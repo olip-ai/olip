@@ -1,0 +1,135 @@
+{
+  "schema": "olip-consultation-readiness/0.1-draft",
+  "matter_family": "tenant_housing",
+  "state": "CA",
+  "practice_area": "Landlord-Tenant Law",
+  "language": null,
+  "summary": {
+    "text": "TEST: my landlord gave me a 3-day notice",
+    "label": "user_reported",
+    "editable": true
+  },
+  "facts": [],
+  "timeline": [
+    {
+      "date": "2026-10-30",
+      "what": "Date on the notice",
+      "source": "user_reported",
+      "uncertain": false
+    }
+  ],
+  "documents_to_gather": [
+    {
+      "document": "The lease or rental agreement",
+      "you_have": null
+    },
+    {
+      "document": "Every notice or court paper you received, with the envelope or the date you got it",
+      "you_have": null
+    },
+    {
+      "document": "Rent receipts or bank records of payments",
+      "you_have": null
+    },
+    {
+      "document": "Photos of the unit's condition, if relevant",
+      "you_have": null
+    },
+    {
+      "document": "Messages with the landlord or manager",
+      "you_have": null
+    }
+  ],
+  "consultation_questions": [
+    "Do you represent tenants? Do you have any conflict with my landlord?",
+    "What do you charge for a first consultation, and how are fees set after that?",
+    "What should I bring, and what should I avoid doing before we meet?",
+    "If there is a court date, can you help in time, or who could?"
+  ],
+  "checklist": [
+    {
+      "id": "state",
+      "label": "The state where the matter is",
+      "why": "Lawyers are licensed state by state.",
+      "status": "answered",
+      "answer": "CA",
+      "label_of_answer": "user_reported"
+    },
+    {
+      "id": "matter_type",
+      "label": "The kind of legal matter, in your words",
+      "why": "Lets the office tell quickly whether it handles this kind of matter.",
+      "status": "answered",
+      "answer": "Landlord-Tenant Law",
+      "label_of_answer": "user_reported"
+    },
+    {
+      "id": "your_side",
+      "label": "Which side you are on (for example tenant or landlord)",
+      "why": "Offices check this before they can talk with you.",
+      "status": "missing",
+      "answer": null,
+      "label_of_answer": "unknown"
+    },
+    {
+      "id": "other_party",
+      "label": "The name of the other side (person or company)",
+      "why": "Offices need it for their conflicts check before a consultation. It is shared only if you tick it.",
+      "status": "missing",
+      "answer": null,
+      "label_of_answer": "unknown"
+    },
+    {
+      "id": "key_dates",
+      "label": "Important dates you were told about (court dates, notices)",
+      "why": "Shown as you reported them. The host does not check or calculate deadlines.",
+      "status": "answered",
+      "answer": "1 date(s) listed",
+      "label_of_answer": "user_reported"
+    },
+    {
+      "id": "goal",
+      "label": "What you want to happen",
+      "why": "Helps the lawyer plan the first meeting.",
+      "status": "missing",
+      "answer": null,
+      "label_of_answer": "unknown"
+    },
+    {
+      "id": "notice_type",
+      "label": "The kind of notice you received, if any (for example 3-day notice, unlawful detainer papers)",
+      "why": "Different papers have different next steps.",
+      "status": "missing",
+      "answer": null,
+      "label_of_answer": "unknown"
+    },
+    {
+      "id": "rent_status",
+      "label": "Whether rent is paid up, in your words",
+      "why": "Often asked at the first meeting.",
+      "status": "missing",
+      "answer": null,
+      "label_of_answer": "unknown"
+    }
+  ],
+  "readiness": {
+    "answered": 3,
+    "total": 8,
+    "percent": 38,
+    "definition": "How many checklist items you have answered. It is NOT a prediction of whether you have a case, will win, or will be accepted by a lawyer."
+  },
+  "published_terms": null,
+  "export": {
+    "format": "olip-consultation-readiness/0.1-draft",
+    "fingerprint": "sha256:cb233059e8747d2787dd060493c3f9716ba49a363c5530d7a0139f1ca2ed8021",
+    "portable": true,
+    "stored": false,
+    "note": "Download or copy this to reuse it with any lawyer or app. Nothing is shared until you approve one named recipient and the exact fields."
+  },
+  "rules": [
+    "The host does not give legal advice, does not judge whether you have a case, and does not certify anything a lawyer says about themselves.",
+    "An inquiry or consultation request alone does not create an attorney-client relationship.",
+    "Do not upload documents here. Bring copies to the consultation, or share them later through the office's own secure system if it asks."
+  ],
+  "stored": false
+}

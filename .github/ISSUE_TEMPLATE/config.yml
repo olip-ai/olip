@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security problem (private)
+    url: https://olip.ai/security/
+    about: Report vulnerabilities privately. Never in a public issue.
+  - name: Try OLIP in your browser
+    url: https://olip.ai/try/
+    about: A fictional simulation of one handoff. No real lawyer is contacted.

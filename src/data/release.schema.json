@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/release.schema.json",
+  "title": "olip.ai release metadata (single source for version, status, license and adoption facts shown on the site)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["last_reviewed", "kit_timestamp", "promoted", "base", "adopted_by_standards_body", "counts", "sponsor", "licenses", "repository", "hosted_sandbox", "browser_simulation", "adoption", "reviews", "contact"],
+  "$defs": {
+    "date": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "version": {
+      "type": "object", "additionalProperties": false, "required": ["version", "status", "label", "date", "path"],
+      "properties": {"version": {"type": "string", "pattern": "^\\d+\\.\\d+$"}, "status": {"enum": ["DRAFT", "CANDIDATE", "ADOPTED"]},
+        "label": {"type": "string"}, "date": {"$ref": "#/$defs/date"}, "path": {"type": "string", "pattern": "^/spec/"}, "kind": {"type": "string"}}
+    },
+    "lic": {"type": "object", "required": ["applies_to", "name"], "properties": {"applies_to": {"type": "string"}, "spdx": {"type": "string"}, "name": {"type": "string"}}}
+  },
+  "properties": {
+    "$schema": {"type": "string"},
+    "last_reviewed": {"$ref": "#/$defs/date"},
+    "kit_timestamp": {"type": "string", "format": "date-time"},
+    "promoted": {"$ref": "#/$defs/version"},
+    "base": {"$ref": "#/$defs/version"},
+    "adopted_by_standards_body": {"type": "boolean"},
+    "counts": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0},
+      "required": ["schemas_0_1", "schemas_0_2", "examples_0_1", "examples_0_2", "conformance_checks_0_1", "conformance_checks_0_2"]},
+    "sponsor": {"type": "object", "required": ["name", "role"], "properties": {"name": {"type": "string"}, "role": {"type": "string"}}},
+    "licenses": {"type": "object", "required": ["status", "granted_on", "granted_by", "decision", "specification", "patents", "software", "examples", "marks"],
+      "properties": {"status": {"enum": ["granted", "pending"]}, "granted_on": {"$ref": "#/$defs/date"}, "granted_by": {"type": "string"}, "decision": {"type": "string", "pattern": "^D-\\d+$"},
+        "specification": {"$ref": "#/$defs/lic"}, "patents": {"$ref": "#/$defs/lic"}, "software": {"$ref": "#/$defs/lic"}, "examples": {"$ref": "#/$defs/lic"}, "marks": {"type": "string"}}},
+    "repository": {"type": "object", "required": ["url", "issues_url", "status"],
+      "properties": {"url": {"type": ["string", "null"], "pattern": "^https://github\\.com/"}, "issues_url": {"type": ["string", "null"]}, "status": {"enum": ["not_public", "public"]}, "note": {"type": "string"}},
+      "if": {"properties": {"status": {"const": "public"}}}, "then": {"properties": {"url": {"type": "string"}}}, "else": {"properties": {"url": {"type": "null"}}}},
+    "hosted_sandbox": {"type": "object", "required": ["status"], "properties": {"status": {"enum": ["not_built", "available"]}}},
+    "browser_simulation": {"type": "object", "required": ["status", "path"], "properties": {"status": {"enum": ["available", "not_built"]}, "path": {"type": "string"}}},
+    "adoption": {"type": "object", "required": ["independent_implementations", "production_firm_endpoints", "outside_contributors", "as_of"],
+      "properties": {"independent_implementations": {"type": "integer", "minimum": 0}, "production_firm_endpoints": {"type": "integer", "minimum": 0}, "outside_contributors": {"type": "integer", "minimum": 0}, "as_of": {"$ref": "#/$defs/date"}}},
+    "reviews": {"type": "object", "additionalProperties": {"enum": ["not_done", "in_progress", "done", "not_established", "established"]}},
+    "contact": {"type": "object", "required": ["feedback", "security"], "properties": {"feedback": {"type": "string", "format": "email"}, "security": {"type": "string", "format": "email"}, "note": {"type": "string"}}}
+  }
+}

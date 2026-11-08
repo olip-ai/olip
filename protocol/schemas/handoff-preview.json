@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/handoff-preview.json",
+  "title": "OLIP handoff preview (what the user approves)",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "preview_id",
+    "state",
+    "casebrief_id",
+    "casebrief_revision",
+    "recipient",
+    "mode",
+    "purpose",
+    "shared_fields",
+    "withheld_fields",
+    "notices",
+    "notice_version",
+    "policy_gate",
+    "consent_digest",
+    "approval",
+    "expires_at"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.json#/$defs/olipVersion"
+    },
+    "preview_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "state": {
+      "enum": [
+        "draft",
+        "approved",
+        "submitted",
+        "cancelled",
+        "expired"
+      ]
+    },
+    "casebrief_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "casebrief_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "recipient": {
+      "type": "object",
+      "required": [
+        "professional_id",
+        "display_name",
+        "license_statements"
+      ],
+      "properties": {
+        "professional_id": {
+          "$ref": "common.json#/$defs/id"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "firm_name": {
+          "type": "string"
+        },
+        "license_statements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "intake_endpoint_status": {
+          "type": "string"
+        },
+        "delivery_topology": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "description": "Exactly one recipient."
+    },
+    "mode": {
+      "enum": [
+        "consumer_selected_listing",
+        "direct_firm_intake",
+        "referral_service",
+        "automated_routing"
+      ]
+    },
+    "purpose": {
+      "enum": [
+        "request_initial_contact",
+        "request_consultation"
+      ]
+    },
+    "shared_fields": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "label",
+          "value"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "value": {}
+        }
+      }
+    },
+    "withheld_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notices": {
+      "type": "array",
+      "items": {
+        "$ref": "common.json#/$defs/notice"
+      }
+    },
+    "notice_version": {
+      "type": "string"
+    },
+    "policy_gate": {
+      "$ref": "policy-gate.json"
+    },
+    "consent_digest": {
+      "$ref": "common.json#/$defs/digest"
+    },
+    "approval": {
+      "type": "object",
+      "required": [
+        "method",
+        "url"
+      ],
+      "properties": {
+        "method": {
+          "enum": [
+            "hosted_otp",
+            "platform_attestation"
+          ]
+        },
+        "url": {
+          "type": "string"
+        },
+        "instructions": {
+          "type": "string"
+        }
+      }
+    },
+    "authorization_id": {
+      "anyOf": [
+        {
+          "$ref": "common.json#/$defs/id"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "created_at": {
+      "$ref": "common.json#/$defs/timestamp"
+    },
+    "expires_at": {
+      "$ref": "common.json#/$defs/timestamp"
+    }
+  }
+}

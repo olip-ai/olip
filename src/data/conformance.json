@@ -1,0 +1,372 @@
+{
+  "suite": {
+    "file": "conformance/run.mjs",
+    "sha256": "3e9d822d5b05921395d6e293c3b5b42e3d15d5b67a56290c6f91655bee3f6466",
+    "kit": "/downloads/olip-0.2-draft-kit.zip"
+  },
+  "runner": "sponsor self-test on the sponsor's machine with fictional data",
+  "independent_reproductions": [],
+  "total_checks": 35,
+  "runs": {
+    "node": {
+      "label": "node-endpoint",
+      "olip_version": "0.1",
+      "mode": "test_endpoint",
+      "ran_at": "2026-11-08T15:26:33.362Z",
+      "seconds": 0.529,
+      "pass": 35,
+      "fail": 0,
+      "skip": 0
+    },
+    "python": {
+      "label": "python-endpoint",
+      "olip_version": "0.1",
+      "mode": "test_endpoint",
+      "ran_at": "2026-11-08T15:26:38.466Z",
+      "seconds": 4.66,
+      "pass": 29,
+      "fail": 0,
+      "skip": 6
+    }
+  },
+  "profiles": [
+    {
+      "profile": "olip-read",
+      "checks": 8,
+      "node": {
+        "pass": 8,
+        "fail": 0,
+        "skip": 0
+      },
+      "python": {
+        "pass": 8,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "profile": "olip-write",
+      "checks": 21,
+      "node": {
+        "pass": 21,
+        "fail": 0,
+        "skip": 0
+      },
+      "python": {
+        "pass": 21,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "profile": "olip-a2a-binding",
+      "checks": 1,
+      "node": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      },
+      "python": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 1
+      }
+    },
+    {
+      "profile": "olip-0.2",
+      "checks": 5,
+      "node": {
+        "pass": 5,
+        "fail": 0,
+        "skip": 0
+      },
+      "python": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 5
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "R1",
+      "profile": "olip-read",
+      "name": "Manifest is valid and names the version and profiles",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "R2",
+      "profile": "olip-read",
+      "name": "Public discovery works with no login and no payment",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "R3",
+      "profile": "olip-read",
+      "name": "Plain-English tenant query: practice and place interpreted, unknowns exposed",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "R4",
+      "profile": "olip-read",
+      "name": "Verified license record and merely indexed record make visibly different claims",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "R5",
+      "profile": "olip-read",
+      "name": "Ordering is stated, never paid; a nonpaying endpoint lawyer is listed",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "R6",
+      "profile": "olip-read",
+      "name": "Intake policy marks unknown and stale fields",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "R7",
+      "profile": "olip-read",
+      "name": "No-match request returns legal aid options, not an empty dead end",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "R8",
+      "profile": "olip-read",
+      "name": "Unsupported major version is refused with a stable code",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W1",
+      "profile": "olip-write",
+      "name": "Write operations need an authenticated caller",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W2",
+      "profile": "olip-write",
+      "name": "A CaseBrief can be created, edited and validated without any transmission",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W3",
+      "profile": "olip-write",
+      "name": "Preview names exactly one recipient and every shared value",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W4",
+      "profile": "olip-write",
+      "name": "Submitting without the user's matching approval fails",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W5",
+      "profile": "olip-write",
+      "name": "Editing the summary invalidates the old approval",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W6",
+      "profile": "olip-write",
+      "name": "Changing the recipient needs a new approval",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W7",
+      "profile": "olip-write",
+      "name": "Replay or duplicate submit causes no extra delivery",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W8",
+      "profile": "olip-write",
+      "name": "Simulated delivery failure is FAILED, never DELIVERED or CONFIRMED",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W9",
+      "profile": "olip-write",
+      "name": "Email relay is SENT, not DELIVERED, without a recipient receipt",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W10",
+      "profile": "olip-write",
+      "name": "Signed receipt verifies; acknowledgment is not acceptance",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W11",
+      "profile": "olip-write",
+      "name": "Status spoofing by the calling agent is refused; transitions are strict",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W12",
+      "profile": "olip-write",
+      "name": "A prohibited jurisdiction workflow is blocked with an allowed alternative",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W13",
+      "profile": "olip-write",
+      "name": "Cancel before sending stops it; cancel after delivery states the limits",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W14",
+      "profile": "olip-write",
+      "name": "Expired approval and expired token are refused",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W15",
+      "profile": "olip-write",
+      "name": "Cross-tenant isolation: another agent sees nothing",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W16",
+      "profile": "olip-write",
+      "name": "Case text never appears in analytics, logs or other tenants' data",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W17",
+      "profile": "olip-write",
+      "name": "Prompt-injection text in a CaseBrief is stored as data and changes nothing",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W18",
+      "profile": "olip-write",
+      "name": "Only approved fields reach the recipient (data minimization)",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W19",
+      "profile": "olip-write",
+      "name": "Extensions survive and unknown fields do not break the server (forward compatibility)",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W20",
+      "profile": "olip-write",
+      "name": "Client discards the first response and retries: still one handoff (network failure reconciliation)",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "W21",
+      "profile": "olip-write",
+      "name": "Status machine published and every recorded event is a legal transition",
+      "node": "pass",
+      "python": "pass",
+      "note": null
+    },
+    {
+      "id": "X1",
+      "profile": "olip-a2a-binding",
+      "name": "A2A agent card and message/send reach the same operations",
+      "node": "pass",
+      "python": "skip",
+      "note": "A2A binding not offered by this endpoint (optional profile)"
+    },
+    {
+      "id": "V1",
+      "profile": "olip-0.2",
+      "name": "Key bindings document validates and every binding is signed by the issuer key",
+      "node": "pass",
+      "python": "skip",
+      "note": "OLIP 0.2 additions not offered by this endpoint (optional profile)"
+    },
+    {
+      "id": "V2",
+      "profile": "olip-0.2",
+      "name": "A delivered receipt's key is bound to the chosen recipient, and to no one else",
+      "node": "pass",
+      "python": "skip",
+      "note": "OLIP 0.2 additions not offered by this endpoint (optional profile)"
+    },
+    {
+      "id": "V3",
+      "profile": "olip-0.2",
+      "name": "Signed status webhooks: delivered, verifiable, replay and tamper refused",
+      "node": "pass",
+      "python": "skip",
+      "note": "OLIP 0.2 additions not offered by this endpoint (optional profile)"
+    },
+    {
+      "id": "V4",
+      "profile": "olip-0.2",
+      "name": "Intake card validates, is signed, and refuses score or rank fields",
+      "node": "pass",
+      "python": "skip",
+      "note": "OLIP 0.2 additions not offered by this endpoint (optional profile)"
+    },
+    {
+      "id": "V5",
+      "profile": "olip-0.2",
+      "name": "A revoked key binding makes receipts unattributable",
+      "node": "pass",
+      "python": "skip",
+      "note": "OLIP 0.2 additions not offered by this endpoint (optional profile)"
+    }
+  ]
+}

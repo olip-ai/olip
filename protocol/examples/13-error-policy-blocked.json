@@ -1,0 +1,57 @@
+{
+  "schema": "error",
+  "fictional": true,
+  "description": "A referral-service workflow blocked by the illustrative California rule, with allowed alternatives.",
+  "example": {
+    "olip_version": "0.1",
+    "error": {
+      "code": "OLIP_POLICY_BLOCKED",
+      "message": "In this illustrative rule set, a referral-service workflow in California needs a certified lawyer referral service. This endpoint is not one.",
+      "retryable": false,
+      "policy_gate": {
+        "result": "blocked",
+        "code": "mode_not_allowed",
+        "message": "In this illustrative rule set, a referral-service workflow in California needs a certified lawyer referral service. This endpoint is not one.",
+        "checks": [
+          {
+            "check": "mode_allowed_in_jurisdiction",
+            "jurisdiction": "US-CA",
+            "mode": "referral_service",
+            "passed": false
+          }
+        ],
+        "rules_review_status": "pending_counsel_review",
+        "allowed_alternatives": [
+          {
+            "kind": "use_mode",
+            "mode": "consumer_selected_listing",
+            "description": "The user picks a named lawyer from the list and approves sending to that one lawyer."
+          },
+          {
+            "kind": "contact_directly",
+            "description": "Call or visit the firm's own website: +1-555-0100, https://alvarez-law.example.test."
+          },
+          {
+            "kind": "legal_aid",
+            "description": "See free legal help options for your state."
+          }
+        ]
+      },
+      "allowed_alternatives": [
+        {
+          "kind": "use_mode",
+          "mode": "consumer_selected_listing",
+          "description": "The user picks a named lawyer from the list and approves sending to that one lawyer."
+        },
+        {
+          "kind": "contact_directly",
+          "description": "Call or visit the firm's own website: +1-555-0100, https://alvarez-law.example.test."
+        },
+        {
+          "kind": "legal_aid",
+          "description": "See free legal help options for your state."
+        }
+      ]
+    }
+  }
+}

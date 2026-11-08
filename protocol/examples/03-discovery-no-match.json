@@ -1,0 +1,44 @@
+{
+  "schema": "discovery-response",
+  "fictional": true,
+  "description": "No listed professional fits; legal aid options returned.",
+  "example": {
+    "olip_version": "0.1",
+    "interpretation": null,
+    "query": {
+      "jurisdiction": "US-WY",
+      "matter": "housing.landlord_tenant",
+      "language": null
+    },
+    "ordering": {
+      "method": "family_name_alphabetical",
+      "paid_influence": false,
+      "disclosure": "Listed in alphabetical order by family name. Payment, subscriptions and advertising never change who is listed or the order."
+    },
+    "results": [],
+    "no_match": {
+      "reason": "no_listed_professional_for_matter_and_jurisdiction",
+      "message": "No listed professional fits these filters. Free legal help options are listed below."
+    },
+    "legal_aid_options": [
+      {
+        "name": "Fictional Court Self-Help Center (test data)",
+        "kind": "court_self_help",
+        "jurisdictions": [
+          "*"
+        ],
+        "matter_codes": [
+          "*"
+        ],
+        "url": "https://selfhelp.example.test",
+        "cost": "free"
+      }
+    ],
+    "notices": [
+      {
+        "id": "license_record",
+        "text": "A license record check is not an endorsement by any court, bar or licensing authority."
+      }
+    ]
+  }
+}

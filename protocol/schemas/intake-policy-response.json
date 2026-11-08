@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/intake-policy-response.json",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "intake_policy"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.json#/$defs/olipVersion"
+    },
+    "intake_policy": {
+      "$ref": "intake-policy.json"
+    }
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "schemas": [
+    {
+      "file": "authorization.json",
+      "name": "authorization",
+      "title": "OLIP user authorization"
+    },
+    {
+      "file": "casebrief.json",
+      "name": "casebrief",
+      "title": "OLIP CaseBrief"
+    },
+    {
+      "file": "common.json",
+      "name": "common",
+      "title": "OLIP common definitions"
+    },
+    {
+      "file": "discovery-response.json",
+      "name": "discovery-response",
+      "title": "OLIP discover_providers response"
+    },
+    {
+      "file": "error.json",
+      "name": "error",
+      "title": "OLIP error"
+    },
+    {
+      "file": "handoff-preview.json",
+      "name": "handoff-preview",
+      "title": "OLIP handoff preview (what the user approves)"
+    },
+    {
+      "file": "handoff.json",
+      "name": "handoff",
+      "title": "OLIP handoff and status"
+    },
+    {
+      "file": "intake-policy-response.json",
+      "name": "intake-policy-response",
+      "title": ""
+    },
+    {
+      "file": "intake-policy.json",
+      "name": "intake-policy",
+      "title": "OLIP intake policy and eligibility"
+    },
+    {
+      "file": "manifest.json",
+      "name": "manifest",
+      "title": "OLIP endpoint manifest (/.well-known/olip.json)"
+    },
+    {
+      "file": "policy-gate.json",
+      "name": "policy-gate",
+      "title": "OLIP jurisdiction and purpose policy gate result"
+    },
+    {
+      "file": "professional-identity-response.json",
+      "name": "professional-identity-response",
+      "title": ""
+    },
+    {
+      "file": "professional-identity.json",
+      "name": "professional-identity",
+      "title": "OLIP professional identity and licensing evidence"
+    },
+    {
+      "file": "receipt.json",
+      "name": "receipt",
+      "title": "OLIP recipient receipt"
+    },
+    {
+      "file": "status-event.json",
+      "name": "status-event",
+      "title": "OLIP status event"
+    },
+    {
+      "file": "status-machine.json",
+      "name": "status-machine",
+      "title": "OLIP status machine document"
+    }
+  ],
+  "examples": [
+    {
+      "file": "01-manifest.json",
+      "schema": "manifest",
+      "description": "Endpoint manifest at /.well-known/olip.json."
+    },
+    {
+      "file": "02-discovery-plain-english.json",
+      "schema": "discovery-response",
+      "description": "Public discovery from a plain-English tenant question. Unknowns exposed."
+    },
+    {
+      "file": "03-discovery-no-match.json",
+      "schema": "discovery-response",
+      "description": "No listed professional fits; legal aid options returned."
+    },
+    {
+      "file": "04-identity-verified.json",
+      "schema": "professional-identity-response",
+      "description": "License checked against the (fictional) official source."
+    },
+    {
+      "file": "05-identity-indexed.json",
+      "schema": "professional-identity-response",
+      "description": "License only copied from a dataset; not checked. Unclaimed. No intake endpoint."
+    },
+    {
+      "file": "06-intake-policy.json",
+      "schema": "intake-policy-response",
+      "description": "What a professional accepts. Unknown values marked."
+    },
+    {
+      "file": "07-casebrief.json",
+      "schema": "casebrief",
+      "description": "Editable CaseBrief draft. Nothing sent."
+    },
+    {
+      "file": "08-handoff-preview.json",
+      "schema": "handoff-preview",
+      "description": "Exactly one recipient, every shared value, notices, consent digest, approval link."
+    },
+    {
+      "file": "09-authorization.json",
+      "schema": "authorization",
+      "description": "Single-use approval the user gave on their own page."
+    },
+    {
+      "file": "10-handoff-delivered.json",
+      "schema": "handoff",
+      "description": "Delivered to the recipient's intake system with a signed receipt. Not read, not accepted."
+    },
+    {
+      "file": "11-receipt.json",
+      "schema": "receipt",
+      "description": "Recipient receipt, Ed25519-signed over canonical JSON."
+    },
+    {
+      "file": "12-status-event.json",
+      "schema": "status-event",
+      "description": "One status event (recipient_system, signed)."
+    },
+    {
+      "file": "13-error-policy-blocked.json",
+      "schema": "error",
+      "description": "A referral-service workflow blocked by the illustrative California rule, with allowed alternatives."
+    },
+    {
+      "file": "14-status-machine.json",
+      "schema": "status-machine",
+      "description": "The canonical status machine."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "./release.schema.json",
+  "last_reviewed": "2026-11-08",
+  "kit_timestamp": "2026-11-08T00:00:00Z",
+  "promoted": {"version": "0.2", "status": "DRAFT", "label": "OLIP 0.2 Draft", "date": "2026-11-07", "path": "/spec/0.2/", "kind": "optional additions on top of 0.1"},
+  "base": {"version": "0.1", "status": "DRAFT", "label": "OLIP 0.1 Draft", "date": "2026-11-06", "path": "/spec/0.1/"},
+  "adopted_by_standards_body": false,
+  "counts": {"schemas_0_1": 16, "schemas_0_2": 5, "examples_0_1": 14, "examples_0_2": 5, "conformance_checks_0_1": 30, "conformance_checks_0_2": 5},
+  "sponsor": {"name": "Digital Crossings Inc.", "role": "initial sponsor and editor of the draft"},
+  "licenses": {
+    "status": "granted",
+    "granted_on": "2026-11-07",
+    "granted_by": "Digital Crossings Inc. (initial sponsor)",
+    "decision": "D-11",
+    "specification": {"applies_to": "specification text, schemas, status machine, taxonomy", "spdx": "CC-BY-4.0", "name": "Creative Commons Attribution 4.0 International"},
+    "patents": {"applies_to": "specification", "name": "Open Web Foundation Final Specification Agreement (OWFa 1.0) patent commitment"},
+    "software": {"applies_to": "reference endpoints, clients, adapters, conformance suite, this website's source", "spdx": "Apache-2.0", "name": "Apache License 2.0"},
+    "examples": {"applies_to": "fictional examples and test fixtures", "spdx": "CC0-1.0", "name": "CC0 1.0 Universal"},
+    "marks": "The name OLIP is not licensed by any of the above. No trademark registration is claimed."
+  },
+  "repository": {"url": "https://github.com/olip-ai/olip", "issues_url": "https://github.com/olip-ai/olip/issues", "status": "public", "note": "Public source repository in the olip-ai GitHub organization, owned by the sponsor. Fresh history; published 2026-11-08."},
+  "hosted_sandbox": {"status": "not_built"},
+  "browser_simulation": {"status": "available", "path": "/try/"},
+  "adoption": {"independent_implementations": 0, "production_firm_endpoints": 0, "outside_contributors": 0, "as_of": "2026-11-08"},
+  "reviews": {"independent_security_review": "not_done", "counsel_review_of_policy_rules": "not_done", "independent_governance": "not_established"},
+  "contact": {"feedback": "notices@esqcopilot.com", "security": "notices@esqcopilot.com", "note": "The sponsor's published contact address. A dedicated OLIP address does not exist yet."}
+}

@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/common.json",
+  "title": "OLIP common definitions",
+  "$defs": {
+    "olipVersion": {
+      "type": "string",
+      "pattern": "^0\\.1(\\.\\d+)?$"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,199}$",
+      "description": "Stable, opaque identifier. Never reused. Implementations may use any scheme; a URN such as urn:olip:<issuer-domain>:<type>:<local> is recommended for cross-system identifiers."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 with an explicit offset or Z."
+    },
+    "nullableTimestamp": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "timeZone": {
+      "type": "string",
+      "pattern": "^(UTC|[A-Za-z_]+(/[A-Za-z0-9_+-]+)+)$",
+      "description": "IANA time zone name."
+    },
+    "jurisdiction": {
+      "type": "string",
+      "pattern": "^US(-[A-Z]{2})?$|^US-FED(-[A-Za-z0-9-]+)?$",
+      "description": "ISO 3166-2 style: US-CA. US-FED-... for federal courts or agencies."
+    },
+    "language": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$",
+      "description": "BCP 47 tag."
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "nullableDigest": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/digest"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "fieldStatus": {
+      "type": "string",
+      "enum": [
+        "official_source_checked",
+        "authority_issued_credential",
+        "indexed_unverified",
+        "self_reported",
+        "inferred",
+        "verified",
+        "unknown",
+        "not_provided",
+        "stale",
+        "conflicting"
+      ]
+    },
+    "knownValue": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "value": {},
+        "status": {
+          "$ref": "#/$defs/fieldStatus"
+        },
+        "as_of": {
+          "$ref": "#/$defs/nullableTimestamp"
+        },
+        "basis": {}
+      },
+      "description": "A value with an honest status. Unknown is a valid answer; never fill in a guess as fact."
+    },
+    "sourceRef": {
+      "type": "object",
+      "required": [
+        "name",
+        "url",
+        "data_as_of"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "data_as_of": {
+          "$ref": "#/$defs/nullableTimestamp"
+        },
+        "retrieved_at": {
+          "$ref": "#/$defs/nullableTimestamp"
+        },
+        "evidence_sha256": {
+          "$ref": "#/$defs/nullableDigest"
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "required": [
+        "alg",
+        "kid",
+        "value"
+      ],
+      "properties": {
+        "alg": {
+          "enum": [
+            "EdDSA"
+          ]
+        },
+        "kid": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "description": "Detached signature over OLIP canonical JSON of the enclosing object without its signature member. Keys published as JWKS at /.well-known/olip-keys.json."
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9.-]+\\.[a-z]{2,}/[A-Za-z0-9._-]+$"
+      },
+      "description": "Optional extensions keyed by reverse-DNS-free domain/name, e.g. example.com/foo. Receivers must keep unknown extensions and must not fail on them."
+    },
+    "notice": {
+      "type": "object",
+      "required": [
+        "id",
+        "text"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "matterClassification": {
+      "type": "object",
+      "required": [
+        "code",
+        "label",
+        "sali"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[a-z_]+(\\.[a-z_]+)+$"
+        },
+        "label": {
+          "type": "string"
+        },
+        "sali": {
+          "type": "object",
+          "required": [
+            "iri",
+            "status"
+          ],
+          "properties": {
+            "iri": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uri"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "status": {
+              "enum": [
+                "mapped_exact",
+                "mapped_broader",
+                "mapped_narrower",
+                "unmapped_pending_review",
+                "no_equivalent"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

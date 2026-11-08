@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/error.json",
+  "title": "OLIP error",
+  "type": "object",
+  "required": [
+    "error"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.json#/$defs/olipVersion"
+    },
+    "error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message",
+        "retryable"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "OLIP_INVALID_REQUEST",
+            "OLIP_VERSION_UNSUPPORTED",
+            "OLIP_UNAUTHENTICATED",
+            "OLIP_TOKEN_EXPIRED",
+            "OLIP_FORBIDDEN",
+            "OLIP_NOT_FOUND",
+            "OLIP_RATE_LIMITED",
+            "OLIP_PAYLOAD_TOO_LARGE",
+            "OLIP_INTERNAL",
+            "OLIP_ONE_RECIPIENT_ONLY",
+            "OLIP_POLICY_BLOCKED",
+            "OLIP_FIELD_NOT_ACCEPTED",
+            "OLIP_REQUIRED_FIELD_MISSING",
+            "OLIP_REVISION_CONFLICT",
+            "OLIP_IDEMPOTENCY_KEY_REQUIRED",
+            "OLIP_IDEMPOTENCY_KEY_REUSED",
+            "OLIP_AUTHORIZATION_INVALID",
+            "OLIP_AUTHORIZATION_REVOKED",
+            "OLIP_AUTHORIZATION_USED",
+            "OLIP_AUTHORIZATION_EXPIRED",
+            "OLIP_AUTHORIZATION_STALE",
+            "OLIP_CONSENT_MISMATCH",
+            "OLIP_NOT_APPROVED",
+            "OLIP_APPROVAL_CODE_WRONG",
+            "OLIP_APPROVAL_CODE_EXPIRED",
+            "OLIP_INVALID_TRANSITION",
+            "OLIP_EVENT_SOURCE_FORBIDDEN",
+            "OLIP_EVIDENCE_REQUIRED",
+            "OLIP_RECIPIENT_UNREACHABLE"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "details": {},
+        "policy_gate": {
+          "$ref": "policy-gate.json"
+        },
+        "allowed_alternatives": {
+          "type": "array"
+        },
+        "supported_versions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

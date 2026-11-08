@@ -1,0 +1,258 @@
+{
+  "label": "node-endpoint",
+  "base": "http://127.0.0.1:18787",
+  "olip_version": "0.1",
+  "mode": "test_endpoint",
+  "ran_at": "2026-11-08T15:26:33.362Z",
+  "seconds": 0.529,
+  "pass": 35,
+  "fail": 0,
+  "skip": 0,
+  "results": [
+    {
+      "id": "R1",
+      "profile": "olip-read",
+      "acceptance": null,
+      "name": "Manifest is valid and names the version and profiles",
+      "result": "pass"
+    },
+    {
+      "id": "R2",
+      "profile": "olip-read",
+      "acceptance": 2,
+      "name": "Public discovery works with no login and no payment",
+      "result": "pass"
+    },
+    {
+      "id": "R3",
+      "profile": "olip-read",
+      "acceptance": 1,
+      "name": "Plain-English tenant query: practice and place interpreted, unknowns exposed",
+      "result": "pass"
+    },
+    {
+      "id": "R4",
+      "profile": "olip-read",
+      "acceptance": 11,
+      "name": "Verified license record and merely indexed record make visibly different claims",
+      "result": "pass"
+    },
+    {
+      "id": "R5",
+      "profile": "olip-read",
+      "acceptance": 12,
+      "name": "Ordering is stated, never paid; a nonpaying endpoint lawyer is listed",
+      "result": "pass"
+    },
+    {
+      "id": "R6",
+      "profile": "olip-read",
+      "acceptance": null,
+      "name": "Intake policy marks unknown and stale fields",
+      "result": "pass"
+    },
+    {
+      "id": "R7",
+      "profile": "olip-read",
+      "acceptance": null,
+      "name": "No-match request returns legal aid options, not an empty dead end",
+      "result": "pass"
+    },
+    {
+      "id": "R8",
+      "profile": "olip-read",
+      "acceptance": null,
+      "name": "Unsupported major version is refused with a stable code",
+      "result": "pass"
+    },
+    {
+      "id": "W1",
+      "profile": "olip-write",
+      "acceptance": null,
+      "name": "Write operations need an authenticated caller",
+      "result": "pass"
+    },
+    {
+      "id": "W2",
+      "profile": "olip-write",
+      "acceptance": 3,
+      "name": "A CaseBrief can be created, edited and validated without any transmission",
+      "result": "pass"
+    },
+    {
+      "id": "W3",
+      "profile": "olip-write",
+      "acceptance": 4,
+      "name": "Preview names exactly one recipient and every shared value",
+      "result": "pass"
+    },
+    {
+      "id": "W4",
+      "profile": "olip-write",
+      "acceptance": 4,
+      "name": "Submitting without the user's matching approval fails",
+      "result": "pass"
+    },
+    {
+      "id": "W5",
+      "profile": "olip-write",
+      "acceptance": 5,
+      "name": "Editing the summary invalidates the old approval",
+      "result": "pass"
+    },
+    {
+      "id": "W6",
+      "profile": "olip-write",
+      "acceptance": 5,
+      "name": "Changing the recipient needs a new approval",
+      "result": "pass"
+    },
+    {
+      "id": "W7",
+      "profile": "olip-write",
+      "acceptance": 6,
+      "name": "Replay or duplicate submit causes no extra delivery",
+      "result": "pass"
+    },
+    {
+      "id": "W8",
+      "profile": "olip-write",
+      "acceptance": 7,
+      "name": "Simulated delivery failure is FAILED, never DELIVERED or CONFIRMED",
+      "result": "pass"
+    },
+    {
+      "id": "W9",
+      "profile": "olip-write",
+      "acceptance": 7,
+      "name": "Email relay is SENT, not DELIVERED, without a recipient receipt",
+      "result": "pass"
+    },
+    {
+      "id": "W10",
+      "profile": "olip-write",
+      "acceptance": 8,
+      "name": "Signed receipt verifies; acknowledgment is not acceptance",
+      "result": "pass"
+    },
+    {
+      "id": "W11",
+      "profile": "olip-write",
+      "acceptance": null,
+      "name": "Status spoofing by the calling agent is refused; transitions are strict",
+      "result": "pass"
+    },
+    {
+      "id": "W12",
+      "profile": "olip-write",
+      "acceptance": 9,
+      "name": "A prohibited jurisdiction workflow is blocked with an allowed alternative",
+      "result": "pass"
+    },
+    {
+      "id": "W13",
+      "profile": "olip-write",
+      "acceptance": 13,
+      "name": "Cancel before sending stops it; cancel after delivery states the limits",
+      "result": "pass"
+    },
+    {
+      "id": "W14",
+      "profile": "olip-write",
+      "acceptance": null,
+      "name": "Expired approval and expired token are refused",
+      "result": "pass"
+    },
+    {
+      "id": "W15",
+      "profile": "olip-write",
+      "acceptance": 14,
+      "name": "Cross-tenant isolation: another agent sees nothing",
+      "result": "pass"
+    },
+    {
+      "id": "W16",
+      "profile": "olip-write",
+      "acceptance": 14,
+      "name": "Case text never appears in analytics, logs or other tenants' data",
+      "result": "pass"
+    },
+    {
+      "id": "W17",
+      "profile": "olip-write",
+      "acceptance": null,
+      "name": "Prompt-injection text in a CaseBrief is stored as data and changes nothing",
+      "result": "pass"
+    },
+    {
+      "id": "W18",
+      "profile": "olip-write",
+      "acceptance": null,
+      "name": "Only approved fields reach the recipient (data minimization)",
+      "result": "pass"
+    },
+    {
+      "id": "W19",
+      "profile": "olip-write",
+      "acceptance": null,
+      "name": "Extensions survive and unknown fields do not break the server (forward compatibility)",
+      "result": "pass"
+    },
+    {
+      "id": "W20",
+      "profile": "olip-write",
+      "acceptance": null,
+      "name": "Client discards the first response and retries: still one handoff (network failure reconciliation)",
+      "result": "pass"
+    },
+    {
+      "id": "W21",
+      "profile": "olip-write",
+      "acceptance": null,
+      "name": "Status machine published and every recorded event is a legal transition",
+      "result": "pass"
+    },
+    {
+      "id": "X1",
+      "profile": "olip-a2a-binding",
+      "acceptance": null,
+      "name": "A2A agent card and message/send reach the same operations",
+      "result": "pass"
+    },
+    {
+      "id": "V1",
+      "profile": "olip-0.2",
+      "acceptance": null,
+      "name": "Key bindings document validates and every binding is signed by the issuer key",
+      "result": "pass"
+    },
+    {
+      "id": "V2",
+      "profile": "olip-0.2",
+      "acceptance": null,
+      "name": "A delivered receipt's key is bound to the chosen recipient, and to no one else",
+      "result": "pass"
+    },
+    {
+      "id": "V3",
+      "profile": "olip-0.2",
+      "acceptance": null,
+      "name": "Signed status webhooks: delivered, verifiable, replay and tamper refused",
+      "result": "pass"
+    },
+    {
+      "id": "V4",
+      "profile": "olip-0.2",
+      "acceptance": null,
+      "name": "Intake card validates, is signed, and refuses score or rank fields",
+      "result": "pass"
+    },
+    {
+      "id": "V5",
+      "profile": "olip-0.2",
+      "acceptance": null,
+      "name": "A revoked key binding makes receipts unattributable",
+      "result": "pass"
+    }
+  ]
+}

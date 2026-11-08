@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/intake-policy.json",
+  "title": "OLIP intake policy and eligibility",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "professional_id",
+    "accepting_new_matters",
+    "jurisdictions",
+    "matter_types",
+    "required_fields",
+    "optional_fields",
+    "delivery",
+    "regulatory",
+    "updated_at",
+    "stale"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.json#/$defs/olipVersion"
+    },
+    "professional_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "fictional": {
+      "type": "boolean"
+    },
+    "accepting_new_matters": {
+      "$ref": "common.json#/$defs/knownValue"
+    },
+    "capacity": {
+      "$ref": "common.json#/$defs/knownValue"
+    },
+    "jurisdictions": {
+      "type": "array",
+      "items": {
+        "$ref": "common.json#/$defs/jurisdiction"
+      }
+    },
+    "matter_types": {
+      "type": "array",
+      "items": {
+        "$ref": "common.json#/$defs/matterClassification"
+      }
+    },
+    "client_side": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "$ref": "common.json#/$defs/language"
+      }
+    },
+    "accessibility": {
+      "$ref": "common.json#/$defs/knownValue"
+    },
+    "exclusions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "required_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "optional_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "required": [
+        "topology",
+        "receipt"
+      ],
+      "properties": {
+        "topology": {
+          "enum": [
+            "direct",
+            "relay_email",
+            "relay_webhook",
+            null
+          ]
+        },
+        "receipt": {
+          "enum": [
+            "signed_EdDSA",
+            "transport_only",
+            "none"
+          ]
+        }
+      }
+    },
+    "regulatory": {
+      "type": "object",
+      "required": [
+        "modes_allowed"
+      ],
+      "properties": {
+        "modes_allowed": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "consumer_selected_listing",
+              "direct_firm_intake",
+              "referral_service",
+              "automated_routing"
+            ]
+          }
+        },
+        "listing_agreement_accepted": {
+          "type": "boolean"
+        }
+      }
+    },
+    "retention_days": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "deadlines_note": {
+      "type": "string"
+    },
+    "updated_at": {
+      "$ref": "common.json#/$defs/timestamp"
+    },
+    "stale": {
+      "type": "boolean"
+    },
+    "extensions": {
+      "$ref": "common.json#/$defs/extensions"
+    }
+  }
+}

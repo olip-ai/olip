@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/manifest.json",
+  "title": "OLIP endpoint manifest (/.well-known/olip.json)",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "supported_versions",
+    "implementation",
+    "profiles",
+    "operations"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.json#/$defs/olipVersion"
+    },
+    "supported_versions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "implementation": {
+      "type": "object",
+      "required": [
+        "name",
+        "version",
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "mock",
+            "sandbox",
+            "production"
+          ]
+        }
+      }
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "olip-read",
+          "olip-write",
+          "olip-mock-harness",
+          "olip-a2a-binding"
+        ]
+      },
+      "minItems": 1
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "method",
+          "path",
+          "auth"
+        ]
+      }
+    },
+    "auth": {
+      "type": "object",
+      "required": [
+        "token_endpoint",
+        "grant_types"
+      ]
+    },
+    "keys_url": {
+      "type": "string"
+    },
+    "bindings": {
+      "type": "object"
+    },
+    "extensions_supported": {
+      "type": "array"
+    },
+    "mock_hooks": {
+      "type": "object"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "profiles": {
+            "contains": {
+              "const": "olip-write"
+            }
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "auth",
+          "keys_url"
+        ]
+      }
+    }
+  ],
+  "description": "auth and keys_url are required when the endpoint offers olip-write; a read-only endpoint needs neither."
+}

@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/professional-identity.json",
+  "title": "OLIP professional identity and licensing evidence",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "id",
+    "type",
+    "display_name",
+    "licenses",
+    "claim",
+    "self_reported",
+    "intake_endpoint",
+    "commercial"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.json#/$defs/olipVersion"
+    },
+    "id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "type": {
+      "enum": [
+        "individual_lawyer",
+        "law_firm",
+        "legal_aid_organization",
+        "other_licensed_professional"
+      ]
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "family_name": {
+      "type": "string"
+    },
+    "fictional": {
+      "type": "boolean"
+    },
+    "firm": {
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.json#/$defs/id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "website": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "phone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "licenses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "jurisdiction",
+          "license_id",
+          "status",
+          "verification",
+          "display_statement"
+        ],
+        "properties": {
+          "jurisdiction": {
+            "$ref": "common.json#/$defs/jurisdiction"
+          },
+          "authority": {
+            "type": "string"
+          },
+          "license_id": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "common.json#/$defs/knownValue"
+          },
+          "verification": {
+            "type": "object",
+            "required": [
+              "level",
+              "checked_at",
+              "source"
+            ],
+            "properties": {
+              "level": {
+                "enum": [
+                  "indexed",
+                  "official_source_checked",
+                  "authority_issued_credential"
+                ],
+                "description": "indexed: copied from a dataset, never checked. official_source_checked: compared against the licensing authority's own record at checked_at. authority_issued_credential: a signed credential issued by the authority itself."
+              },
+              "checked_at": {
+                "$ref": "common.json#/$defs/nullableTimestamp"
+              },
+              "freshness_days": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "source": {
+                "$ref": "common.json#/$defs/sourceRef"
+              },
+              "credential": {
+                "type": "object"
+              }
+            }
+          },
+          "display_statement": {
+            "type": "string",
+            "minLength": 10,
+            "description": "Plain sentence an agent must show as-is. Must not overstate the level."
+          }
+        }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "unclaimed",
+            "claimed_unverified",
+            "claimed_verified",
+            "unknown"
+          ]
+        },
+        "method": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "claimed_at": {
+          "$ref": "common.json#/$defs/nullableTimestamp"
+        }
+      },
+      "description": "Whether the professional has claimed this profile. Separate from license evidence."
+    },
+    "self_reported": {
+      "type": "object",
+      "properties": {
+        "practice_areas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "$ref": "common.json#/$defs/language"
+          }
+        },
+        "service_territory": {
+          "type": "array",
+          "items": {
+            "$ref": "common.json#/$defs/jurisdiction"
+          }
+        }
+      },
+      "description": "Statements by the professional. Not checked."
+    },
+    "intake_endpoint": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "none",
+            "declared",
+            "conformance_tested",
+            "active",
+            "unhealthy"
+          ]
+        },
+        "topology": {
+          "enum": [
+            "direct",
+            "relay_email",
+            "relay_webhook",
+            null
+          ]
+        },
+        "olip_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "last_health_check": {
+          "$ref": "common.json#/$defs/nullableTimestamp"
+        }
+      }
+    },
+    "commercial": {
+      "type": "object",
+      "required": [
+        "paid_placement",
+        "affects_order"
+      ],
+      "properties": {
+        "paid_placement": {
+          "const": false
+        },
+        "affects_order": {
+          "const": false
+        }
+      },
+      "description": "OLIP discovery results never carry paid placement, and payment never affects order. Advertising, if any, belongs outside OLIP results."
+    },
+    "extensions": {
+      "$ref": "common.json#/$defs/extensions"
+    }
+  }
+}

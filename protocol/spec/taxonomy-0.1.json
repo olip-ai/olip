@@ -1,0 +1,13 @@
+{
+  "olip_version": "0.1",
+  "status": "draft",
+  "description": "Starter OLIP matter codes. Codes are stable once published; labels may change. SALI LMSS mappings are NOT yet made: every entry is unmapped_pending_review until someone checks the official LMSS release and records the exact IRI. Do not invent IRIs.",
+  "sali_lmss_reference": { "name": "SALI Legal Matter Specification Standard (LMSS)", "publisher": "SALI Alliance", "mapping_rule": "Record iri only after checking it in a named LMSS release; set status mapped_exact, mapped_broader or mapped_narrower; otherwise leave unmapped_pending_review or no_equivalent." },
+  "codes": [
+    { "code": "housing.landlord_tenant", "label": "Landlord and tenant", "client_sides": ["tenant", "landlord"], "sali": { "iri": null, "status": "unmapped_pending_review" } },
+    { "code": "employment.wrongful_termination", "label": "Wrongful termination", "client_sides": ["employee", "employer"], "sali": { "iri": null, "status": "unmapped_pending_review" } },
+    { "code": "employment.wage_and_hour", "label": "Unpaid wages", "client_sides": ["employee", "employer"], "sali": { "iri": null, "status": "unmapped_pending_review" } },
+    { "code": "family.divorce", "label": "Divorce", "client_sides": ["either_spouse"], "sali": { "iri": null, "status": "unmapped_pending_review" } },
+    { "code": "consumer.lemon_law", "label": "Vehicle defects (lemon law)", "client_sides": ["consumer", "manufacturer"], "sali": { "iri": null, "status": "unmapped_pending_review" } }
+  ]
+}

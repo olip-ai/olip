@@ -1,0 +1,11 @@
+node_modules/
+protocol/node_modules/
+build/
+.docusaurus/
+.cache-loader/
+.olip-kit-stage/
+static/downloads/
+static/spec/
+static/schemas/
+src/data/validators-0.1.js
+__pycache__/

@@ -1,0 +1,67 @@
+---
+id: status
+title: Status
+description: Exactly what exists for OLIP 0.1 and the 0.2 additions today, labeled DRAFT, TESTED, AVAILABLE or NOT BUILT, and which review gates are still open.
+---
+
+import R from '@site/src/data/release.json';
+import C from '@site/src/data/conformance.json';
+
+# Status of OLIP {R.base.version} and {R.promoted.version}
+
+Last reviewed: **{R.last_reviewed}**. Labels: <span className="status status--draft">DRAFT</span> written, not reviewed by outsiders · <span className="status status--tested">TESTED</span> automated tests pass on the sponsor's machines with fictional data · <span className="status status--available">AVAILABLE</span> downloadable or usable on this site · <span className="status status--notbuilt">NOT BUILT</span> does not exist.
+
+## Summary
+
+| Fact | Value |
+|---|---|
+| Promoted version | {R.promoted.label} ({R.promoted.date}): {R.promoted.kind} |
+| Base version | {R.base.label} ({R.base.date}); the [0.1 text](/spec/0.1/) is unchanged and stays available |
+| Adopted by a standards body, bar or regulator | No |
+| Sponsor | {R.sponsor.name}, {R.sponsor.role} |
+| Licenses | Granted {R.licenses.granted_on} (decision {R.licenses.decision}); see [Licensing](/license/) |
+| Public source repository | Public at [github.com/olip-ai/olip](https://github.com/olip-ai/olip) (published 2026-11-08). |
+| Hosted sandbox | Not built. Use the local kit or the [browser simulation](/try/). |
+| Independent implementations | {R.adoption.independent_implementations} known |
+| Production firm endpoints | {R.adoption.production_firm_endpoints} known |
+
+## Components
+
+| Component | Status | Evidence |
+|---|---|---|
+| Specification text 0.1 | <span className="status status--draft">DRAFT</span> | [Full text](/spec/0.1/) |
+| {R.counts.schemas_0_1} JSON Schemas, OpenAPI 3.1, status machine, taxonomy | <span className="status status--tested">TESTED</span> <span className="status status--available">AVAILABLE</span> | {R.counts.examples_0_1} fictional examples validate; [Downloads](/spec/downloads/) |
+| Threat model and security checklist | <span className="status status--draft">DRAFT</span> | Not independently reviewed |
+| Reference mock endpoint (Node, no runtime dependencies) | <span className="status status--tested">TESTED</span> <span className="status status--available">AVAILABLE</span> | {C.runs.node.pass} pass, {C.runs.node.fail} fail, {C.runs.node.skip} skip ({C.total_checks} checks: 0.1 and 0.2); in the kit |
+| Second endpoint (Python, standard library only) | <span className="status status--tested">TESTED</span> <span className="status status--available">AVAILABLE</span> | {C.runs.python.pass} pass, {C.runs.python.fail} fail, {C.runs.python.skip} skip (A2A optional; implements 0.1 only); in the kit |
+| Quickstart walkthrough (success, failure, withdrawal) | <span className="status status--tested">TESTED</span> <span className="status status--available">AVAILABLE</span> | Passes on both endpoints, every response schema-checked |
+| MCP adapter (agent side, no approve tool) | <span className="status status--tested">TESTED</span> <span className="status status--available">AVAILABLE</span> | In the kit |
+| A2A binding | <span className="status status--tested">TESTED</span> own tests only | Not tested against an official A2A SDK |
+| Specification text 0.2 (additions: key bindings, signed status webhooks, intake card) | <span className="status status--draft">DRAFT</span> | [Full text](/spec/0.2/) |
+| {R.counts.schemas_0_2} JSON Schemas for 0.2 | <span className="status status--tested">TESTED</span> <span className="status status--available">AVAILABLE</span> | {R.counts.examples_0_2} generated examples; [Downloads](/spec/downloads/#olip-02-additions) |
+| 0.2 in the Node reference endpoint | <span className="status status--tested">TESTED</span> <span className="status status--available">AVAILABLE</span> | Checks V1 to V5 pass; in the kit |
+| 0.2 in the Python endpoint | <span className="status status--notbuilt">NOT BUILT</span> | Implements 0.1 only; its V1 to V5 checks are skipped |
+| [OLIP over MCP](/docs/implementing/olip-over-mcp/) guide and two new read-only MCP tools | <span className="status status--tested">TESTED</span> <span className="status status--available">AVAILABLE</span> | In the kit |
+| MCP Registry listing | <span className="status status--draft">DRAFT</span> | Needs a hosted sandbox first; see the guide |
+| Conformance suite | <span className="status status--tested">TESTED</span> <span className="status status--available">AVAILABLE</span> | {R.counts.conformance_checks_0_1} checks for 0.1 plus {R.counts.conformance_checks_0_2} for 0.2; [latest results](/conformance/) |
+| [Try OLIP](/try/) browser simulation | <span className="status status--tested">TESTED</span> <span className="status status--available">AVAILABLE</span> | Fictional only, no network requests; automated tests for every path |
+| In-browser schema validator | <span className="status status--available">AVAILABLE</span> | [Validator](/validator/) |
+| Hosted sandbox | <span className="status status--notbuilt">NOT BUILT</span> | The sandbox runs locally only |
+| SDK packages on npm or PyPI | <span className="status status--notbuilt">NOT BUILT</span> | |
+| Public source repository and issue tracker | <span className="status status--available">PUBLIC</span> | [github.com/olip-ai/olip](https://github.com/olip-ai/olip) and its [issues](https://github.com/olip-ai/olip/issues) |
+| Certification program | <span className="status status--notbuilt">NONE</span> | By design there is no certification |
+
+## Review gates still open
+
+| Gate | State |
+|---|---|
+| Independent security review | Not done |
+| Two genuinely independent implementations (different organizations) | Not met: both implementations have the same author, and 0.2 has one implementation |
+| Counsel review of jurisdiction policy rules | Not done; reference rules are illustrative and `pending_counsel_review` |
+| Name clearance for "OLIP" | Done: the sponsor states the name is cleared (2026-11-07). No trademark registration is claimed |
+| Licenses | Granted {R.licenses.granted_on}; see [Licensing](/license/) |
+| Independent governance | Not established; see [Governance](/governance/) |
+
+## Adoption
+
+No production deployments, no third-party implementations and no outside contributors are known as of {R.adoption.as_of}. This page will not count the sponsor's own demos or products as adoption.

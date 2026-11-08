@@ -1,0 +1,26 @@
+{
+  "schema": null,
+  "note": "JWKS with the recipient intake key and the host key (olip_key_role).",
+  "example": {
+    "keys": [
+      {
+        "crv": "Ed25519",
+        "x": "Y1sCN5Brmq65nQ_2Yb90nQoiYLqCJCICVZrevTep9uo",
+        "kty": "OKP",
+        "kid": "k_15fa0803aec0",
+        "alg": "EdDSA",
+        "use": "sig",
+        "olip_key_role": "recipient_intake"
+      },
+      {
+        "crv": "Ed25519",
+        "x": "hMGqH9tWvgTMYIB0q4amPW719-B4jtjBRcdUnNjdLu4",
+        "kty": "OKP",
+        "kid": "k_669ebbcf681a",
+        "alg": "EdDSA",
+        "use": "sig",
+        "olip_key_role": "host"
+      }
+    ]
+  }
+}

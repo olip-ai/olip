@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.2/schemas/status-webhook.json",
+  "title": "OLIP signed status webhook (0.2)",
+  "description": "Body of a POST to a subscriber's callback_url. The host signs the whole body (canonical JSON without signature). Receivers MUST verify the signature with the host's keys, MUST reject sent_at more than 300 seconds from their clock, MUST ignore a webhook_id they have already processed, and MUST treat the webhook as a hint: the status of record is the one returned by get_handoff_status.",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "webhook_id",
+    "subscription_id",
+    "handoff_id",
+    "sent_at",
+    "attempt",
+    "event",
+    "signature"
+  ],
+  "properties": {
+    "olip_version": {
+      "const": "0.2"
+    },
+    "webhook_id": {
+      "$ref": "https://olip.ai/spec/0.1/schemas/common.json#/$defs/id"
+    },
+    "subscription_id": {
+      "$ref": "https://olip.ai/spec/0.1/schemas/common.json#/$defs/id"
+    },
+    "handoff_id": {
+      "$ref": "https://olip.ai/spec/0.1/schemas/common.json#/$defs/id"
+    },
+    "sent_at": {
+      "$ref": "https://olip.ai/spec/0.1/schemas/common.json#/$defs/timestamp"
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "event": {
+      "$ref": "https://olip.ai/spec/0.1/schemas/status-event.json"
+    },
+    "state_after": {
+      "type": "string"
+    },
+    "signature": {
+      "$ref": "https://olip.ai/spec/0.1/schemas/common.json#/$defs/signature"
+    }
+  },
+  "additionalProperties": false
+}

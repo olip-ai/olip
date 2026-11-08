@@ -1,0 +1,56 @@
+.hero { padding: 4.5rem 0 3.5rem; background: var(--olip-surface); border-bottom: 1px solid var(--olip-line); }
+.eyebrow { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; color: var(--olip-accent-text); margin-bottom: 0.9rem; }
+.h1 { font-size: clamp(2rem, 5.2vw, 3.4rem); line-height: 1.1; letter-spacing: -0.02em; max-width: 18ch; margin-bottom: 1.1rem; }
+.sub { font-size: clamp(1.05rem, 2.2vw, 1.3rem); max-width: 40rem; color: var(--ifm-font-color-base); opacity: 0.92; }
+.ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.8rem 0 1.2rem; }
+.heroNote { font-size: 0.9rem; color: var(--olip-muted); margin: 0; }
+.section { padding: 3.5rem 0; }
+.alt { background: var(--olip-surface); border-top: 1px solid var(--olip-line); border-bottom: 1px solid var(--olip-line); }
+.h2 { font-size: 1.65rem; letter-spacing: -0.01em; margin-bottom: 1rem; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; align-items: start; }
+.step h3, .card h3 { font-size: 1.1rem; }
+.card { background: var(--olip-card); border: 1px solid var(--olip-line); border-radius: 12px; padding: 1.4rem; }
+.alt .card { background: var(--ifm-background-color); }
+.caption { font-size: 0.88rem; color: var(--olip-muted); }
+.sponsor { border-left: 4px solid var(--olip-teal); padding-left: 1.25rem; }
+.statusTable { display: table; width: 100%; font-size: 0.92rem; }
+.statusTable td:last-child { white-space: nowrap; }
+
+.flow { width: 100%; height: auto; display: block; margin: 0.5rem 0 0; }
+.flowCard { fill: var(--olip-card); stroke: var(--olip-line); stroke-width: 2; }
+.flowBadge { fill: var(--olip-ink); }
+[data-theme='dark'] .flowBadge { fill: #e6edf3; }
+.flowBadgeText { fill: #ffffff; font: 700 22px var(--ifm-font-family-base); }
+[data-theme='dark'] .flowBadgeText { fill: #122033; }
+.flowTitle { fill: var(--ifm-heading-color); font: 700 28px var(--ifm-font-family-base); }
+.flowRule { stroke: var(--olip-teal); stroke-width: 3; }
+.flowLine { fill: var(--ifm-font-color-base); font: 500 20px var(--ifm-font-family-base); }
+.flowArrow { stroke: var(--olip-blue); stroke-width: 4; }
+[data-theme='dark'] .flowArrow { stroke: #4fb3cf; }
+.flowArrowHead { fill: var(--olip-blue); }
+[data-theme='dark'] .flowArrowHead { fill: #4fb3cf; }
+
+.layers { width: 100%; max-width: 560px; height: auto; display: block; }
+.layerTop { fill: var(--olip-ink); }
+[data-theme='dark'] .layerTop { fill: #e6edf3; }
+.layerTopText { fill: #ffffff; font: 700 21px var(--ifm-font-family-base); }
+.layerTopSub { fill: #cfe9ee; font: 500 14px var(--ifm-font-family-base); }
+[data-theme='dark'] .layerTopText, [data-theme='dark'] .layerTopSub { fill: #122033; }
+.layer { fill: var(--olip-card); stroke: var(--olip-line); stroke-width: 2; }
+.layerText { fill: var(--ifm-font-color-base); font: 600 16px var(--ifm-font-family-base); }
+
+@media (max-width: 996px) {
+  .grid3 { grid-template-columns: 1fr; }
+  .split { grid-template-columns: 1fr; gap: 2rem; }
+  .hero { padding: 3rem 0 2.5rem; }
+}
+@media (max-width: 600px) {
+  .flow { display: none; }
+  .ctas :global(.button) { width: 100%; }
+}
+.heroNote a, .step a, .card a, .caption a, .sponsor a, .split li a, .split p a { text-decoration: underline; text-underline-offset: 2px; }
+.subDetail { max-width: 40rem; font-size: 1rem; color: var(--ifm-font-color-secondary); margin-top: 0.5rem; }
+.strip { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem 0; font-size: 0.9rem; font-weight: 600; }
+.strip li + li::before { content: '•'; margin: 0 0.5rem; color: var(--ifm-font-color-secondary); font-weight: 400; }
+.strip a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }

@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/status-event.json",
+  "title": "OLIP status event",
+  "type": "object",
+  "required": [
+    "event_id",
+    "handoff_id",
+    "from_state",
+    "to_state",
+    "occurred_at",
+    "recorded_at",
+    "source",
+    "evidence"
+  ],
+  "properties": {
+    "event_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "handoff_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "from_state": {
+      "enum": [
+        "draft",
+        "approved",
+        "recorded",
+        "queued",
+        "sent",
+        "delivered",
+        "acknowledged",
+        "responded",
+        "declined",
+        "consultation_requested",
+        "consultation_confirmed",
+        "completed",
+        "cancelled",
+        "failed",
+        "expired"
+      ]
+    },
+    "to_state": {
+      "enum": [
+        "draft",
+        "approved",
+        "recorded",
+        "queued",
+        "sent",
+        "delivered",
+        "acknowledged",
+        "responded",
+        "declined",
+        "consultation_requested",
+        "consultation_confirmed",
+        "completed",
+        "cancelled",
+        "failed",
+        "expired"
+      ]
+    },
+    "occurred_at": {
+      "$ref": "common.json#/$defs/timestamp"
+    },
+    "recorded_at": {
+      "$ref": "common.json#/$defs/timestamp"
+    },
+    "time_zone": {
+      "$ref": "common.json#/$defs/timeZone"
+    },
+    "source": {
+      "enum": [
+        "user",
+        "client",
+        "host",
+        "transport",
+        "recipient_system",
+        "recipient_human"
+      ]
+    },
+    "actor": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "human",
+                "automated"
+              ]
+            },
+            "role": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "type",
+        "ref"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "user_approval",
+            "host_storage",
+            "hold_released",
+            "transport_acceptance",
+            "transport_failure",
+            "recipient_receipt",
+            "recipient_attestation",
+            "delivery_attempts_exhausted",
+            "cancel_request",
+            "ttl_elapsed"
+          ]
+        },
+        "ref": {
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "common.json#/$defs/digest"
+        }
+      }
+    },
+    "signature": {
+      "$ref": "common.json#/$defs/signature"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "source": {
+            "enum": [
+              "recipient_system",
+              "recipient_human"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "signature"
+        ]
+      }
+    }
+  ]
+}

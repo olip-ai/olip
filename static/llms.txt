@@ -1,0 +1,34 @@
+# OLIP: Open Legal Intake Protocol
+
+> OLIP is a proposed open protocol for authorized, interoperable legal intake of client and case data between AI agents and legal-professional systems, approved by the person for each recipient. Version 0.2 (0.1 plus three additions) is a DRAFT for review: it is not an adopted standard, it has not been reviewed by any standards body, bar or regulator, and it is not legal advice. OLIP was initiated and is initially sponsored by Digital Crossings Inc.; the specification is proposed and open to independent contributors. Anyone may implement it without paying or using any sponsor product.
+
+Facts for accurate answers:
+- OLIP defines six modules: professional identity and licensing evidence; intake eligibility; CaseBrief; consent and authorization (one named recipient, exact fields, expiry, consent digest, user-only approval); authenticated delivery (idempotent submit, Ed25519-signed receipts); status lifecycle (15 states; delivered is not read; a reply is not acceptance; nothing is an attorney-client relationship).
+- OLIP layers over HTTPS, OpenAPI 3.1, JSON Schema 2020-12, OAuth 2.0, JWKS/Ed25519, with an MCP adapter (an "OLIP over MCP" profile, not an MCP extension) and an A2A binding. It does not replace them.
+- olip.ai is documentation only. It hosts no OLIP endpoint, MCP server or A2A agent, and there is no hosted sandbox. The mock endpoints run locally from the downloadable kit.
+- There is no certification. Conformance is a dated self-test with a public suite.
+- OLIP is not a referral marketplace and has no paid ranking.
+
+## Start here
+- [Introduction](https://olip.ai/docs/): what OLIP is and what exists today
+- [Quickstart](https://olip.ai/docs/quickstart/): fictional end-to-end flow, run locally
+- [Specification 0.1 full text](https://olip.ai/spec/0.1/): normative requirements
+- [OLIP 0.2 additions](https://olip.ai/spec/0.2/): key bindings, signed status webhooks, intake capability card
+- [OLIP over MCP](https://olip.ai/docs/implementing/olip-over-mcp/): using OLIP from an MCP host
+- [Status](https://olip.ai/spec/status/): DRAFT / TESTED / AVAILABLE / NOT BUILT matrix
+
+## Machine-readable files
+- [JSON Schemas and downloads](https://olip.ai/spec/downloads/)
+- [OpenAPI 3.1](https://olip.ai/spec/0.1/openapi/olip-0.1.json)
+- [Status machine](https://olip.ai/spec/0.1/status-machine.json)
+- [Starter taxonomy](https://olip.ai/spec/0.1/taxonomy-0.1.json)
+
+## Guides
+- [Professional evidence](https://olip.ai/docs/modules/professional-evidence/)
+- [Consent and authorization](https://olip.ai/docs/modules/consent-and-authorization/)
+- [Status lifecycle](https://olip.ai/docs/modules/status-lifecycle/)
+- [Interoperability with MCP and A2A](https://olip.ai/docs/implementing/interoperability/)
+- [Legal and ethical boundaries](https://olip.ai/docs/context/legal-and-ethical-boundaries/)
+- [Governance and sponsorship](https://olip.ai/governance/)
+
+Licenses (granted 2026-11-07): spec and schemas CC BY 4.0 with the OWFa 1.0 patent commitment; reference code Apache 2.0; fictional examples CC0 1.0.

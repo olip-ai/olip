@@ -1,0 +1,109 @@
+{
+  "$schema": "https://olip.ai/schemas/intake-capability-card/0.1-draft.json",
+  "schema": "olip-intake-capability-card/0.1-draft",
+  "card_id": "esqcp:card:11111111-1111-4111-8111-111111111111",
+  "canonical_url": "https://sandbox.example.org/v1/v12/attorneys/11111111-1111-4111-8111-111111111111/olip-card",
+  "host": {
+    "name": "Digital Crossings Inc. (sponsor sandbox, fictional data)",
+    "role": "hosting_provider",
+    "note": "A firm may publish the same card format on its own site. No account or subscription with any host is needed to implement OLIP."
+  },
+  "subject": {
+    "lawyer_id": "11111111-1111-4111-8111-111111111111",
+    "name": "TEST Ana Example",
+    "firm_name": "TEST Example Tenant Law (fictional)",
+    "profile_url": "https://example.org/test-profile/test-ana-ca-t1",
+    "identity_verification": "not_performed"
+  },
+  "official_evidence": {
+    "licenses": [
+      {
+        "jurisdiction": "CA",
+        "license_id": "T100001",
+        "status": "active",
+        "authority_record_url": "https://example.org/test-license-record",
+        "as_of": "2026-11-02",
+        "check_basis": "copy_of_official_records"
+      }
+    ],
+    "label": "Copied from the official licensing record on the date shown; not a fresh check. A license does not show competence or availability."
+  },
+  "firm_reported": {
+    "label": "Stated by the firm and dated. The host has not verified these facts.",
+    "matter_types": [
+      {
+        "label": "Landlord-Tenant Law",
+        "taxonomy": "esq-practice-areas/1",
+        "sali_iri": null,
+        "mapping": "unmapped_pending_review"
+      }
+    ],
+    "jurisdictions_served": [
+      "CA"
+    ],
+    "languages": [],
+    "acceptance_criteria": [
+      "TEST: tenants only"
+    ],
+    "communication_methods": [
+      "email",
+      "agent_task"
+    ],
+    "availability": {
+      "status": "firm_reported",
+      "note": "TEST: taking new matters",
+      "as_of": "2026-11-07T18:49:13.900Z",
+      "label": "The firm says so; not checked by the host."
+    },
+    "consultation_terms": [
+      {
+        "status": "not_published"
+      }
+    ],
+    "last_confirmed_by": "lawyer_at_firm"
+  },
+  "intake": {
+    "accepts_inquiries": true,
+    "methods": [
+      "esq-connect/1.0 (OLIP 0.1 status semantics)"
+    ],
+    "endpoint": {
+      "discovery": "https://sandbox.example.org/.well-known/esq-connect.json",
+      "submit": "https://sandbox.example.org/v1/connect/mandates",
+      "auth": "person-approved, recipient-bound permission (holder token + one-time approval code)",
+      "idempotency": "idempotency_key on send",
+      "status": "https://sandbox.example.org/v1/connect/tasks/{task_id}"
+    },
+    "status_callbacks": [
+      "sent",
+      "delivered",
+      "failed"
+    ],
+    "callback_auth": "HMAC-SHA256 over timestamp.body, 5-minute window, event ids deduplicated",
+    "approved_question_count": 1,
+    "human_review": "A person at the firm decides conflicts and whether to take a matter. An inquiry does not create an attorney-client relationship.",
+    "fallback": "Contact the office directly or use the official license record."
+  },
+  "policy_url": "https://example.org/intake-policy",
+  "lifecycle": {
+    "published": true,
+    "published_at": "2026-11-07T18:49:13.913Z",
+    "last_confirmed_at": "2026-11-07T18:49:13.913Z",
+    "expires_at": "2027-02-05T18:49:13.913Z",
+    "stale": false
+  },
+  "not_included": [
+    "quality or match scores",
+    "rankings",
+    "response or win rates",
+    "payment or subscription status"
+  ],
+  "quarantined_fields": [],
+  "generated_at": "2026-11-07T18:49:13.937Z",
+  "signature": {
+    "alg": "Ed25519",
+    "kid": "esq-rk-0495bfac777c",
+    "value": "kLn-r6LO16CbiedNE6Ij18lgjVK2QEPSq6_RmlFT_E_prQ8ZQusSj5evqj8_4FuAqIm3ioz2G_a08UQwB__4Cg",
+    "keys_url": "/v1/connect/receipt-keys"
+  }
+}

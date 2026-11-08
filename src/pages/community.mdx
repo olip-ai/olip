@@ -1,0 +1,60 @@
+---
+title: Community
+description: How to give feedback on OLIP, report an error, propose a change, self-test, publish results, the code of conduct, the decision process and the roadmap.
+---
+
+import R from '@site/src/data/release.json';
+
+# Community
+
+OLIP {R.promoted.version} is a draft (optional additions on {R.base.label}), and outside review is what it needs most: AI agent developers, intake and practice-management vendors, legal-aid organizations, lawyers, security practitioners and consumer advocates. You do not need an account with the sponsor or any company to implement, test or comment on OLIP.
+
+## Feedback
+
+The source code, specification and issue tracker are public at **[github.com/olip-ai/olip](https://github.com/olip-ai/olip)**. Open an [issue](https://github.com/olip-ai/olip/issues) for feedback, errors and proposals.
+
+If you prefer email: **[{R.contact.feedback}](mailto:notices@esqcopilot.com?subject=OLIP%20feedback)** with "OLIP feedback" in the subject. This is the sponsor's published contact address. Please include the page or section, what you expected, and what you found. Do not send real client or case information. Security problems go to [Security](/security/) instead, never to a public channel.
+
+Step-by-step guides:
+
+- [Report an error](/docs/contributing/report-an-error/)
+- [Propose a change to the protocol](/docs/contributing/propose-a-change/)
+- [Test your own implementation](/docs/contributing/self-test/)
+- [Publish your conformance results](/docs/contributing/publish-results/)
+
+## Contributing changes
+
+The licenses were granted by the initial sponsor on {R.licenses.granted_on} (decision {R.licenses.decision}). Contributions are made under the same license as the part of the project they change:
+
+| You contribute to | Your contribution is licensed under |
+|---|---|
+| {R.licenses.specification.applies_to} | {R.licenses.specification.name} ({R.licenses.specification.spdx}), with the OWFa 1.0 patent commitment |
+| {R.licenses.software.applies_to} | {R.licenses.software.name} ({R.licenses.software.spdx}) |
+| {R.licenses.examples.applies_to} | {R.licenses.examples.name} ({R.licenses.examples.spdx}) |
+
+{R.licenses.marks} See [Licensing](/license/) for the exact terms.
+
+Rules (they apply in the public repository and to emailed proposals):
+
+- Open an issue first for any normative change, with: problem, proposal, compatibility impact, test plan.
+- Every normative change ships with a schema update, a conformance test and an example.
+- Never add real client, lawyer or firm data. Fictional data only (`.test` domains, `TEST-` license numbers).
+- Sign off commits under the [Developer Certificate of Origin](https://developercertificate.org/) (`git commit -s`).
+
+## Code of conduct
+
+The project adopts the Contributor Covenant 2.1. Be respectful, assume good faith, keep discussion on the technical and policy merits, and never publish anyone's personal or case information. Reports go privately to {R.contact.feedback} with "OLIP conduct" in the subject.
+
+## Decision process
+
+Until an independent group exists, the sponsor edits the draft and records every decision with its reason in the [decision log](/governance/#decision-log). The proposed process for later (lazy consensus for editorial changes, comment periods and votes for normative ones) is on [Governance](/governance/#proposed-decision-rules).
+
+## Roadmap
+
+| Next | Why |
+|---|---|
+| Independent security review | Gate before any production use |
+| A first implementation by another organization | Proves independent interoperability; see [the invitation](/docs/contributing/independent-implementation-invitation/) |
+| Counsel review of policy rules | Gate before production write traffic |
+| Proposals O-01 to O-08 | See [Proposals](/spec/proposals/) |
+| Hosted sandbox | Only once it can be operated safely with fictional data. Until then: the local kit and the [browser simulation](/try/) |

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/authorization.json",
+  "title": "OLIP user authorization",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "authorization_id",
+    "preview_id",
+    "consent_digest",
+    "method",
+    "approved_at",
+    "expires_at",
+    "single_use"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.json#/$defs/olipVersion"
+    },
+    "authorization_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "preview_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "consent_digest": {
+      "$ref": "common.json#/$defs/digest"
+    },
+    "method": {
+      "enum": [
+        "hosted_otp",
+        "platform_attestation"
+      ]
+    },
+    "approved_at": {
+      "$ref": "common.json#/$defs/timestamp"
+    },
+    "expires_at": {
+      "$ref": "common.json#/$defs/timestamp"
+    },
+    "single_use": {
+      "const": true
+    }
+  }
+}

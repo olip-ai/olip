@@ -1,0 +1,22 @@
+{
+  "name": "olip-draft",
+  "version": "0.2.0-draft",
+  "private": true,
+  "description": "OLIP (Open Legal Intake Protocol) 0.1 DRAFT plus the 0.2 additions: specification, JSON Schemas, fictional reference mock server, adapters and conformance suite. Not an adopted standard. Fictional data only.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node reference/server.mjs",
+    "test": "node --test --test-concurrency=1 tests/*.test.mjs",
+    "conformance": "node conformance/run.mjs",
+    "demo": "node reference/demo.mjs",
+    "walkthrough": "node reference/walkthrough.mjs",
+    "examples-0.2": "node scripts/make-examples-0.2.mjs"
+  },
+  "devDependencies": {
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1"
+  }
+}

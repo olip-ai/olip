@@ -1,0 +1,259 @@
+{
+  "schema": "discovery-response",
+  "fictional": true,
+  "description": "Public discovery from a plain-English tenant question. Unknowns exposed.",
+  "example": {
+    "olip_version": "0.1",
+    "interpretation": {
+      "method": "keyword_hints",
+      "matter_candidates": [
+        {
+          "code": "housing.landlord_tenant",
+          "label": "Landlord and tenant",
+          "sali": {
+            "iri": null,
+            "status": "unmapped_pending_review"
+          },
+          "confidence": "medium",
+          "basis": [
+            "keyword: evict",
+            "keyword: landlord"
+          ],
+          "client_side": {
+            "value": "tenant",
+            "status": "inferred",
+            "basis": [
+              "my landlord",
+              "evict me"
+            ]
+          }
+        }
+      ],
+      "jurisdiction": {
+        "value": null,
+        "status": "unknown"
+      },
+      "unknowns": [
+        {
+          "field": "location.jurisdiction",
+          "question": "Which state is the property or matter in?"
+        },
+        {
+          "field": "key_dates",
+          "question": "Have you received any court papers or a notice with a deadline? What date?"
+        },
+        {
+          "field": "facts",
+          "question": "Has a case already been filed in court?"
+        }
+      ],
+      "statement": "This is an automatic reading of the words used. It is not legal advice and may be wrong. Please confirm."
+    },
+    "query": {
+      "jurisdiction": null,
+      "matter": "housing.landlord_tenant",
+      "language": null
+    },
+    "ordering": {
+      "method": "family_name_alphabetical",
+      "paid_influence": false,
+      "disclosure": "Listed in alphabetical order by family name. Payment, subscriptions and advertising never change who is listed or the order."
+    },
+    "results": [
+      {
+        "id": "prf_test_alvarez",
+        "type": "individual_lawyer",
+        "display_name": "Dana Alvarez (fictional)",
+        "fictional": true,
+        "firm": {
+          "id": "frm_test_alvarez",
+          "name": "Alvarez Tenant Law (fictional)",
+          "website": "https://alvarez-law.example.test",
+          "phone": "+1-555-0100"
+        },
+        "licenses": [
+          {
+            "jurisdiction": "US-CA",
+            "license_id": "TEST-CA-100001",
+            "verification_level": "official_source_checked",
+            "display_statement": "Checked against the fictional US-CA registry on 2026-10-30: listed as active. This is a record check, not an endorsement."
+          }
+        ],
+        "claim_status": "claimed_verified",
+        "intake_endpoint_status": "active",
+        "matter_types": [
+          {
+            "code": "housing.landlord_tenant",
+            "label": "Landlord and tenant",
+            "sali": {
+              "iri": null,
+              "status": "unmapped_pending_review"
+            }
+          }
+        ],
+        "commercial": {
+          "paid_placement": false,
+          "affects_order": false
+        },
+        "links": {
+          "identity": "/olip/v0.1/professionals/prf_test_alvarez",
+          "intake_policy": "/olip/v0.1/professionals/prf_test_alvarez/intake-policy"
+        }
+      },
+      {
+        "id": "prf_test_chen",
+        "type": "individual_lawyer",
+        "display_name": "Riley Chen (fictional)",
+        "fictional": true,
+        "firm": {
+          "id": "frm_test_chen",
+          "name": "Chen Workers Law (fictional)",
+          "website": "https://chen-law.example.test",
+          "phone": "+1-555-0102"
+        },
+        "licenses": [
+          {
+            "jurisdiction": "US-NY",
+            "license_id": "TEST-NY-200001",
+            "verification_level": "official_source_checked",
+            "display_statement": "Checked against the fictional US-NY registry on 2026-10-28: listed as active. This is a record check, not an endorsement."
+          }
+        ],
+        "claim_status": "claimed_verified",
+        "intake_endpoint_status": "active",
+        "matter_types": [
+          {
+            "code": "housing.landlord_tenant",
+            "label": "Landlord and tenant",
+            "sali": {
+              "iri": null,
+              "status": "unmapped_pending_review"
+            }
+          }
+        ],
+        "commercial": {
+          "paid_placement": false,
+          "affects_order": false
+        },
+        "links": {
+          "identity": "/olip/v0.1/professionals/prf_test_chen",
+          "intake_policy": "/olip/v0.1/professionals/prf_test_chen/intake-policy"
+        }
+      },
+      {
+        "id": "prf_test_okafor",
+        "type": "individual_lawyer",
+        "display_name": "Jordan Okafor (fictional)",
+        "fictional": true,
+        "firm": {
+          "id": "frm_test_okafor",
+          "name": "Okafor Housing Law (fictional)",
+          "website": "https://okafor-law.example.test",
+          "phone": "+1-555-0103"
+        },
+        "licenses": [
+          {
+            "jurisdiction": "US-NY",
+            "license_id": "TEST-NY-200002",
+            "verification_level": "official_source_checked",
+            "display_statement": "Checked against the fictional US-NY registry on 2026-10-28: listed as active. This is a record check, not an endorsement."
+          }
+        ],
+        "claim_status": "claimed_verified",
+        "intake_endpoint_status": "unhealthy",
+        "matter_types": [
+          {
+            "code": "housing.landlord_tenant",
+            "label": "Landlord and tenant",
+            "sali": {
+              "iri": null,
+              "status": "unmapped_pending_review"
+            }
+          }
+        ],
+        "commercial": {
+          "paid_placement": false,
+          "affects_order": false
+        },
+        "links": {
+          "identity": "/olip/v0.1/professionals/prf_test_okafor",
+          "intake_policy": "/olip/v0.1/professionals/prf_test_okafor/intake-policy"
+        }
+      },
+      {
+        "id": "prf_test_reyes",
+        "type": "individual_lawyer",
+        "display_name": "Sam Reyes (fictional)",
+        "fictional": true,
+        "firm": {
+          "id": "frm_test_reyes",
+          "name": "Reyes Renters Law (fictional)",
+          "website": "https://reyes-law.example.test",
+          "phone": "+1-555-0104"
+        },
+        "licenses": [
+          {
+            "jurisdiction": "US-CA",
+            "license_id": "TEST-CA-100003",
+            "verification_level": "official_source_checked",
+            "display_statement": "Checked against the fictional US-CA registry on 2026-10-30: listed as active. This is a record check, not an endorsement."
+          }
+        ],
+        "claim_status": "claimed_verified",
+        "intake_endpoint_status": "active",
+        "matter_types": [
+          {
+            "code": "housing.landlord_tenant",
+            "label": "Landlord and tenant",
+            "sali": {
+              "iri": null,
+              "status": "unmapped_pending_review"
+            }
+          }
+        ],
+        "commercial": {
+          "paid_placement": false,
+          "affects_order": false
+        },
+        "links": {
+          "identity": "/olip/v0.1/professionals/prf_test_reyes",
+          "intake_policy": "/olip/v0.1/professionals/prf_test_reyes/intake-policy"
+        }
+      }
+    ],
+    "no_match": null,
+    "legal_aid_options": [
+      {
+        "name": "Fictional Tenant Help Line (test data)",
+        "kind": "legal_aid",
+        "jurisdictions": [
+          "US-CA",
+          "US-NY"
+        ],
+        "matter_codes": [
+          "housing.landlord_tenant"
+        ],
+        "url": "https://tenant-help.example.test",
+        "cost": "free"
+      },
+      {
+        "name": "Fictional Court Self-Help Center (test data)",
+        "kind": "court_self_help",
+        "jurisdictions": [
+          "*"
+        ],
+        "matter_codes": [
+          "*"
+        ],
+        "url": "https://selfhelp.example.test",
+        "cost": "free"
+      }
+    ],
+    "notices": [
+      {
+        "id": "license_record",
+        "text": "A license record check is not an endorsement by any court, bar or licensing authority."
+      }
+    ]
+  }
+}

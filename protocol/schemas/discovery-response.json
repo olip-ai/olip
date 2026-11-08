@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/discovery-response.json",
+  "title": "OLIP discover_providers response",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "query",
+    "ordering",
+    "results",
+    "legal_aid_options"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.json#/$defs/olipVersion"
+    },
+    "interpretation": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "method",
+            "matter_candidates",
+            "jurisdiction",
+            "unknowns",
+            "statement"
+          ],
+          "properties": {
+            "method": {
+              "type": "string"
+            },
+            "matter_candidates": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "code",
+                  "label",
+                  "confidence",
+                  "basis",
+                  "client_side"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "sali": {
+                    "type": "object"
+                  },
+                  "confidence": {
+                    "enum": [
+                      "low",
+                      "medium",
+                      "high"
+                    ]
+                  },
+                  "basis": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "client_side": {
+                    "$ref": "common.json#/$defs/knownValue"
+                  }
+                }
+              }
+            },
+            "jurisdiction": {
+              "$ref": "common.json#/$defs/knownValue"
+            },
+            "unknowns": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "field",
+                  "question"
+                ]
+              }
+            },
+            "statement": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "query": {
+      "type": "object"
+    },
+    "ordering": {
+      "type": "object",
+      "required": [
+        "method",
+        "paid_influence",
+        "disclosure"
+      ],
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "paid_influence": {
+          "const": false
+        },
+        "disclosure": {
+          "type": "string"
+        }
+      }
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "display_name",
+          "licenses",
+          "claim_status",
+          "intake_endpoint_status",
+          "commercial"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "common.json#/$defs/id"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "licenses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "jurisdiction",
+                "verification_level",
+                "display_statement"
+              ]
+            }
+          },
+          "claim_status": {
+            "type": "string"
+          },
+          "intake_endpoint_status": {
+            "type": "string"
+          },
+          "commercial": {
+            "type": "object",
+            "properties": {
+              "paid_placement": {
+                "const": false
+              },
+              "affects_order": {
+                "const": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "no_match": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "reason",
+            "message"
+          ]
+        }
+      ]
+    },
+    "legal_aid_options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "kind",
+          "url"
+        ]
+      }
+    },
+    "notices": {
+      "type": "array",
+      "items": {
+        "$ref": "common.json#/$defs/notice"
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "status-event",
+  "fictional": true,
+  "description": "One status event (recipient_system, signed).",
+  "example": {
+    "event_id": "evt_jmZRf4l-qyrqpwHr",
+    "handoff_id": "hnd_yoR0K3uW71esJMF6",
+    "from_state": "approved",
+    "to_state": "delivered",
+    "occurred_at": "2026-11-06T20:08:23.278Z",
+    "recorded_at": "2026-11-06T20:08:23.278Z",
+    "source": "recipient_system",
+    "actor": null,
+    "evidence": {
+      "type": "recipient_receipt",
+      "ref": "rcp_shP2qqR6yMK268sD",
+      "sha256": "sha256:3bd7e282b331c94550f46019f5077afaf5c9a13d4b154baf768bc9bae85ac258"
+    },
+    "time_zone": "UTC",
+    "signature": {
+      "alg": "EdDSA",
+      "kid": "k_725002a8b77b",
+      "value": "9sEhcxRoqyjDQRjTjekc71McGfywkPnDQo0AGPirLsBYJH0THjdnXzpjg7Mwg3tGLt2cDbJRhNm1NCv3zdPXBw"
+    }
+  }
+}

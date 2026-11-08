@@ -1,0 +1,30 @@
+name: Interoperability trouble
+description: Two OLIP implementations do not work together, or the conformance suite disagrees with your reading of the spec.
+labels: [interop]
+body:
+  - type: input
+    id: client
+    attributes: {label: Agent or client (name and version)}
+    validations: {required: true}
+  - type: input
+    id: endpoint
+    attributes: {label: Endpoint (name and version)}
+    validations: {required: true}
+  - type: dropdown
+    id: profile
+    attributes: {label: Profile, multiple: true, options: [olip-read, olip-write, olip-mock-harness, olip-a2a-binding, olip-0.2]}
+    validations: {required: true}
+  - type: textarea
+    id: results
+    attributes: {label: Conformance results.json (or the failing request and response), render: json}
+    validations: {required: true}
+  - type: textarea
+    id: reading
+    attributes: {label: Which spec section, and how you read it}
+  - type: checkboxes
+    id: fictional
+    attributes:
+      label: Confirmation
+      options:
+        - label: Fictional data only.
+          required: true

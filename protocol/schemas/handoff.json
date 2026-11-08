@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/handoff.json",
+  "title": "OLIP handoff and status",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "handoff_id",
+    "state",
+    "state_meaning",
+    "recipient_id",
+    "mode",
+    "purpose",
+    "casebrief_id",
+    "casebrief_revision",
+    "consent_digest",
+    "authorization_id",
+    "created_at",
+    "updated_at",
+    "events",
+    "receipt",
+    "delivery",
+    "engagement"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.json#/$defs/olipVersion"
+    },
+    "handoff_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "state": {
+      "enum": [
+        "draft",
+        "approved",
+        "recorded",
+        "queued",
+        "sent",
+        "delivered",
+        "acknowledged",
+        "responded",
+        "declined",
+        "consultation_requested",
+        "consultation_confirmed",
+        "completed",
+        "cancelled",
+        "failed",
+        "expired"
+      ]
+    },
+    "state_meaning": {
+      "type": "string"
+    },
+    "recipient_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "casebrief_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "casebrief_revision": {
+      "type": "integer"
+    },
+    "consent_digest": {
+      "$ref": "common.json#/$defs/digest"
+    },
+    "authorization_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "preview_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "created_at": {
+      "$ref": "common.json#/$defs/timestamp"
+    },
+    "updated_at": {
+      "$ref": "common.json#/$defs/timestamp"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "status-event.json"
+      }
+    },
+    "payload": {
+      "type": "object"
+    },
+    "payload_sha256": {
+      "$ref": "common.json#/$defs/digest"
+    },
+    "receipt": {
+      "anyOf": [
+        {
+          "$ref": "receipt.json"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "delivery": {
+      "type": "object",
+      "required": [
+        "topology",
+        "attempts"
+      ],
+      "properties": {
+        "topology": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attempts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "at",
+              "outcome"
+            ]
+          }
+        },
+        "max_attempts": {
+          "type": "integer"
+        }
+      }
+    },
+    "cancellation": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "requested_at",
+            "effect",
+            "limits"
+          ],
+          "properties": {
+            "effect": {
+              "enum": [
+                "not_transmitted",
+                "withdrawal_notice_sent_recipient_may_retain_copy"
+              ]
+            },
+            "limits": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "engagement": {
+      "type": "object",
+      "required": [
+        "status",
+        "statement"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "unknown",
+            "recipient_reported_engaged",
+            "recipient_reported_not_engaged"
+          ]
+        },
+        "statement": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

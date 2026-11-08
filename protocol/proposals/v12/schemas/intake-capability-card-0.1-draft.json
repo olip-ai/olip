@@ -1,0 +1,376 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/schemas/intake-capability-card/0.1-draft.json",
+  "title": "OLIP Intake Capability Card (0.1 draft)",
+  "description": "An optional, firm-controlled, public record of how a lawyer or firm accepts legal inquiries. DRAFT: not a standard, not endorsed by any standards body. Official evidence and firm-reported facts are separate. Contains no quality score, rank, rate or payment field.",
+  "type": "object",
+  "required": [
+    "schema",
+    "card_id",
+    "subject",
+    "official_evidence",
+    "firm_reported",
+    "intake",
+    "lifecycle"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schema": {
+      "const": "olip-intake-capability-card/0.1-draft"
+    },
+    "card_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 200
+    },
+    "canonical_url": {
+      "type": "string"
+    },
+    "host": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "self_hosted",
+            "hosting_provider"
+          ]
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "required": [
+        "lawyer_id",
+        "name"
+      ],
+      "properties": {
+        "lawyer_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "firm_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "profile_url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "identity_verification": {
+          "enum": [
+            "not_performed",
+            "performed_by_host",
+            "performed_by_third_party"
+          ]
+        }
+      }
+    },
+    "official_evidence": {
+      "type": "object",
+      "required": [
+        "licenses",
+        "label"
+      ],
+      "properties": {
+        "licenses": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "jurisdiction",
+              "status",
+              "check_basis"
+            ],
+            "properties": {
+              "jurisdiction": {
+                "type": "string"
+              },
+              "license_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status": {
+                "type": "string"
+              },
+              "authority_record_url": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "as_of": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "check_basis": {
+                "enum": [
+                  "fresh_check_at_source",
+                  "copy_of_official_records",
+                  "not_recorded"
+                ]
+              }
+            }
+          }
+        },
+        "label": {
+          "type": "string"
+        }
+      }
+    },
+    "firm_reported": {
+      "type": "object",
+      "required": [
+        "label"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "matter_types": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "label"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "taxonomy": {
+                "type": "string"
+              },
+              "sali_iri": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "mapping": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "jurisdictions_served": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$"
+          }
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "language",
+              "as_of"
+            ],
+            "properties": {
+              "language": {
+                "type": "string"
+              },
+              "as_of": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 200
+          }
+        },
+        "communication_methods": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "availability": {
+          "type": "object"
+        },
+        "consultation_terms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "anyOf": [
+              {
+                "required": [
+                  "status"
+                ],
+                "properties": {
+                  "status": {
+                    "const": "not_published"
+                  }
+                }
+              },
+              {
+                "required": [
+                  "source",
+                  "as_of"
+                ]
+              }
+            ]
+          }
+        },
+        "last_confirmed_by": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "intake": {
+      "type": "object",
+      "required": [
+        "accepts_inquiries",
+        "human_review"
+      ],
+      "properties": {
+        "accepts_inquiries": {
+          "type": "boolean"
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "endpoint": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "status_callbacks": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "sent",
+              "delivered",
+              "failed",
+              "acknowledged",
+              "declined",
+              "consultation_confirmed"
+            ]
+          }
+        },
+        "callback_auth": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "approved_question_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "human_review": {
+          "type": "string"
+        },
+        "fallback": {
+          "type": "string"
+        }
+      }
+    },
+    "policy_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lifecycle": {
+      "type": "object",
+      "required": [
+        "published",
+        "last_confirmed_at",
+        "expires_at",
+        "stale"
+      ],
+      "properties": {
+        "published": {
+          "type": "boolean"
+        },
+        "published_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "last_confirmed_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "expires_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stale": {
+          "type": "boolean"
+        }
+      }
+    },
+    "not_included": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "quarantined_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "object",
+      "properties": {
+        "alg": {
+          "const": "Ed25519"
+        },
+        "kid": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "keys_url": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$comment": "Scores, ranks, sponsorship, paid placement, response rates and quality ratings are not card fields; additionalProperties:false keeps them out."
+}

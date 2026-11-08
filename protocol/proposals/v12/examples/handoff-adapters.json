@@ -1,0 +1,35 @@
+{
+  "adapters": [
+    {
+      "id": "test_intake_adapter",
+      "status": "test_only",
+      "note": "Mock firm intake system for fictional (TEST) lawyers. Not a real product."
+    },
+    {
+      "id": "portable_export",
+      "status": "available",
+      "note": "Download the approved package; the firm imports it into its own system."
+    },
+    {
+      "id": "clio",
+      "status": "blocked",
+      "note": "No partner access or credentials; not built or tested."
+    },
+    {
+      "id": "lawmatics",
+      "status": "blocked",
+      "note": "No partner access or credentials; not built or tested."
+    },
+    {
+      "id": "mycase",
+      "status": "blocked",
+      "note": "No partner access or credentials; not built or tested."
+    },
+    {
+      "id": "google_calendar",
+      "status": "blocked",
+      "note": "No authorized calendar connection; consultation times come only from the office."
+    }
+  ],
+  "rule": "An integration is listed as working only after it was built and tested against the vendor's real system with authorized access."
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/status-machine.json",
+  "title": "OLIP status machine document",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "states",
+    "transitions",
+    "transmitted_states"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.json#/$defs/olipVersion"
+    },
+    "states": {
+      "type": "object",
+      "required": [
+        "draft",
+        "approved",
+        "recorded",
+        "queued",
+        "sent",
+        "delivered",
+        "acknowledged",
+        "responded",
+        "declined",
+        "consultation_requested",
+        "consultation_confirmed",
+        "completed",
+        "cancelled",
+        "failed",
+        "expired"
+      ],
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "terminal",
+          "meaning"
+        ]
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "sources",
+          "evidence"
+        ]
+      }
+    },
+    "transmitted_states": {
+      "type": "array"
+    },
+    "sources": {
+      "type": "object"
+    },
+    "recipient_event_types": {
+      "type": "array"
+    }
+  }
+}

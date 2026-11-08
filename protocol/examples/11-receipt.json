@@ -1,0 +1,20 @@
+{
+  "schema": "receipt",
+  "fictional": true,
+  "description": "Recipient receipt, Ed25519-signed over canonical JSON.",
+  "example": {
+    "receipt_id": "rcp_shP2qqR6yMK268sD",
+    "handoff_id": "hnd_yoR0K3uW71esJMF6",
+    "recipient_id": "prf_test_alvarez",
+    "received_at": "2026-11-06T20:08:23.278Z",
+    "payload_sha256": "sha256:ebc664ab19f520289a605c07e3bfa9d0bef55ea24b0f5fb2bb33b7a5f0d9f804",
+    "consent_digest": "sha256:fd62d67c0020cd8a7a212d933db6827f3d66afc1377ba4ef590bbc35f0fefeb4",
+    "retention_days": 365,
+    "statement": "Stored by the recipient's intake system. This is not proof that a person has read it, and not acceptance of the matter.",
+    "signature": {
+      "alg": "EdDSA",
+      "kid": "k_725002a8b77b",
+      "value": "Vyi5YU42EAtexbXe6epvibDoa39IqDhxR9rVBW1u5HBG8fJstZJcXiOwDXVdu8_hSLEzm28TTwuv-a6W4xT7Bg"
+    }
+  }
+}

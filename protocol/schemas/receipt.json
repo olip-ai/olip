@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/receipt.json",
+  "title": "OLIP recipient receipt",
+  "type": "object",
+  "required": [
+    "receipt_id",
+    "handoff_id",
+    "recipient_id",
+    "received_at",
+    "payload_sha256",
+    "consent_digest",
+    "retention_days",
+    "statement",
+    "signature"
+  ],
+  "properties": {
+    "receipt_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "handoff_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "recipient_id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "received_at": {
+      "$ref": "common.json#/$defs/timestamp"
+    },
+    "payload_sha256": {
+      "$ref": "common.json#/$defs/digest"
+    },
+    "consent_digest": {
+      "$ref": "common.json#/$defs/digest"
+    },
+    "retention_days": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "statement": {
+      "type": "string"
+    },
+    "signature": {
+      "$ref": "common.json#/$defs/signature"
+    }
+  }
+}

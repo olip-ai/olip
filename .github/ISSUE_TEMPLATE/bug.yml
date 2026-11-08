@@ -1,0 +1,33 @@
+name: Bug or error
+description: Something in the spec, a schema, an example, the reference code, the conformance suite or the website is wrong.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Fictional data only. Security problems go to https://olip.ai/security/, not here."
+  - type: input
+    id: where
+    attributes: {label: File or page, description: "For example protocol/schemas/casebrief.json or https://olip.ai/docs/quickstart/", placeholder: protocol/schemas/casebrief.json}
+    validations: {required: true}
+  - type: dropdown
+    id: version
+    attributes: {label: OLIP version, options: ["0.1", "0.2 additions", "website only", "not sure"]}
+    validations: {required: true}
+  - type: textarea
+    id: expected
+    attributes: {label: What you expected}
+    validations: {required: true}
+  - type: textarea
+    id: actual
+    attributes: {label: What happened, description: Paste output or a minimal fictional payload.}
+    validations: {required: true}
+  - type: textarea
+    id: steps
+    attributes: {label: Steps to reproduce, description: "Commands, operating system, Node.js and Python versions."}
+  - type: checkboxes
+    id: fictional
+    attributes:
+      label: Confirmation
+      options:
+        - label: This report contains no real client, lawyer, firm or case data.
+          required: true

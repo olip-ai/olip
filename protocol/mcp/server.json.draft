@@ -1,0 +1,11 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.olip-ai/olip-sandbox",
+  "title": "OLIP sandbox (fictional data)",
+  "description": "Try the Open Legal Intake Protocol (OLIP 0.2 draft) with fictional lawyers. No real data, no real delivery.",
+  "version": "0.2.0",
+  "websiteUrl": "https://olip.ai/docs/implementing/olip-over-mcp/",
+  "remotes": [
+    { "type": "streamable-http", "url": "NOT-YET-HOSTED (see README.md)" }
+  ]
+}

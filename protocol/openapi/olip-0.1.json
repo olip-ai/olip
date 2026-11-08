@@ -1,0 +1,1229 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OLIP 0.1 (working draft)",
+    "version": "0.1.0-draft",
+    "description": "Open Legal Intake Protocol HTTPS binding. DRAFT, not adopted. See https://olip.ai/spec/0.1/ (spec/OLIP-0.1-DRAFT.md).",
+    "license": {
+      "name": "Proposed: CC BY 4.0 for spec text, Apache-2.0 for code (pending legal review)",
+      "identifier": "CC-BY-4.0"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8787",
+      "description": "Reference mock server (fictional data)"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "olipClient": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/oauth/token",
+            "scopes": {
+              "olip.read": "read",
+              "olip.write": "write",
+              "olip.recipient": "recipient events"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "OlipVersion": {
+        "name": "OLIP-Version",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "example": "0.1"
+        }
+      },
+      "IdempotencyKey": {
+        "name": "Idempotency-Key",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 200
+        }
+      }
+    }
+  },
+  "paths": {
+    "/.well-known/olip.json": {
+      "get": {
+        "operationId": "get_manifest",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/manifest.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/.well-known/olip-keys.json": {
+      "get": {
+        "operationId": "get_keys",
+        "responses": {
+          "200": {
+            "description": "JWKS (Ed25519 public keys)"
+          }
+        }
+      }
+    },
+    "/olip/v0.1/status-machine": {
+      "get": {
+        "operationId": "get_status_machine",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/status-machine.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/token": {
+      "post": {
+        "operationId": "issue_token",
+        "description": "OAuth 2.0 client credentials (RFC 6749 section 4.4).",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "grant_type",
+                  "client_id",
+                  "client_secret"
+                ],
+                "properties": {
+                  "grant_type": {
+                    "const": "client_credentials"
+                  },
+                  "client_id": {
+                    "type": "string"
+                  },
+                  "client_secret": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token"
+          },
+          "401": {
+            "description": "invalid_client"
+          }
+        }
+      }
+    },
+    "/olip/v0.1/providers": {
+      "get": {
+        "operationId": "discover_providers",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "matter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/OlipVersion"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/discovery-response.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/professionals/{id}": {
+      "get": {
+        "operationId": "get_professional_identity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/professional-identity-response.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/professionals/{id}/intake-policy": {
+      "get": {
+        "operationId": "get_intake_policy",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/intake-policy-response.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/casebriefs/validate": {
+      "post": {
+        "operationId": "prepare_or_validate_casebrief",
+        "security": [
+          {
+            "olipClient": [
+              "olip.write"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "casebrief"
+                ],
+                "properties": {
+                  "casebrief": {
+                    "type": "object"
+                  },
+                  "recipient_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/casebriefs": {
+      "post": {
+        "operationId": "create_casebrief",
+        "security": [
+          {
+            "olipClient": [
+              "olip.write"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "casebrief": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created; transmitted is false",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version",
+                    "casebrief"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "type": "string"
+                    },
+                    "casebrief": {
+                      "$ref": "../schemas/casebrief.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/casebriefs/{id}": {
+      "get": {
+        "operationId": "get_casebrief",
+        "security": [
+          {
+            "olipClient": [
+              "olip.write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version",
+                    "casebrief"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "type": "string"
+                    },
+                    "casebrief": {
+                      "$ref": "../schemas/casebrief.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "update_casebrief",
+        "security": [
+          {
+            "olipClient": [
+              "olip.write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Current revision"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version",
+                    "casebrief"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "type": "string"
+                    },
+                    "casebrief": {
+                      "$ref": "../schemas/casebrief.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "delete_casebrief",
+        "security": [
+          {
+            "olipClient": [
+              "olip.write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "deleted",
+                    "limits"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/casebriefs/{id}/export": {
+      "get": {
+        "operationId": "export_casebrief",
+        "security": [
+          {
+            "olipClient": [
+              "olip.write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "format",
+                    "casebrief",
+                    "handoffs"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/handoff-previews": {
+      "post": {
+        "operationId": "preview_handoff",
+        "security": [
+          {
+            "olipClient": [
+              "olip.write"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "casebrief_id",
+                  "recipient_id",
+                  "fields"
+                ],
+                "properties": {
+                  "casebrief_id": {
+                    "type": "string"
+                  },
+                  "recipient_id": {
+                    "type": "string"
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "mode": {
+                    "type": "string"
+                  },
+                  "purpose": {
+                    "type": "string"
+                  },
+                  "selection": {
+                    "type": "object",
+                    "properties": {
+                      "by": {
+                        "enum": [
+                          "user"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version",
+                    "preview"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "type": "string"
+                    },
+                    "preview": {
+                      "$ref": "../schemas/handoff-preview.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/handoff-previews/{id}": {
+      "get": {
+        "operationId": "get_handoff_preview",
+        "security": [
+          {
+            "olipClient": [
+              "olip.write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version",
+                    "preview"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "type": "string"
+                    },
+                    "preview": {
+                      "$ref": "../schemas/handoff-preview.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/handoff-previews/{id}/revoke": {
+      "post": {
+        "operationId": "revoke_handoff_preview",
+        "security": [
+          {
+            "olipClient": [
+              "olip.write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version",
+                    "preview"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "type": "string"
+                    },
+                    "preview": {
+                      "$ref": "../schemas/handoff-preview.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/approvals/{id}": {
+      "get": {
+        "operationId": "user_approval_page",
+        "description": "HTML page for the USER. Not an agent operation.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "k",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTML"
+          }
+        }
+      }
+    },
+    "/olip/v0.1/approvals/{id}/send-code": {
+      "post": {
+        "operationId": "user_approval_send_code",
+        "description": "User asks for a code sent to their own email.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Code sent"
+          }
+        }
+      }
+    },
+    "/olip/v0.1/approvals/{id}/confirm": {
+      "post": {
+        "operationId": "user_approval_confirm",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version",
+                    "authorization"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "type": "string"
+                    },
+                    "authorization": {
+                      "$ref": "../schemas/authorization.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/handoffs": {
+      "post": {
+        "operationId": "submit_approved_handoff",
+        "security": [
+          {
+            "olipClient": [
+              "olip.write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "authorization_id",
+                  "consent_digest"
+                ],
+                "properties": {
+                  "authorization_id": {
+                    "type": "string"
+                  },
+                  "consent_digest": {
+                    "type": "string"
+                  },
+                  "recipient_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version",
+                    "handoff"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "type": "string"
+                    },
+                    "handoff": {
+                      "$ref": "../schemas/handoff.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Idempotent replay; no new delivery"
+          }
+        }
+      }
+    },
+    "/olip/v0.1/handoffs/{id}": {
+      "get": {
+        "operationId": "get_handoff_status",
+        "security": [
+          {
+            "olipClient": [
+              "olip.write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version",
+                    "handoff"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "type": "string"
+                    },
+                    "handoff": {
+                      "$ref": "../schemas/handoff.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/handoffs/{id}/cancel": {
+      "post": {
+        "operationId": "cancel_when_possible",
+        "security": [
+          {
+            "olipClient": [
+              "olip.write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version",
+                    "handoff"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "type": "string"
+                    },
+                    "handoff": {
+                      "$ref": "../schemas/handoff.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v0.1/handoffs/{id}/events": {
+      "post": {
+        "operationId": "record_recipient_event",
+        "security": [
+          {
+            "olipClient": [
+              "olip.recipient"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "actor",
+                  "evidence"
+                ],
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "acknowledged",
+                      "responded",
+                      "declined",
+                      "consultation_requested",
+                      "consultation_confirmed",
+                      "completed",
+                      "cancelled"
+                    ]
+                  },
+                  "actor": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "enum": [
+                          "human",
+                          "automated"
+                        ]
+                      },
+                      "role": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "evidence": {
+                    "type": "object",
+                    "required": [
+                      "type",
+                      "ref"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version",
+                    "handoff"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "type": "string"
+                    },
+                    "handoff": {
+                      "$ref": "../schemas/handoff.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OLIP error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

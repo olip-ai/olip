@@ -1,0 +1,58 @@
+{
+  "handoff_id": "hof_KSVh_GrVq6CNbivh",
+  "state": "pending",
+  "document": {
+    "schema": "olip-intake-handoff/0.1-draft",
+    "handoff_key": "hof:tsk_NhEXvp3mOMMp3NvE",
+    "task_id": "tsk_NhEXvp3mOMMp3NvE",
+    "correlation_id": "cor_HYr2F393wUvDozMy",
+    "matter": {
+      "state": "CA",
+      "practice_area": "Landlord-Tenant Law",
+      "label": "person_reported"
+    },
+    "fields": {
+      "name": {
+        "value": "TEST Pat Sample",
+        "provenance": "person_provided_first_message"
+      },
+      "email_address": {
+        "value": "pat.sample@example.org",
+        "provenance": "person_provided_first_message"
+      },
+      "matter_summary": {
+        "value": "TEST [removed: card number]: I received a 3-day notice and would like to talk about my options.",
+        "provenance": "person_provided_first_message"
+      }
+    },
+    "fields_not_shared": [
+      "phone",
+      "preferred_timeframe"
+    ],
+    "consent": {
+      "mandate_id": "mdt_MZFt0fMgds7x4lcc",
+      "mandate_version": 1,
+      "package_digest": "b929107aa072f479b66c8796a0c4ca9d839405e4f440e22c8151d089be0687b8",
+      "receipt_ids": [
+        "rct_HpIEmO24VlRlpQoy",
+        "rct_5nDLjeLMaraASVQ1",
+        "rct_s4J4lrnAIZLz6QUk",
+        "rct_j0QpHeBXwaxGj1Lg",
+        "rct_gr-5j430EfGFGEca",
+        "rct_i_UOMiKRut6e59mN",
+        "rct_00dYtEACQIIqiW_b"
+      ],
+      "scope": "this office only; no onward sharing",
+      "recipient_attorney_id": "11111111-1111-4111-8111-111111111111"
+    },
+    "firm_controls": {
+      "conflicts": "firm_conflict_check_required",
+      "acceptance": "firm_decision_required",
+      "engagement_letter": "firm_system_only",
+      "note": "Your system of record decides conflicts, acceptance, engagement letters, signatures and matter creation."
+    },
+    "redaction_applied": false,
+    "generated_at": "2026-11-07T18:49:14.203Z"
+  },
+  "note": "Import this into your own system. The host never marks an export as a created matter."
+}

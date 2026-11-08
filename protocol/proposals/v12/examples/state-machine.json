@@ -1,0 +1,682 @@
+{
+  "states": [
+    "prepared",
+    "awaiting_user_approval",
+    "authorized",
+    "recorded",
+    "queued",
+    "sent",
+    "delivered",
+    "acknowledged",
+    "responded",
+    "declined",
+    "consultation_requested",
+    "consultation_confirmed",
+    "completed",
+    "cancelled",
+    "failed",
+    "expired",
+    "needs_information",
+    "under_review",
+    "engagement_confirmed",
+    "closed"
+  ],
+  "v12_names": {
+    "prepared": "DRAFT",
+    "awaiting_user_approval": "AWAITING_CLIENT_APPROVAL",
+    "authorized": "AUTHORIZED",
+    "recorded": "RECORDED_NOT_SENT",
+    "queued": "QUEUED",
+    "sent": "SENT",
+    "delivered": "DELIVERED",
+    "acknowledged": "ACKNOWLEDGED",
+    "responded": "RESPONDED",
+    "needs_information": "NEEDS_INFORMATION",
+    "under_review": "UNDER_PROFESSIONAL_REVIEW",
+    "consultation_requested": "CONSULTATION_PROPOSED",
+    "consultation_confirmed": "CONSULTATION_CONFIRMED",
+    "completed": "CONSULTATION_HELD",
+    "engagement_confirmed": "ENGAGEMENT_CONFIRMED",
+    "declined": "DECLINED",
+    "cancelled": "CANCELLED",
+    "failed": "FAILED",
+    "expired": "EXPIRED",
+    "closed": "CLOSED"
+  },
+  "transitions": [
+    {
+      "from": "prepared",
+      "to": "awaiting_user_approval",
+      "sources": [
+        "host"
+      ]
+    },
+    {
+      "from": "prepared",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client"
+      ]
+    },
+    {
+      "from": "prepared",
+      "to": "expired",
+      "sources": [
+        "host"
+      ]
+    },
+    {
+      "from": "awaiting_user_approval",
+      "to": "authorized",
+      "sources": [
+        "user"
+      ]
+    },
+    {
+      "from": "awaiting_user_approval",
+      "to": "prepared",
+      "sources": [
+        "user",
+        "client"
+      ]
+    },
+    {
+      "from": "awaiting_user_approval",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client"
+      ]
+    },
+    {
+      "from": "awaiting_user_approval",
+      "to": "expired",
+      "sources": [
+        "host"
+      ]
+    },
+    {
+      "from": "authorized",
+      "to": "recorded",
+      "sources": [
+        "host"
+      ]
+    },
+    {
+      "from": "authorized",
+      "to": "queued",
+      "sources": [
+        "host"
+      ]
+    },
+    {
+      "from": "authorized",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client"
+      ]
+    },
+    {
+      "from": "authorized",
+      "to": "expired",
+      "sources": [
+        "host"
+      ]
+    },
+    {
+      "from": "authorized",
+      "to": "failed",
+      "sources": [
+        "host"
+      ]
+    },
+    {
+      "from": "recorded",
+      "to": "queued",
+      "sources": [
+        "host"
+      ]
+    },
+    {
+      "from": "recorded",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client"
+      ]
+    },
+    {
+      "from": "recorded",
+      "to": "expired",
+      "sources": [
+        "host"
+      ]
+    },
+    {
+      "from": "queued",
+      "to": "sent",
+      "sources": [
+        "transport"
+      ]
+    },
+    {
+      "from": "queued",
+      "to": "delivered",
+      "sources": [
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "queued",
+      "to": "failed",
+      "sources": [
+        "host",
+        "transport"
+      ]
+    },
+    {
+      "from": "queued",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client"
+      ]
+    },
+    {
+      "from": "sent",
+      "to": "delivered",
+      "sources": [
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "sent",
+      "to": "failed",
+      "sources": [
+        "transport"
+      ]
+    },
+    {
+      "from": "sent",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client"
+      ]
+    },
+    {
+      "from": "failed",
+      "to": "queued",
+      "sources": [
+        "host"
+      ]
+    },
+    {
+      "from": "delivered",
+      "to": "acknowledged",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "delivered",
+      "to": "responded",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "delivered",
+      "to": "declined",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "delivered",
+      "to": "consultation_requested",
+      "sources": [
+        "recipient_human",
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "delivered",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client"
+      ]
+    },
+    {
+      "from": "acknowledged",
+      "to": "responded",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "acknowledged",
+      "to": "declined",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "acknowledged",
+      "to": "consultation_requested",
+      "sources": [
+        "recipient_human",
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "acknowledged",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client"
+      ]
+    },
+    {
+      "from": "responded",
+      "to": "declined",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "responded",
+      "to": "consultation_requested",
+      "sources": [
+        "recipient_human",
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "responded",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client"
+      ]
+    },
+    {
+      "from": "consultation_requested",
+      "to": "consultation_confirmed",
+      "sources": [
+        "recipient_human",
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "consultation_requested",
+      "to": "declined",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "consultation_requested",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client",
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "consultation_confirmed",
+      "to": "completed",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "consultation_confirmed",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client",
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "delivered",
+      "to": "needs_information",
+      "sources": [
+        "recipient_human",
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "acknowledged",
+      "to": "needs_information",
+      "sources": [
+        "recipient_human",
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "responded",
+      "to": "needs_information",
+      "sources": [
+        "recipient_human",
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "under_review",
+      "to": "needs_information",
+      "sources": [
+        "recipient_human",
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "delivered",
+      "to": "under_review",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "acknowledged",
+      "to": "under_review",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "responded",
+      "to": "under_review",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "needs_information",
+      "to": "under_review",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "needs_information",
+      "to": "acknowledged",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "needs_information",
+      "to": "responded",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "needs_information",
+      "to": "declined",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "needs_information",
+      "to": "consultation_requested",
+      "sources": [
+        "recipient_human",
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "needs_information",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client"
+      ]
+    },
+    {
+      "from": "under_review",
+      "to": "responded",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "under_review",
+      "to": "declined",
+      "sources": [
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "under_review",
+      "to": "consultation_requested",
+      "sources": [
+        "recipient_human",
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "under_review",
+      "to": "cancelled",
+      "sources": [
+        "user",
+        "client"
+      ]
+    },
+    {
+      "from": "consultation_confirmed",
+      "to": "engagement_confirmed",
+      "sources": [
+        "recipient_human",
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "completed",
+      "to": "engagement_confirmed",
+      "sources": [
+        "recipient_human",
+        "recipient_system"
+      ]
+    },
+    {
+      "from": "delivered",
+      "to": "closed",
+      "sources": [
+        "user",
+        "client",
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "acknowledged",
+      "to": "closed",
+      "sources": [
+        "user",
+        "client",
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "responded",
+      "to": "closed",
+      "sources": [
+        "user",
+        "client",
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "needs_information",
+      "to": "closed",
+      "sources": [
+        "user",
+        "client",
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "under_review",
+      "to": "closed",
+      "sources": [
+        "user",
+        "client",
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "consultation_requested",
+      "to": "closed",
+      "sources": [
+        "user",
+        "client",
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "consultation_confirmed",
+      "to": "closed",
+      "sources": [
+        "user",
+        "client",
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "engagement_confirmed",
+      "to": "closed",
+      "sources": [
+        "user",
+        "client",
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "declined",
+      "to": "closed",
+      "sources": [
+        "user",
+        "client",
+        "recipient_human"
+      ]
+    },
+    {
+      "from": "completed",
+      "to": "closed",
+      "sources": [
+        "user",
+        "client",
+        "recipient_human"
+      ]
+    }
+  ],
+  "wording": {
+    "prepared": {
+      "headline": "Your message is ready. It has not been sent.",
+      "proves": "A draft exists.",
+      "does_not_prove": "Nothing was approved or sent."
+    },
+    "awaiting_user_approval": {
+      "headline": "Waiting for your OK. Nothing has been sent.",
+      "proves": "The exact recipient and details are shown for approval.",
+      "does_not_prove": "Nothing was approved or sent."
+    },
+    "authorized": {
+      "headline": "You approved it. It has not been sent yet.",
+      "proves": "You approved this exact recipient, details and text.",
+      "does_not_prove": "The lawyer has not received anything yet."
+    },
+    "recorded": {
+      "headline": "Saved, but not sent. Contact the office directly if you need help now.",
+      "proves": "The host stored it.",
+      "does_not_prove": "It was not sent to the lawyer."
+    },
+    "queued": {
+      "headline": "Waiting to be sent.",
+      "proves": "It is in the sending line.",
+      "does_not_prove": "No mail system has accepted it yet; the lawyer has not received it."
+    },
+    "sent": {
+      "headline": "Sent. Not yet confirmed as received.",
+      "proves": "A mail or delivery system accepted it.",
+      "does_not_prove": "No proof it reached the lawyer's office or that anyone read it."
+    },
+    "delivered": {
+      "headline": "Received by the lawyer's office system.",
+      "proves": "The office's intake system confirmed it stored the message.",
+      "does_not_prove": "No proof a person read it; it is not acceptance of your matter."
+    },
+    "acknowledged": {
+      "headline": "Someone at the office has seen it.",
+      "proves": "A person at the office recorded that they viewed it.",
+      "does_not_prove": "It is not a reply and not acceptance of your matter."
+    },
+    "responded": {
+      "headline": "The office replied.",
+      "proves": "A person at the office sent a reply.",
+      "does_not_prove": "It does not mean the lawyer will take your matter."
+    },
+    "declined": {
+      "headline": "The office said it cannot take this matter.",
+      "proves": "The office declined.",
+      "does_not_prove": "It says nothing about your case. You can contact another lawyer you choose."
+    },
+    "consultation_requested": {
+      "headline": "A consultation was proposed. It is not confirmed yet.",
+      "proves": "A consultation was requested or offered.",
+      "does_not_prove": "No time is agreed yet."
+    },
+    "consultation_confirmed": {
+      "headline": "The office confirmed a consultation time.",
+      "proves": "The office confirmed a time.",
+      "does_not_prove": "It does not create an attorney-client relationship."
+    },
+    "completed": {
+      "headline": "The office recorded that the consultation took place.",
+      "proves": "The consultation happened.",
+      "does_not_prove": "It says nothing about hiring or outcome."
+    },
+    "cancelled": {
+      "headline": "Cancelled.",
+      "proves": "You or the office cancelled.",
+      "does_not_prove": "If it was already sent, the office may keep its copy."
+    },
+    "failed": {
+      "headline": "It could not be sent. Contact the office directly.",
+      "proves": "Sending failed after the allowed tries.",
+      "does_not_prove": "The lawyer did not receive it."
+    },
+    "expired": {
+      "headline": "Your approval ran out before it was sent. Nothing was sent.",
+      "proves": "The approval window ended.",
+      "does_not_prove": "The lawyer did not receive it."
+    },
+    "needs_information": {
+      "headline": "The office asked for more details. Nothing more is shared until you say yes.",
+      "proves": "A person or the intake system at the office asked for specific details from its approved list.",
+      "does_not_prove": "It is not acceptance of your matter, and you do not have to answer."
+    },
+    "under_review": {
+      "headline": "A person at the office is reviewing it. No decision yet.",
+      "proves": "Someone at the office marked it for review by a lawyer (for example a conflicts check).",
+      "does_not_prove": "It is not acceptance, and no conflicts decision has been made."
+    },
+    "engagement_confirmed": {
+      "headline": "The firm's own records say you are its client now.",
+      "proves": "The firm's system of record, or a lawyer at the firm with a reference from it, reported an engagement.",
+      "does_not_prove": "The host did not create or sign any agreement; the firm's engagement letter controls."
+    },
+    "closed": {
+      "headline": "Closed here. Nothing further will happen through this host.",
+      "proves": "You or the office closed this request.",
+      "does_not_prove": "If it was already sent, the office may keep its copy."
+    }
+  }
+}

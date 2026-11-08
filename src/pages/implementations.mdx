@@ -1,0 +1,55 @@
+---
+title: Implementations
+description: Reference implementations, adapters, mock endpoints, conformance suite and the honest roadmap of what is not yet available for OLIP 0.1.
+---
+
+import R from '@site/src/data/release.json';
+import C from '@site/src/data/conformance.json';
+
+# Implementations
+
+Everything listed as available can be downloaded and run locally today from the [OLIP draft kit](pathname:///downloads/olip-0.2-draft-kit.zip). Nothing is hosted for public testing; to see the flow without installing anything, use the [browser simulation](/try/). All data is fictional.
+
+## Available now
+
+| Resource | Language | What it is | Status |
+|---|---|---|---|
+| Reference mock endpoint (`reference/server.mjs`) | Node.js 20+, no runtime dependencies | `olip-read`, `olip-write`, `olip-mock-harness`, `olip-a2a-binding` profiles against fictional fixtures, plus the 0.2 additions | <span className="status status--tested">TESTED</span> {C.runs.node.pass} pass, {C.runs.node.fail} fail, {C.runs.node.skip} skip |
+| Second endpoint (`alt-python/olip_alt_server.py`) | Python 3.10+, standard library only (own Ed25519) | Separate code and data; read and write profiles | <span className="status status--tested">TESTED</span> {C.runs.python.pass} pass, {C.runs.python.fail} fail, {C.runs.python.skip} skip (A2A and 0.2 not offered) |
+| Reference agent client (`reference/client.mjs`) | Node.js | HTTPS client with receipt verification | <span className="status status--tested">TESTED</span> |
+| Python agent client (`alt-python/olip_client.py`) | Python | Second agent for the interop matrix | <span className="status status--tested">TESTED</span> |
+| Quickstart walkthrough (`reference/walkthrough.mjs`) | Node.js | Success, failure and withdrawal paths, every response schema-checked | <span className="status status--tested">TESTED</span> on both endpoints |
+| MCP adapter (`reference/mcp-adapter.mjs`) | Node.js | Exposes OLIP operations as MCP tools against any endpoint; no approve tool | <span className="status status--tested">TESTED</span> |
+| Conformance suite (`conformance/run.mjs`) | Node.js | {C.total_checks} checks (0.1 and 0.2), JSON results; test-endpoint mode and fixture-free read mode for production endpoints | <span className="status status--tested">TESTED</span> |
+| Schemas, OpenAPI, examples | JSON | [Downloads](/spec/downloads/) | <span className="status status--available">AVAILABLE</span> |
+| In-browser validator | Browser | [Validate a payload](/validator/) and compute a consent digest | <span className="status status--available">AVAILABLE</span> |
+
+### Interoperability matrix (sponsor's machines, 2026-11-07)
+
+| Agent ↓ / Endpoint → | Node endpoint | Python endpoint |
+|---|---|---|
+| Node agent (demo and walkthrough) | pass | pass |
+| Python agent | pass | pass |
+
+Both implementations have **the same author**, so this shows the specification is implementable twice from the text, not that two independent organizations agree. Run it yourself with `npm test` in the kit.
+
+## Conformance suite
+
+See the [conformance checklist](/docs/implementing/conformance-checklist/) for all {C.total_checks} checks ({R.counts.conformance_checks_0_1} for 0.1, {R.counts.conformance_checks_0_2} for 0.2) and how to state a result truthfully. The latest sponsor self-test results, with pass, fail and skip for every check, are on [Conformance results](/conformance/). There is no certification.
+
+## Not yet available
+
+| Item | Status | Note |
+|---|---|---|
+| Hosted public sandbox | <span className="status status--notbuilt">NOT BUILT</span> | Run the mock locally instead. |
+| SDK packages (npm, PyPI) | <span className="status status--notbuilt">NOT BUILT</span> | The reference client is a single file you can copy. |
+| Public source repository | <span className="status status--available">PUBLIC</span> | [github.com/olip-ai/olip](https://github.com/olip-ai/olip): specification, schemas, conformance suite, reference endpoints and this website, with licenses, contribution guide, issue forms and CI. Report problems as [issues](https://github.com/olip-ai/olip/issues). |
+| Third-party implementations | {R.adoption.independent_implementations} known (as of {R.adoption.as_of}) | [Tell us](/community/#feedback) if you build one. |
+| Production firm endpoint | <span className="status status--notbuilt">NOT BUILT</span> | No firm runs OLIP in production. |
+| Sponsor product integrations | not listed | Commercial products that adopt OLIP will be listed here only once they run and pass the public suite, with the same wording as anyone else. |
+
+## Listing your implementation
+
+Any implementation can be listed here on equal terms, free: a name, a link, the profiles it supports, and a dated self-test result from the public suite.
+
+To be listed, follow [Publish your conformance results](/docs/contributing/publish-results/). The sponsor's own products are listed on the same terms and are never counted as independent.

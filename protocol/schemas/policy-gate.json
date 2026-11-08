@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/policy-gate.json",
+  "title": "OLIP jurisdiction and purpose policy gate result",
+  "type": "object",
+  "required": [
+    "result",
+    "code",
+    "message",
+    "checks",
+    "rules_review_status",
+    "allowed_alternatives"
+  ],
+  "properties": {
+    "result": {
+      "enum": [
+        "allowed",
+        "blocked"
+      ]
+    },
+    "code": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "check",
+          "passed"
+        ]
+      }
+    },
+    "rules_review_status": {
+      "enum": [
+        "pending_counsel_review",
+        "counsel_approved",
+        "no_rules"
+      ],
+      "description": "Whether qualified counsel approved the rule set. A gate result is never a legal opinion."
+    },
+    "allowed_alternatives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "description"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "use_mode",
+              "contact_directly",
+              "legal_aid",
+              "certified_referral_service",
+              "other"
+            ]
+          },
+          "mode": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

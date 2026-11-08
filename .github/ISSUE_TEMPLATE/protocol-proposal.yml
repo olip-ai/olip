@@ -1,0 +1,27 @@
+name: Protocol change proposal
+description: Propose a normative change (anything that changes what an implementation must or may do).
+labels: [proposal]
+body:
+  - type: markdown
+    attributes:
+      value: "Every accepted normative change ships with a schema change, a fictional example and a conformance test. See https://olip.ai/docs/contributing/propose-a-change/"
+  - type: textarea
+    id: problem
+    attributes: {label: Problem, description: What fails or is missing today, with evidence.}
+    validations: {required: true}
+  - type: textarea
+    id: proposal
+    attributes: {label: Proposal, description: Proposed text or schema change.}
+    validations: {required: true}
+  - type: textarea
+    id: compat
+    attributes: {label: Compatibility impact, description: Affected versions and profiles; how existing implementations keep working.}
+    validations: {required: true}
+  - type: textarea
+    id: security
+    attributes: {label: Security and privacy impact}
+    validations: {required: true}
+  - type: textarea
+    id: tests
+    attributes: {label: Test plan, description: Which conformance checks change or are added.}
+    validations: {required: true}

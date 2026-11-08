@@ -1,0 +1,144 @@
+{
+  "schema": "manifest",
+  "fictional": true,
+  "description": "Endpoint manifest at /.well-known/olip.json.",
+  "example": {
+    "olip_version": "0.1",
+    "supported_versions": [
+      "0.1"
+    ],
+    "implementation": {
+      "name": "OLIP reference mock server",
+      "version": "0.1.0-draft",
+      "mode": "mock",
+      "fictional_data_only": true,
+      "operator": "Digital Crossings Inc. (sponsor of the draft; conformance does not require Digital Crossings Inc.)"
+    },
+    "profiles": [
+      "olip-read",
+      "olip-write",
+      "olip-mock-harness",
+      "olip-a2a-binding"
+    ],
+    "operations": [
+      {
+        "name": "discover_providers",
+        "method": "GET",
+        "path": "/olip/v0.1/providers",
+        "auth": "none"
+      },
+      {
+        "name": "get_professional_identity",
+        "method": "GET",
+        "path": "/olip/v0.1/professionals/{id}",
+        "auth": "none"
+      },
+      {
+        "name": "get_intake_policy",
+        "method": "GET",
+        "path": "/olip/v0.1/professionals/{id}/intake-policy",
+        "auth": "none"
+      },
+      {
+        "name": "prepare_or_validate_casebrief",
+        "method": "POST",
+        "path": "/olip/v0.1/casebriefs/validate",
+        "auth": "client"
+      },
+      {
+        "name": "create_casebrief",
+        "method": "POST",
+        "path": "/olip/v0.1/casebriefs",
+        "auth": "client"
+      },
+      {
+        "name": "update_casebrief",
+        "method": "PUT",
+        "path": "/olip/v0.1/casebriefs/{id}",
+        "auth": "client"
+      },
+      {
+        "name": "delete_casebrief",
+        "method": "DELETE",
+        "path": "/olip/v0.1/casebriefs/{id}",
+        "auth": "client"
+      },
+      {
+        "name": "export_casebrief",
+        "method": "GET",
+        "path": "/olip/v0.1/casebriefs/{id}/export",
+        "auth": "client"
+      },
+      {
+        "name": "preview_handoff",
+        "method": "POST",
+        "path": "/olip/v0.1/handoff-previews",
+        "auth": "client"
+      },
+      {
+        "name": "get_handoff_preview",
+        "method": "GET",
+        "path": "/olip/v0.1/handoff-previews/{id}",
+        "auth": "client"
+      },
+      {
+        "name": "revoke_handoff_preview",
+        "method": "POST",
+        "path": "/olip/v0.1/handoff-previews/{id}/revoke",
+        "auth": "client"
+      },
+      {
+        "name": "submit_approved_handoff",
+        "method": "POST",
+        "path": "/olip/v0.1/handoffs",
+        "auth": "client"
+      },
+      {
+        "name": "get_handoff_status",
+        "method": "GET",
+        "path": "/olip/v0.1/handoffs/{id}",
+        "auth": "client_or_recipient"
+      },
+      {
+        "name": "cancel_when_possible",
+        "method": "POST",
+        "path": "/olip/v0.1/handoffs/{id}/cancel",
+        "auth": "client"
+      },
+      {
+        "name": "record_recipient_event",
+        "method": "POST",
+        "path": "/olip/v0.1/handoffs/{id}/events",
+        "auth": "recipient"
+      }
+    ],
+    "auth": {
+      "token_endpoint": "/oauth/token",
+      "grant_types": [
+        "client_credentials"
+      ],
+      "token_type": "Bearer",
+      "token_ttl_seconds": 900
+    },
+    "user_approval_methods": [
+      "hosted_otp"
+    ],
+    "keys_url": "/.well-known/olip-keys.json",
+    "bindings": {
+      "https": "/olip/v0.1",
+      "a2a_agent_card": "/.well-known/agent-card.json",
+      "mcp": "agent-side adapter: reference/mcp-adapter.mjs (works with any OLIP endpoint)"
+    },
+    "status_machine": "/olip/v0.1/status-machine",
+    "extensions_supported": [],
+    "mock_hooks": {
+      "fixtures": "/mock/fixtures",
+      "inbox": "/mock/inbox?address=",
+      "clock": "/mock/clock",
+      "analytics": "/mock/analytics",
+      "logs": "/mock/logs",
+      "deliveries": "/mock/deliveries",
+      "reset": "/mock/reset"
+    }
+  }
+}

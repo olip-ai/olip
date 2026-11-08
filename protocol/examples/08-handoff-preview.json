@@ -1,0 +1,143 @@
+{
+  "schema": "handoff-preview",
+  "fictional": true,
+  "description": "Exactly one recipient, every shared value, notices, consent digest, approval link.",
+  "example": {
+    "olip_version": "0.1",
+    "preview_id": "prv_ddIVITKiIsLsJQI3",
+    "state": "draft",
+    "casebrief_id": "cbr_0OteMGJurjk7K7dF",
+    "casebrief_revision": 1,
+    "recipient": {
+      "professional_id": "prf_test_alvarez",
+      "display_name": "Dana Alvarez (fictional)",
+      "firm_name": "Alvarez Tenant Law (fictional)",
+      "license_statements": [
+        "Checked against the fictional US-CA registry on 2026-10-30: listed as active. This is a record check, not an endorsement."
+      ],
+      "intake_endpoint_status": "active",
+      "delivery_topology": "direct"
+    },
+    "mode": "consumer_selected_listing",
+    "purpose": "request_initial_contact",
+    "shared_fields": [
+      {
+        "path": "summary",
+        "label": "Summary",
+        "value": "Fictional example: I received a 3-day notice from my landlord."
+      },
+      {
+        "path": "client.name",
+        "label": "Your name",
+        "value": "Sample User (fictional)"
+      },
+      {
+        "path": "client.email",
+        "label": "Your email",
+        "value": "sample.user@example.test"
+      },
+      {
+        "path": "location.jurisdiction",
+        "label": "State",
+        "value": "US-CA"
+      },
+      {
+        "path": "matter.code",
+        "label": "Type of problem",
+        "value": "housing.landlord_tenant"
+      },
+      {
+        "path": "key_dates",
+        "label": "Key dates",
+        "value": [
+          {
+            "label": "Date on notice (fictional)",
+            "date": "2026-11-20",
+            "time_zone": "America/Los_Angeles",
+            "kind": "deadline",
+            "certainty": "user_reported"
+          }
+        ]
+      }
+    ],
+    "withheld_fields": [
+      "location.county",
+      "facts",
+      "objectives",
+      "documents"
+    ],
+    "notices": [
+      {
+        "id": "not_relationship",
+        "text": "Sending this does not create an attorney-client relationship. The firm decides whether to take the matter."
+      },
+      {
+        "id": "not_privileged",
+        "text": "This message may not be privileged or confidential just because it is sent this way."
+      },
+      {
+        "id": "deadlines",
+        "text": "Sending this does not stop any legal deadline. If you have a court date, contact the court or a lawyer directly as well."
+      },
+      {
+        "id": "license_record",
+        "text": "A license record check is not an endorsement by any court, bar or licensing authority."
+      },
+      {
+        "id": "only_this_recipient",
+        "text": "Only the one recipient named above receives the fields listed above. Nothing else is shared."
+      }
+    ],
+    "notice_version": "olip-mock-notices-2026-11-06",
+    "policy_gate": {
+      "result": "allowed",
+      "code": "allowed",
+      "message": "Allowed by this endpoint's illustrative rules (pending legal review).",
+      "checks": [
+        {
+          "check": "mode_allowed_in_jurisdiction",
+          "jurisdiction": "US-CA",
+          "mode": "consumer_selected_listing",
+          "passed": true
+        },
+        {
+          "check": "recipient_licensed_in_jurisdiction",
+          "passed": true,
+          "evidence_level": "official_source_checked"
+        },
+        {
+          "check": "recipient_has_intake_endpoint",
+          "passed": true
+        },
+        {
+          "check": "recipient_accepts_mode",
+          "passed": true
+        },
+        {
+          "check": "recipient_listing_agreement_accepted",
+          "passed": true
+        },
+        {
+          "check": "user_selected_recipient",
+          "passed": true
+        },
+        {
+          "check": "recipient_lists_matter_type",
+          "passed": true,
+          "note": "Practice fit is the recipient's own statement, not a legal conclusion or endorsement."
+        }
+      ],
+      "rules_review_status": "pending_counsel_review",
+      "allowed_alternatives": []
+    },
+    "consent_digest": "sha256:fd62d67c0020cd8a7a212d933db6827f3d66afc1377ba4ef590bbc35f0fefeb4",
+    "created_at": "2026-11-06T20:08:23.269Z",
+    "expires_at": "2026-11-06T20:38:23.269Z",
+    "approval": {
+      "method": "hosted_otp",
+      "url": "/olip/v0.1/approvals/prv_ddIVITKiIsLsJQI3?k=gzlxJoHajYEWPUQww1ZXAoUi",
+      "instructions": "Show this link to the user. Only the user can approve, with a code sent to their own email. The agent must not approve."
+    },
+    "authorization_id": null
+  }
+}

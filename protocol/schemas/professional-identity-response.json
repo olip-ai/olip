@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/professional-identity-response.json",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "professional"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.json#/$defs/olipVersion"
+    },
+    "professional": {
+      "$ref": "professional-identity.json"
+    },
+    "notices": {
+      "type": "array",
+      "items": {
+        "$ref": "common.json#/$defs/notice"
+      }
+    }
+  }
+}

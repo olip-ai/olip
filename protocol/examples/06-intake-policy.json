@@ -1,0 +1,81 @@
+{
+  "schema": "intake-policy-response",
+  "fictional": true,
+  "description": "What a professional accepts. Unknown values marked.",
+  "example": {
+    "olip_version": "0.1",
+    "intake_policy": {
+      "olip_version": "0.1",
+      "professional_id": "prf_test_alvarez",
+      "fictional": true,
+      "accepting_new_matters": {
+        "value": true,
+        "status": "self_reported",
+        "as_of": "2026-11-01T00:00:00Z"
+      },
+      "capacity": {
+        "value": null,
+        "status": "unknown"
+      },
+      "client_side": [
+        "tenant"
+      ],
+      "exclusions": [],
+      "accessibility": {
+        "value": null,
+        "status": "not_provided"
+      },
+      "required_fields": [
+        "summary",
+        "client.name",
+        "client.email",
+        "location.jurisdiction",
+        "matter.code"
+      ],
+      "optional_fields": [
+        "client.phone",
+        "client.preferred_language",
+        "facts",
+        "objectives",
+        "key_dates",
+        "parties",
+        "open_questions",
+        "location.county",
+        "location.city"
+      ],
+      "retention_days": 365,
+      "deadlines_note": "Sending a request does not stop any legal deadline. If you have a court date, say so.",
+      "updated_at": "2026-11-01T00:00:00Z",
+      "stale": false,
+      "extensions": {},
+      "jurisdictions": [
+        "US-CA"
+      ],
+      "matter_types": [
+        {
+          "code": "housing.landlord_tenant",
+          "label": "Landlord and tenant",
+          "sali": {
+            "iri": null,
+            "status": "unmapped_pending_review"
+          }
+        }
+      ],
+      "languages": [
+        "en",
+        "es"
+      ],
+      "delivery": {
+        "topology": "direct",
+        "receipt": "signed_EdDSA"
+      },
+      "regulatory": {
+        "modes_allowed": [
+          "consumer_selected_listing",
+          "direct_firm_intake"
+        ],
+        "listing_agreement_accepted": true
+      }
+    }
+  }
+}

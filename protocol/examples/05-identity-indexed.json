@@ -1,0 +1,74 @@
+{
+  "schema": "professional-identity-response",
+  "fictional": true,
+  "description": "License only copied from a dataset; not checked. Unclaimed. No intake endpoint.",
+  "example": {
+    "olip_version": "0.1",
+    "professional": {
+      "olip_version": "0.1",
+      "type": "individual_lawyer",
+      "fictional": true,
+      "commercial": {
+        "paid_placement": false,
+        "affects_order": false
+      },
+      "extensions": {},
+      "id": "prf_test_brooks",
+      "display_name": "Morgan Brooks (fictional)",
+      "family_name": "Brooks",
+      "firm": {
+        "id": "frm_test_brooks",
+        "name": "Brooks Law Office (fictional)",
+        "website": "https://brooks-law.example.test",
+        "phone": "+1-555-0101"
+      },
+      "licenses": [
+        {
+          "jurisdiction": "US-CA",
+          "authority": "Fictional US-CA licensing registry (test data)",
+          "license_id": "TEST-CA-100002",
+          "status": {
+            "value": "active",
+            "status": "indexed_unverified",
+            "as_of": "2026-10-02T00:00:00-07:00"
+          },
+          "verification": {
+            "level": "indexed",
+            "checked_at": null,
+            "freshness_days": 120,
+            "source": {
+              "name": "Fictional bulk dataset (test data)",
+              "url": "https://dataset.example.test/lawyers.csv",
+              "data_as_of": "2026-10-02T00:00:00-07:00",
+              "retrieved_at": "2026-10-02T00:00:00-07:00",
+              "evidence_sha256": null
+            }
+          },
+          "display_statement": "Copied from a public dataset on 2026-10-02. Not checked against the official source."
+        }
+      ],
+      "claim": {
+        "status": "unclaimed",
+        "method": null,
+        "claimed_at": null
+      },
+      "self_reported": {
+        "practice_areas": [],
+        "languages": [],
+        "service_territory": []
+      },
+      "intake_endpoint": {
+        "status": "none",
+        "topology": null,
+        "olip_version": null,
+        "last_health_check": null
+      }
+    },
+    "notices": [
+      {
+        "id": "license_record",
+        "text": "A license record check is not an endorsement by any court, bar or licensing authority."
+      }
+    ]
+  }
+}

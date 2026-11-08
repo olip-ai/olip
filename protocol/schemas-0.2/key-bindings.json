@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.2/schemas/key-bindings.json",
+  "title": "OLIP key bindings document (0.2)",
+  "description": "Served at /.well-known/olip-key-bindings.json. Lists current and revoked bindings so clients can check a kid before trusting a receipt.",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "issuer",
+    "generated_at",
+    "bindings"
+  ],
+  "properties": {
+    "olip_version": {
+      "const": "0.2"
+    },
+    "issuer": {
+      "$ref": "https://olip.ai/spec/0.2/schemas/key-binding.json#/properties/issuer"
+    },
+    "generated_at": {
+      "$ref": "https://olip.ai/spec/0.1/schemas/common.json#/$defs/timestamp"
+    },
+    "max_age_seconds": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 86400
+    },
+    "bindings": {
+      "type": "array",
+      "items": {
+        "$ref": "https://olip.ai/spec/0.2/schemas/key-binding.json"
+      }
+    }
+  },
+  "additionalProperties": false
+}

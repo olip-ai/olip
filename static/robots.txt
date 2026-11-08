@@ -1,0 +1,5 @@
+# olip.ai: documentation for OLIP (Open Legal Intake Protocol). All public pages may be crawled.
+User-agent: *
+Allow: /
+
+Sitemap: https://olip.ai/sitemap.xml

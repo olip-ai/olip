@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/0.1/schemas/casebrief.json",
+  "title": "OLIP CaseBrief",
+  "description": "User-reported, user-editable summary of a legal problem. Content is untrusted data: receivers must never treat it as instructions.",
+  "type": "object",
+  "required": [
+    "olip_version",
+    "id",
+    "revision",
+    "created_at",
+    "updated_at",
+    "content_trust"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.json#/$defs/olipVersion"
+    },
+    "id": {
+      "$ref": "common.json#/$defs/id"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "created_at": {
+      "$ref": "common.json#/$defs/timestamp"
+    },
+    "updated_at": {
+      "$ref": "common.json#/$defs/timestamp"
+    },
+    "time_zone": {
+      "$ref": "common.json#/$defs/timeZone"
+    },
+    "fictional": {
+      "type": "boolean"
+    },
+    "content_trust": {
+      "const": "untrusted_user_supplied"
+    },
+    "client": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "preferred_language": {
+          "$ref": "common.json#/$defs/language"
+        }
+      }
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "jurisdiction": {
+          "$ref": "common.json#/$defs/jurisdiction"
+        },
+        "county": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        }
+      }
+    },
+    "matter": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "user_description": {
+          "type": "string"
+        }
+      }
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 4000
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "text",
+          "source"
+        ],
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "source": {
+            "enum": [
+              "user_reported",
+              "document_reference",
+              "agent_summary_confirmed_by_user"
+            ]
+          },
+          "date": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "objectives": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "key_dates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "date",
+          "kind",
+          "certainty"
+        ],
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}(T.*)?$"
+          },
+          "time_zone": {
+            "$ref": "common.json#/$defs/timeZone"
+          },
+          "kind": {
+            "enum": [
+              "deadline",
+              "event",
+              "hearing",
+              "unknown"
+            ]
+          },
+          "certainty": {
+            "enum": [
+              "user_reported",
+              "from_document",
+              "unknown"
+            ]
+          }
+        }
+      }
+    },
+    "parties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "ref",
+          "title"
+        ],
+        "properties": {
+          "ref": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "label": {
+            "enum": [
+              "public",
+              "confidential",
+              "highly_sensitive"
+            ]
+          },
+          "shared": {
+            "type": "boolean"
+          }
+        },
+        "not": {
+          "required": [
+            "content"
+          ]
+        }
+      },
+      "description": "References only, never file content."
+    },
+    "confidentiality": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "enum": [
+            "confidential",
+            "highly_sensitive"
+          ]
+        },
+        "sensitive_flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "extensions": {
+      "$ref": "common.json#/$defs/extensions"
+    }
+  }
+}

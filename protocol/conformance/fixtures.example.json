@@ -1,0 +1,13 @@
+{
+  "_comment": "Fixtures for fixture-free read mode (node conformance/run.mjs --base https://your-endpoint --fixtures this-file.json). Replace each id with a real id on your endpoint. These values fit the fictional reference mock. Optional: stale (leave it out if no professional has stale intake data; R6 then reports its stale part as skipped), nonpaying_endpoint, intake_card.",
+  "jurisdiction_supported": "US-CA",
+  "matter_supported": "housing.landlord_tenant",
+  "no_match_jurisdiction": "US-WY",
+  "professionals": {
+    "verified": "prf_test_alvarez",
+    "indexed_only_no_endpoint": "prf_test_brooks",
+    "stale": "prf_test_brooks",
+    "nonpaying_endpoint": "prf_test_alvarez",
+    "intake_card": "prf_test_alvarez"
+  }
+}
