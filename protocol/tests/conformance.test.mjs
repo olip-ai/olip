@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { startServer, run, ROOT } from "./helpers.mjs";
+import { startServer, run, ROOT, PYTHON } from "./helpers.mjs";
 
 const servers = {};
 test("start both endpoints", async () => { servers.node = await startServer("node", 18787); servers.python = await startServer("python", 18788); });
@@ -19,7 +19,7 @@ for (const kind of ["node", "python"]) {
     assert.match(r.out, /State: delivered/); assert.match(r.out, /check: valid/); assert.match(r.out, /replay=true, same id=true/);
   });
   test(`Python agent completes a fictional handoff on the ${kind} endpoint`, async () => {
-    const r = await run("python3", ["alt-python/olip_client.py", servers[kind].base]);
+    const r = await run(PYTHON, ["alt-python/olip_client.py", servers[kind].base]);
     assert.equal(r.code, 0, r.out + r.err);
     assert.equal(JSON.parse(r.out).ok, true);
   });

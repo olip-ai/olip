@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
 import { makeValidator } from "../conformance/schema-validator.mjs";
 import { STATUS_MACHINE as SM, canonicalize, consentDigest } from "../reference/lib/olip-core.mjs";
-import { run, ROOT } from "./helpers.mjs";
+import { run, ROOT, PYTHON } from "./helpers.mjs";
 
 test("every example file validates against the schema it names", async () => {
   const v = await makeValidator();
@@ -37,7 +37,7 @@ test("consent digest changes when any bound element changes", () => {
   assert.equal(canonicalize({ b: 1, a: [true, null, "é"] }), '{"a":[true,null,"é"],"b":1}');
 });
 test("pure-Python Ed25519 matches RFC 8032 test vector 1", async () => {
-  const r = await run("python3", ["-c", "import sys; sys.path.insert(0,'alt-python'); import ed25519_pure as e; s=bytes.fromhex('9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60'); print(e.public_key(s).hex()); print(e.sign(s,b'').hex()); print(e.verify(e.public_key(s), b'', e.sign(s,b'')), e.verify(e.public_key(s), b'x', e.sign(s,b'')))"]);
+  const r = await run(PYTHON, ["-c", "import sys; sys.path.insert(0,'alt-python'); import ed25519_pure as e; s=bytes.fromhex('9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60'); print(e.public_key(s).hex()); print(e.sign(s,b'').hex()); print(e.verify(e.public_key(s), b'', e.sign(s,b'')), e.verify(e.public_key(s), b'x', e.sign(s,b'')))"]);
   const [pub, sig, ver] = r.out.trim().split("\n");
   assert.equal(pub, "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a");
   assert.equal(sig, "e5564300c360ac729086e2cc806e828a84877f1eb8e5d974d873e065224901555fb8821590a33bacc61e39701cf9b46bd25bf5f0595bbe24655141438e7a100b");
