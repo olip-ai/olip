@@ -7,6 +7,7 @@ import { randomBytes, randomInt, timingSafeEqual } from "node:crypto";
 import { OLIP_VERSION, OLIP_V02, canonicalize, sha256, consentDigest, newKeyPair, signObject, findTransition, isTerminal, wasTransmitted, newId, getPath, STATUS_MACHINE } from "./lib/olip-core.mjs";
 import * as FX from "./data/fixtures.mjs";
 import { readFileSync } from "node:fs";
+import { pathToFileURL } from "node:url";
 const SPEC_SHA256 = (() => { try { return sha256(readFileSync(new URL("../spec/OLIP-0.2-DRAFT.md", import.meta.url))); } catch { return null; } })();
 
 const PREVIEW_TTL_S = 30 * 60, AUTH_TTL_S = 30 * 60, TOKEN_TTL_S = 15 * 60, OTP_TTL_S = 10 * 60, MAX_ATTEMPTS = 3;
@@ -731,7 +732,7 @@ export function createOlipServer({ mode = "mock" } = {}) {
   return { server, ops, reset };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const port = Number(process.env.PORT || 8787);
   const { server } = createOlipServer({ mode: process.env.OLIP_MODE || "mock" });
   server.listen(port, "127.0.0.1", () => console.log(`OLIP reference mock server (fictional data) on http://127.0.0.1:${port}`));

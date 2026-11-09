@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node reference/server.mjs",
-    "test": "node --test --test-concurrency=1 tests/*.test.mjs",
+    "test": "node scripts/run-tests.mjs",
     "conformance": "node conformance/run.mjs",
     "demo": "node reference/demo.mjs",
     "walkthrough": "node reference/walkthrough.mjs",

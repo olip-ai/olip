@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { startServer, run, ROOT } from "./helpers.mjs";
+import { startServer, run, ROOT, PYTHON } from "./helpers.mjs";
 
 const servers = {};
 test("start both endpoints", async () => { servers.node = await startServer("node", 18787); servers.python = await startServer("python", 18788); });
@@ -19,7 +19,7 @@ for (const kind of ["node", "python"]) {
     assert.match(r.out, /State: delivered/); assert.match(r.out, /check: valid/); assert.match(r.out, /replay=true, same id=true/);
   });
   test(`Python agent completes a fictional handoff on the ${kind} endpoint`, async () => {
-    const r = await run("python3", ["alt-python/olip_client.py", servers[kind].base]);
+    const r = await run(PYTHON, ["alt-python/olip_client.py", servers[kind].base]);
     assert.equal(r.code, 0, r.out + r.err);
     assert.equal(JSON.parse(r.out).ok, true);
   });
@@ -29,7 +29,7 @@ test("MCP adapter lists tools without an approve tool and calls a live endpoint"
     { jsonrpc: "2.0", method: "notifications/initialized" }, { jsonrpc: "2.0", id: 2, method: "tools/list" },
     { jsonrpc: "2.0", id: 3, method: "tools/call", params: { name: "olip_discover_providers", arguments: { matter: "housing.landlord_tenant" } } }].map((x) => JSON.stringify(x)).join("\n") + "\n";
   const r = await run("node", ["reference/mcp-adapter.mjs"], { env: { ...process.env, OLIP_BASE: servers.python.base }, input });
-  const lines = r.out.trim().split("\n").map((l) => JSON.parse(l));
+  const lines = r.out.trim().split(/\r?\n/).map((l) => JSON.parse(l));
   const tools = lines.find((l) => l.id === 2).result.tools.map((t) => t.name);
   assert.ok(tools.includes("olip_submit_approved_handoff"));
   assert.ok(!tools.some((t) => /approve(?!d)/.test(t)), "no tool lets the agent approve");

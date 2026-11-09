@@ -2,8 +2,10 @@ import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+// Windows installs Python as "python"; Linux and macOS as "python3".
+export const PYTHON = process.platform === "win32" ? "python" : "python3";
 export async function startServer(kind, port) {
-  const cmd = kind === "node" ? ["node", ["reference/server.mjs"]] : ["python3", ["alt-python/olip_alt_server.py"]];
+  const cmd = kind === "node" ? ["node", ["reference/server.mjs"]] : [PYTHON, ["alt-python/olip_alt_server.py"]];
   const p = spawn(cmd[0], cmd[1], { cwd: ROOT, env: { ...process.env, PORT: String(port) }, stdio: ["ignore", "pipe", "pipe"] });
   const base = `http://127.0.0.1:${port}`;
   for (let i = 0; i < 50; i++) { try { const r = await fetch(`${base}/.well-known/olip.json`); if (r.ok) return { base, stop: () => p.kill() }; } catch {} await new Promise((r) => setTimeout(r, 100)); }
