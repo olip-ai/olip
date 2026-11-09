@@ -26,7 +26,7 @@ test("MCP adapter: intake card and receipt check tools work and stay read-only",
     { jsonrpc: "2.0", id: 3, method: "tools/call", params: { name: "olip_get_intake_card", arguments: { professional_id: FX.professionals.direct_ok } } },
     { jsonrpc: "2.0", id: 4, method: "tools/call", params: { name: "olip_verify_receipt", arguments: { handoff_id: h.handoff_id } } }].map((x) => JSON.stringify(x)).join("\n") + "\n";
   const r = await run("node", ["reference/mcp-adapter.mjs"], { env: { ...process.env, OLIP_BASE: srv.base, OLIP_CLIENT_ID: FX.clients.a.client_id, OLIP_CLIENT_SECRET: FX.clients.a.client_secret }, input: lines });
-  const out = r.out.trim().split("\n").map((l) => JSON.parse(l));
+  const out = r.out.trim().split(/\r?\n/).map((l) => JSON.parse(l));
   const tools = out.find((l) => l.id === 2).result.tools;
   for (const n of ["olip_get_intake_card", "olip_verify_receipt"]) assert.equal(tools.find((t) => t.name === n)?.annotations?.readOnlyHint, true, n);
   assert.ok(!tools.some((t) => /approve(?!d)/.test(t.name)), "still no approve tool");

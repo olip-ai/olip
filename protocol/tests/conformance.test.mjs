@@ -29,7 +29,7 @@ test("MCP adapter lists tools without an approve tool and calls a live endpoint"
     { jsonrpc: "2.0", method: "notifications/initialized" }, { jsonrpc: "2.0", id: 2, method: "tools/list" },
     { jsonrpc: "2.0", id: 3, method: "tools/call", params: { name: "olip_discover_providers", arguments: { matter: "housing.landlord_tenant" } } }].map((x) => JSON.stringify(x)).join("\n") + "\n";
   const r = await run("node", ["reference/mcp-adapter.mjs"], { env: { ...process.env, OLIP_BASE: servers.python.base }, input });
-  const lines = r.out.trim().split("\n").map((l) => JSON.parse(l));
+  const lines = r.out.trim().split(/\r?\n/).map((l) => JSON.parse(l));
   const tools = lines.find((l) => l.id === 2).result.tools.map((t) => t.name);
   assert.ok(tools.includes("olip_submit_approved_handoff"));
   assert.ok(!tools.some((t) => /approve(?!d)/.test(t)), "no tool lets the agent approve");
