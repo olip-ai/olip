@@ -1,0 +1,9 @@
+# Reviewed false positives (approved by the repository owner, 2026-11-14).
+# Each is a random event idempotency key ("idem_" + 16 characters) in a FICTIONAL example file, not a credential.
+# The generator now emits low-entropy counters instead (commit b886720), so no new entries should be needed.
+# Fingerprints are exact (commit:file:rule:line); nothing else is ignored.
+7937f9123960cf10177ea3023f8403efa6b3cfff:protocol/v2-draft/examples/invalid/audit-record.broken_hash.json:generic-api-key:22
+7937f9123960cf10177ea3023f8403efa6b3cfff:protocol/v2-draft/examples/invalid/lifecycle-event.unsigned.json:generic-api-key:18
+7937f9123960cf10177ea3023f8403efa6b3cfff:protocol/v2-draft/examples/invalid/lifecycle-event.issuer_not_scoped.json:generic-api-key:18
+7937f9123960cf10177ea3023f8403efa6b3cfff:protocol/v2-draft/examples/valid/audit-record.json:generic-api-key:22
+7937f9123960cf10177ea3023f8403efa6b3cfff:protocol/v2-draft/examples/valid/lifecycle-event.json:generic-api-key:18
