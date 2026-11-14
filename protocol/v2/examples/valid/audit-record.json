@@ -1,0 +1,43 @@
+{
+  "seq": 4,
+  "recorded_at": "2026-11-14T17:00:00.090Z",
+  "prev_hash": "sha256:53b656da6ad7a872a1bb3311493f5f6ad9a15542703a56bc012d6ebe038ee640",
+  "event": {
+    "olip_version": "2.0",
+    "event_id": "urn:olip:org_test_alvarez:event:CTmveW0-lhFs",
+    "matter_id": "mat_B3kz4C0sREuyqTcw",
+    "object": {
+      "type": "conflict_screen",
+      "id": "scr_lG7e0US0_XVgPg7X"
+    },
+    "event_type": "intake.information_requested",
+    "actor": {
+      "role": "firm",
+      "actor_id": "stf_test_jordan",
+      "organization_id": "org_test_alvarez",
+      "staff_role": "intake_staff"
+    },
+    "prior_revision": 1,
+    "occurred_at": "2026-11-14T17:00:00.087Z",
+    "idempotency_key": "firm-event-1794674344599-00000001",
+    "correlation_id": "mat_B3kz4C0sREuyqTcw",
+    "causation_id": null,
+    "evidence": {},
+    "payload": {
+      "fields": [
+        {
+          "path": "related_parties",
+          "question": "Is anyone else on the lease?"
+        }
+      ]
+    },
+    "fictional": true,
+    "signature": {
+      "alg": "EdDSA",
+      "kid": "kid_test_740cc96de2d4",
+      "value": "45udIeisLorZ7tsy_BMICeGMTfJQ--Ndkk5pKw3nZfiPtVUG_mXuMS4r8Bba14fcUu_1PWBrlVDXonLXnWMUDA"
+    }
+  },
+  "entry_hash": "sha256:9b8074afca55d8e30d398602e4d0053d2b6e5265946e5f0427afbfa27aba25fb",
+  "attribution": "firm_signed"
+}

@@ -1,0 +1,72 @@
+{
+  "id": "scr_lG7e0US0_XVgPg7X",
+  "type": "conflict_screen",
+  "machine": "intake",
+  "state": "eligible_for_further_intake",
+  "revision": 4,
+  "history": [
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:lmGUhuhhR6PH",
+      "event_type": "intake.screening_requested",
+      "at": "2026-11-14T17:00:00.082Z",
+      "by": "lifecycle_host"
+    },
+    {
+      "event_id": "urn:olip:org_test_alvarez:event:CTmveW0-lhFs",
+      "event_type": "intake.information_requested",
+      "at": "2026-11-14T17:00:00.090Z",
+      "by": "firm",
+      "actor_id": "stf_test_jordan",
+      "kid": "kid_test_740cc96de2d4"
+    },
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:Mwe9os2dst8P",
+      "event_type": "intake.additional_information_provided",
+      "at": "2026-11-14T17:00:00.100Z",
+      "by": "lifecycle_host"
+    },
+    {
+      "event_id": "urn:olip:org_test_alvarez:event:aaWt7UE21IK7",
+      "event_type": "intake.eligible_for_further_intake",
+      "at": "2026-11-14T17:00:00.105Z",
+      "by": "firm",
+      "actor_id": "stf_test_jordan",
+      "kid": "kid_test_740cc96de2d4"
+    }
+  ],
+  "created_at": "2026-11-14T17:00:00.070Z",
+  "updated_at": "2026-11-14T17:00:00.105Z",
+  "matter_id": "mat_B3kz4C0sREuyqTcw",
+  "organization_id": "org_test_alvarez",
+  "requested_fields": [
+    "prospective_client.name",
+    "adverse_parties",
+    "matter.category",
+    "matter.jurisdiction",
+    "related_parties"
+  ],
+  "disclosures": [
+    "dsc_QNkmnV-RYHkRIfOn",
+    "dsc_eMKg1wUVcpwbQrTv"
+  ],
+  "firm_requests": [
+    {
+      "event_id": "urn:olip:org_test_alvarez:event:CTmveW0-lhFs",
+      "fields": [
+        {
+          "path": "related_parties",
+          "question": "Is anyone else on the lease?"
+        }
+      ]
+    }
+  ],
+  "decision": {
+    "event_type": "intake.eligible_for_further_intake",
+    "firm_text": null,
+    "alternatives": [],
+    "by_actor": "stf_test_jordan",
+    "at": "2026-11-14T17:00:00.103Z",
+    "statement": "The firm says intake may continue. This is not a conflict clearance finding and not representation."
+  },
+  "supersedes": null
+}
