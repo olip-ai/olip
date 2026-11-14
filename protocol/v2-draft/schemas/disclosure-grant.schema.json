@@ -37,7 +37,7 @@
         "engagement.respond",
         "message.send",
         "document.send",
-        "logistics.preauthorize"
+        "message.logistics"
       ]
     },
     "recipient": {
@@ -101,7 +101,7 @@
     "use": {
       "enum": [
         "one_time",
-        "limited"
+        "bounded_class"
       ]
     },
     "uses": {

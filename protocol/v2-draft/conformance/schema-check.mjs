@@ -47,7 +47,7 @@ export function createResponseChecker(schemas = loadSchemas()) {
   function observe({ opId, status, body, html, raw, route, method }) {
     if (html || raw || body == null || typeof body !== "object") return;
     const where = `${method} ${route} ${status}`;
-    if (status >= 400) { check("error", body, where); return; }
+    if (status >= 400) { if (opId !== "token") check("error", body, where); return; } // the token endpoint uses the OAuth 2.0 error format (RFC 6749 section 5.2)
     if (!opId) return;
     seen.add(opId);
     if (body.olip_version !== undefined && body.olip_version !== "2.0-draft") problems.push({ where, problem: "olip_version" });

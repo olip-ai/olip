@@ -1035,7 +1035,7 @@ export function createLifecycleHost({ mode = "mock", topology = "relay", clock =
     } catch (e) { r = err(500, "OLIP_INTERNAL", "Internal error in the mock host."); if (process.env.OLIP_DEBUG) console.error(e); }
     // Logs: route template, status and error code only. Never bodies, tokens, codes or download paths.
     S.logs.push({ at: iso(), method, route: routeT, status: r.status, code: r.body?.error?.code ?? null });
-    if (observe) { try { observe({ method, route: routeT, opId: R.find((x) => x.path === routeT && x.method === method)?.opId ?? null, status: r.status, body: r.body == null ? null : structuredClone(r.body), html: !!r.html, raw: !!r.raw }); } catch { /* observers never affect responses */ } }
+    if (observe) { try { observe({ method, route: routeT, opId: R.find((x) => x.path === routeT && x.method === method)?.opId ?? null, status: r.status, body: r.body == null ? null : structuredClone(r.body), request: body == null ? null : structuredClone(body), html: !!r.html, raw: !!r.raw }); } catch { /* observers never affect responses */ } }
     return r;
   }
 

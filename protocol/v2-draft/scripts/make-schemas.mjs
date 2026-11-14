@@ -102,10 +102,10 @@ S["legal-matter"] = doc("legal-matter", "LegalMatter", "A matter as one caller s
 }, ["matter_id", "fictional", "jurisdiction", "matter_type", "state", "revision", "journey_status", "created_at", "updated_at", "retention_policy", "represented", "status"]));
 
 S["disclosure-grant"] = doc("disclosure-grant", "DisclosureGrant", "A user's one-time approval of one exact action for one recipient. The digest binds action, recipient, purpose, fields and values, documents, content, revision and expiry.", obj({
-  grant_id: C("object_id"), action: enm("disclosure.screening", "disclosure.additional_screening", "disclosure.casebrief", "consultation.request", "consultation.propose", "engagement.respond", "message.send", "document.send", "logistics.preauthorize"),
+  grant_id: C("object_id"), action: enm("disclosure.screening", "disclosure.additional_screening", "disclosure.casebrief", "consultation.request", "consultation.propose", "engagement.respond", "message.send", "document.send", "message.logistics"),
   recipient: C("organization_id"), purpose: str(), stage: nul(enm("screening", "additional_screening", "casebrief")), matter_id: C("object_id"), fields: arr(C("field_path")),
   documents: arr(obj({ document_id: C("object_id"), sha256: C("digest") })), state: enm("pending", "active", "used", "denied", "revoked", "expired"),
-  use: enm("one_time", "limited"), uses: { type: "integer", minimum: 0 }, max_uses: { type: "integer", minimum: 1 }, grant_digest: C("digest"),
+  use: enm("one_time", "bounded_class"), uses: { type: "integer", minimum: 0 }, max_uses: { type: "integer", minimum: 1 }, grant_digest: C("digest"),
   created_at: C("timestamp"), expires_at: C("timestamp"), approved_at: nul(C("timestamp")),
 }));
 
