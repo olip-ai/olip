@@ -21,7 +21,7 @@ jobs:
         working-directory: protocol
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with: {node-version: '${{ matrix.node }}', cache: npm, cache-dependency-path: protocol/package-lock.json}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
@@ -49,7 +49,7 @@ jobs:
         working-directory: protocol/v2-draft
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with: {node-version: '${{ matrix.node }}', cache: npm, cache-dependency-path: protocol/v2-draft/package-lock.json}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with: {node-version: '22', cache: npm}
       - run: npm ci && (cd protocol && npm ci)
       - run: (cd protocol && npm test)
