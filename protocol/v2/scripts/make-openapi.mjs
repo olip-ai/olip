@@ -81,7 +81,7 @@ export function buildOpenApi() {
   return {
     openapi: "3.1.0", jsonSchemaDialect: "https://json-schema.org/draft/2020-12/schema",
     info: { title: "OLIP 2.0 lifecycle API", version: "2.0.0", license: { name: "Apache-2.0", identifier: "Apache-2.0" },
-      description: "PROPOSED draft. Not adopted by any standards body and not approved by any bar or regulator. OLIP 1.0 is unchanged and frozen. This file is generated from the reference host's route table. Mock-only test hooks (/mock/v2/*) are deliberately left out: a real host must never expose them." },
+      description: "OLIP 2.0, the sponsor release. OLIP 1.0 is unchanged and frozen. This file is generated from the reference host's route table. Mock-only test hooks (/mock/v2/*) are deliberately left out: a real host must never expose them." },
     servers: [{ url: "http://127.0.0.1:{port}", description: "Local reference host (fictional data only).", variables: { port: { default: "8787" } } }],
     tags: [...new Set(host.routes.map((r) => tagOf(r.path)))].map((name) => ({ name })),
     components: { securitySchemes: { bearer: { type: "http", scheme: "bearer", description: "Tokens identify one caller kind: user (session), agent (delegated by one user), firm (organization client credentials) or observer. x-olip-callers on each operation lists who may call it." } } },

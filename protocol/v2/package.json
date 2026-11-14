@@ -2,7 +2,7 @@
   "name": "olip-2.0",
   "version": "2.0.0",
   "private": true,
-  "description": "PROPOSED OLIP 2.0 lifecycle profiles (draft, unreleased): schemas, OpenAPI, state machines, fictional reference lifecycle host and firm endpoint, MCP/A2A adapters, SDKs and conformance. Not adopted by any standards body. Fictional data only. OLIP 1.0 files in ../ are not changed.",
+  "description": "OLIP 2.0 lifecycle profiles (release 2.0): schemas, OpenAPI, state machines, fictional reference lifecycle host and firm endpoint, MCP/A2A adapters, SDKs and conformance. Not adopted by any standards body. Fictional data only. OLIP 1.0 files in ../ are not changed.",
   "type": "module",
   "engines": {
     "node": ">=20"
