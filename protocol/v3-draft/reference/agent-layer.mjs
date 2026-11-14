@@ -148,6 +148,8 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
   // ---------- webhooks (hints only; signed; SSRF-checked at subscribe AND at every delivery) ----------
   const timers = new Set();
   let closed = false;
+  // Highest request reference already used, so a restarted host never reuses one (failed requests leave gaps).
+  let requestSeq = Math.max(0, ...[...store.idempotency.values()].map((r) => Number(String(r.request_ref ?? "").slice(4)) || 0));
   function queueWebhooks(wf, entry) {
     for (const s of store.subscriptions.values()) {
       if (!s.active || s.workflow_id !== wf.workflow_id) continue;
@@ -251,7 +253,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
     const m = r.matter;
     const wf = { workflow_id: newId("wf"), matter_id: m.matter_id, owner_subject_id: p.subject_id, jurisdiction: m.jurisdiction, fictional: m.fictional, created_at: iso(), created_by: actorRef(p), v2_mirrored_seq: 0 };
     store.workflows.set(wf.workflow_id, wf);
-    append(wf, { event_type: "workflow.created", actor: { type: p.kind === "agent" ? "ai_host" : "user", ref: actorRef(p) }, payload: { matter_ref: "2.0-draft matter (id in workflow record)" }, idempotency_key: c.idem });
+    append(wf, { event_type: "workflow.created", actor: { type: p.kind === "agent" ? "ai_host" : "user", ref: actorRef(p) }, payload: { matter_ref: "2.0-draft matter (id in workflow record)" }, idempotency_key: c.ref });
     syncLifecycle(wf);
     return workflowView(p, wf);
   };
@@ -286,7 +288,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
     const d = { disclosure_id: newId("dis"), workflow_id: wf.workflow_id, organization_id: a.organization_id, stage: a.stage, fields: a.fields, v2: v2ref, state: "awaiting_user_approval", created_at: iso(), created_by: actorRef(p),
       approval: { approval_id: r.approval.approval_id, approval_url: r.approval.approval_url, grant_id: r.approval.grant_id, grant_digest: r.approval.grant_digest, expires_at: r.approval.expires_at } };
     store.disclosures.set(d.disclosure_id, d);
-    append(wf, { event_type: "disclosure.prepared", actor: { type: p.kind === "agent" ? "ai_host" : "user", ref: actorRef(p) }, payload: { disclosure_id: d.disclosure_id, organization_id: d.organization_id, stage: d.stage, fields: d.fields, grant_digest: d.approval.grant_digest }, idempotency_key: c.idem });
+    append(wf, { event_type: "disclosure.prepared", actor: { type: p.kind === "agent" ? "ai_host" : "user", ref: actorRef(p) }, payload: { disclosure_id: d.disclosure_id, organization_id: d.organization_id, stage: d.stage, fields: d.fields, grant_digest: d.approval.grant_digest }, idempotency_key: c.ref });
     return { olip_version: V3, disclosure: disclosureView(d), sent: false,
       next: "Show the user the approval page. Only the user can approve, there, with a code sent to their own contact. Then call olip.submit_approved_disclosure with this disclosure_id, grant_id and grant_digest.",
       statement: "Nothing was sent. The approval is bound to this one organization, these exact field values, this purpose and an expiry. Any change needs a new approval." };
@@ -310,7 +312,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
         : (await v2call(p, "POST", `/olip/v2/matters/${wf.matter_id}/disclosures/submit`, body, `v3:${c.idem}`)).body;
     } catch (e) { syncLifecycle(wf); throw e; }
     d.state = "submitted"; d.delivery = { state: r.delivery.state, receipt_id: r.delivery.receipt?.receipt_id ?? null, receipt_kid: r.delivery.receipt?.signature?.kid ?? null };
-    append(wf, { event_type: "disclosure.submitted", actor: { type: p.kind === "agent" ? "ai_host" : "user", ref: actorRef(p) }, authority_ref: a.grant_id, payload: { disclosure_id: d.disclosure_id, organization_id: d.organization_id, delivery_state: d.delivery.state, grant_digest: a.grant_digest }, idempotency_key: c.idem });
+    append(wf, { event_type: "disclosure.submitted", actor: { type: p.kind === "agent" ? "ai_host" : "user", ref: actorRef(p) }, authority_ref: a.grant_id, payload: { disclosure_id: d.disclosure_id, organization_id: d.organization_id, delivery_state: d.delivery.state, grant_digest: a.grant_digest }, idempotency_key: c.ref });
     syncLifecycle(wf);
     return { olip_version: V3, disclosure: disclosureView(d), delivery: r.delivery, lifecycle_object: r.conflict_screen ? { type: "conflict_screen", id: r.conflict_screen.id, state: r.conflict_screen.state } : null,
       status_semantics: { delivery_state: STATUS_SEMANTICS.find((x) => x.state === "delivered_to_endpoint"), tool_success: STATUS_SEMANTICS.find((x) => x.state === "tool_call_succeeded") } };
@@ -319,7 +321,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
     const d = store.disclosures.get(a.disclosure_id); const wf = d && store.workflows.get(d.workflow_id);
     if (!d || !wf || !isConsumer(p) || wf.owner_subject_id !== p.subject_id) fail("NOT_FOUND");
     if (d.state === "submitted") fail("CONFLICTING_STATE", "Already sent. Cancelling cannot undo a delivered disclosure. The organization may keep what it received under its own duties.");
-    if (d.state !== "cancelled") { d.state = "cancelled"; d.cancelled_at = iso(); append(wf, { event_type: "disclosure.cancelled", actor: { type: p.kind === "agent" ? "ai_host" : "user", ref: actorRef(p) }, payload: { disclosure_id: d.disclosure_id }, idempotency_key: c.idem }); }
+    if (d.state !== "cancelled") { d.state = "cancelled"; d.cancelled_at = iso(); append(wf, { event_type: "disclosure.cancelled", actor: { type: p.kind === "agent" ? "ai_host" : "user", ref: actorRef(p) }, payload: { disclosure_id: d.disclosure_id }, idempotency_key: c.ref }); }
     return { olip_version: V3, disclosure: disclosureView(d), statement: "Cancelled before sending. The user's approval for it can no longer be used through this layer." };
   };
   H["olip.plan_next_actions"] = async (p, a) => {
@@ -394,7 +396,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
     body.capsule_digest = digestOf(body);
     const cap = signDetached(body, keys.capsules);
     store.capsules.set(cap.capsule_id, { capsule_id: cap.capsule_id, capsule_digest: cap.capsule_digest, owner_subject_id: wf.owner_subject_id, workflow_id: wf.workflow_id, expires_at: cap.expires_at, revoked: false, intended_client_id: a.intended_host?.client_id ?? null });
-    append(wf, { event_type: "capsule.exported", actor: { type: "user", ref: actorRef(p) }, payload: { capsule_id: cap.capsule_id, capsule_digest: cap.capsule_digest, included_field_count: a.include_fields.length, encrypted: body.encryption.status !== "none" }, idempotency_key: c.idem });
+    append(wf, { event_type: "capsule.exported", actor: { type: "user", ref: actorRef(p) }, payload: { capsule_id: cap.capsule_id, capsule_digest: cap.capsule_digest, included_field_count: a.include_fields.length, encrypted: body.encryption.status !== "none" }, idempotency_key: c.ref });
     return { olip_version: V3, capsule: cap, transmitted: false, statement: "Exported for you. It was not sent anywhere and it authorizes no one." };
   };
   H["olip.validate_context_capsule"] = (p, a) => ({ olip_version: V3, ...checkCapsule(a.capsule), stored: false });
@@ -411,7 +413,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
       scope: ["read_imported_capsule"], authorizes_recipients: [], statement: "Lets this one assistant import this one capsule. It does not let the assistant contact or send anything to anyone." }, keys.capsules);
     store.importAuthorizations.set(auth.import_authorization_id, { ...auth, owner_subject_id: p.subject_id, uses: 0, revoked: false });
     const wf = store.workflows.get(rec.workflow_id);
-    append(wf, { event_type: "capsule.import_authorized", actor: { type: "user", ref: actorRef(p) }, payload: { capsule_id: rec.capsule_id, client_id: a.client_id, import_authorization_id: auth.import_authorization_id }, idempotency_key: c.idem });
+    append(wf, { event_type: "capsule.import_authorized", actor: { type: "user", ref: actorRef(p) }, payload: { capsule_id: rec.capsule_id, client_id: a.client_id, import_authorization_id: auth.import_authorization_id }, idempotency_key: c.ref });
     return { olip_version: V3, import_authorization: auth };
   };
   H["olip.import_context_capsule"] = (p, a, c) => {
@@ -430,7 +432,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
     const imp = { import_id: newId("imp"), capsule_id: a.capsule.capsule_id, client_id: p.client_id, owner_subject_id: p.subject_id, state: "imported_limited", imported_at: iso(), capsule: a.capsule, import_authorization_id: ia.import_authorization_id };
     store.imports.set(`${p.client_id}:${imp.capsule_id}`, imp);
     const wf = store.workflows.get(store.capsules.get(imp.capsule_id).workflow_id);
-    append(wf, { event_type: "capsule.imported", actor: { type: "ai_host", ref: actorRef(p) }, authority_ref: ia.import_authorization_id, payload: { capsule_id: imp.capsule_id, client_id: p.client_id }, idempotency_key: c.idem });
+    append(wf, { event_type: "capsule.imported", actor: { type: "ai_host", ref: actorRef(p) }, authority_ref: ia.import_authorization_id, payload: { capsule_id: imp.capsule_id, client_id: p.client_id }, idempotency_key: c.ref });
     return importView(imp, { grants_created: v2.state.grants.size - grantsBefore });
   };
   const importView = (imp, extra = {}) => ({ olip_version: V3, import: { import_id: imp.import_id, capsule_id: imp.capsule_id, client_id: imp.client_id, state: imp.state, imported_at: imp.imported_at },
@@ -451,7 +453,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
       rec.revoked = true; rec.revoked_at = iso();
       for (const ia of store.importAuthorizations.values()) if (ia.capsule_id === rec.capsule_id) ia.revoked = true;
       for (const imp of store.imports.values()) if (imp.capsule_id === rec.capsule_id) imp.state = "revoked";
-      append(store.workflows.get(rec.workflow_id), { event_type: "capsule.revoked", actor: { type: "user", ref: actorRef(p) }, payload: { capsule_id: rec.capsule_id }, idempotency_key: c.idem });
+      append(store.workflows.get(rec.workflow_id), { event_type: "capsule.revoked", actor: { type: "user", ref: actorRef(p) }, payload: { capsule_id: rec.capsule_id }, idempotency_key: c.ref });
     }
     return { olip_version: V3, capsule_id: rec.capsule_id, revoked: true, revoked_at: rec.revoked_at, statement: "Future imports and reads on this host stop. Copies already taken elsewhere cannot be recalled." };
   };
@@ -518,7 +520,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
     const correlation_id = correlationId && /^[A-Za-z0-9_.:-]{1,100}$/.test(correlationId) ? correlationId : newId("cor");
     const a = ACTION_BY_ID[actionId];
     let p = null, decision = null, status = 200, out;
-    const c = { idem: null, decision: null };
+    const c = { idem: null, ref: null, decision: null };
     try {
       if (!a) fail("ACTION_NOT_SUPPORTED");
       if (!a.transports.includes(binding)) fail("ACTION_NOT_SUPPORTED", `${a.id} is not offered through ${binding}.`);
@@ -534,15 +536,17 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
       if (a.mutating) {
         if (!idempotencyKey || !/^[A-Za-z0-9_.:-]{8,128}$/.test(idempotencyKey)) fail("IDEMPOTENCY_KEY_REQUIRED", "Send an Idempotency-Key of 8 to 128 characters (letters, digits, _ . : -).");
         const scope = `${p.kind}:${p.subject_id ?? p.organization_id ?? p.operator_id}:${p.client_id ?? "-"}:${a.id}:${idempotencyKey}`;
-        c.idem = digestOf(scope).slice(7, 39);
+        c.idem = digestOf(scope).slice(7, 39); // deterministic key for the 2.0-draft call, never written to the journal
         const prev = store.idempotency.get(scope);
+        // The journal records a short host-local request reference, not the caller's key or a digest of it.
+        if (!prev) c.ref = `req-${String(++requestSeq).padStart(6, "0")}`;
         const bodyDigest = digestOf(input);
         if (prev) {
           if (prev.input_digest !== bodyDigest) fail("IDEMPOTENCY_CONFLICT");
           return finish({ status: prev.status, body: { ...prev.body, idempotent_replay: true }, a, p, decision, correlation_id, binding });
         }
         out = await H[a.id](p, input, c);
-        store.idempotency.set(scope, { input_digest: bodyDigest, status: 200, body: out, at: iso() });
+        store.idempotency.set(scope, { input_digest: bodyDigest, status: 200, body: out, at: iso(), request_ref: c.ref });
       } else out = await H[a.id](p, input, c);
       store.commit();
       return finish({ status, body: out, a, p, decision: c.decision || decision, correlation_id, binding });

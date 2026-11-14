@@ -2,8 +2,8 @@
   "olip_version": "3.0-draft.1",
   "document": "legal_context_capsule",
   "capsule_version": "3.0-draft.1",
-  "capsule_id": "cap_zUFHIgqHTW5sIoQs",
-  "matter_ref": "wf_VorHnOamNEFaFkTK",
+  "capsule_id": "cap_Yws8hk1dMf3MsERs",
+  "matter_ref": "wf__YbExBonJIga9mHc",
   "subject_ref": "subj_x_US0uvJ4e_vjPDdMcyDYx",
   "controller": {
     "kind": "user",
@@ -11,14 +11,14 @@
   },
   "issuer": "urn:olip:host:v3-host",
   "fictional": true,
-  "created_at": "2026-11-14T17:00:00.467Z",
-  "expires_at": "2026-11-21T17:00:00.467Z",
+  "created_at": "2026-11-14T17:00:00.435Z",
+  "expires_at": "2026-11-21T17:00:00.435Z",
   "source_provenance": {
     "origin": "olip_3_0_draft_reference_host",
     "method": "user_initiated_export",
     "casebrief_revision": 1,
     "as_of_event_sequence": 32,
-    "as_of_event_digest": "sha256:f8e4aa1dccb4689562fc0e2f30ac59d5e38403655d92ca1db98642403cc2ee46"
+    "as_of_event_digest": "sha256:ab339d0e4b1c3a382843b415bd523001b8e5900e5c9b55b8975f618921b2df3b"
   },
   "included_fields": [
     "matter.category"
@@ -58,9 +58,9 @@
     }
   ],
   "workflow_snapshot": {
-    "as_of": "2026-11-14T17:00:00.467Z",
+    "as_of": "2026-11-14T17:00:00.435Z",
     "as_of_event_sequence": 32,
-    "as_of_event_digest": "sha256:f8e4aa1dccb4689562fc0e2f30ac59d5e38403655d92ca1db98642403cc2ee46",
+    "as_of_event_digest": "sha256:ab339d0e4b1c3a382843b415bd523001b8e5900e5c9b55b8975f618921b2df3b",
     "lifecycle": {
       "matter": {
         "state": "closed",
@@ -68,7 +68,7 @@
       },
       "conflict_screens": [
         {
-          "id": "scr_WmHgzV5tf0TD9SyI",
+          "id": "scr_vDHGB9fyBVkuJ2Zx",
           "organization_id": "org_test_alvarez",
           "state": "eligible_for_further_intake",
           "meaning": "The organization says intake may continue. This is NOT a conflict clearance finding and NOT representation.",
@@ -76,7 +76,7 @@
           "reconciliation_required": false
         },
         {
-          "id": "scr_I26LGqMG4TwA_iFK",
+          "id": "scr_H-b3fO4Tvb9UEO1s",
           "organization_id": "org_test_cedar",
           "state": "not_started",
           "meaning": "No screening data has been sent to this organization.",
@@ -86,7 +86,7 @@
       ],
       "consultations": [
         {
-          "id": "cns_WhOgoiQnTUyp9kcp",
+          "id": "cns__2UX-00VkSye1j6d",
           "organization_id": "org_test_alvarez",
           "state": "confirmed",
           "meaning": "The organization's scheduling system confirmed this time and time zone.",
@@ -96,7 +96,7 @@
       ],
       "engagements": [
         {
-          "id": "eng_x7wQtDvR6o4pLy-O",
+          "id": "eng_M6ftx0Jo1-kLMGnL",
           "organization_id": "org_test_alvarez",
           "state": "ended",
           "meaning": "The organization reports the engagement ended (see the matter record).",
@@ -115,7 +115,7 @@
     "authorized_by": "signed_in_user_session",
     "purpose": "personal_record",
     "originating_system": "urn:olip:host:v3-host",
-    "expires_at": "2026-11-21T17:00:00.467Z",
+    "expires_at": "2026-11-21T17:00:00.435Z",
     "onward_disclosure": false,
     "authorizes_recipients": [],
     "new_host_access": "Requires a separate import authorization from the user for one named assistant.",
@@ -123,7 +123,7 @@
   },
   "intended_host": null,
   "retention": {
-    "expires_at": "2026-11-21T17:00:00.467Z",
+    "expires_at": "2026-11-21T17:00:00.435Z",
     "revocation": "The user can revoke it on the issuing host; imports and reads there stop. Copies already taken elsewhere cannot be recalled.",
     "deletion": "Mock host: in memory or a local snapshot file.",
     "legal_hold_caveat": "Organizations that already received information keep it under their own legal duties."
@@ -149,7 +149,7 @@
         "value": "housing.landlord_tenant",
         "origin_type": "user_reported",
         "source_ref": "casebrief_revision_1",
-        "observed_at": "2026-11-14T17:00:00.459Z",
+        "observed_at": "2026-11-14T17:00:00.429Z",
         "verified_at": null,
         "jurisdiction": "US-CA",
         "extraction_method": "user_entered",
@@ -162,12 +162,12 @@
       },
       {
         "claim_id": "claim_002",
-        "field_path": "lifecycle.conflict_screen.scr_WmHgzV5tf0TD9SyI",
+        "field_path": "lifecycle.conflict_screen.scr_vDHGB9fyBVkuJ2Zx",
         "value": "intake.eligible_for_further_intake",
         "origin_type": "firm_asserted",
-        "source_ref": "urn:olip:org_test_alvarez:event:RSwtYoddxH9e",
-        "observed_at": "2026-11-14T17:00:00.258Z",
-        "verified_at": "2026-11-14T17:00:00.258Z",
+        "source_ref": "urn:olip:org_test_alvarez:event:lCwbqx3Tl-fD",
+        "observed_at": "2026-11-14T17:00:00.255Z",
+        "verified_at": "2026-11-14T17:00:00.255Z",
         "jurisdiction": "US-CA",
         "extraction_method": "signed_lifecycle_event",
         "confidence_or_uncertainty": "not_applicable",
@@ -179,12 +179,12 @@
       },
       {
         "claim_id": "claim_003",
-        "field_path": "lifecycle.consultation.cns_WhOgoiQnTUyp9kcp",
+        "field_path": "lifecycle.consultation.cns__2UX-00VkSye1j6d",
         "value": "consultation.options_offered",
         "origin_type": "firm_asserted",
-        "source_ref": "urn:olip:org_test_alvarez:event:_MFuJETIWjiZ",
-        "observed_at": "2026-11-14T17:00:00.287Z",
-        "verified_at": "2026-11-14T17:00:00.287Z",
+        "source_ref": "urn:olip:org_test_alvarez:event:edxcEIRJW0PZ",
+        "observed_at": "2026-11-14T17:00:00.283Z",
+        "verified_at": "2026-11-14T17:00:00.283Z",
         "jurisdiction": "US-CA",
         "extraction_method": "signed_lifecycle_event",
         "confidence_or_uncertainty": "not_applicable",
@@ -196,12 +196,12 @@
       },
       {
         "claim_id": "claim_004",
-        "field_path": "lifecycle.consultation.cns_WhOgoiQnTUyp9kcp",
+        "field_path": "lifecycle.consultation.cns__2UX-00VkSye1j6d",
         "value": "consultation.confirmed",
         "origin_type": "firm_asserted",
-        "source_ref": "urn:olip:org_test_alvarez:event:KjBREmLmxTQl",
-        "observed_at": "2026-11-14T17:00:00.305Z",
-        "verified_at": "2026-11-14T17:00:00.305Z",
+        "source_ref": "urn:olip:org_test_alvarez:event:_YTsGNIUpdES",
+        "observed_at": "2026-11-14T17:00:00.300Z",
+        "verified_at": "2026-11-14T17:00:00.300Z",
         "jurisdiction": "US-CA",
         "extraction_method": "signed_lifecycle_event",
         "confidence_or_uncertainty": "not_applicable",
@@ -213,10 +213,27 @@
       },
       {
         "claim_id": "claim_005",
-        "field_path": "lifecycle.engagement.eng_x7wQtDvR6o4pLy-O",
+        "field_path": "lifecycle.engagement.eng_M6ftx0Jo1-kLMGnL",
         "value": "engagement.offered",
         "origin_type": "firm_asserted",
-        "source_ref": "urn:olip:org_test_alvarez:event:W89WKiOIV_0A",
+        "source_ref": "urn:olip:org_test_alvarez:event:9eWuL-TMJof3",
+        "observed_at": "2026-11-14T17:00:00.395Z",
+        "verified_at": "2026-11-14T17:00:00.395Z",
+        "jurisdiction": "US-CA",
+        "extraction_method": "signed_lifecycle_event",
+        "confidence_or_uncertainty": "not_applicable",
+        "verification_status": "signature_verified_by_2_0_host",
+        "supersedes_claim_id": null,
+        "access_classification": "client_confidential",
+        "content_digest": "sha256:df7be69406b575870dfbb20d2c7f81a9cbeab9c24b8e093f23a60dd674dc92d7",
+        "untrusted_text_flags": []
+      },
+      {
+        "claim_id": "claim_006",
+        "field_path": "lifecycle.engagement.eng_M6ftx0Jo1-kLMGnL",
+        "value": "engagement.firm_confirmed",
+        "origin_type": "firm_asserted",
+        "source_ref": "urn:olip:org_test_alvarez:event:aTIwzTh9CHCp",
         "observed_at": "2026-11-14T17:00:00.413Z",
         "verified_at": "2026-11-14T17:00:00.413Z",
         "jurisdiction": "US-CA",
@@ -229,30 +246,13 @@
         "untrusted_text_flags": []
       },
       {
-        "claim_id": "claim_006",
-        "field_path": "lifecycle.engagement.eng_x7wQtDvR6o4pLy-O",
-        "value": "engagement.firm_confirmed",
-        "origin_type": "firm_asserted",
-        "source_ref": "urn:olip:org_test_alvarez:event:Js0lx9e7QmKX",
-        "observed_at": "2026-11-14T17:00:00.436Z",
-        "verified_at": "2026-11-14T17:00:00.436Z",
-        "jurisdiction": "US-CA",
-        "extraction_method": "signed_lifecycle_event",
-        "confidence_or_uncertainty": "not_applicable",
-        "verification_status": "signature_verified_by_2_0_host",
-        "supersedes_claim_id": null,
-        "access_classification": "client_confidential",
-        "content_digest": "sha256:df7be69406b575870dfbb20d2c7f81a9cbeab9c24b8e093f23a60dd674dc92d7",
-        "untrusted_text_flags": []
-      },
-      {
         "claim_id": "claim_007",
-        "field_path": "lifecycle.matter.mat_UQ0Rj6ZAj-3hj3OY",
+        "field_path": "lifecycle.matter.mat_XbTrM3sykEmO4x2v",
         "value": "matter.closed",
         "origin_type": "firm_asserted",
-        "source_ref": "urn:olip:org_test_alvarez:event:xK2qletdAZML",
-        "observed_at": "2026-11-14T17:00:00.460Z",
-        "verified_at": "2026-11-14T17:00:00.460Z",
+        "source_ref": "urn:olip:org_test_alvarez:event:awpqBP64QDE2",
+        "observed_at": "2026-11-14T17:00:00.429Z",
+        "verified_at": "2026-11-14T17:00:00.429Z",
         "jurisdiction": "US-CA",
         "extraction_method": "signed_lifecycle_event",
         "confidence_or_uncertainty": "not_applicable",
@@ -268,11 +268,11 @@
     "time_sensitive_fields": [],
     "document_refs": []
   },
-  "capsule_digest": "sha256:3e00820e0f76c6be8beb6c3afbc17b75df08b9305d67905a7735a27e00cfb52c",
+  "capsule_digest": "sha256:2aa6fb81f11f3efcf865e0b1bf98b2e4981e01c10413d0cdfe5ce672f053f223",
   "signature": {
     "alg": "EdDSA",
     "kid": "kid_v3test_bb480e323394",
-    "value": "tb6EXkkTQuQ8a3fbrLFFdhZM8y7_wv3KdBSZK3cZnNig2D2Oh5kXA0R51lxOXhtkhiuF__4K9NkcR-pilmObBw"
+    "value": "LLPn9Il6QPolcL5sES0j-dSQIcgFKNZ761pSyouJfMoVy6SLSx3TiRFn3Ez1PiOfCgpV8PIrDKsTAhF1ifwhCA"
   },
   "sealed_content": {
     "alg": "ECDH-ES+HKDF-SHA256/A256GCM",

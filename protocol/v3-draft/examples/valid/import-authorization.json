@@ -2,15 +2,15 @@
   "olip_version": "3.0-draft.1",
   "import_authorization": {
     "olip_version": "3.0-draft.1",
-    "import_authorization_id": "iau_df-m_MPyCfswwt3I",
-    "capsule_id": "cap_3srrtk_nlrr9_e8M",
-    "capsule_digest": "sha256:161b1989d98576169b6794bd32483ab85a2f77c9787af61d2bbbdd2858a714d9",
+    "import_authorization_id": "iau_oIBdTFNAFkRxw3Pn",
+    "capsule_id": "cap_HmuwNZC13vJ3RkKx",
+    "capsule_digest": "sha256:2f461af9eaa64dd7a9b73cf1e07c54abfe7114ab2c7c870b6eab3221fb2977f8",
     "client_id": "agt_test_assistant_b",
     "subject_ref": "subj_x_US0uvJ4e_vjPDdMcyDYx",
     "authorized_by": "signed_in_user_session",
-    "created_at": "2026-11-14T17:00:00.318Z",
-    "expires_at": "2026-11-14T18:00:00.318Z",
-    "nonce": "yhMlIBFwIoe8FjXJ0d14cQ",
+    "created_at": "2026-11-14T17:00:00.311Z",
+    "expires_at": "2026-11-14T18:00:00.311Z",
+    "nonce": "PB7h9jJ0heew1ckvZzsxZg",
     "max_uses": 1,
     "scope": [
       "read_imported_capsule"
@@ -20,10 +20,10 @@
     "signature": {
       "alg": "EdDSA",
       "kid": "kid_v3test_bb480e323394",
-      "value": "zGbeYmhLYr5w3nKLi_ZDtTFHkpxNZKbjPtl2aqbXMF4GuqGcvdXUEj4wI5nbtPhkpB48p_abrU4WgRlshWBcAQ"
+      "value": "QOyX-8WFA25mbABRksmOiDWZoJCURgiX7klkF_Zm3rGb0CDxlvWMzbcr7OeGWuTO5kOUDtv55YI3917m5iMdDA"
     }
   },
-  "correlation_id": "cor_7cg1KYqp61XB0Sro",
+  "correlation_id": "cor_GKzZ1OXDDZAs4E2x",
   "action_receipt": {
     "action": "olip.authorize_capsule_import",
     "effect": "authorized_state_change",

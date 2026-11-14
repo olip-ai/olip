@@ -7,3 +7,14 @@
 7937f9123960cf10177ea3023f8403efa6b3cfff:protocol/v2-draft/examples/invalid/lifecycle-event.issuer_not_scoped.json:generic-api-key:18
 7937f9123960cf10177ea3023f8403efa6b3cfff:protocol/v2-draft/examples/valid/audit-record.json:generic-api-key:22
 7937f9123960cf10177ea3023f8403efa6b3cfff:protocol/v2-draft/examples/valid/lifecycle-event.json:generic-api-key:18
+# OLIP 3.0-draft (PR #15). Commit 3f876c2 only, fixed in the next commit:
+# seven are scoped request digests in a FICTIONAL example journal (the journal now records "req-000001"-style references),
+# and one is a deliberately credential-like FICTIONAL test phrase (the test now uses a low-entropy passcode).
+3f876c273d3a54783c033612fbb4d3b5156ce8c8:protocol/v3-draft/examples/valid/events-page.json:generic-api-key:107
+3f876c273d3a54783c033612fbb4d3b5156ce8c8:protocol/v3-draft/examples/valid/events-page.json:generic-api-key:222
+3f876c273d3a54783c033612fbb4d3b5156ce8c8:protocol/v3-draft/examples/valid/events-page.json:generic-api-key:543
+3f876c273d3a54783c033612fbb4d3b5156ce8c8:protocol/v3-draft/examples/valid/events-page.json:generic-api-key:577
+3f876c273d3a54783c033612fbb4d3b5156ce8c8:protocol/v3-draft/examples/valid/events-page.json:generic-api-key:610
+3f876c273d3a54783c033612fbb4d3b5156ce8c8:protocol/v3-draft/examples/valid/events-page.json:generic-api-key:651
+3f876c273d3a54783c033612fbb4d3b5156ce8c8:protocol/v3-draft/examples/valid/events-page.json:generic-api-key:683
+3f876c273d3a54783c033612fbb4d3b5156ce8c8:protocol/v3-draft/tests/capsule.test.mjs:generic-api-key:46

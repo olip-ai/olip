@@ -1,11 +1,11 @@
 {
   "olip_version": "3.0-draft.1",
-  "event_id": "urn:olip:v3:v3-host:evt:wf_VorHnOamNEFaFkTK:1",
-  "workflow_id": "wf_VorHnOamNEFaFkTK",
+  "event_id": "urn:olip:v3:v3-host:evt:wf__YbExBonJIga9mHc:1",
+  "workflow_id": "wf__YbExBonJIga9mHc",
   "sequence": 1,
   "event_type": "workflow.created",
   "schema_version": "3.0-draft.1",
-  "recorded_at": "2026-11-14T17:00:00.216Z",
+  "recorded_at": "2026-11-14T17:00:00.214Z",
   "actor_type": "ai_host",
   "actor_ref": {
     "kind": "agent",
@@ -20,13 +20,13 @@
   },
   "previous_event_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
   "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
-  "idempotency_key": "849ba2a8a89276e766e58263b7814ee9",
+  "idempotency_key": "req-000001",
   "privacy_scope": "participant_minimum",
   "fictional": true,
   "event_digest": "md5:abc",
   "signature": {
     "alg": "EdDSA",
     "kid": "kid_v3test_a2fcfad00484",
-    "value": "7zDuHYBYjQLXYKwX0U59tPvWIoavtKnCKw7lPdljVod8ouWkCItZgc6838Bw5P_2rpswXOzKzT433kY8y-itBA"
+    "value": "WOtxg7OSsK1Ndr7wLmo4pR-3VLwntSkjVy4J3FYzSkQNcx1X3b0htlxMWaL7qq23jxEihy6YCPwDCqprJAJbBw"
   }
 }

@@ -1,9 +1,9 @@
 {
   "olip_version": "3.0-draft.1",
   "plan_version": "3.0-draft.1",
-  "workflow_id": "wf_VorHnOamNEFaFkTK",
+  "workflow_id": "wf__YbExBonJIga9mHc",
   "as_of_event_sequence": 2,
-  "as_of_event_digest": "sha256:46480852ac95199d3213735dcca2cafe459dd24fc2e14b64353f60aba13acca7",
+  "as_of_event_digest": "sha256:1eac3dd5f06de70d826728cb9c888aec8c8896614a86e07744669276b2965cc8",
   "desired_goal": "share_screening",
   "next_actions": [
     {
@@ -46,8 +46,8 @@
   "not_authorization": false,
   "not_legal_advice": true,
   "statement": "Procedural hints only. 'allowed' is not permission: every action is checked again by the host when it is called. Nothing here is legal advice or a recommendation of any organization.",
-  "plan_digest": "sha256:c65303537b08003d07d5cc17f7c817eff44b57ea11d2a170624ad9f33ec2d35d",
-  "correlation_id": "cor_gojmpeAyYPsxSYmq",
+  "plan_digest": "sha256:a546611546d52e1d71c726022fdf76d056f48fff01a7472cb5c1e9e51c466c6f",
+  "correlation_id": "cor_TLSx0HNMQjBUmjjJ",
   "action_receipt": {
     "action": "olip.plan_next_actions",
     "effect": "local_preparation",

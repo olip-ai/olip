@@ -1,16 +1,16 @@
 {
   "olip_version": "3.0-draft.1",
-  "webhook_id": "whk_p2x9w2vryvzmaOXo",
-  "subscription_id": "sub_Mht8u7-NgvE6mskx",
-  "workflow_id": "wf_VorHnOamNEFaFkTK",
+  "webhook_id": "whk_kzWtEEjfAD1xessf",
+  "subscription_id": "sub_HPE7R7Pbv--WsLOw",
+  "workflow_id": "wf__YbExBonJIga9mHc",
   "event_sequence": 19,
   "event_type": "disclosure.prepared",
-  "event_digest": "sha256:b8379ba6f90333a0071208aaa3b5a63a7cdb9ff584329f0fa47a6fbb7518b66f",
-  "sent_at": "2026-11-14T17:00:00.359Z",
+  "event_digest": "sha256:2a843bf117ce3407b19a650035ac1fb2a0a5cb5b578d3bd5b13b093dc7c6844b",
+  "sent_at": "2026-11-14T17:00:00.348Z",
   "statement": "Hint only. Contains no case content. Read the workflow before acting. Deduplicate on webhook_id.",
   "signature": {
     "alg": "EdDSA",
     "kid": "kid_v3test_a2fcfad00484",
-    "value": "VjWoswtkgO2jidbpc-dyrRDwXoh2z7bu8-19ZgCxy56EUwGolLYUz88x9u_5S5wJbxQmbgbX3MNJ4zEPdYc_Cw"
+    "value": "PN-DP3fMOWIPmPA9jRiSPaV440lSjfe1QuJE3jyR55duP7ijIHDv0G8okDyLK4X9B6KkWONn_Zbo7o10enOLDg"
   }
 }

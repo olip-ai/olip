@@ -5,15 +5,15 @@
   "result": {
     "olip_version": "2.0-draft",
     "consultation": {
-      "id": "cns_WhOgoiQnTUyp9kcp",
+      "id": "cns__2UX-00VkSye1j6d",
       "type": "consultation",
       "machine": "consultation",
       "state": "not_requested",
       "revision": 0,
       "history": [],
-      "created_at": "2026-11-14T17:00:00.271Z",
-      "updated_at": "2026-11-14T17:00:00.271Z",
-      "matter_id": "mat_UQ0Rj6ZAj-3hj3OY",
+      "created_at": "2026-11-14T17:00:00.267Z",
+      "updated_at": "2026-11-14T17:00:00.267Z",
+      "matter_id": "mat_XbTrM3sykEmO4x2v",
       "organization_id": "org_test_alvarez",
       "preferences": {
         "modes": [
@@ -29,18 +29,18 @@
       "attendance": null
     },
     "approval": {
-      "approval_id": "apv_qpno_SCUMl4j0iAh",
-      "approval_url": "/olip/v2/approvals/apv_qpno_SCUMl4j0iAh",
-      "grant_id": "grt_Sg9qoEPoB2njEmH_",
-      "grant_digest": "sha256:d3b64ea0b58819582b72e16954127d4bf7dd83d86210f5115ae5d06535f770f9",
-      "expires_at": "2026-11-14T17:30:00.271Z",
+      "approval_id": "apv_jgR1wB8fIAFFsk0S",
+      "approval_url": "/olip/v2/approvals/apv_jgR1wB8fIAFFsk0S",
+      "grant_id": "grt_NBgPYewursRXFGfk",
+      "grant_digest": "sha256:5032b9049613c4cef180267fb286a5b3423a0318f9953b97732ca7dc45346b91",
+      "expires_at": "2026-11-14T17:30:00.267Z",
       "state": "pending_user_approval",
       "instructions": "Show this link to the user. Only the user can approve it, on that page, with a code sent to their own contact. The agent cannot approve."
     }
   },
   "effect": "local_preparation",
   "next": "Show the user the approval page. Only the user can approve. Then call the matching submit step with grant_id and grant_digest.",
-  "correlation_id": "cor_cbGTPRsyctwr4Tmw",
+  "correlation_id": "cor_8BcWv7FMjgKdu066",
   "action_receipt": {
     "action": "olip.call_lifecycle",
     "effect": "local_preparation",

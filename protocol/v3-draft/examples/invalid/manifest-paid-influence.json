@@ -862,11 +862,11 @@
   "mode": "mock",
   "fictional_data_only": true,
   "max_age_seconds": 300,
-  "expires_at": "2026-11-14T18:00:00.186Z",
+  "expires_at": "2026-11-14T18:00:00.184Z",
   "etag": "sha256:634eb64fb40127d3af62dfa64f75c299d8603408c4af02f6ee051c0110e60ad2",
   "signature": {
     "alg": "EdDSA",
     "kid": "kid_v3test_911680470501",
-    "value": "-krXR4Di72-aIXfHmUNfiAsalpK10U2topVPcfG8cXoEVLV8IO7BcVyqOTuJF5HCCijAX91ufurVw5Bz8trRAA"
+    "value": "-7SMpgaN6hg078rFRg845M4U2Rn442gWHwUyEmWhGrdHGSh9P6QOpl1Ozh4N-2_N75EBFsSw8RmcuRuMCJ44Cw"
   }
 }

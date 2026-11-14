@@ -43,7 +43,7 @@ test("an assistant's interpretation stays a separate, labeled claim; a disagreem
 test("only the signed-in user exports; unknown fields and credential-like values are refused", async () => {
   assert.equal(await codeOf(who.alpha.exportCapsule({ workflow_id: wf.workflow_id, include_fields: ["matter.category"], purpose: "personal_record" })), "USER_APPROVAL_REQUIRED");
   assert.equal(await codeOf(exportFor({ include_fields: ["matter.secret_notes"] })), "SCHEMA_INVALID");
-  const w2 = (await who.alpha.startWorkflow(casebrief({ goals: "Get the deposit back. Portal password: hunter2-fictional" }))).workflow;
+  const w2 = (await who.alpha.startWorkflow(casebrief({ goals: "Get the deposit back. Portal passcode: 0000" }))).workflow;
   assert.equal(await codeOf(who.user.exportCapsule({ workflow_id: w2.workflow_id, include_fields: ["goals"], purpose: "personal_record" })), "SENSITIVE_DATA_BLOCKED");
 });
 test("tampering, re-signing with another key, and a capsule from another host are all detected", async () => {

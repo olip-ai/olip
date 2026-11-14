@@ -1,10 +1,10 @@
 {
   "olip_version": "3.0-draft.1",
-  "capsule_id": "cap_zUFHIgqHTW5sIoQs",
+  "capsule_id": "cap_Yws8hk1dMf3MsERs",
   "revoked": true,
-  "revoked_at": "2026-11-14T17:00:00.538Z",
+  "revoked_at": "2026-11-14T17:00:00.483Z",
   "statement": "Future imports and reads on this host stop. Copies already taken elsewhere cannot be recalled.",
-  "correlation_id": "cor_pgV3ZuxPKkAxvIcR",
+  "correlation_id": "cor_lzPBsxmpIezvPIWM",
   "action_receipt": {
     "action": "olip.revoke_context_capsule",
     "effect": "authorized_state_change",

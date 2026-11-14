@@ -8,7 +8,7 @@
   "issuer_kid": "kid_v3test_bb480e323394",
   "encrypted": false,
   "stored": false,
-  "correlation_id": "cor_vHNs1xsikE5xODAc",
+  "correlation_id": "cor_CcMVn0Amgp4BXaTh",
   "action_receipt": {
     "action": "olip.validate_context_capsule",
     "effect": "local_preparation",
