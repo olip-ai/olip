@@ -84,6 +84,7 @@ test("webhooks: signed, minimal hints; receivers verify signature, freshness and
     assert.equal((await checkWebhook(w, keys, { seen, now: Date.parse(w.sent_at) })).reason, "replayed_webhook_id");
     assert.equal((await checkWebhook({ ...w, event_type: "x" }, keys, { seen: new Set(), now: Date.parse(w.sent_at) })).reason, "bad_signature");
     assert.equal((await checkWebhook(w, keys, { seen: new Set(), now: Date.parse(w.sent_at) + 600e3 })).reason, "stale_or_future_timestamp");
+    assert.equal((await checkWebhook({ ...w, signature: { ...w.signature, kid: "kid_test_attacker000" } }, keys, { seen: new Set(), now: Date.parse(w.sent_at) })).reason, "unknown_kid", "a changed kid is refused");
   } finally { rx.close(); }
   const m2 = (await a.ai.createMatter(casebrief(), { fictional: true })).matter;
   for (const [url, reason] of [["http://example.test/h", "https_required"], ["https://user:pw@example.test/h", "credentials_in_url"], ["https://169.254.169.254/latest", "blocked_address"], ["https://[::1]/h", "blocked_address"], ["https://10.0.0.5/h", "blocked_address"], ["https://metadata.google.internal/x", "blocked_hostname"], ["https://localhost/x", "blocked_hostname"]])

@@ -1,4 +1,4 @@
-// Scenarios A, B, C and E from the OLIP 2.0 instructions, run over loopback HTTP with fictional data.
+// Scenarios A, B, C, D and E from the OLIP 2.0 instructions, run over loopback HTTP with fictional data.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { startSystem, runScenarioA, actors, userApproves, staff, acts, eligibleMatter, casebrief, SCREEN_FIELDS, expectErr, ok, obj, httpTransport, FIRMS } from "./helpers.mjs";
@@ -101,5 +101,43 @@ test("Scenario E: relay accepts but the firm is offline; state stays accepted_by
     expectErr(r3, 409, "OLIP_IDEMPOTENCY_CONFLICT");
     const types = (await a.ai.events(m.matter_id)).entries.map((e) => e.event.event_type);
     assert.ok(types.includes("disclosure.not_confirmed")); assert.ok(!types.includes("intake.screening_requested"));
+  } finally { await sys.stop(); }
+});
+
+test("Scenario D: a malicious assistant tries blanket approval, an unapproved send, a self-made engagement and history edits; all fail with precise codes and change nothing", async () => {
+  const sys = await startSystem();
+  try {
+    const a = await actors(sys);
+    const { m, screen } = await eligibleMatter(sys, a);
+    const before = (await a.ai.events(m.matter_id)).entries;
+    const stateBefore = JSON.stringify([...sys.host.state.objects.values()].filter((o) => o.matter_id === m.matter_id).map((o) => [o.id, o.state, o.revision]));
+    // 1. Blanket approval: approve every pending approval it can find.
+    const cb = await a.ai.requestCasebriefDisclosure(m.matter_id, "org_test_alvarez", FIRMS.org_test_alvarez.casebrief_fields);
+    expectErr(await a.ai.request("POST", `/olip/v2/approvals/${cb.approval.approval_id}/decision`, { decision: "approve", otp: "000000", grant_digest: cb.approval.grant_digest }), 403, "OLIP_AGENT_CANNOT_APPROVE");
+    expectErr(await a.ai.request("POST", `/olip/v2/grants/${cb.approval.grant_id}/approve`, {}), 404, "OLIP_NOT_FOUND");
+    // 2. Send an unapproved draft and a fuller CaseBrief without approval.
+    expectErr(await a.ai.request("POST", `/olip/v2/matters/${m.matter_id}/disclosures/submit`, { grant_id: cb.approval.grant_id, grant_digest: cb.approval.grant_digest }), 403, "OLIP_DISCLOSURE_NOT_AUTHORIZED");
+    const t = ok(await a.ai.request("POST", `/olip/v2/matters/${m.matter_id}/threads`, { organization_id: "org_test_alvarez" })).thread;
+    const d = await a.ai.draftMessage(t.id, "Fictional: send this without asking the user.");
+    expectErr(await a.ai.request("POST", `/olip/v2/messages/${d.message.id}/send`, { grant_id: d.approval.grant_id, grant_digest: d.approval.grant_digest }), 403, "OLIP_DISCLOSURE_NOT_AUTHORIZED");
+    expectErr(await a.ai.request("POST", `/olip/v2/messages/${d.message.id}/send`, { grant_id: cb.approval.grant_id, grant_digest: cb.approval.grant_digest }), 403, "OLIP_DISCLOSURE_NOT_AUTHORIZED");
+    // 3. Create its own engagement and confirm it.
+    expectErr(await a.ai.request("POST", `/olip/v2/matters/${m.matter_id}/engagements`, {}), 403, "OLIP_FORBIDDEN");
+    expectErr(await a.ai.request("POST", `/olip/v2/matters/${m.matter_id}/engagement-offers`, { event: { olip_version: "2.0-draft", event_type: "engagement.offered" } }), 403, "OLIP_FORBIDDEN");
+    expectErr(await a.ai.request("POST", `/olip/v2/conflict-screens/${screen.id}/events`, { event: { olip_version: "2.0-draft", event_type: "intake.eligible_for_further_intake" } }), 403, "OLIP_FORBIDDEN");
+    // 4. Edit or delete signed history: there is no such operation, and the chain still verifies.
+    for (const [method, path] of [["PUT", `/olip/v2/matters/${m.matter_id}/events`], ["DELETE", `/olip/v2/matters/${m.matter_id}/events`], ["PUT", `/olip/v2/matters/${m.matter_id}/events/1`]])
+      expectErr(await a.ai.request(method, path, { entries: [] }), 404, "OLIP_NOT_FOUND");
+    assert.equal((await a.ai.events(m.matter_id)).chain.ok, true);
+    // No side effects: no new firm-visible state; only the host's own records of the prepared (unapproved) requests and the opened thread.
+    const after = (await a.ai.events(m.matter_id)).entries;
+    assert.deepEqual(after.slice(0, before.length).map((e) => e.entry_hash), before.map((e) => e.entry_hash), "earlier history unchanged");
+    assert.ok(!after.slice(before.length).some((e) => ["firm", "consumer"].includes(e.event.actor.role) && /delivered|sent|eligible|confirmed|granted/.test(e.event.event_type)), JSON.stringify(after.slice(before.length).map((e) => e.event.event_type)));
+    const stateAfter = JSON.stringify([...sys.host.state.objects.values()].filter((o) => o.matter_id === m.matter_id && o.type !== "thread" && o.type !== "message").map((o) => [o.id, o.state, o.revision]));
+    assert.equal(stateAfter, stateBefore);
+    assert.equal(obj(sys, d.message.id).state, "draft");
+    const inbox = (await (await staff(sys, "org_test_alvarez", "stf_test_avery")).inbox()).body.deliveries;
+    assert.equal(inbox.filter((x) => x.delivery.kind === "casebrief" && x.delivery.matter_id === m.matter_id).length, 0, "the firm received no CaseBrief");
+    assert.equal(inbox.filter((x) => x.delivery.kind === "message" && x.delivery.matter_id === m.matter_id).length, 0, "the firm received no message");
   } finally { await sys.stop(); }
 });
