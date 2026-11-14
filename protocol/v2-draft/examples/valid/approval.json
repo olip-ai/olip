@@ -1,9 +1,9 @@
 {
-  "approval_id": "apv_ZWe8EjdkrQF7MqpP",
+  "approval_id": "apv_PtHsKbVVZjOSJ0V0",
   "state": "pending",
-  "expires_at": "2026-11-14T17:30:00.076Z",
-  "grant_id": "grt_7U0uHLEQ9xsDp3KO",
-  "grant_digest": "sha256:8e09b5aada9db6082fa17472617a1b92b8a3d11894f36dadc031e1594f56d448",
+  "expires_at": "2026-11-14T17:30:00.062Z",
+  "grant_id": "grt_C4NRFYqYyACmOS-6",
+  "grant_digest": "sha256:4d6c035a83be907b51bd64b2b837931fae4cb6a4375c46e2cdb0b16a91c09c01",
   "action": "disclosure.screening",
   "preview": {
     "recipient": {

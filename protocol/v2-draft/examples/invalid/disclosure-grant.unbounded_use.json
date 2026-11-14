@@ -1,10 +1,10 @@
 {
-  "grant_id": "grt_7U0uHLEQ9xsDp3KO",
+  "grant_id": "grt_C4NRFYqYyACmOS-6",
   "action": "disclosure.screening",
   "recipient": "org_test_alvarez",
   "purpose": "conflict_screening",
   "stage": "screening",
-  "matter_id": "mat_AgdSquWVxFyu6fqV",
+  "matter_id": "mat_E4laPlUDXirno6aU",
   "fields": [
     "prospective_client.name",
     "adverse_parties",
@@ -16,8 +16,8 @@
   "use": "one_time",
   "uses": 1,
   "max_uses": 0,
-  "grant_digest": "sha256:8e09b5aada9db6082fa17472617a1b92b8a3d11894f36dadc031e1594f56d448",
-  "created_at": "2026-11-14T17:00:00.076Z",
-  "expires_at": "2026-11-14T17:30:00.076Z",
-  "approved_at": "2026-11-14T17:00:00.083Z"
+  "grant_digest": "sha256:4d6c035a83be907b51bd64b2b837931fae4cb6a4375c46e2cdb0b16a91c09c01",
+  "created_at": "2026-11-14T17:00:00.062Z",
+  "expires_at": "2026-11-14T17:30:00.062Z",
+  "approved_at": "2026-11-14T17:00:00.067Z"
 }

@@ -1,10 +1,10 @@
 {
   "olip_version": "2.0-draft",
   "event_id": "evt-123",
-  "matter_id": "mat_AgdSquWVxFyu6fqV",
+  "matter_id": "mat_E4laPlUDXirno6aU",
   "object": {
     "type": "conflict_screen",
-    "id": "scr_VklcO2KuCrZpqaMt"
+    "id": "scr_VIQMT72zgRyOz7xC"
   },
   "event_type": "intake.information_requested",
   "actor": {
@@ -14,9 +14,9 @@
     "staff_role": "intake_staff"
   },
   "prior_revision": 1,
-  "occurred_at": "2026-11-14T17:00:00.096Z",
-  "idempotency_key": "idem_W61n4Xe7lzALvV_d",
-  "correlation_id": "mat_AgdSquWVxFyu6fqV",
+  "occurred_at": "2026-11-14T17:00:00.076Z",
+  "idempotency_key": "firm-event-1794630187907-00000001",
+  "correlation_id": "mat_E4laPlUDXirno6aU",
   "causation_id": null,
   "evidence": {},
   "payload": {
@@ -31,6 +31,6 @@
   "signature": {
     "alg": "EdDSA",
     "kid": "kid_test_740cc96de2d4",
-    "value": "BZRGeugUBbCY22NtvAwx__qBdFXTO6ju_Qw6jU2XqJ842kPzg7rlXdJEQJphBBqdVV4NFIAzpzfCX1td3LkgCw"
+    "value": "Wiajlg7IEuLkxzR-vGfHQy13ixTlez4T5N1DboALLhOgXAYSL2p9ZlICIHeBYrpJYn_jE3YddYvcYAXpjBEnBQ"
   }
 }

@@ -61,6 +61,8 @@ export function createFirmEndpoint({ firm, clock, host }) {
     return r;
   }
 
+  // Firm-issued idempotency keys: unique per endpoint run, deliberately low-entropy (they are not secrets).
+  const startedAt = Date.now(); let eventSeq = 0;
   // Build and sign a firm event. The firm system enforces its own roles first; the host checks again independently.
   async function act(actorId, a) {
     const actor = staff[actorId] || delegations.find((d) => d.actor_id === actorId);
@@ -72,7 +74,7 @@ export function createFirmEndpoint({ firm, clock, host }) {
     const rev = cur.body.revision ?? cur.body[Object.keys(cur.body).find((k) => cur.body[k]?.revision !== undefined)]?.revision;
     const event = signDetached({ olip_version: V2, event_id: `urn:olip:${firm.organization_id}:event:${randomBytes(9).toString("base64url")}`, matter_id: a.matter_id,
       object: a.object, event_type: a.event_type, actor: { role: "firm", actor_id: actorId, organization_id: firm.organization_id, staff_role: actor.role || "delegated_adapter" },
-      prior_revision: rev ?? 0, occurred_at: a.occurred_at || iso(), idempotency_key: a.idem || newId("idem"), correlation_id: a.correlation_id || a.matter_id, causation_id: a.causation_id || null,
+      prior_revision: rev ?? 0, occurred_at: a.occurred_at || iso(), idempotency_key: a.idem || `firm-event-${startedAt}-${String(++eventSeq).padStart(8, "0")}`, correlation_id: a.correlation_id || a.matter_id, causation_id: a.causation_id || null,
       evidence: a.evidence || {}, payload: a.payload || {}, fictional: true }, a.sign_with || activeKey);
     const r = await hostCall("POST", a.post_path, { event }, { idem: event.idempotency_key });
     return { ...r, event };

@@ -116,10 +116,11 @@ export function createLifecycleHost({ mode = "mock", topology = "relay", clock =
     queueWebhooks(matter_id, entry);
     return entry;
   }
+  let hostEventSeq = 0; // host-issued idempotency keys: unique per host, deliberately low-entropy (they are not secrets)
   function hostEvent(o, event_type, actorRole, { evidence = {}, payload = {}, actor_id = null, causation_id = null } = {}) {
     const e = signDetached({ olip_version: V2, event_id: `urn:olip:${op.operator_id}:event:${randomBytes(9).toString("base64url")}`, matter_id: o.matter_id, object: { type: o.type, id: o.id },
       event_type, actor: { role: actorRole, actor_id, organization_id: actorRole === "lifecycle_host" ? op.operator_id : null }, prior_revision: o.revision, occurred_at: iso(),
-      idempotency_key: newId("idem"), correlation_id: o.matter_id, causation_id, evidence, payload, fictional: true }, hostKey);
+      idempotency_key: `host-event-${String(++hostEventSeq).padStart(8, "0")}`, correlation_id: o.matter_id, causation_id, evidence, payload, fictional: true }, hostKey);
     return e;
   }
   // Applies a state-machine transition with full checks. Used for host and consumer events (the host signs them as attestations).

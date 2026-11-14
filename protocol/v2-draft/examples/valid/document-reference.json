@@ -1,7 +1,7 @@
 {
-  "id": "doc_EbsNSAe0RBYLyLWI",
+  "id": "doc_2iHr8zB6xXlNX-6x",
   "type": "document",
-  "matter_id": "mat_AgdSquWVxFyu6fqV",
+  "matter_id": "mat_E4laPlUDXirno6aU",
   "consumer_subject_id": "usr_test_casey",
   "uploader": {
     "kind": "firm",
@@ -28,7 +28,7 @@
     "host_copy": "Deleted from this host 30 days after the user closes it, unless a legal hold applies (mock policy).",
     "firm_copies": "Kept by each organization under its own duties."
   },
-  "created_at": "2026-11-18T17:00:00.184Z",
+  "created_at": "2026-11-18T17:00:00.142Z",
   "revision": 0,
   "history": []
 }

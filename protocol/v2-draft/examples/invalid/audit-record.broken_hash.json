@@ -1,14 +1,14 @@
 {
   "seq": 4,
-  "recorded_at": "2026-11-14T17:00:00.099Z",
-  "prev_hash": "sha256:439875fa8387fcda415c0e905291ae0d708fcbb58a01ddd1981f7a558f98d7bd",
+  "recorded_at": "2026-11-14T17:00:00.079Z",
+  "prev_hash": "sha256:e368e898a03c23185c320bbf96493aceda038f550ff2913182e9cb9f0cf99dda",
   "event": {
     "olip_version": "2.0-draft",
-    "event_id": "urn:olip:org_test_alvarez:event:rhxMSI0-eWkV",
-    "matter_id": "mat_AgdSquWVxFyu6fqV",
+    "event_id": "urn:olip:org_test_alvarez:event:fKKGtll_7Joj",
+    "matter_id": "mat_E4laPlUDXirno6aU",
     "object": {
       "type": "conflict_screen",
-      "id": "scr_VklcO2KuCrZpqaMt"
+      "id": "scr_VIQMT72zgRyOz7xC"
     },
     "event_type": "intake.information_requested",
     "actor": {
@@ -18,9 +18,9 @@
       "staff_role": "intake_staff"
     },
     "prior_revision": 1,
-    "occurred_at": "2026-11-14T17:00:00.096Z",
-    "idempotency_key": "idem_W61n4Xe7lzALvV_d",
-    "correlation_id": "mat_AgdSquWVxFyu6fqV",
+    "occurred_at": "2026-11-14T17:00:00.076Z",
+    "idempotency_key": "firm-event-1794630187907-00000001",
+    "correlation_id": "mat_E4laPlUDXirno6aU",
     "causation_id": null,
     "evidence": {},
     "payload": {
@@ -35,7 +35,7 @@
     "signature": {
       "alg": "EdDSA",
       "kid": "kid_test_740cc96de2d4",
-      "value": "BZRGeugUBbCY22NtvAwx__qBdFXTO6ju_Qw6jU2XqJ842kPzg7rlXdJEQJphBBqdVV4NFIAzpzfCX1td3LkgCw"
+      "value": "Wiajlg7IEuLkxzR-vGfHQy13ixTlez4T5N1DboALLhOgXAYSL2p9ZlICIHeBYrpJYn_jE3YddYvcYAXpjBEnBQ"
     }
   },
   "entry_hash": "sha256:zz",
