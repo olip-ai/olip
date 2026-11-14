@@ -1,0 +1,44 @@
+{
+  "approval_id": "apv_ZWe8EjdkrQF7MqpP",
+  "state": "pending",
+  "expires_at": "2026-11-14T17:30:00.076Z",
+  "grant_id": "grt_7U0uHLEQ9xsDp3KO",
+  "grant_digest": "sha256:8e09b5aada9db6082fa17472617a1b92b8a3d11894f36dadc031e1594f56d448",
+  "action": "disclosure.screening",
+  "preview": {
+    "recipient": {
+      "organization_id": "org_test_alvarez",
+      "display_name": "Alvarez Tenant Law (fictional)"
+    },
+    "action": "Share screening details",
+    "purpose": "Let this firm check for conflicts of interest before you share anything else.",
+    "fields": [
+      {
+        "path": "prospective_client.name",
+        "value": "Casey Rivera (fictional)"
+      },
+      {
+        "path": "adverse_parties",
+        "value": [
+          "Bayview Rentals LLC (fictional)"
+        ]
+      },
+      {
+        "path": "matter.category",
+        "value": "housing.landlord_tenant"
+      },
+      {
+        "path": "matter.jurisdiction",
+        "value": "US-CA"
+      }
+    ],
+    "notices": [
+      "Only the one organization named here receives the items listed. Nothing else is shared.",
+      "Sharing this does not create an attorney-client relationship. The organization decides whether to take the matter.",
+      "Sharing this does not stop any legal deadline.",
+      "You can withdraw later. An organization that already received information may keep it under its own legal duties."
+    ],
+    "casebrief_revision": 1,
+    "warnings": []
+  }
+}

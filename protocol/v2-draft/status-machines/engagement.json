@@ -1,5 +1,5 @@
 {
-  "$schema": "https://olip.ai/spec/2.0-draft/schemas/state-machine.json",
+  "$schema": "https://olip.ai/spec/2.0-draft/schemas/state-machine.schema.json",
   "olip_version": "2.0-draft",
   "status": "proposed_draft_not_adopted",
   "machine": "engagement",

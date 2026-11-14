@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/state-machine.schema.json",
+  "title": "StateMachine",
+  "description": "Format of the files in status-machines/.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "olip_version",
+    "machine",
+    "object_type",
+    "initial",
+    "states",
+    "transitions"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "olip_version": {
+      "$ref": "common.schema.json#/$defs/olip_version"
+    },
+    "status": {
+      "const": "proposed_draft_not_adopted"
+    },
+    "machine": {
+      "type": "string",
+      "pattern": "^[a-z_]+$"
+    },
+    "object_type": {
+      "type": "string"
+    },
+    "initial": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "states": {
+      "type": "object",
+      "minProperties": 2,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "meaning",
+          "terminal"
+        ],
+        "properties": {
+          "meaning": {
+            "type": "string",
+            "minLength": 1
+          },
+          "terminal": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "event_type",
+          "from",
+          "to",
+          "actors",
+          "evidence"
+        ],
+        "properties": {
+          "event_type": {
+            "type": "string",
+            "pattern": "^[a-z_]+\\.[a-z_]+$"
+          },
+          "from": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "to": {
+            "type": "string"
+          },
+          "actors": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "lifecycle_host",
+                "firm",
+                "consumer"
+              ]
+            },
+            "minItems": 1
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "minItems": 1
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "grant_id": "grt_7U0uHLEQ9xsDp3KO",
+  "action": "disclosure.screening",
+  "recipient": "org_test_alvarez",
+  "purpose": "conflict_screening",
+  "stage": "screening",
+  "matter_id": "mat_AgdSquWVxFyu6fqV",
+  "fields": [
+    "prospective_client.name",
+    "adverse_parties",
+    "matter.category",
+    "matter.jurisdiction"
+  ],
+  "documents": [],
+  "state": "used",
+  "use": "one_time",
+  "uses": 1,
+  "max_uses": 1,
+  "grant_digest": "sha256:8e09b5aada9db6082fa17472617a1b92b8a3d11894f36dadc031e1594f56d448",
+  "created_at": "2026-11-14T17:00:00.076Z",
+  "expires_at": "2026-11-14T17:30:00.076Z",
+  "approved_at": "2026-11-14T17:00:00.083Z"
+}

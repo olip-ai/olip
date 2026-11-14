@@ -19,12 +19,13 @@ export const httpTransport = (base) => ({
 // A relay that stores messages for an offline firm: it accepts (202) but cannot produce the firm's receipt.
 const offlineInbox = (inner, isOffline) => ({ call: (method, path, body, headers) => (isOffline() && method === "POST" && path === "/firm/v2/inbox" ? Promise.resolve({ status: 202, body: { accepted: true } }) : inner.call(method, path, body, headers)) });
 
-export async function startSystem({ topology = "relay", orgs = ["org_test_alvarez", "org_test_cedar", "org_test_northgate"], mode = "mock", offline = [], allowLoopbackCallbacksForTests = true, rateLimitPerToken, clock = createClock(), hostLabel } = {}) {
+export async function startSystem({ topology = "relay", orgs = ["org_test_alvarez", "org_test_cedar", "org_test_northgate"], mode = "mock", offline = [], allowLoopbackCallbacksForTests = true, rateLimitPerToken, clock = createClock(), hostLabel, observe } = {}) {
   if (topology === "direct" && orgs.length !== 1) throw new Error("direct topology: one self-hosting firm per host");
   const firmEps = {}, firmBases = {}, offlineSet = new Set(offline);
   const transports = [];
   let hostRef = null;
-  const hostInProcess = { call: (method, path, body, headers) => hostRef.handle(method, path, headers, body) };
+  // In-process calls get a serialized copy, exactly as they would over HTTP, so no caller holds live host state.
+  const hostInProcess = { call: async (method, path, body, headers) => { const r = await hostRef.handle(method, path, headers, body == null ? null : structuredClone(body)); return { ...r, body: r.body == null ? null : JSON.parse(JSON.stringify(r.body)) }; } };
   let hostBase = null;
   const hostHttp = { call: (...a) => httpTransport(hostBase).call(...a) };
   for (const id of orgs) {
@@ -35,7 +36,7 @@ export async function startSystem({ topology = "relay", orgs = ["org_test_alvare
     else { firmBases[id] = await listen(ep.server); t = httpTransport(firmBases[id]); }
     transports.push({ organization_id: id, transport: offlineInbox(t, () => offlineSet.has(id)) });
   }
-  const host = createLifecycleHost({ mode, topology, clock, firms: transports, allowLoopbackCallbacksForTests, rateLimitPerToken, hostLabel });
+  const host = createLifecycleHost({ mode, topology, clock, firms: transports, allowLoopbackCallbacksForTests, rateLimitPerToken, hostLabel, observe });
   hostRef = host;
   hostBase = await listen(host.server);
   return {

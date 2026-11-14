@@ -1,0 +1,8 @@
+{
+  "olip_version": "2.0-draft",
+  "error": {
+    "code": "OLIP_NOT_FOUND",
+    "message": "Unknown operation.",
+    "retryable": false
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/conversation-thread.schema.json",
+  "title": "ConversationThread",
+  "description": "A conversation between one user and one organization, with the firm's policy and an honest encryption statement.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "machine",
+    "state",
+    "revision",
+    "history",
+    "created_at",
+    "updated_at",
+    "matter_id",
+    "organization_id",
+    "consumer_subject_id",
+    "purpose",
+    "observers",
+    "message_ids",
+    "policy",
+    "encryption"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "type": {
+      "const": "thread"
+    },
+    "machine": {
+      "type": "null"
+    },
+    "state": {
+      "enum": [
+        "open",
+        "read_only"
+      ]
+    },
+    "revision": {
+      "$ref": "common.schema.json#/$defs/revision"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/history_entry"
+      }
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "updated_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "matter_id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "organization_id": {
+      "$ref": "common.schema.json#/$defs/organization_id"
+    },
+    "reconciliation_required": {
+      "type": "boolean",
+      "description": "Set when a validly signed event contradicted one already applied. The firm must reconcile."
+    },
+    "consumer_subject_id": {
+      "$ref": "common.schema.json#/$defs/subject_id"
+    },
+    "purpose": {
+      "enum": [
+        "pre_engagement",
+        "consultation",
+        "engaged",
+        "post_closure"
+      ]
+    },
+    "observers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "organization_id",
+          "access",
+          "added_at",
+          "removed_at"
+        ],
+        "properties": {
+          "organization_id": {
+            "$ref": "common.schema.json#/$defs/organization_id"
+          },
+          "access": {
+            "enum": [
+              "status_only"
+            ]
+          },
+          "added_at": {
+            "$ref": "common.schema.json#/$defs/timestamp"
+          },
+          "removed_at": {
+            "anyOf": [
+              {
+                "$ref": "common.schema.json#/$defs/timestamp"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "message_ids": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/object_id"
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_message_chars",
+        "logistics_templates"
+      ],
+      "properties": {
+        "pre_engagement_threads": {
+          "type": "boolean"
+        },
+        "agent_read_access_allowed": {
+          "type": "boolean"
+        },
+        "max_message_chars": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "logistics_templates": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "closing_communications_after_closure": {
+          "type": "boolean"
+        },
+        "retention": {
+          "type": "string"
+        }
+      }
+    },
+    "encryption": {
+      "$ref": "common.schema.json#/$defs/encryption"
+    },
+    "logistics_preauthorizations": {
+      "type": "array",
+      "items": {}
+    }
+  }
+}

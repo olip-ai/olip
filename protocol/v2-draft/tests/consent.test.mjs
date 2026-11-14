@@ -67,7 +67,7 @@ test("the host enforces the firm's screening allowlist: extra, nested and disgui
   expectErr(await a.ai.request("POST", `/olip/v2/matters/${nested.matter_id}/conflict-screens`, { organization_id: "org_test_alvarez", fields: SCREEN_FIELDS, selection: { by: "user" } }), 422, "OLIP_DISCLOSURE_NOT_AUTHORIZED");
   const ssn = (await a.ai.createMatter(casebrief({ prospective_client: { name: "Casey Rivera (fictional) 123-45-6789" } }), { fictional: true })).matter;
   const r = expectErr(await a.ai.request("POST", `/olip/v2/matters/${ssn.matter_id}/conflict-screens`, { organization_id: "org_test_alvarez", fields: SCREEN_FIELDS, selection: { by: "user" } }), 422, "OLIP_SENSITIVE_DATA_BLOCKED");
-  assert.deepEqual(r.error.problems[0].findings, ["us_ssn"]);
+  assert.deepEqual(r.error.details.problems[0].findings, ["us_ssn"]);
 });
 test("fuller CaseBrief before the firm says intake may continue is refused (conflict-safe by default)", async () => {
   const { m, req } = await newScreen();

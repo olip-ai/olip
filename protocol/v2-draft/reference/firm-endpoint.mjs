@@ -41,8 +41,8 @@ export function createFirmEndpoint({ firm, clock, host }) {
 
   // The firm's intake system signs a receipt for exactly what it stored.
   function receive(delivery, presentedSecret) {
-    if (!safeEqual(presentedSecret, firm.inbox_secret)) return { status: 401, body: { error: { code: "OLIP_UNAUTHENTICATED", message: "Unknown host." } } };
-    if (!delivery || typeof delivery !== "object" || !delivery.delivery_id) return { status: 400, body: { error: { code: "OLIP_INVALID_REQUEST", message: "delivery_id required." } } };
+    if (!safeEqual(presentedSecret, firm.inbox_secret)) return { status: 401, body: { olip_version: V2, error: { retryable: false, code: "OLIP_UNAUTHENTICATED", message: "Unknown host." } } };
+    if (!delivery || typeof delivery !== "object" || !delivery.delivery_id) return { status: 400, body: { olip_version: V2, error: { retryable: false, code: "OLIP_INVALID_REQUEST", message: "delivery_id required." } } };
     const dup = inbox.find((d) => d.delivery.delivery_id === delivery.delivery_id);
     if (dup) return { status: 200, body: { receipt: dup.receipt, duplicate: true } };
     const receipt = signDetached({ olip_version: V2, receipt_id: newId("rcp"), delivery_id: delivery.delivery_id, organization_id: firm.organization_id, kind: delivery.kind,
@@ -64,9 +64,9 @@ export function createFirmEndpoint({ firm, clock, host }) {
   // Build and sign a firm event. The firm system enforces its own roles first; the host checks again independently.
   async function act(actorId, a) {
     const actor = staff[actorId] || delegations.find((d) => d.actor_id === actorId);
-    if (!actor || actor.revoked) return { status: 403, body: { error: { code: "OLIP_FIRM_AUTHORITY_REQUIRED", message: "This staff account is not active at the firm." } } };
+    if (!actor || actor.revoked) return { status: 403, body: { olip_version: V2, error: { retryable: false, code: "OLIP_FIRM_AUTHORITY_REQUIRED", message: "This staff account is not active at the firm." } } };
     const allowed = actor.role ? firm.role_permissions[actor.role] : actor.event_types;
-    if (!a.skip_local_role_check && !allowed.includes(a.event_type)) return { status: 403, body: { error: { code: "OLIP_FIRM_AUTHORITY_REQUIRED", message: `Firm policy: ${actor.role || actor.kind} may not record ${a.event_type}.` } } };
+    if (!a.skip_local_role_check && !allowed.includes(a.event_type)) return { status: 403, body: { olip_version: V2, error: { retryable: false, code: "OLIP_FIRM_AUTHORITY_REQUIRED", message: `Firm policy: ${actor.role || actor.kind} may not record ${a.event_type}.` } } };
     const cur = a.prior_revision !== undefined ? { body: { revision: a.prior_revision } } : await hostCall("GET", a.object_path);
     if (cur.status && cur.status >= 400) return cur;
     const rev = cur.body.revision ?? cur.body[Object.keys(cur.body).find((k) => cur.body[k]?.revision !== undefined)]?.revision;
@@ -88,18 +88,18 @@ export function createFirmEndpoint({ firm, clock, host }) {
     if (method === "POST" && p === "/firm/v2/inbox") return receive(body?.delivery, String(headers.authorization || "").replace(/^Bearer /, ""));
     if (method === "POST" && p === "/firm/admin/login") {
       const s = staff[body?.actor_id] || delegations.find((d) => d.actor_id === body?.actor_id);
-      if (!s || s.revoked || !safeEqual(String(body?.password || ""), s.password)) return { status: 401, body: { error: { code: "OLIP_UNAUTHENTICATED", message: "Wrong staff login." } } };
+      if (!s || s.revoked || !safeEqual(String(body?.password || ""), s.password)) return { status: 401, body: { olip_version: V2, error: { retryable: false, code: "OLIP_UNAUTHENTICATED", message: "Wrong staff login." } } };
       const t = "fst_" + randomBytes(18).toString("base64url"); tokens.set(t, s.actor_id); return { status: 200, body: { staff_token: t, actor_id: s.actor_id } };
     }
     if (p.startsWith("/firm/admin/")) {
       const actorId = tokens.get(String(headers.authorization || "").replace(/^Bearer /, ""));
       const actor = actorId && (staff[actorId] || delegations.find((d) => d.actor_id === actorId));
-      if (!actor || actor.revoked) return { status: 401, body: { error: { code: "OLIP_UNAUTHENTICATED", message: "Staff login required." } } };
+      if (!actor || actor.revoked) return { status: 401, body: { olip_version: V2, error: { retryable: false, code: "OLIP_UNAUTHENTICATED", message: "Staff login required." } } };
       if (method === "GET" && p === "/firm/admin/inbox") return { status: 200, body: { deliveries: inbox.map((d) => ({ delivery: d.delivery, receipt_id: d.receipt.receipt_id })) } };
       if (method === "POST" && p === "/firm/admin/actions") return act(actorId, body);
       if (method === "POST" && p === "/firm/admin/host") return hostCall(body.method, body.path, body.body);
     }
-    return { status: 404, body: { error: { code: "OLIP_NOT_FOUND", message: "Not found." } } };
+    return { status: 404, body: { olip_version: V2, error: { retryable: false, code: "OLIP_NOT_FOUND", message: "Not found." } } };
   }
 
   const admin = {
@@ -111,7 +111,7 @@ export function createFirmEndpoint({ firm, clock, host }) {
 
   const server = createServer(async (req, res) => {
     let raw = ""; for await (const c of req) { raw += c; if (raw.length > 1_000_000) { res.writeHead(413).end(); return; } }
-    let body = null; try { body = raw ? JSON.parse(raw) : null; } catch { res.writeHead(400, { "content-type": "application/json" }).end(JSON.stringify({ error: { code: "OLIP_INVALID_REQUEST", message: "Body must be JSON." } })); return; }
+    let body = null; try { body = raw ? JSON.parse(raw) : null; } catch { res.writeHead(400, { "content-type": "application/json" }).end(JSON.stringify({ olip_version: V2, error: { retryable: false, code: "OLIP_INVALID_REQUEST", message: "Body must be JSON." } })); return; }
     const r = await handle(req.method, req.url, req.headers, body);
     res.writeHead(r.status, { "content-type": "application/json", "cache-control": "no-store" }).end(JSON.stringify(r.body));
   });

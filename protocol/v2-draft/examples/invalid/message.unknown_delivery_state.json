@@ -1,0 +1,85 @@
+{
+  "id": "msg_s6cqYtj6sRKrLD5Q",
+  "type": "message",
+  "machine": "message_delivery",
+  "state": "seen",
+  "revision": 5,
+  "history": [
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:00O2S5IPUJ2Q",
+      "event_type": "message.user_authorized",
+      "at": "2026-11-18T17:00:00.212Z",
+      "by": "consumer"
+    },
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:71pL8BPYhIYV",
+      "event_type": "message.queued",
+      "at": "2026-11-18T17:00:00.212Z",
+      "by": "lifecycle_host"
+    },
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:KKwC3FLFWl2i",
+      "event_type": "message.accepted_by_transport",
+      "at": "2026-11-18T17:00:00.214Z",
+      "by": "lifecycle_host"
+    },
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:PF3Qfec_P7YZ",
+      "event_type": "message.delivered_to_endpoint",
+      "at": "2026-11-18T17:00:00.215Z",
+      "by": "lifecycle_host"
+    },
+    {
+      "event_id": "urn:olip:org_test_alvarez:event:6pdMPEsyWz7w",
+      "event_type": "message.read_by_recipient",
+      "at": "2026-11-18T17:00:00.233Z",
+      "by": "firm",
+      "actor_id": "stf_test_avery",
+      "kid": "kid_test_740cc96de2d4"
+    }
+  ],
+  "created_at": "2026-11-18T17:00:00.208Z",
+  "updated_at": "2026-11-18T17:00:00.233Z",
+  "matter_id": "mat_AgdSquWVxFyu6fqV",
+  "thread_id": "thr_jYpJkORJwOLwomC0",
+  "organization_id": "org_test_alvarez",
+  "sender": {
+    "role": "consumer",
+    "subject_id": "usr_test_casey",
+    "via": "agt_test_assistant_a"
+  },
+  "category": "substantive",
+  "template": null,
+  "content_digest": "sha256:7560bcdd76a4b1a92a6177657b4584db519cdb427d8b6abc918c5903d11562ba",
+  "attachments": [],
+  "drafting": {
+    "ai_assisted": true,
+    "reviewed_by": null
+  },
+  "expires_at": "2026-11-19T17:00:00.208Z",
+  "receipt": {
+    "olip_version": "2.0-draft",
+    "receipt_id": "rcp_PBDgbfMcxBK7CJ7o",
+    "delivery_id": "dlv_SlOrHMCU5t2hlZJK",
+    "organization_id": "org_test_alvarez",
+    "kind": "message",
+    "payload_digest": "sha256:910319343403d22d68f54543c090866d48b3a05fb2afcdd81af5f5fa352fa838",
+    "received_at": "2026-11-18T17:00:00.213Z",
+    "statement": "The firm's intake system stored this exact content. Nobody has read or decided anything yet.",
+    "fictional": true,
+    "signature": {
+      "alg": "EdDSA",
+      "kid": "kid_test_740cc96de2d4",
+      "value": "MLLZzZvfTQMtF54wqU-G14i0HL9zNZcq_YsASTju50Op3sH0daLZGhQ7qSpPhl7EXm8-XWoZNfDFKhFwzAxdCg"
+    }
+  },
+  "body": {
+    "untrusted_content": true,
+    "value": "Fictional: here is my move-out checklist. Please confirm next steps."
+  },
+  "labels": {
+    "ai_assisted": true,
+    "reviewed_by": null,
+    "statement": "Sent by the user."
+  }
+}

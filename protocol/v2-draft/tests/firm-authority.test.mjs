@@ -70,7 +70,7 @@ test("two validly signed contradictory events at one revision are flagged, never
   ok(await rawFirmEvent(sys, "org_test_alvarez", screenEv(s, "intake.eligible_for_further_intake", { prior_revision: rev })));
   const contra = screenEv(s, "intake.unable_to_proceed", { prior_revision: rev, payload: { firm_text: "Fictional: cannot proceed." } });
   const r = expectErr(await rawFirmEvent(sys, "org_test_alvarez", contra), 409, "OLIP_EVENT_CONFLICT");
-  assert.ok(r.error.reconciliation_id);
+  assert.ok(r.error.details.reconciliation_id);
   assert.equal(obj(sys, s.id).state, "eligible_for_further_intake");
   const recs = ok(await a.ai.request("GET", `/olip/v2/matters/${m.matter_id}/reconciliations`)).reconciliations;
   assert.equal(recs.length, 1); assert.equal(recs[0].status, "needs_firm_reconciliation");

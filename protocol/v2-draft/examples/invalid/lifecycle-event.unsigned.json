@@ -1,0 +1,31 @@
+{
+  "olip_version": "2.0-draft",
+  "event_id": "urn:olip:org_test_alvarez:event:rhxMSI0-eWkV",
+  "matter_id": "mat_AgdSquWVxFyu6fqV",
+  "object": {
+    "type": "conflict_screen",
+    "id": "scr_VklcO2KuCrZpqaMt"
+  },
+  "event_type": "intake.information_requested",
+  "actor": {
+    "role": "firm",
+    "actor_id": "stf_test_jordan",
+    "organization_id": "org_test_alvarez",
+    "staff_role": "intake_staff"
+  },
+  "prior_revision": 1,
+  "occurred_at": "2026-11-14T17:00:00.096Z",
+  "idempotency_key": "idem_W61n4Xe7lzALvV_d",
+  "correlation_id": "mat_AgdSquWVxFyu6fqV",
+  "causation_id": null,
+  "evidence": {},
+  "payload": {
+    "fields": [
+      {
+        "path": "related_parties",
+        "question": "Is anyone else on the lease?"
+      }
+    ]
+  },
+  "fictional": true
+}

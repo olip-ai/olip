@@ -1,0 +1,16 @@
+{
+  "olip_version": "2.0-draft",
+  "receipt_id": "rcp_DniMOkmL9PS4xv2e",
+  "delivery_id": "dlv_11A7-u3fs2MvMdfb",
+  "organization_id": "org_test_alvarez",
+  "kind": "screening",
+  "payload_digest": "sha256:b88d17fba9325a775bc4be6d70d4b944b482b557baaa09408a5909a052e86331",
+  "received_at": "2026-11-14T17:00:00.087Z",
+  "statement": "The firm's intake system stored this exact content. Nobody has read or decided anything yet.",
+  "fictional": true,
+  "signature": {
+    "alg": "EdDSA",
+    "kid": "kid_test_740cc96de2d4",
+    "value": "R2YsSKC6UqhP8GVn1dephaRRTfXr9IWCj73tmRyZ0M8akwF0dZ3Rxzm82dRCxXaJAw3ws_NCPQxSHQwyr_SrBg"
+  }
+}

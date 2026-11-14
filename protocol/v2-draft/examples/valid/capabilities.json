@@ -1,0 +1,554 @@
+{
+  "olip_version": "2.0-draft",
+  "release_status": "proposed_draft_not_adopted",
+  "statement": "OLIP 2.0 is a proposed extension under development. It has not been adopted by any standards body or approved by any bar or regulator. OLIP 1.0 is unchanged.",
+  "profiles": [
+    "olip-lifecycle-core/2",
+    "olip-consultation/2",
+    "olip-engagement/2",
+    "olip-communications/2",
+    "olip-matter/2"
+  ],
+  "base_path": "/olip/v2",
+  "supported_media": [
+    "application/json"
+  ],
+  "extension_id": "olip.ai/lifecycle-capabilities/2.0-draft",
+  "implementation": {
+    "name": "OLIP 2.0-draft reference lifecycle host",
+    "mode": "mock",
+    "topology": "relay",
+    "operator": {
+      "operator_id": "op_test_neutral_relay",
+      "display_name": "Neutral Relay Co. (fictional independent vendor)"
+    },
+    "fictional_data_only": true,
+    "sponsor_services_required": false
+  },
+  "auth": {
+    "token_endpoint": "/olip/v2/token",
+    "grant_types": [
+      "client_credentials",
+      "urn:olip:params:oauth:grant-type:delegation_code"
+    ],
+    "user_sign_in": "/olip/v2/user-sessions (mock)",
+    "agent_delegation": "/olip/v2/agent-delegations"
+  },
+  "user_approval_methods": [
+    "hosted_otp_mock"
+  ],
+  "approval_is_model_callable": false,
+  "encryption": {
+    "in_transit": "Mock runs on loopback HTTP. A real host must use TLS 1.2 or later (TLS 1.3 preferred).",
+    "at_rest": "AES-256-GCM with a host-managed key",
+    "end_to_end": false,
+    "statement": "Not end-to-end encrypted: the host can decrypt to scan, deliver and export."
+  },
+  "operations": [
+    {
+      "name": "get_lifecycle_capabilities",
+      "method": "GET",
+      "path": "/olip/v2/capabilities",
+      "auth": [
+        "public"
+      ]
+    },
+    {
+      "name": "get_lifecycle_manifest",
+      "method": "GET",
+      "path": "/.well-known/olip-lifecycle.json",
+      "auth": [
+        "public"
+      ]
+    },
+    {
+      "name": "get_host_keys",
+      "method": "GET",
+      "path": "/olip/v2/keys",
+      "auth": [
+        "public"
+      ]
+    },
+    {
+      "name": "token",
+      "method": "POST",
+      "path": "/olip/v2/token",
+      "auth": [
+        "public"
+      ]
+    },
+    {
+      "name": "create_user_session",
+      "method": "POST",
+      "path": "/olip/v2/user-sessions",
+      "auth": [
+        "public"
+      ]
+    },
+    {
+      "name": "create_agent_delegation",
+      "method": "POST",
+      "path": "/olip/v2/agent-delegations",
+      "auth": [
+        "user"
+      ]
+    },
+    {
+      "name": "revoke_agent_delegation",
+      "method": "POST",
+      "path": "/olip/v2/agent-delegations/{id}/revoke",
+      "auth": [
+        "user"
+      ]
+    },
+    {
+      "name": "list_recipients",
+      "method": "GET",
+      "path": "/olip/v2/recipients",
+      "auth": [
+        "public"
+      ]
+    },
+    {
+      "name": "get_intake_questions",
+      "method": "GET",
+      "path": "/olip/v2/recipients/{id}/intake-questions",
+      "auth": [
+        "public"
+      ]
+    },
+    {
+      "name": "create_matter",
+      "method": "POST",
+      "path": "/olip/v2/matters",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "get_matter",
+      "method": "GET",
+      "path": "/olip/v2/matters/{id}",
+      "auth": [
+        "user",
+        "agent",
+        "firm",
+        "observer"
+      ]
+    },
+    {
+      "name": "update_casebrief",
+      "method": "PUT",
+      "path": "/olip/v2/matters/{id}/casebrief",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "request_conflict_screen",
+      "method": "POST",
+      "path": "/olip/v2/matters/{id}/conflict-screens",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "get_conflict_screen",
+      "method": "GET",
+      "path": "/olip/v2/conflict-screens/{id}",
+      "auth": [
+        "user",
+        "agent",
+        "firm"
+      ]
+    },
+    {
+      "name": "submit_conflict_screen",
+      "method": "POST",
+      "path": "/olip/v2/conflict-screens/{id}/submit",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "record_conflict_screen_event",
+      "method": "POST",
+      "path": "/olip/v2/conflict-screens/{id}/events",
+      "auth": [
+        "firm"
+      ]
+    },
+    {
+      "name": "provide_additional_screening",
+      "method": "POST",
+      "path": "/olip/v2/conflict-screens/{id}/additional-information",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "submit_additional_screening",
+      "method": "POST",
+      "path": "/olip/v2/conflict-screens/{id}/additional-information/submit",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "withdraw_conflict_screen",
+      "method": "POST",
+      "path": "/olip/v2/conflict-screens/{id}/withdraw",
+      "auth": [
+        "user"
+      ]
+    },
+    {
+      "name": "request_casebrief_disclosure",
+      "method": "POST",
+      "path": "/olip/v2/matters/{id}/disclosures",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "submit_casebrief_disclosure",
+      "method": "POST",
+      "path": "/olip/v2/matters/{id}/disclosures/submit",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "get_approval",
+      "method": "GET",
+      "path": "/olip/v2/approvals/{id}",
+      "auth": [
+        "user"
+      ]
+    },
+    {
+      "name": "decide_approval",
+      "method": "POST",
+      "path": "/olip/v2/approvals/{id}/decision",
+      "auth": [
+        "user"
+      ]
+    },
+    {
+      "name": "revoke_grant",
+      "method": "POST",
+      "path": "/olip/v2/grants/{id}/revoke",
+      "auth": [
+        "user"
+      ]
+    },
+    {
+      "name": "list_grants",
+      "method": "GET",
+      "path": "/olip/v2/matters/{id}/grants",
+      "auth": [
+        "user"
+      ]
+    },
+    {
+      "name": "request_consultation",
+      "method": "POST",
+      "path": "/olip/v2/matters/{id}/consultations",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "submit_consultation_request",
+      "method": "POST",
+      "path": "/olip/v2/consultations/{id}/submit",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "get_consultation",
+      "method": "GET",
+      "path": "/olip/v2/consultations/{id}",
+      "auth": [
+        "user",
+        "agent",
+        "firm"
+      ]
+    },
+    {
+      "name": "record_consultation_event",
+      "method": "POST",
+      "path": "/olip/v2/consultations/{id}/events",
+      "auth": [
+        "firm",
+        "user"
+      ]
+    },
+    {
+      "name": "propose_consultation_slot",
+      "method": "POST",
+      "path": "/olip/v2/consultations/{id}/proposals",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "submit_consultation_proposal",
+      "method": "POST",
+      "path": "/olip/v2/consultations/{id}/proposals/submit",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "publish_engagement_offer",
+      "method": "POST",
+      "path": "/olip/v2/matters/{id}/engagement-offers",
+      "auth": [
+        "firm"
+      ]
+    },
+    {
+      "name": "prepare_engagement_target",
+      "method": "POST",
+      "path": "/olip/v2/matters/{id}/engagements",
+      "auth": [
+        "firm"
+      ]
+    },
+    {
+      "name": "get_engagement",
+      "method": "GET",
+      "path": "/olip/v2/engagements/{id}",
+      "auth": [
+        "user",
+        "agent",
+        "firm"
+      ]
+    },
+    {
+      "name": "respond_to_engagement_offer",
+      "method": "POST",
+      "path": "/olip/v2/engagement-offers/{id}/responses",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "record_engagement_event",
+      "method": "POST",
+      "path": "/olip/v2/engagements/{id}/events",
+      "auth": [
+        "firm"
+      ]
+    },
+    {
+      "name": "create_thread",
+      "method": "POST",
+      "path": "/olip/v2/matters/{id}/threads",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "get_thread",
+      "method": "GET",
+      "path": "/olip/v2/threads/{id}",
+      "auth": [
+        "user",
+        "agent",
+        "firm",
+        "observer"
+      ]
+    },
+    {
+      "name": "send_message",
+      "method": "POST",
+      "path": "/olip/v2/threads/{id}/messages",
+      "auth": [
+        "user",
+        "agent",
+        "firm"
+      ]
+    },
+    {
+      "name": "send_authorized_message",
+      "method": "POST",
+      "path": "/olip/v2/messages/{id}/send",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "preauthorize_logistics",
+      "method": "POST",
+      "path": "/olip/v2/threads/{id}/logistics-preauthorizations",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "get_messages",
+      "method": "GET",
+      "path": "/olip/v2/threads/{id}/messages",
+      "auth": [
+        "user",
+        "agent",
+        "firm",
+        "observer"
+      ]
+    },
+    {
+      "name": "mark_message_read",
+      "method": "POST",
+      "path": "/olip/v2/messages/{id}/read",
+      "auth": [
+        "user"
+      ]
+    },
+    {
+      "name": "record_message_event",
+      "method": "POST",
+      "path": "/olip/v2/messages/{id}/events",
+      "auth": [
+        "firm"
+      ]
+    },
+    {
+      "name": "record_thread_event",
+      "method": "POST",
+      "path": "/olip/v2/threads/{id}/events",
+      "auth": [
+        "firm"
+      ]
+    },
+    {
+      "name": "prepare_document_upload",
+      "method": "POST",
+      "path": "/olip/v2/documents/upload-authorizations",
+      "auth": [
+        "user",
+        "agent",
+        "firm"
+      ]
+    },
+    {
+      "name": "upload_document",
+      "method": "PUT",
+      "path": "/olip/v2/uploads/{id}",
+      "auth": [
+        "user",
+        "agent",
+        "firm"
+      ]
+    },
+    {
+      "name": "transfer_approved_document",
+      "method": "POST",
+      "path": "/olip/v2/threads/{id}/documents",
+      "auth": [
+        "user",
+        "agent"
+      ]
+    },
+    {
+      "name": "create_download_authorization",
+      "method": "POST",
+      "path": "/olip/v2/documents/{id}/download-authorizations",
+      "auth": [
+        "user",
+        "agent",
+        "firm"
+      ]
+    },
+    {
+      "name": "download_document",
+      "method": "GET",
+      "path": "/olip/v2/downloads/{token}",
+      "auth": [
+        "public"
+      ]
+    },
+    {
+      "name": "record_matter_event",
+      "method": "POST",
+      "path": "/olip/v2/matters/{id}/events",
+      "auth": [
+        "firm",
+        "user"
+      ]
+    },
+    {
+      "name": "export_matter_passport",
+      "method": "POST",
+      "path": "/olip/v2/matters/{id}/exports",
+      "auth": [
+        "user"
+      ]
+    },
+    {
+      "name": "subscribe_lifecycle_events",
+      "method": "POST",
+      "path": "/olip/v2/matters/{id}/subscriptions",
+      "auth": [
+        "agent",
+        "user",
+        "firm",
+        "observer"
+      ]
+    },
+    {
+      "name": "get_matter_events",
+      "method": "GET",
+      "path": "/olip/v2/matters/{id}/events",
+      "auth": [
+        "user",
+        "agent",
+        "firm"
+      ]
+    },
+    {
+      "name": "list_reconciliations",
+      "method": "GET",
+      "path": "/olip/v2/matters/{id}/reconciliations",
+      "auth": [
+        "user",
+        "agent",
+        "firm"
+      ]
+    }
+  ],
+  "policy_gate": {
+    "mode": "mock",
+    "rules_status": "illustrative_pending_counsel_review",
+    "production_write_requires": "approved_by_counsel"
+  },
+  "downgrade": {
+    "olip_1_0_only_peer": "A 1.0-only peer has no lifecycle extension in its manifest. Clients must not call /olip/v2 on it and must not show lifecycle states for it."
+  },
+  "mock_hooks": {
+    "outbox": "/mock/v2/outbox",
+    "clock": "/mock/v2/clock",
+    "logs": "/mock/v2/logs",
+    "webhooks": "/mock/v2/webhooks",
+    "reset": "/mock/v2/reset",
+    "note": "Test build only. A public or production host must never expose these."
+  }
+}

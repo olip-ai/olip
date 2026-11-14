@@ -86,14 +86,14 @@ test("documents: allowlisted types, content sniffing, mock malware check, size l
   assert.equal(good.document.filename, "passwd_script_.txt"); assert.equal(good.document.scan.status, "clean"); assert.match(good.document.storage, /no public URL/);
   expectErr(await upload(a.ai, { name: "x.exe", mime: "application/x-msdownload" }), 422, "OLIP_DOCUMENT_REJECTED");
   const forged = expectErr(await upload(a.ai, { name: "fake.pdf", mime: "application/pdf", bytes: Buffer.from("MZ\x90\x00 not a pdf") }), 422, "OLIP_DOCUMENT_REJECTED");
-  assert.equal(forged.error.reason, "content_does_not_match_declared_mime");
+  assert.equal(forged.error.details.reason, "content_does_not_match_declared_mime");
   const mal = expectErr(await upload(a.ai, { name: "eicar.txt", bytes: Buffer.from(EICAR) }), 422, "OLIP_DOCUMENT_REJECTED");
-  assert.equal(mal.error.reason, "test_signature_found");
+  assert.equal(mal.error.details.reason, "test_signature_found");
   const html = expectErr(await upload(a.ai, { name: "x.txt", bytes: Buffer.from("<script>alert(1)</script>") }), 422, "OLIP_DOCUMENT_REJECTED");
-  assert.equal(html.error.reason, "active_content_declared_as_text");
+  assert.equal(html.error.details.reason, "active_content_declared_as_text");
   expectErr(await upload(a.ai, { size: 5_000_000 }), 413, "OLIP_PAYLOAD_TOO_LARGE");
   // a rejected document can never be attached or sent
-  expectErr(await a.ai.request("POST", `/olip/v2/threads/${t.id}/documents`, { document_id: mal.error.document_id }), 422, "OLIP_DOCUMENT_NOT_CLEARED");
+  expectErr(await a.ai.request("POST", `/olip/v2/threads/${t.id}/documents`, { document_id: mal.error.details.document_id }), 422, "OLIP_DOCUMENT_NOT_CLEARED");
   // sending needs an approval bound to the SHA-256
   const ap = ok(await a.ai.request("POST", `/olip/v2/threads/${t.id}/documents`, { document_id: good.document.id })).approval;
   expectErr(await a.ai.request("POST", `/olip/v2/threads/${t.id}/documents`, { document_id: good.document.id, ...ap }), 403, "OLIP_DISCLOSURE_NOT_AUTHORIZED");

@@ -27,7 +27,7 @@ export function createClock(start = Date.parse("2026-11-14T17:00:00Z")) {
   return { now: () => new Date(Date.now() + offset), advance: (s) => { offset += s * 1000; } };
 }
 
-export function createLifecycleHost({ mode = "mock", topology = "relay", clock = createClock(), firms = [], operator, rateLimitPerToken = 2000, allowLoopbackCallbacksForTests = false, hostLabel = "host" } = {}) {
+export function createLifecycleHost({ mode = "mock", topology = "relay", clock = createClock(), firms = [], operator, rateLimitPerToken = 2000, allowLoopbackCallbacksForTests = false, hostLabel = "host", observe = null } = {}) {
   if (!["mock", "production"].includes(mode)) throw new Error("mode must be mock or production");
   const hostKey = keyFromLabel(`${hostLabel}/${topology}/host`, "host_attestation");
   const op = operator || (topology === "direct" ? { operator_id: firms[0]?.organization_id, display_name: `${FX.FIRMS[firms[0]?.organization_id]?.display_name} (self-hosted)` } : FX.RELAY_OPERATOR);
@@ -46,7 +46,7 @@ export function createLifecycleHost({ mode = "mock", topology = "relay", clock =
 
   // ---------- responses ----------
   const ok = (body, status = 200) => ({ status, body: { olip_version: V2, ...body } });
-  const err = (status, code, message, extra = {}) => ({ status, body: { olip_version: V2, error: { code, message, retryable: status === 429 || status >= 500, ...extra } } });
+  const err = (status, code, message, extra = {}) => ({ status, body: { olip_version: V2, error: { code, message, retryable: status === 429 || status >= 500, ...(Object.keys(extra).length ? { details: extra } : {}) } } });
   const NOT_FOUND = () => err(404, "OLIP_NOT_FOUND", "Not found, or not visible to this caller.");
 
   // ---------- auth ----------
@@ -132,8 +132,9 @@ export function createLifecycleHost({ mode = "mock", topology = "relay", clock =
     const entry = journalAppend(o.matter_id, e);
     return { ok: true, event: e, entry };
   }
+  const ID_PREFIX = { matter: "mat", conflict_screen: "scr", consultation: "cns", engagement: "eng", thread: "thr", message: "msg" };
   function newObject(type, machine, fields) {
-    return put({ id: newId(type.slice(0, 3)), type, machine, state: MACHINES[machine]?.initial ?? "open", revision: 0, applied: {}, history: [], created_at: iso(), updated_at: iso(), ...fields });
+    return put({ id: newId(ID_PREFIX[type]), type, machine, state: MACHINES[machine]?.initial ?? "open", revision: 0, applied: {}, history: [], created_at: iso(), updated_at: iso(), ...fields });
   }
 
   // The single gate for every firm-originated assertion.
@@ -296,7 +297,6 @@ export function createLifecycleHost({ mode = "mock", topology = "relay", clock =
   }
   async function sendToEndpoint(msg, t) {
     // consumer -> firm: delivered only with the firm's signed receipt for this exact content.
-    msg.history.push({ at: iso(), note: "queued" });
     const r0 = transition(msg, "message_delivery", "message.queued", "lifecycle_host"); if (r0.error) return r0;
     const d = await deliver(t.organization_id, "message", { message_id: msg.id, thread_id: t.id, content_digest: msg.content_digest, body: vault.open(msg.sealed_body).toString("utf8"), attachments: msg.attachments }, msg.matter_id);
     if (d.state === "failed") { transition(msg, "message_delivery", "message.failed", "lifecycle_host", { evidence: { delivery_id: d.delivery_id } }); return { delivery: d }; }
@@ -566,7 +566,7 @@ export function createLifecycleHost({ mode = "mock", topology = "relay", clock =
     const m = obj(prm.id); if (!m || !canSee(ctx.p, m)) return NOT_FOUND();
     return ok({ grants: [...S.grants.values()].filter((g) => g.matter_id === m.id).map(grantSummary) });
   });
-  const grantSummary = (g) => ({ grant_id: g.grant_id, action: g.action, recipient: g.recipient.organization_id, purpose: g.purpose, stage: g.stage, fields: (g.fields || []).map((f) => f.path), documents: g.documents ?? [], state: g.state, use: g.use, uses: g.uses, max_uses: g.max_uses, grant_digest: g.grant_digest, created_at: g.created_at, expires_at: g.expires_at, approved_at: g.approval_evidence?.approved_at ?? null });
+  const grantSummary = (g) => ({ grant_id: g.grant_id, action: g.action, recipient: g.recipient.organization_id, purpose: g.purpose, stage: g.stage ?? null, matter_id: g.matter_id, fields: (g.fields || []).map((f) => f.path), documents: g.documents ?? [], state: g.state, use: g.use, uses: g.uses, max_uses: g.max_uses, grant_digest: g.grant_digest, created_at: g.created_at, expires_at: g.expires_at, approved_at: g.approval_evidence?.approved_at ?? null });
 
   // ---- consultation ----
   route("request_consultation", "POST", "/olip/v2/matters/{id}/consultations", ["user", "agent"], "Prepare a consultation request to one organization. Returns a user approval link.", async (ctx, prm, b) => {
@@ -1035,6 +1035,7 @@ export function createLifecycleHost({ mode = "mock", topology = "relay", clock =
     } catch (e) { r = err(500, "OLIP_INTERNAL", "Internal error in the mock host."); if (process.env.OLIP_DEBUG) console.error(e); }
     // Logs: route template, status and error code only. Never bodies, tokens, codes or download paths.
     S.logs.push({ at: iso(), method, route: routeT, status: r.status, code: r.body?.error?.code ?? null });
+    if (observe) { try { observe({ method, route: routeT, opId: R.find((x) => x.path === routeT && x.method === method)?.opId ?? null, status: r.status, body: r.body == null ? null : structuredClone(r.body), html: !!r.html, raw: !!r.raw }); } catch { /* observers never affect responses */ } }
     return r;
   }
 

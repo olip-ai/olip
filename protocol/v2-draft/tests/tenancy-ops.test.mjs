@@ -37,7 +37,7 @@ test("policy gate: production mode refuses every lifecycle write (no counsel-app
   try {
     const c = await actors(prod);
     const r = expectErr(await c.ai.request("POST", "/olip/v2/matters", { casebrief: casebrief(), fictional: true }), 422, "OLIP_POLICY_GATE_CLOSED");
-    assert.equal(r.error.rule_status, "pending_counsel_review");
+    assert.equal(r.error.details.rule_status, "pending_counsel_review");
     assert.equal(prod.host.capabilities().mock_hooks, undefined, "no mock hooks outside mock mode");
     assert.equal((await httpTransport(prod.hostBase).call("GET", "/mock/v2/outbox")).status, 404);
   } finally { await prod.stop(); }
@@ -87,7 +87,7 @@ test("webhooks: signed, minimal hints; receivers verify signature, freshness and
   } finally { rx.close(); }
   const m2 = (await a.ai.createMatter(casebrief(), { fictional: true })).matter;
   for (const [url, reason] of [["http://example.test/h", "https_required"], ["https://user:pw@example.test/h", "credentials_in_url"], ["https://169.254.169.254/latest", "blocked_address"], ["https://[::1]/h", "blocked_address"], ["https://10.0.0.5/h", "blocked_address"], ["https://metadata.google.internal/x", "blocked_hostname"], ["https://localhost/x", "blocked_hostname"]])
-    assert.equal(expectErr(await a.ai.request("POST", `/olip/v2/matters/${m2.matter_id}/subscriptions`, { callback_url: url }), 422, "OLIP_CALLBACK_URL_REJECTED").error.reason, reason, url);
+    assert.equal(expectErr(await a.ai.request("POST", `/olip/v2/matters/${m2.matter_id}/subscriptions`, { callback_url: url }), 422, "OLIP_CALLBACK_URL_REJECTED").error.details.reason, reason, url);
 });
 test("SSRF checks: DNS answers that point inside are refused (rebinding); public addresses pass; ranges are exact", async () => {
   const fake = (addrs) => async () => addrs.map((address) => ({ address }));

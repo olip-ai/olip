@@ -1,0 +1,347 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/consultation.schema.json",
+  "title": "Consultation",
+  "description": "A consultation request and its firm-confirmed time. Times carry an IANA zone and UTC. A consultation is not representation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "machine",
+    "state",
+    "revision",
+    "history",
+    "created_at",
+    "updated_at",
+    "matter_id",
+    "organization_id",
+    "preferences",
+    "slots",
+    "slots_version",
+    "proposal",
+    "confirmation",
+    "attendance"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "type": {
+      "const": "consultation"
+    },
+    "machine": {
+      "const": "consultation"
+    },
+    "state": {
+      "enum": [
+        "not_requested",
+        "requested",
+        "options_offered",
+        "proposed",
+        "confirmed",
+        "reschedule_requested",
+        "completed",
+        "no_show",
+        "declined",
+        "cancelled",
+        "expired"
+      ]
+    },
+    "revision": {
+      "$ref": "common.schema.json#/$defs/revision"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/history_entry"
+      }
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "updated_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "matter_id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "organization_id": {
+      "$ref": "common.schema.json#/$defs/organization_id"
+    },
+    "reconciliation_required": {
+      "type": "boolean",
+      "description": "Set when a validly signed event contradicted one already applied. The firm must reconcile."
+    },
+    "preferences": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modes",
+        "timezone",
+        "note"
+      ],
+      "properties": {
+        "modes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "video",
+              "phone",
+              "in_person",
+              "unknown"
+            ]
+          }
+        },
+        "timezone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "slot_id",
+          "start_utc",
+          "timezone",
+          "local_start",
+          "duration_minutes",
+          "mode",
+          "as_of"
+        ],
+        "properties": {
+          "slot_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "start_utc": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$",
+            "description": "UTC instant; must end in Z."
+          },
+          "timezone": {
+            "type": "string",
+            "description": "IANA time zone name, e.g. America/Los_Angeles."
+          },
+          "local_start": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$",
+            "description": "Wall-clock time in timezone. Must equal start_utc converted to timezone."
+          },
+          "duration_minutes": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 480
+          },
+          "mode": {
+            "enum": [
+              "video",
+              "phone",
+              "in_person",
+              "unknown"
+            ]
+          },
+          "as_of": {
+            "$ref": "common.schema.json#/$defs/timestamp"
+          },
+          "offered_by": {
+            "$ref": "common.schema.json#/$defs/actor_id"
+          },
+          "offer_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "meeting_url": {
+            "description": "Never returned by the reference host; meeting links stay out of status views."
+          }
+        }
+      }
+    },
+    "slots_version": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "proposal": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "slot_id",
+            "offer_version",
+            "at"
+          ],
+          "properties": {
+            "slot_id": {
+              "type": "string"
+            },
+            "offer_version": {
+              "type": "integer"
+            },
+            "at": {
+              "$ref": "common.schema.json#/$defs/timestamp"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "confirmation": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "slot",
+            "confirmation_reference",
+            "confirmed_by_actor",
+            "confirmed_at",
+            "statement"
+          ],
+          "properties": {
+            "slot": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "slot_id",
+                "start_utc",
+                "timezone",
+                "local_start",
+                "duration_minutes",
+                "mode",
+                "as_of"
+              ],
+              "properties": {
+                "slot_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64
+                },
+                "start_utc": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "Z$",
+                  "description": "UTC instant; must end in Z."
+                },
+                "timezone": {
+                  "type": "string",
+                  "description": "IANA time zone name, e.g. America/Los_Angeles."
+                },
+                "local_start": {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$",
+                  "description": "Wall-clock time in timezone. Must equal start_utc converted to timezone."
+                },
+                "duration_minutes": {
+                  "type": "integer",
+                  "minimum": 5,
+                  "maximum": 480
+                },
+                "mode": {
+                  "enum": [
+                    "video",
+                    "phone",
+                    "in_person",
+                    "unknown"
+                  ]
+                },
+                "as_of": {
+                  "$ref": "common.schema.json#/$defs/timestamp"
+                },
+                "offered_by": {
+                  "$ref": "common.schema.json#/$defs/actor_id"
+                },
+                "offer_version": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "meeting_url": {
+                  "description": "Never returned by the reference host; meeting links stay out of status views."
+                }
+              }
+            },
+            "confirmation_reference": {
+              "type": "string",
+              "minLength": 1
+            },
+            "confirmed_by_actor": {
+              "$ref": "common.schema.json#/$defs/actor_id"
+            },
+            "confirmed_at": {
+              "$ref": "common.schema.json#/$defs/timestamp"
+            },
+            "statement": {
+              "$ref": "common.schema.json#/$defs/statement"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "attendance": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "attendance_source",
+            "reported_by",
+            "at",
+            "statement"
+          ],
+          "properties": {
+            "state": {
+              "enum": [
+                "completed",
+                "no_show"
+              ]
+            },
+            "attendance_source": {
+              "type": "string",
+              "minLength": 1
+            },
+            "reported_by": {
+              "$ref": "common.schema.json#/$defs/actor_id"
+            },
+            "at": {
+              "$ref": "common.schema.json#/$defs/timestamp"
+            },
+            "statement": {
+              "$ref": "common.schema.json#/$defs/statement"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

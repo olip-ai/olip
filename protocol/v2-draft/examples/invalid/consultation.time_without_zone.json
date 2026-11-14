@@ -1,0 +1,85 @@
+{
+  "id": "cns_Y3ldZ38pFWHsUZLI",
+  "type": "consultation",
+  "machine": "consultation",
+  "state": "confirmed",
+  "revision": 4,
+  "history": [
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:qn9mcvVakTmZ",
+      "event_type": "consultation.requested",
+      "at": "2026-11-14T17:00:00.144Z",
+      "by": "lifecycle_host"
+    },
+    {
+      "event_id": "urn:olip:org_test_alvarez:event:Zhutse6e1VM2",
+      "event_type": "consultation.options_offered",
+      "at": "2026-11-14T17:00:00.151Z",
+      "by": "firm",
+      "actor_id": "stf_test_sam",
+      "kid": "kid_test_740cc96de2d4"
+    },
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:GNX_aGRtdzOK",
+      "event_type": "consultation.proposed",
+      "at": "2026-11-14T17:00:00.162Z",
+      "by": "lifecycle_host"
+    },
+    {
+      "event_id": "urn:olip:org_test_alvarez:event:i8CltJ8s6u8t",
+      "event_type": "consultation.confirmed",
+      "at": "2026-11-14T17:00:00.166Z",
+      "by": "firm",
+      "actor_id": "stf_test_sam",
+      "kid": "kid_test_740cc96de2d4"
+    }
+  ],
+  "created_at": "2026-11-14T17:00:00.136Z",
+  "updated_at": "2026-11-14T17:00:00.166Z",
+  "matter_id": "mat_AgdSquWVxFyu6fqV",
+  "organization_id": "org_test_alvarez",
+  "preferences": {
+    "modes": [
+      "video"
+    ],
+    "timezone": "America/Los_Angeles",
+    "note": null
+  },
+  "slots": [
+    {
+      "slot_id": "slot-1",
+      "start_utc": "2026-11-18T18:00:00Z",
+      "timezone": "America/Los_Angeles",
+      "local_start": "2026-11-18T10:00",
+      "duration_minutes": 30,
+      "mode": "video",
+      "as_of": "2026-11-14T17:00:00.146Z",
+      "offered_by": "stf_test_sam",
+      "offer_version": 1
+    }
+  ],
+  "slots_version": 1,
+  "proposal": {
+    "slot_id": "slot-1",
+    "offer_version": 1,
+    "at": "2026-11-14T17:00:00.162Z"
+  },
+  "confirmation": {
+    "slot": {
+      "slot_id": "slot-1",
+      "start_utc": "2026-11-18T10:00:00",
+      "timezone": "America/Los_Angeles",
+      "local_start": "2026-11-18T10:00",
+      "duration_minutes": 30,
+      "mode": "video",
+      "as_of": "2026-11-14T17:00:00.146Z",
+      "offered_by": "stf_test_sam",
+      "offer_version": 1
+    },
+    "confirmation_reference": "FICTIONAL-CAL-0001",
+    "confirmed_by_actor": "stf_test_sam",
+    "confirmed_at": "2026-11-14T17:00:00.164Z",
+    "statement": "The firm's scheduling system confirmed this time. This is not representation."
+  },
+  "attendance": null
+}

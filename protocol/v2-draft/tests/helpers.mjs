@@ -1,10 +1,20 @@
 // Shared helpers for the OLIP 2.0-draft tests. Fictional data only; every server listens on 127.0.0.1.
 import assert from "node:assert/strict";
-import { startSystem, httpTransport } from "../reference/system.mjs";
+import { startSystem as startRaw, httpTransport } from "../reference/system.mjs";
+import { createResponseChecker } from "../conformance/schema-check.mjs";
 import { actors, userApproves, staff, acts, reauth, runScenarioA } from "../reference/journey.mjs";
 import { CASEBRIEF, FIRMS } from "../reference/fixtures.mjs";
 import { digestOf, signDetached, keyFromLabel } from "../reference/lib/core.mjs";
 export { startSystem, httpTransport, actors, userApproves, staff, acts, reauth, runScenarioA, CASEBRIEF, FIRMS, digestOf, signDetached, keyFromLabel };
+// Every response in every test is checked against the published JSON Schemas; a mismatch fails the test file.
+export const responseCheck = createResponseChecker();
+// The check runs when a test file stops its system, after the servers are closed, so a failure never leaves a server running.
+const startSystem = async (opts = {}) => {
+  const sys = await startRaw({ ...opts, observe: responseCheck.observe });
+  const stop = sys.stop;
+  sys.stop = async () => { await stop(); assert.deepEqual(responseCheck.problems.slice(0, 8), [], "live responses must match the published schemas"); };
+  return sys;
+};
 export const SCREEN_FIELDS = ["prospective_client.name", "adverse_parties", "matter.category", "matter.jurisdiction"];
 export const expectErr = (r, status, code) => { assert.equal(r.status, status, JSON.stringify(r.body)); if (code) assert.equal(r.body.error.code, code, JSON.stringify(r.body)); return r.body; };
 export const ok = (r, status) => { assert.ok(r.status < 400, `${r.status} ${JSON.stringify(r.body)}`); if (status) assert.equal(r.status, status); return r.body; };

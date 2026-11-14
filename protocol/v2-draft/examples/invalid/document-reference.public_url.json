@@ -1,0 +1,35 @@
+{
+  "id": "doc_EbsNSAe0RBYLyLWI",
+  "type": "document",
+  "matter_id": "mat_AgdSquWVxFyu6fqV",
+  "consumer_subject_id": "usr_test_casey",
+  "uploader": {
+    "kind": "firm",
+    "subject_id": null,
+    "organization_id": "org_test_alvarez"
+  },
+  "purpose": "engagement_letter",
+  "filename": "engagement-letter.txt",
+  "mime": "text/plain",
+  "size": 105,
+  "sha256": "sha256:0f1040114ff0ac8078a04ddbf277abd6fc91bdf0fde6c04d5977d15fcf80b168",
+  "scan": {
+    "status": "clean",
+    "engine": "olip-mock-scanner (EICAR test signature only; not a real antivirus)"
+  },
+  "encryption": {
+    "at_rest": "AES-256-GCM host-managed key",
+    "end_to_end": false
+  },
+  "storage": "host-private (no public URL)",
+  "shared_with": [],
+  "shared_with_consumer": false,
+  "retention": {
+    "host_copy": "Deleted from this host 30 days after the user closes it, unless a legal hold applies (mock policy).",
+    "firm_copies": "Kept by each organization under its own duties."
+  },
+  "created_at": "2026-11-18T17:00:00.184Z",
+  "revision": 0,
+  "history": [],
+  "public_url": "https://files.example.test/x.pdf"
+}

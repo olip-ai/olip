@@ -1,0 +1,182 @@
+{
+  "olip_version": "2.0-draft",
+  "fictional": true,
+  "statement": "Fictional test data produced by the reference system. Not real people, firms or matters.",
+  "examples": [
+    {
+      "file": "valid/approval.json",
+      "schema": "approval",
+      "valid": true
+    },
+    {
+      "file": "valid/audit-record.json",
+      "schema": "audit-record",
+      "valid": true
+    },
+    {
+      "file": "valid/capabilities.json",
+      "schema": "capabilities",
+      "valid": true
+    },
+    {
+      "file": "valid/conflict-screen.json",
+      "schema": "conflict-screen",
+      "valid": true
+    },
+    {
+      "file": "valid/consultation.json",
+      "schema": "consultation",
+      "valid": true
+    },
+    {
+      "file": "valid/conversation-thread.json",
+      "schema": "conversation-thread",
+      "valid": true
+    },
+    {
+      "file": "valid/delivery-receipt.json",
+      "schema": "delivery-receipt",
+      "valid": true
+    },
+    {
+      "file": "valid/disclosure-grant.json",
+      "schema": "disclosure-grant",
+      "valid": true
+    },
+    {
+      "file": "valid/document-reference.json",
+      "schema": "document-reference",
+      "valid": true
+    },
+    {
+      "file": "valid/engagement.json",
+      "schema": "engagement",
+      "valid": true
+    },
+    {
+      "file": "valid/error.json",
+      "schema": "error",
+      "valid": true
+    },
+    {
+      "file": "valid/legal-matter.json",
+      "schema": "legal-matter",
+      "valid": true
+    },
+    {
+      "file": "valid/lifecycle-event.json",
+      "schema": "lifecycle-event",
+      "valid": true
+    },
+    {
+      "file": "valid/matter-participant.json",
+      "schema": "matter-participant",
+      "valid": true
+    },
+    {
+      "file": "valid/matter-passport.json",
+      "schema": "matter-passport",
+      "valid": true
+    },
+    {
+      "file": "valid/message.json",
+      "schema": "message",
+      "valid": true
+    },
+    {
+      "file": "valid/state-machine.json",
+      "schema": "state-machine",
+      "valid": true
+    },
+    {
+      "file": "invalid/engagement.agent_confirmed_state.json",
+      "schema": "engagement",
+      "valid": false,
+      "why": "An engagement state that does not exist (only the firm's own signed event can confirm)."
+    },
+    {
+      "file": "invalid/engagement.display_without_qualifier.json",
+      "schema": "engagement",
+      "valid": false,
+      "why": "Engagement display text with unknown extra claims."
+    },
+    {
+      "file": "invalid/disclosure-grant.unbounded_use.json",
+      "schema": "disclosure-grant",
+      "valid": false,
+      "why": "A grant that claims unlimited uses."
+    },
+    {
+      "file": "invalid/disclosure-grant.wrong_digest_format.json",
+      "schema": "disclosure-grant",
+      "valid": false,
+      "why": "A grant digest that is not SHA-256 hex."
+    },
+    {
+      "file": "invalid/lifecycle-event.unsigned.json",
+      "schema": "lifecycle-event",
+      "valid": false,
+      "why": "A firm event with no signature."
+    },
+    {
+      "file": "invalid/lifecycle-event.issuer_not_scoped.json",
+      "schema": "lifecycle-event",
+      "valid": false,
+      "why": "An event id not scoped to its issuer."
+    },
+    {
+      "file": "invalid/consultation.time_without_zone.json",
+      "schema": "consultation",
+      "valid": false,
+      "why": "A confirmed time whose UTC instant does not end in Z."
+    },
+    {
+      "file": "invalid/matter-passport.passport_authorizes_recipient.json",
+      "schema": "matter-passport",
+      "valid": false,
+      "why": "A passport that claims to authorize a recipient."
+    },
+    {
+      "file": "invalid/matter-passport.passport_transmitted.json",
+      "schema": "matter-passport",
+      "valid": false,
+      "why": "A passport that claims it was sent."
+    },
+    {
+      "file": "invalid/capabilities.approval_model_callable.json",
+      "schema": "capabilities",
+      "valid": false,
+      "why": "Capabilities that claim the model can approve."
+    },
+    {
+      "file": "invalid/capabilities.sponsor_required.json",
+      "schema": "capabilities",
+      "valid": false,
+      "why": "Capabilities that require sponsor services."
+    },
+    {
+      "file": "invalid/message.unknown_delivery_state.json",
+      "schema": "message",
+      "valid": false,
+      "why": "A delivery state OLIP does not define (for example 'seen')."
+    },
+    {
+      "file": "invalid/document-reference.public_url.json",
+      "schema": "document-reference",
+      "valid": false,
+      "why": "A document with a public URL member."
+    },
+    {
+      "file": "invalid/error.no_code.json",
+      "schema": "error",
+      "valid": false,
+      "why": "An error without a stable code."
+    },
+    {
+      "file": "invalid/audit-record.broken_hash.json",
+      "schema": "audit-record",
+      "valid": false,
+      "why": "A journal entry whose hash is not a SHA-256 digest."
+    }
+  ]
+}

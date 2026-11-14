@@ -5,7 +5,7 @@ const out = new URL("../status-machines/", import.meta.url);
 const V = "2.0-draft";
 const T = (event_type, from, to, actors, evidence = [], note) => ({ event_type, from: [].concat(from), to, actors, evidence, ...(note ? { note } : {}) });
 const M = (machine, object_type, initial, states, transitions, notes) => ({
-  $schema: "https://olip.ai/spec/2.0-draft/schemas/state-machine.json", olip_version: V, status: "proposed_draft_not_adopted", machine, object_type, initial, states, transitions, notes });
+  $schema: "https://olip.ai/spec/2.0-draft/schemas/state-machine.schema.json", olip_version: V, status: "proposed_draft_not_adopted", machine, object_type, initial, states, transitions, notes });
 const S = (meaning, terminal = false) => ({ meaning, terminal });
 
 const machines = [

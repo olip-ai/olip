@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/matter-passport.schema.json",
+  "title": "MatterPassport",
+  "description": "A signed export for the user. It is not sent to anyone and authorizes nobody.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "olip_version",
+    "document",
+    "passport_id",
+    "matter_id",
+    "subject_id",
+    "generated_at",
+    "fictional",
+    "casebrief",
+    "consent_ledger",
+    "documents",
+    "status_evidence",
+    "journal",
+    "transmitted",
+    "authorizes_recipients",
+    "statement",
+    "passport_digest",
+    "signature"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.schema.json#/$defs/olip_version"
+    },
+    "document": {
+      "const": "matter_passport"
+    },
+    "passport_id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "matter_id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "subject_id": {
+      "$ref": "common.schema.json#/$defs/subject_id"
+    },
+    "generated_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "fictional": {
+      "type": "boolean"
+    },
+    "casebrief": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "content",
+        "provenance",
+        "statement"
+      ],
+      "properties": {
+        "revision": {
+          "type": "integer"
+        },
+        "content": {
+          "type": "object",
+          "description": "User-reported CaseBrief."
+        },
+        "provenance": {
+          "type": "string"
+        },
+        "statement": {
+          "$ref": "common.schema.json#/$defs/statement"
+        }
+      }
+    },
+    "consent_ledger": {
+      "type": "array",
+      "items": {
+        "$ref": "disclosure-grant.schema.json"
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "document_id",
+          "filename",
+          "mime",
+          "sha256",
+          "uploader_kind"
+        ],
+        "properties": {
+          "document_id": {
+            "$ref": "common.schema.json#/$defs/object_id"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "mime": {
+            "type": "string"
+          },
+          "sha256": {
+            "$ref": "common.schema.json#/$defs/digest"
+          },
+          "uploader_kind": {
+            "enum": [
+              "user",
+              "agent",
+              "firm"
+            ]
+          },
+          "content_base64": {
+            "type": "string",
+            "contentEncoding": "base64"
+          }
+        }
+      }
+    },
+    "status_evidence": {
+      "$ref": "common.schema.json#/$defs/status_projection"
+    },
+    "journal": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "seq",
+          "event_type",
+          "actor_role",
+          "occurred_at",
+          "entry_hash"
+        ],
+        "properties": {
+          "seq": {
+            "type": "integer"
+          },
+          "event_type": {
+            "type": "string"
+          },
+          "actor_role": {
+            "enum": [
+              "firm",
+              "consumer",
+              "lifecycle_host"
+            ]
+          },
+          "occurred_at": {
+            "$ref": "common.schema.json#/$defs/timestamp"
+          },
+          "entry_hash": {
+            "$ref": "common.schema.json#/$defs/digest"
+          }
+        }
+      }
+    },
+    "transmitted": {
+      "const": false
+    },
+    "authorizes_recipients": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "statement": {
+      "$ref": "common.schema.json#/$defs/statement"
+    },
+    "passport_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "signature": {
+      "$ref": "common.schema.json#/$defs/signature"
+    }
+  }
+}

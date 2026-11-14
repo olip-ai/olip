@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/document-reference.schema.json",
+  "title": "DocumentReference",
+  "description": "A stored, scanned document. There is no public URL; downloads use short-lived tokens.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "matter_id",
+    "uploader",
+    "purpose",
+    "filename",
+    "mime",
+    "size",
+    "sha256",
+    "scan",
+    "storage",
+    "created_at"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "type": {
+      "const": "document"
+    },
+    "matter_id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "consumer_subject_id": {
+      "$ref": "common.schema.json#/$defs/subject_id"
+    },
+    "uploader": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "subject_id",
+        "organization_id"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "user",
+            "agent",
+            "firm"
+          ]
+        },
+        "subject_id": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/subject_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "organization_id": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/organization_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "purpose": {
+      "enum": [
+        "client_document",
+        "engagement_letter",
+        "firm_document"
+      ]
+    },
+    "filename": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[^/\\\\]+$"
+    },
+    "mime": {
+      "enum": [
+        "application/pdf",
+        "image/png",
+        "text/plain"
+      ]
+    },
+    "size": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sha256": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "scan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "engine"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "clean",
+            "rejected"
+          ]
+        },
+        "engine": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "encryption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "at_rest",
+        "end_to_end"
+      ],
+      "properties": {
+        "at_rest": {
+          "type": "string"
+        },
+        "end_to_end": {
+          "type": "boolean"
+        }
+      }
+    },
+    "storage": {
+      "const": "host-private (no public URL)"
+    },
+    "shared_with": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/organization_id"
+      }
+    },
+    "shared_with_consumer": {
+      "type": "boolean"
+    },
+    "retention": {
+      "$ref": "common.schema.json#/$defs/retention"
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "revision": {
+      "$ref": "common.schema.json#/$defs/revision"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/history_entry"
+      }
+    }
+  }
+}
