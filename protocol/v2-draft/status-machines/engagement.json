@@ -1,0 +1,194 @@
+{
+  "$schema": "https://olip.ai/spec/2.0-draft/schemas/state-machine.json",
+  "olip_version": "2.0-draft",
+  "status": "proposed_draft_not_adopted",
+  "machine": "engagement",
+  "object_type": "engagement",
+  "initial": "not_offered",
+  "states": {
+    "not_offered": {
+      "meaning": "The organization has not offered an engagement.",
+      "terminal": false
+    },
+    "offered": {
+      "meaning": "The organization issued a signed, versioned engagement offer with hashed documents.",
+      "terminal": false
+    },
+    "user_reviewing": {
+      "meaning": "The user opened the exact offer on the approval surface.",
+      "terminal": false
+    },
+    "user_accepted": {
+      "meaning": "The user accepted this exact offer version on the approval surface. The organization has not confirmed.",
+      "terminal": false
+    },
+    "user_declined": {
+      "meaning": "The user declined this offer version.",
+      "terminal": false
+    },
+    "firm_confirmed": {
+      "meaning": "Firm reports engagement confirmed (source and time shown). OLIP does not create or guarantee an attorney-client relationship; when one is formed is a question of law.",
+      "terminal": false
+    },
+    "rejected_by_firm": {
+      "meaning": "After the user accepted, the organization decided not to confirm.",
+      "terminal": true
+    },
+    "withdrawn": {
+      "meaning": "The organization withdrew the offer.",
+      "terminal": true
+    },
+    "expired": {
+      "meaning": "The offer's validity window ended before acceptance.",
+      "terminal": true
+    },
+    "ended": {
+      "meaning": "The organization reports the engagement ended (see the matter record).",
+      "terminal": true
+    }
+  },
+  "transitions": [
+    {
+      "event_type": "engagement.offered",
+      "from": [
+        "not_offered",
+        "offered",
+        "user_reviewing",
+        "user_accepted",
+        "user_declined"
+      ],
+      "to": "offered",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority",
+        "offer_digest",
+        "document_sha256"
+      ],
+      "note": "A new version invalidates any earlier acceptance."
+    },
+    {
+      "event_type": "engagement.user_reviewing",
+      "from": [
+        "offered"
+      ],
+      "to": "user_reviewing",
+      "actors": [
+        "lifecycle_host"
+      ],
+      "evidence": [
+        "authenticated_user_view"
+      ]
+    },
+    {
+      "event_type": "engagement.user_accepted",
+      "from": [
+        "offered",
+        "user_reviewing"
+      ],
+      "to": "user_accepted",
+      "actors": [
+        "consumer"
+      ],
+      "evidence": [
+        "authenticated_user_action",
+        "offer_digest"
+      ]
+    },
+    {
+      "event_type": "engagement.user_declined",
+      "from": [
+        "offered",
+        "user_reviewing"
+      ],
+      "to": "user_declined",
+      "actors": [
+        "consumer"
+      ],
+      "evidence": [
+        "authenticated_user_action",
+        "offer_digest"
+      ]
+    },
+    {
+      "event_type": "engagement.firm_confirmed",
+      "from": [
+        "user_accepted"
+      ],
+      "to": "firm_confirmed",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority",
+        "offer_digest",
+        "acceptance_id"
+      ]
+    },
+    {
+      "event_type": "engagement.rejected_by_firm",
+      "from": [
+        "user_accepted"
+      ],
+      "to": "rejected_by_firm",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority"
+      ]
+    },
+    {
+      "event_type": "engagement.withdrawn",
+      "from": [
+        "offered",
+        "user_reviewing",
+        "user_accepted"
+      ],
+      "to": "withdrawn",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority"
+      ]
+    },
+    {
+      "event_type": "engagement.expired",
+      "from": [
+        "offered",
+        "user_reviewing"
+      ],
+      "to": "expired",
+      "actors": [
+        "lifecycle_host"
+      ],
+      "evidence": [
+        "offer_valid_until_passed"
+      ]
+    },
+    {
+      "event_type": "engagement.ended",
+      "from": [
+        "firm_confirmed"
+      ],
+      "to": "ended",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority"
+      ]
+    }
+  ],
+  "notes": [
+    "engagement.payment_reported is recorded as information only and NEVER changes state. Payment never creates firm_confirmed.",
+    "Only a firm event signed by a key bound to the organization, by an actor whose role allows engagement.firm_confirmed, produces firm_confirmed."
+  ]
+}

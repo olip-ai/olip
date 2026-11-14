@@ -1,0 +1,156 @@
+{
+  "$schema": "https://olip.ai/spec/2.0-draft/schemas/state-machine.json",
+  "olip_version": "2.0-draft",
+  "status": "proposed_draft_not_adopted",
+  "machine": "message_delivery",
+  "object_type": "message",
+  "initial": "draft",
+  "states": {
+    "draft": {
+      "meaning": "Prepared, not sent. An agent may draft.",
+      "terminal": false
+    },
+    "user_authorized": {
+      "meaning": "The user approved this exact text, recipient and attachments.",
+      "terminal": false
+    },
+    "queued": {
+      "meaning": "The host accepted it for sending.",
+      "terminal": false
+    },
+    "accepted_by_transport": {
+      "meaning": "A relay or transport accepted it. This is NOT delivery.",
+      "terminal": false
+    },
+    "delivered_to_endpoint": {
+      "meaning": "The recipient's own system signed a receipt for this exact content. Not read.",
+      "terminal": false
+    },
+    "read_by_recipient": {
+      "meaning": "An authorized recipient participant recorded reading it. Optional; never inferred.",
+      "terminal": true
+    },
+    "failed": {
+      "meaning": "Sending failed.",
+      "terminal": true
+    },
+    "cancelled_before_send": {
+      "meaning": "Cancelled before it left the host.",
+      "terminal": true
+    },
+    "expired": {
+      "meaning": "The approval or draft expired before sending.",
+      "terminal": true
+    }
+  },
+  "transitions": [
+    {
+      "event_type": "message.user_authorized",
+      "from": [
+        "draft"
+      ],
+      "to": "user_authorized",
+      "actors": [
+        "consumer"
+      ],
+      "evidence": [
+        "user_disclosure_grant"
+      ]
+    },
+    {
+      "event_type": "message.queued",
+      "from": [
+        "user_authorized"
+      ],
+      "to": "queued",
+      "actors": [
+        "lifecycle_host"
+      ],
+      "evidence": []
+    },
+    {
+      "event_type": "message.accepted_by_transport",
+      "from": [
+        "queued"
+      ],
+      "to": "accepted_by_transport",
+      "actors": [
+        "lifecycle_host"
+      ],
+      "evidence": [
+        "transport_acknowledgement"
+      ]
+    },
+    {
+      "event_type": "message.delivered_to_endpoint",
+      "from": [
+        "accepted_by_transport"
+      ],
+      "to": "delivered_to_endpoint",
+      "actors": [
+        "lifecycle_host"
+      ],
+      "evidence": [
+        "recipient_signed_receipt"
+      ]
+    },
+    {
+      "event_type": "message.read_by_recipient",
+      "from": [
+        "delivered_to_endpoint"
+      ],
+      "to": "read_by_recipient",
+      "actors": [
+        "firm",
+        "consumer"
+      ],
+      "evidence": [
+        "firm_signature_or_authenticated_user_action"
+      ]
+    },
+    {
+      "event_type": "message.failed",
+      "from": [
+        "queued",
+        "accepted_by_transport"
+      ],
+      "to": "failed",
+      "actors": [
+        "lifecycle_host"
+      ],
+      "evidence": []
+    },
+    {
+      "event_type": "message.cancelled_before_send",
+      "from": [
+        "draft",
+        "user_authorized",
+        "queued"
+      ],
+      "to": "cancelled_before_send",
+      "actors": [
+        "consumer"
+      ],
+      "evidence": [
+        "authenticated_user_action"
+      ]
+    },
+    {
+      "event_type": "message.expired",
+      "from": [
+        "draft",
+        "user_authorized"
+      ],
+      "to": "expired",
+      "actors": [
+        "lifecycle_host"
+      ],
+      "evidence": []
+    }
+  ],
+  "notes": [
+    "A reply is a NEW message, never a state of the earlier one.",
+    "Firm-origin messages start at queued after the host verifies the firm signature; consumer-origin messages need user_authorized first.",
+    "Without a cryptographically bound recipient receipt the state stays accepted_by_transport."
+  ]
+}
