@@ -32,7 +32,7 @@ jobs:
         shell: bash
         run: |
           node -e 'for (const f of ["node-endpoint","python-endpoint"]) { const r = require("./conformance/results/" + f + ".json"); console.log(f, "pass", r.pass, "fail", r.fail, "skip", r.skip); if (r.fail) process.exit(1); }'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with: {name: 'conformance-${{ matrix.os }}-node${{ matrix.node }}', path: protocol/conformance/results/}
   lifecycle-v2-draft:
@@ -61,7 +61,7 @@ jobs:
       - name: OLIP 1.0 files stay frozen and 1.0 results are not rewritten by this job
         working-directory: .
         run: git diff --exit-code -- protocol/spec protocol/schemas protocol/schemas-0.2 protocol/conformance/results
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with: {name: 'v2-draft-conformance-node${{ matrix.node }}', path: protocol/v2-draft/conformance/results/}
   site:
