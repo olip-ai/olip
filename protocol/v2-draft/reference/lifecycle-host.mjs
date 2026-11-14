@@ -212,9 +212,9 @@ export function createLifecycleHost({ mode = "mock", topology = "relay", clock =
     if (!g || g.subject_id !== expect.subject_id) return { error: err(403, "OLIP_DISCLOSURE_NOT_AUTHORIZED", "No user approval exists for this action.") };
     if (g.state === "pending" || g.state === "denied") return { error: err(403, "OLIP_DISCLOSURE_NOT_AUTHORIZED", `The user has not approved this (state ${g.state}).`) };
     if (g.state === "revoked") return { error: err(403, "OLIP_DISCLOSURE_NOT_AUTHORIZED", "The user revoked this approval.") };
-    if (g.state === "used" || Date.parse(g.expires_at) <= nowMs() || g.uses >= g.max_uses) return { error: err(410, "OLIP_AUTHORIZATION_EXPIRED", "This approval was already used or has expired. Ask the user again.") };
     if (g.action !== expect.action || g.matter_id !== expect.matter_id || g.recipient.organization_id !== expect.organization_id || (expect.related_object_id && g.related_object_id !== expect.related_object_id))
       return { error: err(403, "OLIP_DISCLOSURE_NOT_AUTHORIZED", "This approval is for a different action, matter, recipient or object.") };
+    if (g.state === "used" || Date.parse(g.expires_at) <= nowMs() || g.uses >= g.max_uses) return { error: err(410, "OLIP_AUTHORIZATION_EXPIRED", "This approval was already used or has expired. Ask the user again.") };
     if (!safeEqual(String(grant_digest || ""), g.grant_digest)) return { error: err(409, "OLIP_CONSENT_DIGEST_MISMATCH", "grant_digest does not match the approval.") };
     if (recompute) { const now = grantDigest({ ...g, ...recompute }); if (now !== g.grant_digest) return { error: err(409, "OLIP_CONSENT_DIGEST_MISMATCH", "The content changed after the user approved it. Ask the user again.") }; }
     g.uses++; if (g.uses >= g.max_uses) g.state = "used"; g.last_used_at = iso();
@@ -608,6 +608,7 @@ export function createLifecycleHost({ mode = "mock", topology = "relay", clock =
       if (e.event_type === "consultation.options_offered") {
         const slots = e.payload?.slots; if (!Array.isArray(slots) || !slots.length) return err(422, "OLIP_SCHEMA_INVALID", "options_offered needs slots.");
         for (const sl of slots) { const z = checkZonedTime(sl); if (!z.ok) return err(422, "OLIP_SCHEMA_INVALID", `Slot ${sl.slot_id}: ${z.reason}.`, { slot_id: sl.slot_id, ...z });
+          if (Date.parse(sl.start_utc) <= nowMs()) return err(422, "OLIP_CONSULTATION_SLOT_EXPIRED", `Slot ${sl.slot_id} is in the past.`);
           if (!["video", "phone", "in_person", "unknown"].includes(sl.mode) || !Number.isInteger(sl.duration_minutes) || !sl.as_of) return err(422, "OLIP_SCHEMA_INVALID", `Slot ${sl.slot_id} needs mode, whole-minute duration and as_of.`); }
         if (!(e.payload.version > c.slots_version)) return err(409, "OLIP_REVISION_CONFLICT", "Slot offers need a higher version.");
       }

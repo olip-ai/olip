@@ -17,11 +17,11 @@ export const httpTransport = (base) => ({
   },
 });
 // A relay that stores messages for an offline firm: it accepts (202) but cannot produce the firm's receipt.
-const offlineInbox = (inner) => ({ call: (method, path, body, headers) => (method === "POST" && path === "/firm/v2/inbox" ? Promise.resolve({ status: 202, body: { accepted: true } }) : inner.call(method, path, body, headers)) });
+const offlineInbox = (inner, isOffline) => ({ call: (method, path, body, headers) => (isOffline() && method === "POST" && path === "/firm/v2/inbox" ? Promise.resolve({ status: 202, body: { accepted: true } }) : inner.call(method, path, body, headers)) });
 
 export async function startSystem({ topology = "relay", orgs = ["org_test_alvarez", "org_test_cedar", "org_test_northgate"], mode = "mock", offline = [], allowLoopbackCallbacksForTests = true, rateLimitPerToken, clock = createClock(), hostLabel } = {}) {
   if (topology === "direct" && orgs.length !== 1) throw new Error("direct topology: one self-hosting firm per host");
-  const firmEps = {}, firmBases = {};
+  const firmEps = {}, firmBases = {}, offlineSet = new Set(offline);
   const transports = [];
   let hostRef = null;
   const hostInProcess = { call: (method, path, body, headers) => hostRef.handle(method, path, headers, body) };
@@ -33,13 +33,13 @@ export async function startSystem({ topology = "relay", orgs = ["org_test_alvare
     let t;
     if (topology === "direct") t = { call: (method, path, body, headers) => ep.handle(method, path, headers || {}, body) };
     else { firmBases[id] = await listen(ep.server); t = httpTransport(firmBases[id]); }
-    transports.push({ organization_id: id, transport: offline.includes(id) ? offlineInbox(t) : t });
+    transports.push({ organization_id: id, transport: offlineInbox(t, () => offlineSet.has(id)) });
   }
   const host = createLifecycleHost({ mode, topology, clock, firms: transports, allowLoopbackCallbacksForTests, rateLimitPerToken, hostLabel });
   hostRef = host;
   hostBase = await listen(host.server);
   return {
-    topology, host, hostBase, firms: firmEps, firmBases, clock,
+    topology, host, hostBase, firms: firmEps, firmBases, clock, offline: offlineSet,
     async stop() { await new Promise((r) => host.server.close(r)); for (const id of Object.keys(firmBases)) await new Promise((r) => firmEps[id].server.close(r)); },
   };
 }

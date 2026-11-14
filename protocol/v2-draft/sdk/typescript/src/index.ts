@@ -72,7 +72,7 @@ export class OlipLifecycleClient {
   async request<T = any>(method: string, path: string, body?: unknown, headers: Record<string, string> = {}): Promise<{ status: number; body: T }> {
     const h: Record<string, string> = { accept: "application/json", ...headers };
     if (body !== undefined) h["content-type"] = "application/json";
-    if (this.token) h.authorization = `Bearer ${this.token}`;
+    if (this.token && !h.authorization) h.authorization = `Bearer ${this.token}`;
     if (method !== "GET" && !h["idempotency-key"]) h["idempotency-key"] = crypto.randomUUID();
     const r = await this.f(this.base + path, { method, headers: h, body: body === undefined ? undefined : JSON.stringify(body) });
     const text = await r.text();
