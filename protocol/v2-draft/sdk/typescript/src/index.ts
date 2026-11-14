@@ -73,7 +73,8 @@ export class OlipLifecycleClient {
     const h: Record<string, string> = { accept: "application/json", ...headers };
     if (body !== undefined) h["content-type"] = "application/json";
     if (this.token && !h.authorization) h.authorization = `Bearer ${this.token}`;
-    if (method !== "GET" && !h["idempotency-key"]) h["idempotency-key"] = crypto.randomUUID();
+    if (method !== "GET" && !("idempotency-key" in h)) h["idempotency-key"] = crypto.randomUUID();
+    if (h["idempotency-key"] === "") delete h["idempotency-key"]; // "" means: send no key (used by conformance tests)
     const r = await this.f(this.base + path, { method, headers: h, body: body === undefined ? undefined : JSON.stringify(body) });
     const text = await r.text();
     let parsed: any = null; try { parsed = text ? JSON.parse(text) : null; } catch { parsed = text; }

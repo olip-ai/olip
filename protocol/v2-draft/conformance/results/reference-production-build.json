@@ -1,0 +1,140 @@
+{
+  "olip_version": "2.0-draft",
+  "runner": "olip-2.0-draft-conformance/1",
+  "target": "reference-production-build",
+  "base": "http://127.0.0.1:<port>",
+  "generated_for": "fictional test data only",
+  "independent_implementation": false,
+  "implementation": {
+    "name": "OLIP 2.0-draft reference lifecycle host",
+    "mode": "production",
+    "topology": "relay",
+    "operator": {
+      "operator_id": "op_test_neutral_relay",
+      "display_name": "Neutral Relay Co. (fictional independent vendor)"
+    },
+    "fictional_data_only": false,
+    "sponsor_services_required": false
+  },
+  "statement": "Not an independent implementation result (reference code or unstated).",
+  "summary": {
+    "pass": 10,
+    "fail": 0,
+    "skip": 10,
+    "mock_only": 0,
+    "total": 20
+  },
+  "results": [
+    {
+      "id": "C-01",
+      "title": "Capabilities document is served, valid, and marks the draft as not adopted",
+      "status": "pass"
+    },
+    {
+      "id": "C-02",
+      "title": "Well-known lifecycle manifest equals the capabilities document",
+      "status": "pass"
+    },
+    {
+      "id": "C-03",
+      "title": "OLIP 1.0 manifest (if served) advertises the lifecycle extension without changing 1.0 versions",
+      "status": "skip",
+      "detail": "no OLIP 1.0 manifest at this address"
+    },
+    {
+      "id": "C-04",
+      "title": "Production hosts expose no mock hooks",
+      "status": "pass"
+    },
+    {
+      "id": "C-05",
+      "title": "Recipient list is alphabetical and states that payment never affects order",
+      "status": "pass"
+    },
+    {
+      "id": "C-06",
+      "title": "Host keys are Ed25519 JWKs with a purpose",
+      "status": "pass"
+    },
+    {
+      "id": "C-07",
+      "title": "Unauthenticated writes are refused with an OLIP error",
+      "status": "pass"
+    },
+    {
+      "id": "C-08",
+      "title": "Unknown operations return 404 with an OLIP error",
+      "status": "pass"
+    },
+    {
+      "id": "C-09",
+      "title": "Responses carry no-store and nosniff headers",
+      "status": "pass"
+    },
+    {
+      "id": "B-01",
+      "title": "User signs in and delegates an assistant; the assistant gets its own token",
+      "status": "pass"
+    },
+    {
+      "id": "B-02",
+      "title": "Assistant can prepare a minimal screening; the response never includes the approval code",
+      "status": "skip",
+      "detail": "the host's policy gate is closed for this jurisdiction (fails closed, as required until counsel approves rules); behavior checks skipped"
+    },
+    {
+      "id": "B-03",
+      "title": "The assistant cannot approve (403 OLIP_AGENT_CANNOT_APPROVE) and cannot read the approval page",
+      "status": "skip",
+      "detail": "an earlier step (B-01 or B-02) did not complete, so this was not run"
+    },
+    {
+      "id": "B-04",
+      "title": "Nothing is sent before the user approves",
+      "status": "skip",
+      "detail": "an earlier step (B-01 or B-02) did not complete, so this was not run"
+    },
+    {
+      "id": "B-05",
+      "title": "After the user approves on the page, the screening is delivered only with the firm's signed receipt",
+      "status": "skip",
+      "detail": "an earlier step (B-01 or B-02) did not complete, so this was not run"
+    },
+    {
+      "id": "B-06",
+      "title": "A used approval cannot be reused (410 OLIP_AUTHORIZATION_EXPIRED)",
+      "status": "skip",
+      "detail": "an earlier step (B-01 or B-02) did not complete, so this was not run"
+    },
+    {
+      "id": "B-07",
+      "title": "Mutations without Idempotency-Key are refused",
+      "status": "skip",
+      "detail": "an earlier step (B-01 or B-02) did not complete, so this was not run"
+    },
+    {
+      "id": "B-08",
+      "title": "The assistant cannot record a firm's lifecycle event",
+      "status": "skip",
+      "detail": "an earlier step (B-01 or B-02) did not complete, so this was not run"
+    },
+    {
+      "id": "B-09",
+      "title": "The matter journal is hash-chained and host attestations verify",
+      "status": "skip",
+      "detail": "an earlier step (B-01 or B-02) did not complete, so this was not run"
+    },
+    {
+      "id": "B-10",
+      "title": "Passport export is signed, transmits nothing and authorizes nobody",
+      "status": "skip",
+      "detail": "an earlier step (B-01 or B-02) did not complete, so this was not run"
+    },
+    {
+      "id": "S-01",
+      "title": "Every response seen in this run matches the published JSON Schemas",
+      "status": "pass",
+      "detail": "6 operations checked"
+    }
+  ]
+}
