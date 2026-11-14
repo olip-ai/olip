@@ -1,9 +1,9 @@
 // The end-to-end FICTIONAL OLIP 3.0-draft reference journey (acceptance scenario, docs/ARCHITECTURE.md section 9).
 // Two independent assistants: "Alpha" (agt_test_assistant_a) and "Beta" (agt_test_assistant_b, a different provider).
-// Both talk to the 3.0-draft layer through the TypeScript SDK over HTTP. The user approves only on the 2.0-draft approval
+// Both talk to the 3.0-draft layer through the TypeScript SDK over HTTP. The user approves only on the 2.0 approval
 // page with a code from their own (mock) inbox. Firm staff act only through their own firm's system, which signs events.
 import { OlipAgentClient, verifyDetached, verifyJournal, openSealedCapsule } from "../sdk/typescript/dist/index.js";
-import { actors as v2actors, userApproves as v2userApproves, staff as v2staff, acts } from "../../v2-draft/reference/journey.mjs";
+import { actors as v2actors, userApproves as v2userApproves, staff as v2staff, acts } from "../../v2/reference/journey.mjs";
 import { CASEBRIEF, FIRMS, ASSISTANT_ENCRYPTION_KEYS, SCREEN_FIELDS } from "./fixtures.mjs";
 import { digestOf } from "./lib/core.mjs";
 

@@ -2,7 +2,7 @@
 // Keeps workflows, the signed event journal, idempotency records, disclosures, capsules, import authorizations,
 // subscriptions and the audit log. With a file path it writes an atomic snapshot after every committed change
 // (write to a temporary file, then rename), so a restarted host resumes with the same ids, cursors and idempotency
-// results. It stores no CaseBrief content: case content stays sealed in the 2.0-draft host.
+// results. It stores no CaseBrief content: case content stays sealed in the 2.0 host.
 // Not a production database: no multi-process locking, no encryption of the snapshot file, no replication.
 import { readFileSync, writeFileSync, renameSync, existsSync } from "node:fs";
 

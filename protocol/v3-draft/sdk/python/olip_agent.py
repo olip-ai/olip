@@ -1,7 +1,7 @@
 """OLIP 3.0-draft agent client and verifier for Python (standard library; optional `cryptography`).
 
 PROPOSED draft, not adopted. Works with any OLIP 3.0-draft host; needs no sponsor account or service.
-Canonical JSON and Ed25519 verification are reused from the 2.0-draft Python client (same written rules as OLIP 1.0).
+Canonical JSON and Ed25519 verification are reused from the 2.0 Python client (same written rules as OLIP 1.0).
 Everything 3.0-specific (journal chain, capsule digest, webhooks, plan digest, sealed capsules) is implemented here
 separately from the JavaScript reference and checked against vectors/v3-vectors.json.
 
@@ -21,10 +21,10 @@ from datetime import datetime, timezone
 from typing import Any, Iterable
 
 _here = os.path.dirname(os.path.abspath(__file__))
-_v2 = os.path.normpath(os.path.join(_here, "..", "..", "..", "v2-draft", "sdk", "python"))
+_v2 = os.path.normpath(os.path.join(_here, "..", "..", "..", "v2", "sdk", "python"))
 if _v2 not in sys.path:
     sys.path.insert(0, _v2)
-from olip_lifecycle import canonicalize, sha256_text, verify_detached  # noqa: E402  (2.0-draft client, unchanged)
+from olip_lifecycle import canonicalize, sha256_text, verify_detached  # noqa: E402  (2.0 client, unchanged)
 
 OLIP_V3 = "3.0-draft.1"
 ZERO_DIGEST = "sha256:" + "0" * 64

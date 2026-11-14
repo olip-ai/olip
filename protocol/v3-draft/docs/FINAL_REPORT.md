@@ -5,9 +5,9 @@ Proposed draft, not adopted, not independently security reviewed, not deployed. 
 ## A. What was inspected
 
 - `olip-ai/olip` at `a98dcf2be553d03607a4bedeb7eddd6f6620ccdd` on `main`, no uncommitted work. Work is on a branch for one pull request.
-- Freeze list `protocol/v2-draft/compat/OLIP-1.0-SHA256SUMS.txt` (45 files, list SHA-256 `b1e7339790ae0fc0a1f1029ec13f2a1137e89dec98ee9f1064bc3f6da6c7fb80`): all match.
-- 2.0-draft status: a merged, working reference (5 lifecycle profiles, 97 tests, mock only, not deployed). 3.0-draft builds on it rather than on stubs.
-- Assumptions: the folder convention of 2.0-draft applies (ADR-1); the official MCP and A2A SDKs available today are the targets (ADR-10).
+- Freeze list `protocol/v2/compat/OLIP-1.0-SHA256SUMS.txt` (45 files, list SHA-256 `b1e7339790ae0fc0a1f1029ec13f2a1137e89dec98ee9f1064bc3f6da6c7fb80`): all match.
+- 2.0 status: a merged, working reference (5 lifecycle profiles, 97 tests, mock only, not deployed). 3.0-draft builds on it rather than on stubs.
+- Assumptions: the folder convention of 2.0 applies (ADR-1); the official MCP and A2A SDKs available today are the targets (ADR-10).
 
 ## B. Working artifacts
 
@@ -19,7 +19,7 @@ Proposed draft, not adopted, not independently security reviewed, not deployed. 
 ## C. Compatibility
 
 - OLIP 1.0: 45 / 45 frozen files unchanged; 1.0 suite 24 / 24.
-- OLIP 2.0-draft: no file changed; suite 97 / 97; same-origin pass-through tested.
+- OLIP 2.0: no file changed; suite 97 / 97; same-origin pass-through tested.
 - MCP: official TypeScript SDK 1.32.2, protocol `2025-11-25`. MCP `2026-07-28`: **not supported** (no official SDK release found on 2026-11-14).
 - A2A: official JavaScript SDK 1.3.0, protocol 1.0, JSON-RPC.
 
@@ -49,5 +49,5 @@ Available: a tested, mock-only draft in the repository. Gated: everything else (
 4. Invite one independent implementer to run `conformance/run.mjs` against their own host (governance).
 5. Run the 30-minute quickstart study with outside developers (sponsor).
 6. Production components: real approval channel, durable store, key custody, authenticated A2A (implementers), then an external security review and counsel review for one jurisdiction before any production write.
-7. Investigate the one intermittent 2.0-draft test failure seen at baseline (maintainers).
+7. Investigate the one intermittent 2.0 test failure seen at baseline (maintainers).
 8. Optional: a page on olip.ai describing 3.0-draft as a proposed extension, through the release process.

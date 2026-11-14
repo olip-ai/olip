@@ -6,7 +6,7 @@ Goal: connect an existing AI application to an OLIP 3.0-draft host and complete 
 
 ```bash
 git clone https://github.com/olip-ai/olip && cd olip/protocol/v3-draft
-npm ci && (cd ../v2-draft && npm ci)
+npm ci && (cd ../v2 && npm ci)
 npm start
 ```
 

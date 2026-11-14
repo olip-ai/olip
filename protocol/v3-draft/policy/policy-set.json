@@ -2,7 +2,7 @@
   "olip_version": "3.0-draft.1",
   "policy_set_id": "olip-3.0-draft-reference-policy-2026-11-14",
   "status": "illustrative_pending_counsel_review",
-  "statement": "Reference policy only. No jurisdiction below has been reviewed or approved by counsel. In production mode every regulated write (state change, disclosure or firm event) is refused unless the jurisdiction's status is approved_by_counsel and its review date has not passed. Unknown jurisdictions always fail closed. The 2.0-draft lifecycle host applies its own, separate gate as well.",
+  "statement": "Reference policy only. No jurisdiction below has been reviewed or approved by counsel. In production mode every regulated write (state change, disclosure or firm event) is refused unless the jurisdiction's status is approved_by_counsel and its review date has not passed. Unknown jurisdictions always fail closed. The 2.0 lifecycle host applies its own, separate gate as well.",
   "production_write_requires": "approved_by_counsel",
   "jurisdictions": {
     "US-CA": { "status": "pending_counsel_review", "reviewed_at": null, "review_by": null },

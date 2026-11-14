@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.call_lifecycle.input.json",
-  "title": "Use a 2.0-draft lifecycle step (input)",
+  "title": "Use a 2.0 lifecycle step (input)",
   "type": "object",
   "properties": {
     "workflow_id": {

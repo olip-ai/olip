@@ -1,11 +1,11 @@
 {
   "olip_version": "3.0-draft.1",
-  "event_id": "urn:olip:v3:v3-host:evt:wf__YbExBonJIga9mHc:1",
-  "workflow_id": "wf__YbExBonJIga9mHc",
+  "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:1",
+  "workflow_id": "wf_SN5HdS2d45e97xmO",
   "sequence": 1,
   "event_type": "workflow.created",
   "schema_version": "3.0-draft.1",
-  "recorded_at": "2026-11-14T17:00:00.214Z",
+  "recorded_at": "2026-11-14T17:00:00.169Z",
   "actor_type": "ai_host",
   "actor_ref": {
     "kind": "agent",
@@ -14,19 +14,19 @@
   "authority_ref": null,
   "source": "olip_3_layer",
   "v2_ref": null,
-  "payload_digest": "sha256:cbe29aa4a5597e664032183071a4612925223da7254e15b8fa0a18366d5557bb",
+  "payload_digest": "sha256:aac6e67a486a1324f07b01c9d52618d4a775ae0fd49c96c5d8753d8d7e3ee9ec",
   "payload": {
-    "matter_ref": "2.0-draft matter (id in workflow record)"
+    "matter_ref": "2.0 matter (id in workflow record)"
   },
   "previous_event_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
   "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
   "idempotency_key": "req-000001",
   "privacy_scope": "participant_minimum",
   "fictional": true,
-  "event_digest": "sha256:ce8857cf349fe22214f7e188f5fd81bfb80f6901203cedc946314dc32a685864",
+  "event_digest": "sha256:8bf895c35623c796c40684646f1409dfa0c18fe1a46fee862c464110fbea34cc",
   "signature": {
     "alg": "EdDSA",
     "kid": "kid_v3test_a2fcfad00484",
-    "value": "WOtxg7OSsK1Ndr7wLmo4pR-3VLwntSkjVy4J3FYzSkQNcx1X3b0htlxMWaL7qq23jxEihy6YCPwDCqprJAJbBw"
+    "value": "fYAz1kq9yz5R_w9jqULa5YbDN-jfgmn_mQzJLvD28M67dTkkKyqAMGb3dNL8sq909mnD6M9l5mkb8g1QWwEBBw"
   }
 }

@@ -1,5 +1,5 @@
-// FICTIONAL TEST DATA ONLY (OLIP 3.0-draft). Everything here is invented. The 2.0-draft fixtures are reused unchanged.
-import * as V2FX from "../../v2-draft/reference/fixtures.mjs";
+// FICTIONAL TEST DATA ONLY (OLIP 3.0-draft). Everything here is invented. The 2.0 fixtures are reused unchanged.
+import * as V2FX from "../../v2/reference/fixtures.mjs";
 import { encryptionKey } from "./lib/core.mjs";
 
 export const { CONSUMERS, AGENT_CLIENTS, FIRMS, CASEBRIEF, RELAY_OPERATOR } = V2FX;

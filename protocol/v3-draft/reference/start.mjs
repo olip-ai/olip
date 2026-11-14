@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Starts the FICTIONAL OLIP 3.0-draft sandbox on loopback: the unchanged 2.0-draft lifecycle system plus the 3.0-draft
+// Starts the FICTIONAL OLIP 3.0-draft sandbox on loopback: the unchanged 2.0 lifecycle system plus the 3.0-draft
 // agent layer on one address, and prints a fictional assistant token so any agent can try it. Mock mode only.
 //   node reference/start.mjs          (stop with Ctrl+C)
 import { startV3System } from "./system.mjs";

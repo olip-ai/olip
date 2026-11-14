@@ -1,6 +1,6 @@
 // OLIP 3.0-draft HTTPS binding: the neutral reference contract. PROPOSED, NOT ADOPTED.
 // Every route below is a thin mapping onto layer.invoke(); there is no logic here that MCP or A2A callers skip.
-// Paths that are not 3.0-draft paths go to the co-located, unchanged 2.0-draft lifecycle host.
+// Paths that are not 3.0-draft paths go to the co-located, unchanged 2.0 lifecycle host.
 import { createServer } from "node:http";
 import { V3 } from "./lib/core.mjs";
 import { errorBody, ERRORS } from "./lib/errors.mjs";
@@ -21,7 +21,7 @@ export function createHttpBinding({ layer, v2 }) {
       if (method !== "GET") layer.syncAll(); // keep workflow journals and webhooks current after 2.0 writes
       return r;
     }
-    if (h["olip-version"] && h["olip-version"] !== V3) return json(400, errorBody("VERSION_UNSUPPORTED", `This binding speaks ${V3}. Use /olip/v2 for 2.0-draft.`, { details: { supported: [V3] } }));
+    if (h["olip-version"] && h["olip-version"] !== V3) return json(400, errorBody("VERSION_UNSUPPORTED", `This binding speaks ${V3}. Use /olip/v2 for 2.0.`, { details: { supported: [V3] } }));
     // Static, public contract documents.
     if (method === "GET" && p === "/olip/v3/actions") return json(200, { olip_version: V3, actions: ACTIONS.map(contractOf) }, { "cache-control": "public, max-age=300" });
     if (method === "GET" && p.startsWith("/olip/v3/actions/") && ACTION_BY_ID[decodeURIComponent(p.slice(17))]) return json(200, { olip_version: V3, action: contractOf(ACTION_BY_ID[decodeURIComponent(p.slice(17))]) });

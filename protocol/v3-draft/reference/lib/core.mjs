@@ -1,19 +1,19 @@
 // OLIP 3.0-draft core helpers. PROPOSED, NOT ADOPTED. Node 20+, no third-party dependencies.
-// Reuses the OLIP 1.0 canonical JSON and the 2.0-draft Ed25519 detached-signature rules unchanged (imported, never copied or edited).
+// Reuses the OLIP 1.0 canonical JSON and the 2.0 Ed25519 detached-signature rules unchanged (imported, never copied or edited).
 import { createHash, createHmac, createPrivateKey, createPublicKey, generateKeyPairSync, diffieHellman, hkdfSync, createCipheriv, createDecipheriv, randomBytes, timingSafeEqual } from "node:crypto";
-import { canonicalize, sha256, signDetached, verifyDetached, digestOf, newId, safeEqual, sensitiveFindings, untrusted } from "../../../v2-draft/reference/lib/core.mjs";
-import { checkCallbackUrl, isBlockedAddress } from "../../../v2-draft/reference/lib/ssrf.mjs";
+import { canonicalize, sha256, signDetached, verifyDetached, digestOf, newId, safeEqual, sensitiveFindings, untrusted } from "../../../v2/reference/lib/core.mjs";
+import { checkCallbackUrl, isBlockedAddress } from "../../../v2/reference/lib/ssrf.mjs";
 
 export { canonicalize, sha256, signDetached, verifyDetached, digestOf, newId, safeEqual, sensitiveFindings, untrusted, checkCallbackUrl, isBlockedAddress };
 
 // The only version identifier this folder uses on the wire. Never "3.0": nothing here is a stable release.
 export const V3 = "3.0-draft.1";
-export const V2_WIRE = "2.0-draft";
+export const V2_WIRE = "2.0";
 export const V3_EXTENSION = "olip.ai/agent-compatibility/3.0-draft";
 export const PROFILE = "olip-agent-compat/3";
 export const SCHEMA_BASE = "https://olip.ai/spec/3.0-draft/schemas/";
 export const RELEASE_STATUS = "proposed_draft_not_adopted";
-export const RELEASE_STATEMENT = "OLIP 3.0 is a proposed draft under development. It is not a stable release, has not been adopted by any standards body, has not been independently security reviewed, and has not been approved by any bar or regulator. OLIP 1.0 and the 2.0 draft are unchanged.";
+export const RELEASE_STATEMENT = "OLIP 3.0 is a proposed draft under development. It is not a stable release, has not been adopted by any standards body, has not been independently security reviewed, and has not been approved by any bar or regulator. OLIP 1.0 and OLIP 2.0 are unchanged.";
 
 // ---------- keys ----------
 // Deterministic FICTIONAL keys, rebuilt from a public label so anyone can reproduce the test vectors.

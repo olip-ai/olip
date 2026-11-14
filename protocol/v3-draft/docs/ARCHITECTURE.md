@@ -15,13 +15,13 @@
  +---------------------------|---------------------------+     |                               |
         in-process call with the CALLER'S OWN token            |                               |
  +---------------------------v---------------------------+     |  approval page + one-time     |
- |  2.0-draft lifecycle host (unchanged)                 |<----+  code from the user's inbox   |
+ |  2.0 lifecycle host (unchanged)                 |<----+  code from the user's inbox   |
  |   consent grants, approval page, firm-signature       |                                     |
  |   checks, policy gate, journal, delivery receipts     |<------ firm-signed events ----------+
  +-------------------------------------------------------+
 ```
 
-Trust boundaries: (1) the AI application is an untrusted caller; (2) the user's approval happens only on the 2.0-draft approval page, outside the model's reach; (3) firm facts enter only as events signed by the firm's key and verified by the 2.0-draft host; (4) outbound webhooks leave through SSRF checks; (5) the operator changes policy only over HTTPS with an operator credential.
+Trust boundaries: (1) the AI application is an untrusted caller; (2) the user's approval happens only on the 2.0 approval page, outside the model's reach; (3) firm facts enter only as events signed by the firm's key and verified by the 2.0 host; (4) outbound webhooks leave through SSRF checks; (5) the operator changes policy only over HTTPS with an operator credential.
 
 ## 2. Feature and authority matrix
 
@@ -42,11 +42,11 @@ Trust boundaries: (1) the AI application is an untrusted caller; (2) the user's 
 
 ## 3. Decisions (ADRs)
 
-**ADR-1. Folder and version naming.** Everything lives in `protocol/v3-draft/`, wire version `3.0-draft.1`, schema namespace `https://olip.ai/spec/3.0-draft/schemas/`. Reason: the 2.0-draft precedent, and the root `docs/` is the public website. Consequence: the package's `docs/3.0/` files are in `protocol/v3-draft/docs/`.
+**ADR-1. Folder and version naming.** Everything lives in `protocol/v3-draft/`, wire version `3.0-draft.1`, schema namespace `https://olip.ai/spec/3.0-draft/schemas/`. Reason: the 2.0 precedent, and the root `docs/` is the public website. Consequence: the package's `docs/3.0/` files are in `protocol/v3-draft/docs/`.
 
-**ADR-2. A layer, not a fork.** 3.0-draft reuses the 2.0-draft lifecycle host unchanged and imports (never copies) its canonical JSON, signatures, SSRF checks and fixtures. Reason: one implementation of consent and firm authority. Consequence: any 2.0 fix applies to 3.0 automatically.
+**ADR-2. A layer, not a fork.** 3.0-draft reuses the 2.0 lifecycle host unchanged and imports (never copies) its canonical JSON, signatures, SSRF checks and fixtures. Reason: one implementation of consent and firm authority. Consequence: any 2.0 fix applies to 3.0 automatically.
 
-**ADR-3. Co-located on one resource server.** The layer runs in the same process as the 2.0-draft host, shares its token store and calls its handlers with the caller's own token. Reason: no token crosses a trust boundary, and every 2.0 check still runs. Consequence: a remote split (3.0 layer and 2.0 host on different servers) is under design; it needs token exchange or a delegated audience.
+**ADR-3. Co-located on one resource server.** The layer runs in the same process as the 2.0 host, shares its token store and calls its handlers with the caller's own token. Reason: no token crosses a trust boundary, and every 2.0 check still runs. Consequence: a remote split (3.0 layer and 2.0 host on different servers) is under design; it needs token exchange or a delegated audience.
 
 **ADR-4. One entry point.** All bindings call `invoke()`. MCP and A2A adapters call the HTTPS binding through the TypeScript SDK. Reason: no binding can skip the gateway. Consequence: `tests/bindings.test.mjs` checks identical outcomes across four paths.
 
@@ -64,7 +64,7 @@ Trust boundaries: (1) the AI application is an untrusted caller; (2) the user's 
 
 ## 4. Known design limits
 
-- The 2.0-draft host in the reference system keeps its state in memory; only the 3.0 layer restarts from its store.
+- The 2.0 host in the reference system keeps its state in memory; only the 3.0 layer restarts from its store.
 - The A2A adapter serves without authentication and binds to 127.0.0.1; it acts with one user's delegated agent token. A networked deployment needs caller authentication.
 - Capsule import has no jurisdiction gate of its own (it creates no permission and sends nothing); review whether a gate is wanted.
 - The operator credential in mock mode is a fixed test secret.

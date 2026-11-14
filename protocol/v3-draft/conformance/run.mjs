@@ -7,14 +7,14 @@
 // Each check reports pass, fail, skip (not applicable or missing input) or mock_only (needs the host's mock test hooks,
 // so it proves behavior only on a test build). A result is "independent" only when the operator says the host was built
 // without the reference code (--independent); the reference host is never reported as independent.
-// The profile names FICTIONAL test accounts on the host (sign-in goes through the co-located 2.0-draft endpoints):
+// The profile names FICTIONAL test accounts on the host (sign-in goes through the co-located 2.0 endpoints):
 // { user: {subject_id, password}, agent: {client_id, client_secret}, other_user: {...}, organization_id, screening_fields, casebrief }.
 // Never point this runner at a host holding real client data.
 import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { OlipAgentClient, verifyDetached, verifyJournal } from "../sdk/typescript/dist/index.js";
-import { OlipLifecycleClient } from "../../v2-draft/sdk/typescript/dist/index.js";
+import { OlipLifecycleClient } from "../../v2/sdk/typescript/dist/index.js";
 import { createResponseChecker } from "./schema-check.mjs";
 import { ROUTES } from "../reference/routes.mjs";
 
@@ -68,7 +68,7 @@ export async function runConformance({ base, profile = DEFAULT_PROFILE, label = 
   await check("V3-06", "Discovery is unpaid and alphabetical", async () => { const r = await anon.findProfessionals({ jurisdiction: "US-CA" }); must(r.ordering.paid_influence === false, "paid_influence"); const n = r.professionals.map((x) => x.display_name); must(JSON.stringify(n) === JSON.stringify([...n].sort((a, b) => a.localeCompare(b))), "order"); });
   await check("V3-07", "Workflow reads need a token", async () => { must((await code(anon.getWorkflow("wf_any"))) === "AUTH_REQUIRED", "no token accepted"); });
 
-  // Sign in through the co-located 2.0-draft endpoints with the profile's FICTIONAL accounts.
+  // Sign in through the co-located 2.0 endpoints with the profile's FICTIONAL accounts.
   async function signIn(u) { const user = new OlipLifecycleClient(base); await user.negotiate(); await user.userSession(u.subject_id, u.password); const d = await user.delegateAgent(profile.agent.client_id, true); const ai = new OlipLifecycleClient(base); await ai.negotiate(); await ai.agentToken(profile.agent.client_id, profile.agent.client_secret, d.delegation_code); return { user2: user, user: new OlipAgentClient(base, { fetch: fetchChecked, token: user.token }), agent: new OlipAgentClient(base, { fetch: fetchChecked, token: ai.token }), ai }; }
   let me = null;
   try { me = await signIn(profile.user); } catch (e) { record("V3-08", "Sign in with the profile's fictional accounts", "skip", `sign-in unavailable: ${e.message}`.slice(0, 200)); }

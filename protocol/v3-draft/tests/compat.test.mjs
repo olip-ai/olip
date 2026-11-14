@@ -1,4 +1,4 @@
-// Backward compatibility and neutrality. The 45 frozen OLIP 1.0 files are byte-for-byte unchanged; no 2.0-draft source
+// Backward compatibility and neutrality. The 45 frozen OLIP 1.0 files are byte-for-byte unchanged; no 2.0 source
 // file changed; the 3.0-draft folder names no sponsor product and needs no sponsor service; 3.0 identifiers never claim
 // a stable "3.0" release.
 import { test } from "node:test";
@@ -13,7 +13,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const V3DIR = join(here, "..");
 const PROTOCOL = join(V3DIR, "..");
 const REPO = join(PROTOCOL, "..");
-const MANIFEST = join(PROTOCOL, "v2-draft", "compat", "OLIP-1.0-SHA256SUMS.txt");
+const MANIFEST = join(PROTOCOL, "v2", "compat", "OLIP-1.0-SHA256SUMS.txt");
 const walk = (d) => readdirSync(d).flatMap((f) => { const p = join(d, f); if (["node_modules", "dist", "__pycache__", "results"].includes(f)) return []; return statSync(p).isDirectory() ? walk(p) : [p]; });
 
 test("the freeze list is the published one, and all 45 frozen OLIP 1.0 files are byte-for-byte unchanged", () => {
@@ -23,12 +23,12 @@ test("the freeze list is the published one, and all 45 frozen OLIP 1.0 files are
   assert.equal(lines.length, 45);
   for (const l of lines) { const [h, f] = l.split(/\s+/); assert.equal(createHash("sha256").update(readFileSync(join(PROTOCOL, f))).digest("hex"), h, f); }
 });
-test("no 2.0-draft source file differs from the committed version (test outputs excluded)", (t) => {
-  const r = spawnSync("git", ["-C", REPO, "diff", "--name-only", "HEAD", "--", "protocol/v2-draft", ":(exclude)protocol/v2-draft/conformance/results"], { encoding: "utf8" });
+test("no 2.0 source file differs from the committed version (test outputs excluded)", (t) => {
+  const r = spawnSync("git", ["-C", REPO, "diff", "--name-only", "HEAD", "--", "protocol/v2", ":(exclude)protocol/v2/conformance/results"], { encoding: "utf8" });
   if (r.status !== 0) return t.skip("git not available in this checkout");
-  assert.equal(r.stdout.trim(), "", "2.0-draft files must not change");
-  const u = spawnSync("git", ["-C", REPO, "ls-files", "--others", "--exclude-standard", "--", "protocol/v2-draft"], { encoding: "utf8" });
-  assert.equal(u.stdout.trim(), "", "no new files inside the 2.0-draft folder");
+  assert.equal(r.stdout.trim(), "", "2.0 files must not change");
+  const u = spawnSync("git", ["-C", REPO, "ls-files", "--others", "--exclude-standard", "--", "protocol/v2"], { encoding: "utf8" });
+  assert.equal(u.stdout.trim(), "", "no new files inside the 2.0 folder");
 });
 test("the 3.0-draft folder is provider-neutral: no sponsor product, account or service is named or needed", () => {
   const files = walk(V3DIR).filter((f) => /\.(mjs|ts|py|json|md|yml)$/.test(f) && !f.endsWith("package-lock.json") && !f.endsWith("compat.test.mjs"));

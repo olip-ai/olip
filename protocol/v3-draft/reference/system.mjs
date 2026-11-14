@@ -1,8 +1,8 @@
 // Starts a complete FICTIONAL OLIP 3.0-draft system on loopback HTTP:
-//   * the unchanged 2.0-draft system (lifecycle host plus firm-owned endpoints), started with its own starter,
+//   * the unchanged 2.0 system (lifecycle host plus firm-owned endpoints), started with its own starter,
 //   * the 3.0-draft agent layer, co-located with that host and served on one origin that answers /olip/v3/* itself
-//     and passes every other path to the 2.0-draft host unchanged.
-import { startSystem as startV2 } from "../../v2-draft/reference/system.mjs";
+//     and passes every other path to the 2.0 host unchanged.
+import { startSystem as startV2 } from "../../v2/reference/system.mjs";
 import { createAgentLayer } from "./agent-layer.mjs";
 import { createHttpBinding } from "./http.mjs";
 

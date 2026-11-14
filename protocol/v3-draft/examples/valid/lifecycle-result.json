@@ -3,17 +3,17 @@
   "operation": "request_consultation",
   "lifecycle_v2_route": "POST /olip/v2/matters/{id}/consultations",
   "result": {
-    "olip_version": "2.0-draft",
+    "olip_version": "2.0",
     "consultation": {
-      "id": "cns__2UX-00VkSye1j6d",
+      "id": "cns_JMiq5BrbkO_jH6Om",
       "type": "consultation",
       "machine": "consultation",
       "state": "not_requested",
       "revision": 0,
       "history": [],
-      "created_at": "2026-11-14T17:00:00.267Z",
-      "updated_at": "2026-11-14T17:00:00.267Z",
-      "matter_id": "mat_XbTrM3sykEmO4x2v",
+      "created_at": "2026-11-14T17:00:00.212Z",
+      "updated_at": "2026-11-14T17:00:00.212Z",
+      "matter_id": "mat_GGfMu_VSfth9cOAR",
       "organization_id": "org_test_alvarez",
       "preferences": {
         "modes": [
@@ -29,18 +29,18 @@
       "attendance": null
     },
     "approval": {
-      "approval_id": "apv_jgR1wB8fIAFFsk0S",
-      "approval_url": "/olip/v2/approvals/apv_jgR1wB8fIAFFsk0S",
-      "grant_id": "grt_NBgPYewursRXFGfk",
-      "grant_digest": "sha256:5032b9049613c4cef180267fb286a5b3423a0318f9953b97732ca7dc45346b91",
-      "expires_at": "2026-11-14T17:30:00.267Z",
+      "approval_id": "apv_VAMqgHStodo3TkIO",
+      "approval_url": "/olip/v2/approvals/apv_VAMqgHStodo3TkIO",
+      "grant_id": "grt_9NJK4cWIqeuT4Me2",
+      "grant_digest": "sha256:54fd313938f993a87c195152f73e923ad40a1c167bbbc896b214808001cc68a6",
+      "expires_at": "2026-11-14T17:30:00.212Z",
       "state": "pending_user_approval",
       "instructions": "Show this link to the user. Only the user can approve it, on that page, with a code sent to their own contact. The agent cannot approve."
     }
   },
   "effect": "local_preparation",
   "next": "Show the user the approval page. Only the user can approve. Then call the matching submit step with grant_id and grant_digest.",
-  "correlation_id": "cor_8BcWv7FMjgKdu066",
+  "correlation_id": "cor_yiE7FZsK0rRl0yn4",
   "action_receipt": {
     "action": "olip.call_lifecycle",
     "effect": "local_preparation",

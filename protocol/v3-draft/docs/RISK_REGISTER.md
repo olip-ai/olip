@@ -18,7 +18,7 @@ Likelihood and impact are rated low, moderate or high. Ratings are the authors' 
 | R3-12 | Mock components mistaken for production (operator secret, store, in-memory 2.0 host, unauthenticated A2A) | moderate | high | Manifest `mode`; production writes fail closed; docs label mock only | implemented, tested; production components under design |
 | R3-13 | Regulated writes enabled without counsel review | low | high | Production mode refuses every write unless a jurisdiction is `approved_by_counsel` and not stale | implemented, tested; no jurisdiction approved |
 | R3-14 | MCP `2026-07-28` hosts expect features the pinned SDK lacks | high | low | Negotiated version recorded; gap documented | open |
-| R3-15 | Intermittent failure in the 2.0-draft suite (1 of 97 on one baseline run) hides a real race | low | moderate | Recorded; later runs passed; needs a repeat-run investigation | open |
+| R3-15 | Intermittent failure in the 2.0 suite (1 of 97 on one baseline run) hides a real race | low | moderate | Recorded; later runs passed; needs a repeat-run investigation | open |
 | R3-16 | The draft is cited as adopted, certified, audited or independently implemented | moderate | moderate | Status words everywhere; conformance results say "not certification" and never self-label independent | implemented, tested |
 | R3-17 | No license grant covers 3.0-draft (the OWFa covers 1.0 only) | high | moderate | Flagged as a sponsor decision | open |
 | R3-18 | A 3.0 feature is later found to read on Patent Family A | low | high | No search, ranking, ordering, freshness or recommendation is added or required | under design; awaiting sponsor confirmation |

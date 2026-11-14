@@ -1,6 +1,6 @@
-// Approval-bound disclosure. An assistant can prepare, but only the USER approves, on the 2.0-draft approval page.
+// Approval-bound disclosure. An assistant can prepare, but only the USER approves, on the 2.0 approval page.
 // The approval binds one recipient, exact content, purpose and expiry; it is rechecked right before sending, and the
-// 2.0-draft host checks again atomically. Retries with the same Idempotency-Key never send twice.
+// 2.0 host checks again atomically. Retries with the same Idempotency-Key never send twice.
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { startSystem, people, approve, sentScreening, codeOf, errOf, casebrief, SCREEN_FIELDS, invokeAs } from "./helpers.mjs";

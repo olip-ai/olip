@@ -9,7 +9,7 @@ Run on 2026-11-14 on the sponsor's build machine: Linux, Node 22.23.4, npm 10.9.
 | OLIP 3.0-draft | `cd protocol/v3-draft && npm test` | **70 / 70 pass**, 0 skip, about 26 s |
 | 3.0-draft conformance, mock build | `npm run conformance` | 18 pass, 0 fail, 0 skip, 1 mock-only (V3-12 reads the fictional inbox) |
 | 3.0-draft conformance, production build | `npm run conformance` | 9 pass, 0 fail (writes refused with `POLICY_UNREVIEWED`) |
-| OLIP 2.0-draft (unchanged) | `cd protocol/v2-draft && npm test` | 97 / 97 pass |
+| OLIP 2.0 (unchanged) | `cd protocol/v2 && npm test` | 97 / 97 pass |
 | OLIP 1.0 (unchanged) | `cd protocol && npm test` | 24 / 24 pass (its rewritten results files were reverted, not committed) |
 | Website | `npm test` (repository root) | 25 / 25 pass |
 | Publication scan | `node scripts/scan-publication.mjs .` | 0 findings |

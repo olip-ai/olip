@@ -27,8 +27,8 @@
       ],
       "statement": "Firm-reported configuration. Not verified by OLIP.",
       "evidence": {
-        "source": "organization_signed_profile (2.0-draft firm endpoint)",
-        "as_of": "2026-11-14T17:00:00.206Z",
+        "source": "organization_signed_profile (2.0 firm endpoint)",
+        "as_of": "2026-11-14T17:00:00.162Z",
         "verification": "host checked the organization's signed authority document"
       }
     },
@@ -52,8 +52,8 @@
       "olip_1_0_professional_ids": [],
       "statement": "Firm-reported configuration. Not verified by OLIP.",
       "evidence": {
-        "source": "organization_signed_profile (2.0-draft firm endpoint)",
-        "as_of": "2026-11-14T17:00:00.206Z",
+        "source": "organization_signed_profile (2.0 firm endpoint)",
+        "as_of": "2026-11-14T17:00:00.162Z",
         "verification": "host checked the organization's signed authority document"
       }
     },
@@ -78,14 +78,14 @@
       "olip_1_0_professional_ids": [],
       "statement": "Firm-reported configuration. Not verified by OLIP.",
       "evidence": {
-        "source": "organization_signed_profile (2.0-draft firm endpoint)",
-        "as_of": "2026-11-14T17:00:00.206Z",
+        "source": "organization_signed_profile (2.0 firm endpoint)",
+        "as_of": "2026-11-14T17:00:00.162Z",
         "verification": "host checked the organization's signed authority document"
       }
     }
   ],
   "statement": "Listed alphabetically. Payment never affects inclusion or order. This host does not recommend or rank any organization; the user chooses.",
-  "correlation_id": "cor_XA3VLuyjqoQCykjA",
+  "correlation_id": "cor_VuxzcHtVKVuh5rMa",
   "action_receipt": {
     "action": "olip.find_professionals",
     "effect": "read_only",

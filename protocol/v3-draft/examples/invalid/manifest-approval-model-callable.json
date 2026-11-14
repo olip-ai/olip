@@ -2,12 +2,12 @@
   "olip_version": "3.0-draft.1",
   "manifest_version": "3.0-draft.1",
   "release_status": "proposed_draft_not_adopted",
-  "statement": "OLIP 3.0 is a proposed draft under development. It is not a stable release, has not been adopted by any standards body, has not been independently security reviewed, and has not been approved by any bar or regulator. OLIP 1.0 and the 2.0 draft are unchanged.",
+  "statement": "OLIP 3.0 is a proposed draft under development. It is not a stable release, has not been adopted by any standards body, has not been independently security reviewed, and has not been approved by any bar or regulator. OLIP 1.0 and OLIP 2.0 are unchanged.",
   "provider_id": "urn:olip:host:v3-host",
   "issuer": "urn:olip:host:v3-host",
   "endpoint_origin": "same-origin",
   "supported_olip_versions": [
-    "2.0-draft",
+    "2.0",
     "3.0-draft.1"
   ],
   "extension_id": "olip.ai/agent-compatibility/3.0-draft",
@@ -188,7 +188,7 @@
       "id": "olip.start_workflow",
       "version": "1.0",
       "title": "Start a workflow",
-      "summary": "Creates the user's matter (through the unchanged 2.0-draft host) and a durable workflow id. Nothing is sent to anyone.",
+      "summary": "Creates the user's matter (through the unchanged 2.0 host) and a durable workflow id. Nothing is sent to anyone.",
       "effects": [
         "authorized_state_change"
       ],
@@ -641,8 +641,8 @@
     {
       "id": "olip.call_lifecycle",
       "version": "1.0",
-      "title": "Use a 2.0-draft lifecycle step",
-      "summary": "Runs one consumer-side 2.0-draft lifecycle step (consultation, engagement review, messages) with its unchanged 2.0 rules. Steps that send anything need the user's approval on the approval page.",
+      "title": "Use a 2.0 lifecycle step",
+      "summary": "Runs one consumer-side 2.0 lifecycle step (consultation, engagement review, messages) with its unchanged 2.0 rules. Steps that send anything need the user's approval on the approval page.",
       "effects": [
         "external_disclosure",
         "local_preparation",
@@ -675,7 +675,7 @@
       "id": "olip.record_firm_event",
       "version": "1.0",
       "title": "Record a firm-signed event",
-      "summary": "The organization's own system records its signed lifecycle event (screening outcome, consultation, engagement, closure). The 2.0-draft host verifies signer, role, scope and key.",
+      "summary": "The organization's own system records its signed lifecycle event (screening outcome, consultation, engagement, closure). The 2.0 host verifies signer, role, scope and key.",
       "effects": [
         "firm_authoritative"
       ],
@@ -740,7 +740,7 @@
     "policy_set_id": "olip-3.0-draft-reference-policy-2026-11-14",
     "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
     "status": "illustrative_pending_counsel_review",
-    "statement": "Reference policy only. No jurisdiction below has been reviewed or approved by counsel. In production mode every regulated write (state change, disclosure or firm event) is refused unless the jurisdiction's status is approved_by_counsel and its review date has not passed. Unknown jurisdictions always fail closed. The 2.0-draft lifecycle host applies its own, separate gate as well.",
+    "statement": "Reference policy only. No jurisdiction below has been reviewed or approved by counsel. In production mode every regulated write (state change, disclosure or firm event) is refused unless the jurisdiction's status is approved_by_counsel and its review date has not passed. Unknown jurisdictions always fail closed. The 2.0 lifecycle host applies its own, separate gate as well.",
     "production_write_requires": "approved_by_counsel",
     "mode": "mock",
     "jurisdictions": {
@@ -778,49 +778,49 @@
     },
     {
       "state": "accepted_by_transport",
-      "layer": "2.0-draft delivery",
+      "layer": "2.0 delivery",
       "means": "A relay accepted the item.",
       "does_not_mean": "The firm's system confirmed receiving it."
     },
     {
       "state": "delivered_to_endpoint",
-      "layer": "2.0-draft delivery",
+      "layer": "2.0 delivery",
       "means": "The firm's endpoint returned a signed receipt for this exact content.",
       "does_not_mean": "Anyone read it, responded, or took the matter."
     },
     {
       "state": "eligible_for_further_intake",
-      "layer": "2.0-draft intake",
+      "layer": "2.0 intake",
       "means": "The firm says intake may continue.",
       "does_not_mean": "A conflict clearance finding or representation."
     },
     {
       "state": "consultation_confirmed",
-      "layer": "2.0-draft consultation",
+      "layer": "2.0 consultation",
       "means": "The firm confirmed an appointment time.",
       "does_not_mean": "The consultation happened or legal advice was given."
     },
     {
       "state": "engagement_offer_issued",
-      "layer": "2.0-draft engagement",
+      "layer": "2.0 engagement",
       "means": "The firm signed a versioned offer.",
       "does_not_mean": "The client accepted or representation began."
     },
     {
       "state": "client_accepted_offer",
-      "layer": "2.0-draft engagement",
+      "layer": "2.0 engagement",
       "means": "The user's acceptance of one exact offer version was recorded.",
       "does_not_mean": "The firm confirmed the engagement."
     },
     {
       "state": "firm_confirmed",
-      "layer": "2.0-draft engagement",
+      "layer": "2.0 engagement",
       "means": "The firm's authorized attorney signed a confirmation. Shown as 'Firm reports engagement confirmed'.",
       "does_not_mean": "A legal determination that an attorney-client relationship exists."
     },
     {
       "state": "matter_closed",
-      "layer": "2.0-draft matter",
+      "layer": "2.0 matter",
       "means": "The firm (or, for an unrepresented intake, the user) closed the matter.",
       "does_not_mean": "All obligations, records or legal holds have ended."
     },
@@ -839,7 +839,7 @@
   ],
   "approval": {
     "user_approval_methods": [
-      "hosted_otp_mock (2.0-draft approval page)",
+      "hosted_otp_mock (2.0 approval page)",
       "signed_in_user_session (capsule export and import authorization)"
     ],
     "approval_is_model_callable": true
@@ -862,11 +862,11 @@
   "mode": "mock",
   "fictional_data_only": true,
   "max_age_seconds": 300,
-  "expires_at": "2026-11-14T18:00:00.184Z",
-  "etag": "sha256:634eb64fb40127d3af62dfa64f75c299d8603408c4af02f6ee051c0110e60ad2",
+  "expires_at": "2026-11-14T18:00:00.141Z",
+  "etag": "sha256:6cff1db25276888e5c9bb823c0499c5239bda74d7a4d1532a68045fe92cdf15e",
   "signature": {
     "alg": "EdDSA",
     "kid": "kid_v3test_911680470501",
-    "value": "-7SMpgaN6hg078rFRg845M4U2Rn442gWHwUyEmWhGrdHGSh9P6QOpl1Ozh4N-2_N75EBFsSw8RmcuRuMCJ44Cw"
+    "value": "XNM-r2ZgJW-357FKXD9Lt6IITzVsb2tcK6uG05qquQhwj_cNTG-FtOqAJBpTCUwakcqpECNF5ikjjS3bTv-SDQ"
   }
 }

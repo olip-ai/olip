@@ -4,9 +4,9 @@ Each gate must be met before the step to its right. Today no gate past "draft me
 
 | # | Gate (package target) | Owner | Status |
 |---|---|---|---|
-| G3-01 | All 3.0-draft, 2.0-draft and 1.0 tests, website tests and the publication scan pass in CI | Maintainers | tested locally; CI job added, awaiting first CI run |
-| G3-02 | Frozen 1.0 hashes 45 / 45 unchanged; no 2.0-draft source changed | Maintainers | tested |
-| G3-03 | V2 dependency: lifecycle profiles implemented and tested | Maintainers | met by the merged 2.0-draft reference (mock only) |
+| G3-01 | All 3.0-draft, 2.0 and 1.0 tests, website tests and the publication scan pass in CI | Maintainers | tested locally; CI job added, awaiting first CI run |
+| G3-02 | Frozen 1.0 hashes 45 / 45 unchanged; no 2.0 source changed | Maintainers | tested |
+| G3-03 | V2 dependency: lifecycle profiles implemented and tested | Maintainers | met by the merged 2.0 reference (mock only) |
 | G3-04 | Core 3.0 conformance: required positive and negative checks green | Maintainers | tested: 18 pass, 0 fail, 1 mock-only (mock build); 9 pass (production build) |
 | G3-05 | Zero unauthorized disclosures or firm-authority violations in the adversarial suite | Maintainers | tested (see TEST_REPORT) |
 | G3-06 | Zero duplicate side effects across bounded idempotent retries | Maintainers | tested, single process |

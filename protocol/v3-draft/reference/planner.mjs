@@ -60,7 +60,7 @@ export function planNextActions(state) {
   for (const [org, s] of [...byOrgScreen.entries()].sort()) {
     const target = { organization_id: org, object_id: s.id };
     if (s.state === "screening_requested") firmStep("WAITING_FOR_FIRM_SCREENING_RESPONSE", target, "intake.eligible_for_further_intake|intake.information_requested|intake.unable_to_proceed");
-    if (s.state === "information_requested") userStep("olip.call_lifecycle", "FIRM_ASKED_FOR_MORE_SCREENING_DETAIL", ["user_approval_on_approval_page"], target, "provide_additional_screening (2.0-draft route)");
+    if (s.state === "information_requested") userStep("olip.call_lifecycle", "FIRM_ASKED_FOR_MORE_SCREENING_DETAIL", ["user_approval_on_approval_page"], target, "provide_additional_screening (2.0 route)");
     if (s.state === "unable_to_proceed") add("olip.preview_disclosure", "blocked", "FIRM_SAID_IT_CANNOT_CONTINUE", { target });
     if (s.state === "eligible_for_further_intake") {
       const sent = state.disclosures.some((d) => d.organization_id === org && d.stage === "casebrief" && d.state === "submitted");

@@ -30,8 +30,8 @@ These are four client paths, but all were written or configured by the sponsor's
 | Version | Relationship | Evidence |
 |---|---|---|
 | OLIP 1.0 (wire 0.1, 0.2) | Untouched; 45 frozen files byte-identical | `tests/compat.test.mjs`; CI `git diff --exit-code` on 1.0 paths |
-| OLIP 2.0-draft | Reused unchanged; same origin serves `/olip/v2/*` as before | `tests/compat.test.mjs` (no 2.0 source changed), `tests/contract.test.mjs` (pass-through); 2.0 suite still runs in its own CI job |
-| 3.0-draft on a host without 2.0-draft | Not supported; 3.0-draft requires a co-located 2.0-draft lifecycle host | Constructor refuses to start without one |
+| OLIP 2.0 | Reused unchanged; same origin serves `/olip/v2/*` as before | `tests/compat.test.mjs` (no 2.0 source changed), `tests/contract.test.mjs` (pass-through); 2.0 suite still runs in its own CI job |
+| 3.0-draft on a host without 2.0 | Not supported; 3.0-draft requires a co-located 2.0 lifecycle host | Constructor refuses to start without one |
 
 ## Runtime
 

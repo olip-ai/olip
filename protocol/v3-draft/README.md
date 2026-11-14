@@ -1,12 +1,12 @@
 # OLIP 3.0-draft: agent compatibility layer (proposed)
 
-> OLIP 3.0 is a proposed draft under development. It is not a stable release, has not been adopted by any standards body, has not been independently security reviewed, and has not been approved by any bar or regulator. OLIP 1.0 and the 2.0 draft are unchanged.
+> OLIP 3.0 is a proposed draft under development. It is not a stable release, has not been adopted by any standards body, has not been independently security reviewed, and has not been approved by any bar or regulator. OLIP 1.0 and OLIP 2.0 are unchanged.
 
 Everything in this folder is **fictional test data** and **mock mode only**. Nothing here is deployed. Nothing here contacts a real person, firm or service.
 
 ## What it does
 
-OLIP 2.0-draft defines the steps between a person and a law firm after intake. 3.0-draft lets an **existing AI application** use those steps safely with little custom code. It works with MCP and A2A, and with plain HTTPS.
+OLIP 2.0 defines the steps between a person and a law firm after intake. 3.0-draft lets an **existing AI application** use those steps safely with little custom code. It works with MCP and A2A, and with plain HTTPS.
 
 | Part | What an assistant gets | Who decides |
 |---|---|---|
@@ -42,7 +42,7 @@ An assistant can prepare everything and approve nothing. No action, MCP tool or 
 
 ```bash
 cd protocol/v3-draft
-npm ci && (cd ../v2-draft && npm ci)
+npm ci && (cd ../v2 && npm ci)
 npm test            # builds the TypeScript clients, then runs all 3.0-draft tests
 npm run demo        # the 12-step fictional journey with two assistants
 npm run conformance # black-box runner against a mock build and a production build

@@ -39,7 +39,7 @@ export function buildOpenApi() {
       description: "Proposed draft. Not a stable release, not adopted by any standards body, not independently security reviewed, not approved by any bar or regulator. Fictional data only. Every path here is a design candidate served by the reference host, not a published production endpoint.",
       license: { name: "Apache-2.0 (code); see the repository LICENSE.md for specification text", identifier: "Apache-2.0" } },
     servers: [{ url: "http://127.0.0.1", description: "Local fictional sandbox only" }],
-    components: { securitySchemes: { bearer: { type: "http", scheme: "bearer", description: "Tokens from the co-located 2.0-draft host (/olip/v2/token, /olip/v2/user-sessions). Mock credentials only." } },
+    components: { securitySchemes: { bearer: { type: "http", scheme: "bearer", description: "Tokens from the co-located 2.0 host (/olip/v2/token, /olip/v2/user-sessions). Mock credentials only." } },
       schemas: Object.fromEntries([...Object.entries(SCHEMAS), ...Object.entries(INPUT_SCHEMAS).map(([k, v]) => [`input.${k}`, v])].map(([k, v]) => [k.replace(/[^A-Za-z0-9._-]/g, "_"), v])) },
     paths, tags: Object.entries(EFFECT_MEANING).map(([name, description]) => ({ name, description })),
     "x-olip-errors": Object.values(ERRORS).map((e) => ({ code: e.code, http: e.http, retryable: e.retryable })), "x-olip-action-count": ACTIONS.length,

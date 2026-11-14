@@ -1,9 +1,9 @@
 // Firm authority and tenant isolation. A client agent can never record a firm-authoritative event; a firm can record
-// only events the 2.0-draft host verifies (signer, role, scope, key, revision); one user's assistant can never see or act
+// only events the 2.0 host verifies (signer, role, scope, key, revision); one user's assistant can never see or act
 // on another user's workflow, capsule, subscription or lifecycle object. Missing and forbidden look the same (NOT_FOUND).
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
-import { signDetached, keyFromLabel } from "../../v2-draft/reference/lib/core.mjs";
+import { signDetached, keyFromLabel } from "../../v2/reference/lib/core.mjs";
 import { startSystem, people, raw, invokeAs, sentScreening, codeOf, casebrief, FIRMS, SCREEN_FIELDS } from "./helpers.mjs";
 
 let sys, casey, morgan;
@@ -15,7 +15,7 @@ async function firmToken(org) {
   return r.body.access_token;
 }
 function screenEvent(org, screen, event_type, key, actor_id = "stf_test_jordan") {
-  return signDetached({ olip_version: "2.0-draft", event_id: `urn:olip:${org}:event:t${Math.random().toString(36).slice(2)}`, matter_id: screen.matter_id, object: { type: "conflict_screen", id: screen.id }, event_type,
+  return signDetached({ olip_version: "2.0", event_id: `urn:olip:${org}:event:t${Math.random().toString(36).slice(2)}`, matter_id: screen.matter_id, object: { type: "conflict_screen", id: screen.id }, event_type,
     actor: { role: "firm", actor_id, organization_id: org, staff_role: "intake_staff" }, prior_revision: screen.revision, occurred_at: sys.clock.now().toISOString(), idempotency_key: `idem-${Math.random()}`,
     correlation_id: screen.matter_id, causation_id: null, evidence: {}, payload: {}, fictional: true }, key);
 }

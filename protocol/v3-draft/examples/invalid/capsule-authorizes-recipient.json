@@ -2,8 +2,8 @@
   "olip_version": "3.0-draft.1",
   "document": "legal_context_capsule",
   "capsule_version": "3.0-draft.1",
-  "capsule_id": "cap_Yws8hk1dMf3MsERs",
-  "matter_ref": "wf__YbExBonJIga9mHc",
+  "capsule_id": "cap_UkkjlKSCcn8D5Uvu",
+  "matter_ref": "wf_SN5HdS2d45e97xmO",
   "subject_ref": "subj_x_US0uvJ4e_vjPDdMcyDYx",
   "controller": {
     "kind": "user",
@@ -11,14 +11,14 @@
   },
   "issuer": "urn:olip:host:v3-host",
   "fictional": true,
-  "created_at": "2026-11-14T17:00:00.435Z",
-  "expires_at": "2026-11-21T17:00:00.435Z",
+  "created_at": "2026-11-14T17:00:00.386Z",
+  "expires_at": "2026-11-21T17:00:00.386Z",
   "source_provenance": {
     "origin": "olip_3_0_draft_reference_host",
     "method": "user_initiated_export",
     "casebrief_revision": 1,
     "as_of_event_sequence": 32,
-    "as_of_event_digest": "sha256:ab339d0e4b1c3a382843b415bd523001b8e5900e5c9b55b8975f618921b2df3b"
+    "as_of_event_digest": "sha256:76bbe3d273eab2ea473c419f86e1b2e774f5bb8ebc21b475c63bc7194083e660"
   },
   "included_fields": [
     "matter.category"
@@ -58,9 +58,9 @@
     }
   ],
   "workflow_snapshot": {
-    "as_of": "2026-11-14T17:00:00.435Z",
+    "as_of": "2026-11-14T17:00:00.386Z",
     "as_of_event_sequence": 32,
-    "as_of_event_digest": "sha256:ab339d0e4b1c3a382843b415bd523001b8e5900e5c9b55b8975f618921b2df3b",
+    "as_of_event_digest": "sha256:76bbe3d273eab2ea473c419f86e1b2e774f5bb8ebc21b475c63bc7194083e660",
     "lifecycle": {
       "matter": {
         "state": "closed",
@@ -68,7 +68,7 @@
       },
       "conflict_screens": [
         {
-          "id": "scr_vDHGB9fyBVkuJ2Zx",
+          "id": "scr_ENqI2zoPG8Q4Al8v",
           "organization_id": "org_test_alvarez",
           "state": "eligible_for_further_intake",
           "meaning": "The organization says intake may continue. This is NOT a conflict clearance finding and NOT representation.",
@@ -76,7 +76,7 @@
           "reconciliation_required": false
         },
         {
-          "id": "scr_H-b3fO4Tvb9UEO1s",
+          "id": "scr_IQA1K5mtAJlX5sFE",
           "organization_id": "org_test_cedar",
           "state": "not_started",
           "meaning": "No screening data has been sent to this organization.",
@@ -86,7 +86,7 @@
       ],
       "consultations": [
         {
-          "id": "cns__2UX-00VkSye1j6d",
+          "id": "cns_JMiq5BrbkO_jH6Om",
           "organization_id": "org_test_alvarez",
           "state": "confirmed",
           "meaning": "The organization's scheduling system confirmed this time and time zone.",
@@ -96,7 +96,7 @@
       ],
       "engagements": [
         {
-          "id": "eng_M6ftx0Jo1-kLMGnL",
+          "id": "eng_T-GwAaRoKZJjgCcW",
           "organization_id": "org_test_alvarez",
           "state": "ended",
           "meaning": "The organization reports the engagement ended (see the matter record).",
@@ -107,7 +107,7 @@
     },
     "pending_user_approvals": 0,
     "authoritative_sources": {
-      "lifecycle_states": "the 2.0-draft host's status of record",
+      "lifecycle_states": "the 2.0 host's status of record",
       "firm_states": "firm-signed events"
     }
   },
@@ -115,7 +115,7 @@
     "authorized_by": "signed_in_user_session",
     "purpose": "personal_record",
     "originating_system": "urn:olip:host:v3-host",
-    "expires_at": "2026-11-21T17:00:00.435Z",
+    "expires_at": "2026-11-21T17:00:00.386Z",
     "onward_disclosure": false,
     "authorizes_recipients": [
       "org_test_cedar"
@@ -125,7 +125,7 @@
   },
   "intended_host": null,
   "retention": {
-    "expires_at": "2026-11-21T17:00:00.435Z",
+    "expires_at": "2026-11-21T17:00:00.386Z",
     "revocation": "The user can revoke it on the issuing host; imports and reads there stop. Copies already taken elsewhere cannot be recalled.",
     "deletion": "Mock host: in memory or a local snapshot file.",
     "legal_hold_caveat": "Organizations that already received information keep it under their own legal duties."
@@ -151,7 +151,7 @@
         "value": "housing.landlord_tenant",
         "origin_type": "user_reported",
         "source_ref": "casebrief_revision_1",
-        "observed_at": "2026-11-14T17:00:00.429Z",
+        "observed_at": "2026-11-14T17:00:00.379Z",
         "verified_at": null,
         "jurisdiction": "US-CA",
         "extraction_method": "user_entered",
@@ -164,12 +164,12 @@
       },
       {
         "claim_id": "claim_002",
-        "field_path": "lifecycle.conflict_screen.scr_vDHGB9fyBVkuJ2Zx",
+        "field_path": "lifecycle.conflict_screen.scr_ENqI2zoPG8Q4Al8v",
         "value": "intake.eligible_for_further_intake",
         "origin_type": "firm_asserted",
-        "source_ref": "urn:olip:org_test_alvarez:event:lCwbqx3Tl-fD",
-        "observed_at": "2026-11-14T17:00:00.255Z",
-        "verified_at": "2026-11-14T17:00:00.255Z",
+        "source_ref": "urn:olip:org_test_alvarez:event:bQc9XCzEanEG",
+        "observed_at": "2026-11-14T17:00:00.202Z",
+        "verified_at": "2026-11-14T17:00:00.202Z",
         "jurisdiction": "US-CA",
         "extraction_method": "signed_lifecycle_event",
         "confidence_or_uncertainty": "not_applicable",
@@ -181,12 +181,12 @@
       },
       {
         "claim_id": "claim_003",
-        "field_path": "lifecycle.consultation.cns__2UX-00VkSye1j6d",
+        "field_path": "lifecycle.consultation.cns_JMiq5BrbkO_jH6Om",
         "value": "consultation.options_offered",
         "origin_type": "firm_asserted",
-        "source_ref": "urn:olip:org_test_alvarez:event:edxcEIRJW0PZ",
-        "observed_at": "2026-11-14T17:00:00.283Z",
-        "verified_at": "2026-11-14T17:00:00.283Z",
+        "source_ref": "urn:olip:org_test_alvarez:event:rmfw4OFsUAAE",
+        "observed_at": "2026-11-14T17:00:00.225Z",
+        "verified_at": "2026-11-14T17:00:00.225Z",
         "jurisdiction": "US-CA",
         "extraction_method": "signed_lifecycle_event",
         "confidence_or_uncertainty": "not_applicable",
@@ -198,12 +198,12 @@
       },
       {
         "claim_id": "claim_004",
-        "field_path": "lifecycle.consultation.cns__2UX-00VkSye1j6d",
+        "field_path": "lifecycle.consultation.cns_JMiq5BrbkO_jH6Om",
         "value": "consultation.confirmed",
         "origin_type": "firm_asserted",
-        "source_ref": "urn:olip:org_test_alvarez:event:_YTsGNIUpdES",
-        "observed_at": "2026-11-14T17:00:00.300Z",
-        "verified_at": "2026-11-14T17:00:00.300Z",
+        "source_ref": "urn:olip:org_test_alvarez:event:MjO2R0Kl4xqc",
+        "observed_at": "2026-11-14T17:00:00.240Z",
+        "verified_at": "2026-11-14T17:00:00.240Z",
         "jurisdiction": "US-CA",
         "extraction_method": "signed_lifecycle_event",
         "confidence_or_uncertainty": "not_applicable",
@@ -215,12 +215,12 @@
       },
       {
         "claim_id": "claim_005",
-        "field_path": "lifecycle.engagement.eng_M6ftx0Jo1-kLMGnL",
+        "field_path": "lifecycle.engagement.eng_T-GwAaRoKZJjgCcW",
         "value": "engagement.offered",
         "origin_type": "firm_asserted",
-        "source_ref": "urn:olip:org_test_alvarez:event:9eWuL-TMJof3",
-        "observed_at": "2026-11-14T17:00:00.395Z",
-        "verified_at": "2026-11-14T17:00:00.395Z",
+        "source_ref": "urn:olip:org_test_alvarez:event:5HNkp5Nv_9uw",
+        "observed_at": "2026-11-14T17:00:00.337Z",
+        "verified_at": "2026-11-14T17:00:00.337Z",
         "jurisdiction": "US-CA",
         "extraction_method": "signed_lifecycle_event",
         "confidence_or_uncertainty": "not_applicable",
@@ -232,12 +232,12 @@
       },
       {
         "claim_id": "claim_006",
-        "field_path": "lifecycle.engagement.eng_M6ftx0Jo1-kLMGnL",
+        "field_path": "lifecycle.engagement.eng_T-GwAaRoKZJjgCcW",
         "value": "engagement.firm_confirmed",
         "origin_type": "firm_asserted",
-        "source_ref": "urn:olip:org_test_alvarez:event:aTIwzTh9CHCp",
-        "observed_at": "2026-11-14T17:00:00.413Z",
-        "verified_at": "2026-11-14T17:00:00.413Z",
+        "source_ref": "urn:olip:org_test_alvarez:event:G_A8NBCaIgMS",
+        "observed_at": "2026-11-14T17:00:00.358Z",
+        "verified_at": "2026-11-14T17:00:00.358Z",
         "jurisdiction": "US-CA",
         "extraction_method": "signed_lifecycle_event",
         "confidence_or_uncertainty": "not_applicable",
@@ -249,12 +249,12 @@
       },
       {
         "claim_id": "claim_007",
-        "field_path": "lifecycle.matter.mat_XbTrM3sykEmO4x2v",
+        "field_path": "lifecycle.matter.mat_GGfMu_VSfth9cOAR",
         "value": "matter.closed",
         "origin_type": "firm_asserted",
-        "source_ref": "urn:olip:org_test_alvarez:event:awpqBP64QDE2",
-        "observed_at": "2026-11-14T17:00:00.429Z",
-        "verified_at": "2026-11-14T17:00:00.429Z",
+        "source_ref": "urn:olip:org_test_alvarez:event:exYYIYCsG6Vv",
+        "observed_at": "2026-11-14T17:00:00.379Z",
+        "verified_at": "2026-11-14T17:00:00.379Z",
         "jurisdiction": "US-CA",
         "extraction_method": "signed_lifecycle_event",
         "confidence_or_uncertainty": "not_applicable",
@@ -270,10 +270,10 @@
     "time_sensitive_fields": [],
     "document_refs": []
   },
-  "capsule_digest": "sha256:2aa6fb81f11f3efcf865e0b1bf98b2e4981e01c10413d0cdfe5ce672f053f223",
+  "capsule_digest": "sha256:2cec3d37314e6eae385ba009a7f9eba532a1b28cd7f78bf46eadb5b6e353928f",
   "signature": {
     "alg": "EdDSA",
     "kid": "kid_v3test_bb480e323394",
-    "value": "LLPn9Il6QPolcL5sES0j-dSQIcgFKNZ761pSyouJfMoVy6SLSx3TiRFn3Ez1PiOfCgpV8PIrDKsTAhF1ifwhCA"
+    "value": "gXCPpRHM5NwIxTtenM1IIpTvUDJII46GS3bP50CZFNJUBsAAtKvdmUyZYohY2C9veQsV_dLXjd960JRF979-CA"
   }
 }

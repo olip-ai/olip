@@ -48,7 +48,7 @@ export function errorBody(code, message, { correlation_id, details } = {}) {
   return { olip_version: V3, error: { code: e.code, message: message || e.meaning, retryable: e.retryable, ...(details ? { details } : {}) }, correlation_id: correlation_id ?? null };
 }
 
-// How the unchanged 2.0-draft lifecycle host's error codes read in 3.0 terms. The 2.0 code is kept alongside.
+// How the unchanged 2.0 lifecycle host's error codes read in 3.0 terms. The 2.0 code is kept alongside.
 const FROM_V2 = {
   OLIP_NOT_FOUND: "NOT_FOUND", OLIP_UNAUTHENTICATED: "AUTH_REQUIRED", OLIP_TOKEN_EXPIRED: "AUTH_REQUIRED", OLIP_DELEGATION_REVOKED: "GRANT_REVOKED",
   OLIP_RATE_LIMITED: "RATE_LIMITED", OLIP_FORBIDDEN: "SCOPE_INSUFFICIENT", OLIP_AGENT_CANNOT_APPROVE: "USER_APPROVAL_REQUIRED",

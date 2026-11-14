@@ -2,7 +2,7 @@
   "name": "olip-3.0-draft",
   "version": "3.0.0-draft.1",
   "private": true,
-  "description": "PROPOSED OLIP 3.0-draft agent compatibility layer (draft, unreleased): action manifest, policy gateway, durable workflows, legal context capsules, next-actions planner, HTTPS/MCP/A2A bindings, SDKs and conformance. Builds on the 2.0-draft lifecycle without changing it. Not adopted by any standards body. Fictional data only. OLIP 1.0 and 2.0-draft files are not changed.",
+  "description": "PROPOSED OLIP 3.0-draft agent compatibility layer (draft, unreleased): action manifest, policy gateway, durable workflows, legal context capsules, next-actions planner, HTTPS/MCP/A2A bindings, SDKs and conformance. Builds on the 2.0 lifecycle without changing it. Not adopted by any standards body. Fictional data only. OLIP 1.0 and 2.0 files are not changed.",
   "type": "module",
   "engines": {
     "node": ">=20"

@@ -21,7 +21,7 @@
       "bearer": {
         "type": "http",
         "scheme": "bearer",
-        "description": "Tokens from the co-located 2.0-draft host (/olip/v2/token, /olip/v2/user-sessions). Mock credentials only."
+        "description": "Tokens from the co-located 2.0 host (/olip/v2/token, /olip/v2/user-sessions). Mock credentials only."
       }
     },
     "schemas": {
@@ -3848,7 +3848,7 @@
       "input.olip.call_lifecycle": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.call_lifecycle.input.json",
-        "title": "Use a 2.0-draft lifecycle step (input)",
+        "title": "Use a 2.0 lifecycle step (input)",
         "type": "object",
         "properties": {
           "workflow_id": {
@@ -4281,7 +4281,7 @@
       "post": {
         "operationId": "start_workflow",
         "summary": "Start a workflow",
-        "description": "Creates the user's matter (through the unchanged 2.0-draft host) and a durable workflow id. Nothing is sent to anyone.\n\nEffect: authorized_state_change (Changes only the caller's own already-authorized workflow, settings or consent records.) Principals: user, agent. Approval: none.",
+        "description": "Creates the user's matter (through the unchanged 2.0 host) and a durable workflow id. Nothing is sent to anyone.\n\nEffect: authorized_state_change (Changes only the caller's own already-authorized workflow, settings or consent records.) Principals: user, agent. Approval: none.",
         "tags": [
           "authorized_state_change"
         ],
@@ -5397,8 +5397,8 @@
     "/olip/v3/lifecycle": {
       "post": {
         "operationId": "call_lifecycle",
-        "summary": "Use a 2.0-draft lifecycle step",
-        "description": "Runs one consumer-side 2.0-draft lifecycle step (consultation, engagement review, messages) with its unchanged 2.0 rules. Steps that send anything need the user's approval on the approval page.\n\nEffect: external_disclosure (Sends client or case information to a recipient. Needs the user's approval bound to that exact recipient and content.) Principals: user, agent. Approval: user_out_of_band.",
+        "summary": "Use a 2.0 lifecycle step",
+        "description": "Runs one consumer-side 2.0 lifecycle step (consultation, engagement review, messages) with its unchanged 2.0 rules. Steps that send anything need the user's approval on the approval page.\n\nEffect: external_disclosure (Sends client or case information to a recipient. Needs the user's approval bound to that exact recipient and content.) Principals: user, agent. Approval: user_out_of_band.",
         "tags": [
           "external_disclosure"
         ],
@@ -5475,7 +5475,7 @@
       "post": {
         "operationId": "record_firm_event",
         "summary": "Record a firm-signed event",
-        "description": "The organization's own system records its signed lifecycle event (screening outcome, consultation, engagement, closure). The 2.0-draft host verifies signer, role, scope and key.\n\nEffect: firm_authoritative (Only the organization's own authenticated, authorized system may do this. A client agent never can.) Principals: firm. Approval: none.",
+        "description": "The organization's own system records its signed lifecycle event (screening outcome, consultation, engagement, closure). The 2.0 host verifies signer, role, scope and key.\n\nEffect: firm_authoritative (Only the organization's own authenticated, authorized system may do this. A client agent never can.) Principals: firm. Approval: none.",
         "tags": [
           "firm_authoritative"
         ],

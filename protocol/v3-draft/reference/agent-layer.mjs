@@ -3,9 +3,9 @@
 // What it is: one semantics-first engine that every binding calls (HTTPS here; MCP and A2A adapters call the HTTPS
 // binding through the SDK). It adds a machine-readable action manifest, a policy gateway, durable workflows with a
 // signed event journal, user-controlled context capsules, and a deterministic next-actions planner, ON TOP OF the
-// unchanged 2.0-draft lifecycle host.
+// unchanged 2.0 lifecycle host.
 //
-// Deployment shape (see docs/ARCHITECTURE.md, ADR-3): the layer runs inside the same resource server as the 2.0-draft
+// Deployment shape (see docs/ARCHITECTURE.md, ADR-3): the layer runs inside the same resource server as the 2.0
 // host. It reuses that host's sign-in, tokens and audience, and forwards lifecycle steps to the unchanged 2.0 handlers
 // in-process. No token crosses a trust boundary, and every 2.0 consent and firm-authority check still runs.
 // In production mode every regulated write fails closed because no jurisdiction policy has been approved by counsel.
@@ -32,7 +32,7 @@ const TOOL_RESULT_NOTE = "A successful call means this host ran the action. It d
 
 export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, hostLabel = "v3-host", trustedCapsuleIssuers = [], webhooks = {}, allowLoopbackCallbacksForTests = false, combinedWith10 = false, policyOverrides, observe = null } = {}) {
   if (!["mock", "production"].includes(mode)) throw new Error("mode must be mock or production");
-  if (!v2?.handle || !v2?.state) throw new Error("the 3.0-draft layer needs a co-located 2.0-draft lifecycle host");
+  if (!v2?.handle || !v2?.state) throw new Error("the 3.0-draft layer needs a co-located 2.0 lifecycle host");
   const keys = { events: signingKey(`${hostLabel}/workflow-events`, "workflow_events"), capsules: signingKey(`${hostLabel}/capsules`, "capsule_issuer"), manifest: signingKey(`${hostLabel}/manifest`, "manifest") };
   const jwks = () => Object.values(keys).map((k) => ({ ...k.publicJwk, status: "active" }));
   const policy = createPolicy({ mode, clock, overrides: policyOverrides });
@@ -49,7 +49,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
   const inputValidators = Object.fromEntries(ACTIONS.map((a) => [a.id, ajv.compile(a.input)]));
   const validateCapsuleShape = ajv.getSchema(SCHEMAS["context-capsule"].$id);
 
-  // ---------- authentication (shared token store of the co-located 2.0-draft host) ----------
+  // ---------- authentication (shared token store of the co-located 2.0 host) ----------
   function authenticate(headers) {
     const h = String(headers.authorization || "");
     if (!h.startsWith("Bearer ")) return null;
@@ -66,7 +66,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
   const actorRef = (p) => (!p ? { kind: "public" } : p.kind === "agent" ? { kind: "agent", client_id: p.client_id } : p.kind === "user" ? { kind: "user", subject_ref: subjectRef(p.subject_id) } : p.kind === "operator" ? { kind: "operator", operator_id: p.operator_id } : { kind: p.kind, organization_id: p.organization_id });
   const subjectRef = (s) => "subj_" + hmac(subjectSecret, s).slice(0, 22); // pseudonymous, stable per host, not reversible without the host secret
 
-  // ---------- the 2.0-draft lifecycle host, called in-process with the caller's own token ----------
+  // ---------- the 2.0 lifecycle host, called in-process with the caller's own token ----------
   async function v2call(p, method, path, body, idem) {
     const headers = { ...(p?.token ? { authorization: p.token } : {}), ...(idem ? { "idempotency-key": idem } : {}) };
     const r = await v2.handle(method, path, headers, body == null ? null : structuredClone(body));
@@ -105,7 +105,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
     }
     return { ok: true, length: entries.length, statement: "Hash chain and Ed25519 signatures check out for this host's journal. Not an independently audited ledger." };
   }
-  // Mirrors new 2.0-draft lifecycle journal entries for the matter into the 3.0 journal (references only, no content).
+  // Mirrors new 2.0 lifecycle journal entries for the matter into the 3.0 journal (references only, no content).
   function syncLifecycle(wf) {
     const src = v2.state.journals.get(wf.matter_id) || [];
     let changed = false;
@@ -214,7 +214,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
         a2a: { adapter: "adapters/a2a/agent.mjs", sdk: `@a2a-js/sdk ${A2A_SDK}`, protocol_version: "1.0", agent_card_path: "/.well-known/agent-card.json (on the adapter)" } },
       actions: ACTIONS.map(contractOf), effects: EFFECT_MEANING,
       policy: policy.publicSummary(), status_semantics: STATUS_SEMANTICS,
-      approval: { user_approval_methods: ["hosted_otp_mock (2.0-draft approval page)", "signed_in_user_session (capsule export and import authorization)"], approval_is_model_callable: false },
+      approval: { user_approval_methods: ["hosted_otp_mock (2.0 approval page)", "signed_in_user_session (capsule export and import authorization)"], approval_is_model_callable: false },
       neutrality: { discovery_ordering: "display_name_alphabetical", paid_influence: false, sponsor_services_required: false, sponsor_account_required: false },
       privacy: { manifest_contains_case_data: false, logs: "route, status and error code only", capsule_encryption: "optional, to one receiving assistant's X25519 key; not end-to-end between people", retention: "Mock: in memory or a local snapshot file. No production retention policy exists." },
       keys_url: "/olip/v3/keys", errors_url: "/olip/v3/errors", schemas_base: "/olip/v3/schemas/",
@@ -232,7 +232,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
   H["olip.find_professionals"] = async (p, a) => {
     const q = new URLSearchParams(); if (a.jurisdiction) q.set("jurisdiction", a.jurisdiction); if (a.matter_type) q.set("matter", a.matter_type);
     const r = (await v2call(null, "GET", `/olip/v2/recipients?${q}`)).body;
-    return { olip_version: V3, ordering: r.ordering, professionals: r.recipients.map((x) => ({ ...x, evidence: { source: "organization_signed_profile (2.0-draft firm endpoint)", as_of: iso(), verification: "host checked the organization's signed authority document" } })),
+    return { olip_version: V3, ordering: r.ordering, professionals: r.recipients.map((x) => ({ ...x, evidence: { source: "organization_signed_profile (2.0 firm endpoint)", as_of: iso(), verification: "host checked the organization's signed authority document" } })),
       statement: "Listed alphabetically. Payment never affects inclusion or order. This host does not recommend or rank any organization; the user chooses." };
   };
   H["olip.get_recipient_policy"] = async (p, a) => {
@@ -253,7 +253,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
     const m = r.matter;
     const wf = { workflow_id: newId("wf"), matter_id: m.matter_id, owner_subject_id: p.subject_id, jurisdiction: m.jurisdiction, fictional: m.fictional, created_at: iso(), created_by: actorRef(p), v2_mirrored_seq: 0 };
     store.workflows.set(wf.workflow_id, wf);
-    append(wf, { event_type: "workflow.created", actor: { type: p.kind === "agent" ? "ai_host" : "user", ref: actorRef(p) }, payload: { matter_ref: "2.0-draft matter (id in workflow record)" }, idempotency_key: c.ref });
+    append(wf, { event_type: "workflow.created", actor: { type: p.kind === "agent" ? "ai_host" : "user", ref: actorRef(p) }, payload: { matter_ref: "2.0 matter (id in workflow record)" }, idempotency_key: c.ref });
     syncLifecycle(wf);
     return workflowView(p, wf);
   };
@@ -264,7 +264,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
     return { olip_version: V3, workflow: { workflow_id: wf.workflow_id, matter_id: wf.matter_id, fictional: wf.fictional, jurisdiction: wf.jurisdiction, created_at: wf.created_at,
       head: head(wf.workflow_id), lifecycle: m.status, represented: m.represented, disclosures: discl,
       casebrief: m.casebrief ? { revision: m.casebrief.revision, content_visible_to_caller: m.casebrief.content != null } : null },
-      status_semantics: STATUS_SEMANTICS, statement: "Lifecycle states come from the 2.0-draft host's status of record. Repeat each meaning exactly; do not infer more." };
+      status_semantics: STATUS_SEMANTICS, statement: "Lifecycle states come from the 2.0 host's status of record. Repeat each meaning exactly; do not infer more." };
   }
   const disclosureView = (d) => ({ disclosure_id: d.disclosure_id, organization_id: d.organization_id, stage: d.stage, fields: d.fields, state: d.state, approval: { approval_id: d.approval.approval_id, approval_url: d.approval.approval_url, grant_id: d.approval.grant_id, grant_digest: d.approval.grant_digest, expires_at: d.approval.expires_at },
     delivery: d.delivery ?? null, created_at: d.created_at });
@@ -348,7 +348,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
         extraction_method: "user_entered", confidence_or_uncertainty: "unknown", verification_status: "unverified", supersedes_claim_id: null, access_classification: "client_confidential", content_digest: digestOf(value),
         untrusted_text_flags: injectionFindings(text) });
     }
-    // Firm-signed lifecycle facts, derived by the host from signature-verified 2.0-draft events (never from a caller).
+    // Firm-signed lifecycle facts, derived by the host from signature-verified 2.0 events (never from a caller).
     for (const e of journal(wf.workflow_id).filter((x) => x.actor_type === "firm_authorized_actor")) {
       assertions.push({ claim_id: cid(), field_path: `lifecycle.${e.v2_ref.object.type}.${e.v2_ref.object.id}`, value: e.event_type.replace(/^lifecycle\./, ""), origin_type: "firm_asserted", source_ref: e.v2_ref.event_id,
         observed_at: e.recorded_at, verified_at: e.recorded_at, jurisdiction: wf.jurisdiction, extraction_method: "signed_lifecycle_event", confidence_or_uncertainty: "not_applicable",
@@ -378,7 +378,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
       source_provenance: { origin: "olip_3_0_draft_reference_host", method: "user_initiated_export", casebrief_revision: m.casebrief.revision, as_of_event_sequence: h.sequence, as_of_event_digest: h.digest },
       included_fields: [...a.include_fields].sort(), excluded_fields: all.filter((x) => !inc(x)).sort().map((x) => ({ path: x, reason: "not_selected_by_user" })),
       workflow_snapshot: { as_of: iso(), as_of_event_sequence: h.sequence, as_of_event_digest: h.digest, lifecycle: m.status, pending_user_approvals: [...store.disclosures.values()].filter((d) => d.workflow_id === wf.workflow_id && d.state === "awaiting_user_approval").length,
-        authoritative_sources: { lifecycle_states: "the 2.0-draft host's status of record", firm_states: "firm-signed events" } },
+        authoritative_sources: { lifecycle_states: "the 2.0 host's status of record", firm_states: "firm-signed events" } },
       export_authorization: { authorized_by: "signed_in_user_session", purpose: a.purpose, originating_system: `urn:olip:host:${hostLabel}`, expires_at: new Date(exp).toISOString(), onward_disclosure: false, authorizes_recipients: [],
         new_host_access: "Requires a separate import authorization from the user for one named assistant.", statement: "This capsule is not consent to contact or send anything to any organization." },
       intended_host: a.intended_host ? { client_id: a.intended_host.client_id } : null,
@@ -511,7 +511,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
     const r = (await v2call(p, "POST", FIRM_PATHS[a.object_type].replace("{id}", encodeURIComponent(a.object_id)), { event: a.event }, `v3:${c.idem}`)).body;
     for (const wf of store.workflows.values()) if (wf.matter_id === matter.id) syncLifecycle(wf);
     return { olip_version: V3, operation: "record_firm_event", lifecycle_v2_route: `POST ${FIRM_PATHS[a.object_type]}`, result: r, effect: "firm_authoritative",
-      statement: "The 2.0-draft host verified the organization's signer, role, scope, key and revision before recording this." };
+      statement: "The 2.0 host verified the organization's signer, role, scope, key and revision before recording this." };
   };
   H["olip.set_jurisdiction_policy"] = (p, a) => ({ olip_version: V3, ...policy.setJurisdiction(a.jurisdiction, { status: a.status, ...(a.reviewed_at ? { reviewed_at: a.reviewed_at } : {}), ...(a.review_by ? { review_by: a.review_by } : {}) }) });
 
@@ -536,7 +536,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
       if (a.mutating) {
         if (!idempotencyKey || !/^[A-Za-z0-9_.:-]{8,128}$/.test(idempotencyKey)) fail("IDEMPOTENCY_KEY_REQUIRED", "Send an Idempotency-Key of 8 to 128 characters (letters, digits, _ . : -).");
         const scope = `${p.kind}:${p.subject_id ?? p.organization_id ?? p.operator_id}:${p.client_id ?? "-"}:${a.id}:${idempotencyKey}`;
-        c.idem = digestOf(scope).slice(7, 39); // deterministic key for the 2.0-draft call, never written to the journal
+        c.idem = digestOf(scope).slice(7, 39); // deterministic key for the 2.0 call, never written to the journal
         const prev = store.idempotency.get(scope);
         // The journal records a short host-local request reference, not the caller's key or a digest of it.
         if (!prev) c.ref = `req-${String(++requestSeq).padStart(6, "0")}`;
@@ -574,7 +574,7 @@ export function createAgentLayer({ v2, mode = "mock", clock, storePath = null, h
     operatorTokens.set(t, { operator_id: OPERATOR.operator_id, expires_at: nowMs() + OPERATOR_TTL_S * 1000 });
     return t;
   }
-  // Mirrors 2.0-draft lifecycle activity into every affected workflow (called after 2.0 writes, so webhooks are timely).
+  // Mirrors 2.0 lifecycle activity into every affected workflow (called after 2.0 writes, so webhooks are timely).
   function syncAll() { if (closed) return; for (const wf of store.workflows.values()) syncLifecycle(wf); }
   async function drain() { while (timers.size) await new Promise((r) => setTimeout(r, 20)); }
   // A closed layer stops retrying webhooks and stops mirroring, so it never writes to a store a restarted layer now owns.

@@ -67,7 +67,7 @@ test("the manifest is signed by a published key, validates, names no sponsor dep
   assert.ok(responseCheck.schemas.get("agent-manifest")(m), JSON.stringify(responseCheck.schemas.get("agent-manifest").errors));
   assert.equal(m.release_status, "proposed_draft_not_adopted");
   assert.match(m.statement, /not a stable release/i);
-  assert.deepEqual(m.supported_olip_versions, ["2.0-draft", "3.0-draft.1"]);
+  assert.deepEqual(m.supported_olip_versions, ["2.0", "3.0-draft.1"]);
   assert.equal(m.approval.approval_is_model_callable, false);
   assert.deepEqual([m.neutrality.paid_influence, m.neutrality.sponsor_services_required, m.neutrality.sponsor_account_required], [false, false, false]);
   assert.equal(m.actions.length, ACTIONS.length);
@@ -113,7 +113,7 @@ test("protocol hygiene: unsupported version header, unknown route, unknown actio
   const badCor = await raw(sys, "GET", "/olip/v3/professionals", { headers: { "x-correlation-id": "bad value with spaces" } });
   assert.match(badCor.body.correlation_id, /^cor_/);
 });
-test("2.0-draft paths on the same origin pass through unchanged", async () => {
+test("2.0 paths on the same origin pass through unchanged", async () => {
   const direct = await sys.v2.host.handle("GET", "/olip/v2/recipients?jurisdiction=US-CA", {}, null);
   const via = await raw(sys, "GET", "/olip/v2/recipients?jurisdiction=US-CA");
   assert.equal(via.status, direct.status);

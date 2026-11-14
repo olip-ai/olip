@@ -24,7 +24,7 @@
   "transmitted": false,
   "stored": false,
   "statement": "Checked locally. Nothing was sent or stored.",
-  "correlation_id": "cor_e7aOzLVh5koSeBek",
+  "correlation_id": "cor_rKj7mThkYqQGbMK5",
   "action_receipt": {
     "action": "olip.prepare_casebrief",
     "effect": "local_preparation",

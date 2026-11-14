@@ -42,7 +42,7 @@
     "olip-communications/2",
     "olip-matter/2"
   ],
-  "correlation_id": "cor_71Nps3X0ioqU3DPr",
+  "correlation_id": "cor_um8Gyu5eCawCvaiE",
   "action_receipt": {
     "action": "olip.get_recipient_policy",
     "effect": "read_only",

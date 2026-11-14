@@ -1,14 +1,14 @@
 {
   "olip_version": "3.0-draft.1",
   "workflow": {
-    "workflow_id": "wf__YbExBonJIga9mHc",
-    "matter_id": "mat_XbTrM3sykEmO4x2v",
+    "workflow_id": "wf_SN5HdS2d45e97xmO",
+    "matter_id": "mat_GGfMu_VSfth9cOAR",
     "fictional": true,
     "jurisdiction": "US-CA",
-    "created_at": "2026-11-14T17:00:00.214Z",
+    "created_at": "2026-11-14T17:00:00.168Z",
     "head": {
       "sequence": 2,
-      "digest": "sha256:1eac3dd5f06de70d826728cb9c888aec8c8896614a86e07744669276b2965cc8"
+      "digest": "sha256:e9ae11af23063a2941ec6df6db9e1efa86977ff17ace5f6bb5b7680028d3818e"
     },
     "lifecycle": {
       "matter": {
@@ -41,49 +41,49 @@
     },
     {
       "state": "accepted_by_transport",
-      "layer": "2.0-draft delivery",
+      "layer": "2.0 delivery",
       "means": "A relay accepted the item.",
       "does_not_mean": "The firm's system confirmed receiving it."
     },
     {
       "state": "delivered_to_endpoint",
-      "layer": "2.0-draft delivery",
+      "layer": "2.0 delivery",
       "means": "The firm's endpoint returned a signed receipt for this exact content.",
       "does_not_mean": "Anyone read it, responded, or took the matter."
     },
     {
       "state": "eligible_for_further_intake",
-      "layer": "2.0-draft intake",
+      "layer": "2.0 intake",
       "means": "The firm says intake may continue.",
       "does_not_mean": "A conflict clearance finding or representation."
     },
     {
       "state": "consultation_confirmed",
-      "layer": "2.0-draft consultation",
+      "layer": "2.0 consultation",
       "means": "The firm confirmed an appointment time.",
       "does_not_mean": "The consultation happened or legal advice was given."
     },
     {
       "state": "engagement_offer_issued",
-      "layer": "2.0-draft engagement",
+      "layer": "2.0 engagement",
       "means": "The firm signed a versioned offer.",
       "does_not_mean": "The client accepted or representation began."
     },
     {
       "state": "client_accepted_offer",
-      "layer": "2.0-draft engagement",
+      "layer": "2.0 engagement",
       "means": "The user's acceptance of one exact offer version was recorded.",
       "does_not_mean": "The firm confirmed the engagement."
     },
     {
       "state": "firm_confirmed",
-      "layer": "2.0-draft engagement",
+      "layer": "2.0 engagement",
       "means": "The firm's authorized attorney signed a confirmation. Shown as 'Firm reports engagement confirmed'.",
       "does_not_mean": "A legal determination that an attorney-client relationship exists."
     },
     {
       "state": "matter_closed",
-      "layer": "2.0-draft matter",
+      "layer": "2.0 matter",
       "means": "The firm (or, for an unrepresented intake, the user) closed the matter.",
       "does_not_mean": "All obligations, records or legal holds have ended."
     },
@@ -100,8 +100,8 @@
       "does_not_mean": "Permission. The gateway checks again when the step is called."
     }
   ],
-  "statement": "Lifecycle states come from the 2.0-draft host's status of record. Repeat each meaning exactly; do not infer more.",
-  "correlation_id": "cor_qU-rjQrg35CFEReM",
+  "statement": "Lifecycle states come from the 2.0 host's status of record. Repeat each meaning exactly; do not infer more.",
+  "correlation_id": "cor_ysNNAG1w0PGyyJQv",
   "action_receipt": {
     "action": "olip.start_workflow",
     "effect": "authorized_state_change",
