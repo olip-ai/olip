@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: {node-version: '${{ matrix.node }}', cache: npm, cache-dependency-path: protocol/package-lock.json}
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with: {python-version: '3.12'}
       - run: npm ci
       - name: Schemas, examples, both endpoints, conformance, interop, MCP adapter, walkthrough
@@ -51,7 +51,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: {node-version: '${{ matrix.node }}', cache: npm, cache-dependency-path: protocol/v2-draft/package-lock.json}
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with: {python-version: '3.12'}
       - run: npm ci && (cd .. && npm ci)
       - name: 2.0-draft tests (schemas, OpenAPI, state machines, consent, firm authority, lifecycle, MCP, A2A, Python, 1.0 compatibility)
