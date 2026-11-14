@@ -1,7 +1,7 @@
 {
   "olip_version": "2.0",
   "release_status": "sponsor_release",
-  "statement": "OLIP 2.0 is a proposed extension under development. It has not been adopted by any standards body or approved by any bar or regulator. OLIP 1.0 is unchanged.",
+  "statement": "OLIP 2.0 is the current release of the Open Legal Intake Protocol, published by its sponsor. It adds the legal-client lifecycle after the handoff: conflict-aware intake, consultation, firm-confirmed engagement, ongoing communications and matter closure. OLIP 1.0 remains available, unchanged.",
   "profiles": [
     "olip-lifecycle-core/2",
     "olip-consultation/2",
