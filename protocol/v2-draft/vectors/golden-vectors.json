@@ -1,0 +1,484 @@
+{
+  "olip_version": "2.0-draft",
+  "status": "proposed_draft_not_adopted",
+  "fictional": true,
+  "statement": "Golden vectors for the OLIP 2.0-draft lifecycle. All keys, people, firms and matters are fictional. The canonical JSON rules are OLIP 1.0's (spec section 9.1), unchanged.",
+  "canonical_json": [
+    {
+      "name": "key order and no whitespace",
+      "input": {
+        "b": 1,
+        "a": [
+          true,
+          false,
+          null
+        ],
+        "c": {
+          "z": "x",
+          "y": -7
+        }
+      },
+      "canonical": "{\"a\":[true,false,null],\"b\":1,\"c\":{\"y\":-7,\"z\":\"x\"}}",
+      "sha256": "sha256:8b392438590a1e5cd92b4dc627040eef027339c6702b41425da2ce1b3142cc43"
+    },
+    {
+      "name": "unicode text is kept, not escaped",
+      "input": {
+        "name": "Zoë Ñúñez (fictional)",
+        "note": "日本語 ✓"
+      },
+      "canonical": "{\"name\":\"Zoë Ñúñez (fictional)\",\"note\":\"日本語 ✓\"}",
+      "sha256": "sha256:712c2703bcdf62261cf4c1cff5eb3f7f7e9510813cfa56565b5080b77fd6fd5a"
+    },
+    {
+      "name": "control characters and quotes are escaped as JSON.stringify does",
+      "input": {
+        "s": "line1\nline2\t\"quoted\" \\ \u0001"
+      },
+      "canonical": "{\"s\":\"line1\\nline2\\t\\\"quoted\\\" \\\\ \\u0001\"}",
+      "sha256": "sha256:346e2626d3429944f25be91ea69e09b78fac45c33947037f4644c67b90969405"
+    },
+    {
+      "name": "keys sort by UTF-16 code units (astral key after BMP private-use key)",
+      "input": {
+        "ﬁ": 1,
+        "😀": 2,
+        "a": 3
+      },
+      "canonical": "{\"a\":3,\"😀\":2,\"ﬁ\":1}",
+      "sha256": "sha256:10bcca9e3ea67b16a24896196e439a544221131305fa3619281ba22a1a5c43d8"
+    },
+    {
+      "name": "nested arrays of objects",
+      "input": {
+        "list": [
+          {
+            "k": 2,
+            "j": 1
+          },
+          {
+            "k": []
+          },
+          {}
+        ]
+      },
+      "canonical": "{\"list\":[{\"j\":1,\"k\":2},{\"k\":[]},{}]}",
+      "sha256": "sha256:0588d09e7d3b60ae6bc18b9250f12f642457b425689159e604a28655c8c78cd2"
+    },
+    {
+      "name": "integers only (no floats in signed or digested content)",
+      "input": {
+        "n": 0,
+        "big": 9007199254740991,
+        "neg": -1
+      },
+      "canonical": "{\"big\":9007199254740991,\"n\":0,\"neg\":-1}",
+      "sha256": "sha256:c92b290f0e4a709a981b5ad73526e630dfb9317ab80c6328df9eb22ce07cc3cc"
+    }
+  ],
+  "keys": [
+    {
+      "label": "vectors/firm-events",
+      "seed_rule": "seed = SHA-256( UTF-8('olip-2.0-draft fictional test key: ' + label) ); Ed25519 private key = seed (RFC 8032)",
+      "seed_hex": "44670b6f8182d308319eacf980a1c3fbf06de36e70cc4f03351d3e3c4a051319",
+      "public_jwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "9DIoXZy7Uis2C76KqerRILkeRELJeMNsH5K_g5GEi5U",
+        "kid": "kid_test_a1ccf8c90877",
+        "alg": "EdDSA",
+        "use": "sig",
+        "key_ops": [
+          "verify"
+        ],
+        "olip_key_purpose": "lifecycle_events"
+      },
+      "kid_rule": "kid = 'kid_test_' + first 12 hex chars of SHA-256(UTF-8(label))",
+      "warning": "FICTIONAL test key. Its private half is public. Never trust it outside tests."
+    },
+    {
+      "label": "vectors/host",
+      "seed_rule": "seed = SHA-256( UTF-8('olip-2.0-draft fictional test key: ' + label) ); Ed25519 private key = seed (RFC 8032)",
+      "seed_hex": "90f03f63743fce08bde91dd5ea663bd55500637cff47ffabba4408808a624ee9",
+      "public_jwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "gEaZ-G21MBnfoiTZwi2l6Cy5hzd-EdfGnaqmSZQtNxY",
+        "kid": "kid_test_302393d12411",
+        "alg": "EdDSA",
+        "use": "sig",
+        "key_ops": [
+          "verify"
+        ],
+        "olip_key_purpose": "host_attestation"
+      },
+      "kid_rule": "kid = 'kid_test_' + first 12 hex chars of SHA-256(UTF-8(label))",
+      "warning": "FICTIONAL test key. Its private half is public. Never trust it outside tests."
+    }
+  ],
+  "signatures": [
+    {
+      "name": "firm-signed lifecycle event",
+      "signer_label": "vectors/firm-events",
+      "object": {
+        "olip_version": "2.0-draft",
+        "event_id": "urn:olip:org_test_vectors:event:v000000001",
+        "matter_id": "mat_vector000001",
+        "object": {
+          "type": "engagement",
+          "id": "eng_vector000001"
+        },
+        "event_type": "engagement.firm_confirmed",
+        "actor": {
+          "role": "firm",
+          "actor_id": "stf_test_vector_attorney",
+          "organization_id": "org_test_vectors",
+          "staff_role": "attorney"
+        },
+        "prior_revision": 2,
+        "occurred_at": "2026-11-14T17:00:00.000Z",
+        "idempotency_key": "idem-vector-1",
+        "correlation_id": "mat_vector000001",
+        "causation_id": null,
+        "evidence": {
+          "offer_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "acceptance_id": "acc_vector000001"
+        },
+        "payload": {},
+        "fictional": true,
+        "signature": {
+          "alg": "EdDSA",
+          "kid": "kid_test_a1ccf8c90877",
+          "value": "gaXNmqWjWXOtarSS8AOhK9y8WrnS3Cyxdkjm4vwZsjcQ0ll72eqcEG2zdDtFnhcRhvO5vwCp4bxbxUoDfjrVDA"
+        }
+      },
+      "signing_input": "{\"actor\":{\"actor_id\":\"stf_test_vector_attorney\",\"organization_id\":\"org_test_vectors\",\"role\":\"firm\",\"staff_role\":\"attorney\"},\"causation_id\":null,\"correlation_id\":\"mat_vector000001\",\"event_id\":\"urn:olip:org_test_vectors:event:v000000001\",\"event_type\":\"engagement.firm_confirmed\",\"evidence\":{\"acceptance_id\":\"acc_vector000001\",\"offer_digest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"fictional\":true,\"idempotency_key\":\"idem-vector-1\",\"matter_id\":\"mat_vector000001\",\"object\":{\"id\":\"eng_vector000001\",\"type\":\"engagement\"},\"occurred_at\":\"2026-11-14T17:00:00.000Z\",\"olip_version\":\"2.0-draft\",\"payload\":{},\"prior_revision\":2}",
+      "expect_valid": true
+    },
+    {
+      "name": "same signature after the event type was changed",
+      "signer_label": "vectors/firm-events",
+      "object": {
+        "olip_version": "2.0-draft",
+        "event_id": "urn:olip:org_test_vectors:event:v000000001",
+        "matter_id": "mat_vector000001",
+        "object": {
+          "type": "engagement",
+          "id": "eng_vector000001"
+        },
+        "event_type": "engagement.firm_rejected",
+        "actor": {
+          "role": "firm",
+          "actor_id": "stf_test_vector_attorney",
+          "organization_id": "org_test_vectors",
+          "staff_role": "attorney"
+        },
+        "prior_revision": 2,
+        "occurred_at": "2026-11-14T17:00:00.000Z",
+        "idempotency_key": "idem-vector-1",
+        "correlation_id": "mat_vector000001",
+        "causation_id": null,
+        "evidence": {
+          "offer_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "acceptance_id": "acc_vector000001"
+        },
+        "payload": {},
+        "fictional": true,
+        "signature": {
+          "alg": "EdDSA",
+          "kid": "kid_test_a1ccf8c90877",
+          "value": "gaXNmqWjWXOtarSS8AOhK9y8WrnS3Cyxdkjm4vwZsjcQ0ll72eqcEG2zdDtFnhcRhvO5vwCp4bxbxUoDfjrVDA"
+        }
+      },
+      "expect_valid": false
+    },
+    {
+      "name": "valid signature but kid not in the published key set",
+      "signer_label": "vectors/firm-events",
+      "object": {
+        "olip_version": "2.0-draft",
+        "event_id": "urn:olip:org_test_vectors:event:v000000001",
+        "matter_id": "mat_vector000001",
+        "object": {
+          "type": "engagement",
+          "id": "eng_vector000001"
+        },
+        "event_type": "engagement.firm_confirmed",
+        "actor": {
+          "role": "firm",
+          "actor_id": "stf_test_vector_attorney",
+          "organization_id": "org_test_vectors",
+          "staff_role": "attorney"
+        },
+        "prior_revision": 2,
+        "occurred_at": "2026-11-14T17:00:00.000Z",
+        "idempotency_key": "idem-vector-1",
+        "correlation_id": "mat_vector000001",
+        "causation_id": null,
+        "evidence": {
+          "offer_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "acceptance_id": "acc_vector000001"
+        },
+        "payload": {},
+        "fictional": true,
+        "signature": {
+          "alg": "EdDSA",
+          "kid": "kid_test_unknown00000",
+          "value": "gaXNmqWjWXOtarSS8AOhK9y8WrnS3Cyxdkjm4vwZsjcQ0ll72eqcEG2zdDtFnhcRhvO5vwCp4bxbxUoDfjrVDA"
+        }
+      },
+      "expect_valid": false,
+      "expect_reason": "unknown_kid"
+    }
+  ],
+  "grant_digest": {
+    "rule": "grant_digest = sha256(canonical({olip_version, action, subject_id, matter_id, recipient:{organization_id, endpoint}, purpose, stage|null, fields: sorted by path [{path,value}], documents: sorted by document_id [{document_id, sha256}], content_digest|null, casebrief_revision|null, related_object_id|null, offer_digest|null, notice_version, nonce, expires_at, use, max_uses, logistics_templates|null}))",
+    "vectors": [
+      {
+        "name": "screening grant (fields are sorted by path before hashing)",
+        "grant": {
+          "action": "disclosure.screening",
+          "subject_id": "usr_test_vector",
+          "matter_id": "mat_vector000001",
+          "recipient": {
+            "organization_id": "org_test_vectors",
+            "endpoint": "https://firm.example.test/firm/v2/inbox"
+          },
+          "purpose": "conflict_screening",
+          "stage": "screening",
+          "fields": [
+            {
+              "path": "matter.jurisdiction",
+              "value": "US-CA"
+            },
+            {
+              "path": "adverse_parties",
+              "value": [
+                "Bayview Rentals LLC (fictional)"
+              ]
+            },
+            {
+              "path": "prospective_client.name",
+              "value": "Casey Rivera (fictional)"
+            }
+          ],
+          "documents": [],
+          "casebrief_revision": 1,
+          "related_object_id": "scr_vector000001",
+          "notice_version": "olip-2.0-draft-notices-1",
+          "nonce": "bm9uY2UtdmVjdG9yLTE",
+          "expires_at": "2026-11-14T17:30:00.000Z",
+          "use": "one_time",
+          "max_uses": 1
+        },
+        "grant_digest": "sha256:8869073a7fc9d97ec43a53e1c3b1215216a0764f919eb11986815f6250f0d372"
+      },
+      {
+        "name": "same grant with one more adverse party: a different digest, so the old approval no longer matches",
+        "grant": {
+          "action": "disclosure.screening",
+          "subject_id": "usr_test_vector",
+          "matter_id": "mat_vector000001",
+          "recipient": {
+            "organization_id": "org_test_vectors",
+            "endpoint": "https://firm.example.test/firm/v2/inbox"
+          },
+          "purpose": "conflict_screening",
+          "stage": "screening",
+          "fields": [
+            {
+              "path": "matter.jurisdiction",
+              "value": "US-CA"
+            },
+            {
+              "path": "adverse_parties",
+              "value": [
+                "Bayview Rentals LLC (fictional)",
+                "Another party (fictional)"
+              ]
+            },
+            {
+              "path": "prospective_client.name",
+              "value": "Casey Rivera (fictional)"
+            }
+          ],
+          "documents": [],
+          "casebrief_revision": 1,
+          "related_object_id": "scr_vector000001",
+          "notice_version": "olip-2.0-draft-notices-1",
+          "nonce": "bm9uY2UtdmVjdG9yLTE",
+          "expires_at": "2026-11-14T17:30:00.000Z",
+          "use": "one_time",
+          "max_uses": 1
+        },
+        "grant_digest": "sha256:260d60d62f9502082ab05fc36937850a7c761ddce95b581ae009c07f7eb7e815"
+      }
+    ]
+  },
+  "journal_chain": {
+    "rule": "entry_hash = sha256(canonical({seq, recorded_at, prev_hash, event})); the first prev_hash is sha256: followed by 64 zeros",
+    "entries": [
+      {
+        "seq": 1,
+        "recorded_at": "2026-11-14T17:00:00.000Z",
+        "prev_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "event": {
+          "event_id": "urn:olip:op_test_vectors:event:chain1x",
+          "event_type": "matter.created"
+        },
+        "entry_hash": "sha256:0a8a0e2b480615bd391b743aa33e93cc29973ffa4138850063aa44362c2dc398"
+      },
+      {
+        "seq": 2,
+        "recorded_at": "2026-11-14T17:00:01.000Z",
+        "prev_hash": "sha256:0a8a0e2b480615bd391b743aa33e93cc29973ffa4138850063aa44362c2dc398",
+        "event": {
+          "event_id": "urn:olip:op_test_vectors:event:chain2x",
+          "event_type": "consent.granted"
+        },
+        "entry_hash": "sha256:2b94bc03c1b1d66a4039a3a542ec943d7fc47302351c1c737dc4cf3b6ebc2efe"
+      },
+      {
+        "seq": 3,
+        "recorded_at": "2026-11-14T17:00:02.000Z",
+        "prev_hash": "sha256:2b94bc03c1b1d66a4039a3a542ec943d7fc47302351c1c737dc4cf3b6ebc2efe",
+        "event": {
+          "event_id": "urn:olip:op_test_vectors:event:chain3x",
+          "event_type": "intake.screening_requested"
+        },
+        "entry_hash": "sha256:f27dfec6072c61ea12a60b91b13c9af860069b7bd886a323bfa9f09ca0b6e8ef"
+      }
+    ]
+  },
+  "zoned_times": [
+    {
+      "start_utc": "2026-11-18T18:00:00Z",
+      "timezone": "America/Los_Angeles",
+      "local_start": "2026-11-18T10:00",
+      "expect_ok": true
+    },
+    {
+      "start_utc": "2026-11-18T18:00:00Z",
+      "timezone": "America/New_York",
+      "local_start": "2026-11-18T13:00",
+      "expect_ok": true
+    },
+    {
+      "start_utc": "2026-03-08T10:30:00Z",
+      "timezone": "America/Los_Angeles",
+      "local_start": "2026-03-08T03:30",
+      "note": "first hour after the spring-forward change",
+      "expect_ok": true
+    },
+    {
+      "start_utc": "2026-11-01T08:30:00Z",
+      "timezone": "America/Los_Angeles",
+      "local_start": "2026-11-01T01:30",
+      "note": "ambiguous local hour on fall-back day; the UTC instant decides",
+      "expect_ok": true
+    },
+    {
+      "start_utc": "2026-11-01T09:30:00Z",
+      "timezone": "America/Los_Angeles",
+      "local_start": "2026-11-01T01:30",
+      "note": "the same local wall time one hour later in UTC",
+      "expect_ok": true
+    },
+    {
+      "start_utc": "2026-11-18T18:00:00Z",
+      "timezone": "America/Los_Angeles",
+      "local_start": "2026-11-18T18:00",
+      "note": "UTC shown as local",
+      "expect_ok": false,
+      "expect_reason": "local_time_does_not_match_utc_instant_in_zone"
+    },
+    {
+      "start_utc": "2026-11-18T10:00:00",
+      "timezone": "America/Los_Angeles",
+      "local_start": "2026-11-18T10:00",
+      "note": "missing Z",
+      "expect_ok": false,
+      "expect_reason": "start_utc_must_be_utc_rfc3339"
+    },
+    {
+      "start_utc": "2026-11-18T18:00:00Z",
+      "timezone": "Pacific/Atlantis",
+      "local_start": "2026-11-18T10:00",
+      "note": "not an IANA zone",
+      "expect_ok": false,
+      "expect_reason": "unknown_iana_timezone"
+    }
+  ],
+  "webhooks": {
+    "body": {
+      "olip_version": "2.0-draft",
+      "webhook_id": "whk_vector000001",
+      "subscription_id": "sub_vector000001",
+      "sent_at": "2026-11-14T17:00:00.000Z",
+      "matter_id": "mat_vector000001",
+      "event_id": "urn:olip:op_test_vectors:event:chain3x",
+      "event_type": "intake.screening_requested",
+      "object": {
+        "type": "conflict_screen",
+        "id": "scr_vector000001"
+      },
+      "hint_only": true,
+      "statement": "A hint. Read the status of record before showing anything.",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_test_302393d12411",
+        "value": "exkn-FP3LUzZ8HQh1RXj8N4b12yqgZYe_DMRTrYB1xs75p4JnpYxoz07-AFqLaAHboblTjGC--N4hC4zmqP7Cw"
+      }
+    },
+    "host_key_label": "vectors/host",
+    "max_skew_seconds": 300,
+    "cases": [
+      {
+        "name": "fresh and first seen",
+        "now": "2026-11-14T17:02:00.000Z",
+        "seen": [],
+        "expect_ok": true
+      },
+      {
+        "name": "older than the allowed skew",
+        "now": "2026-11-14T17:06:00.000Z",
+        "seen": [],
+        "expect_ok": false,
+        "expect_reason": "stale_or_future_timestamp"
+      },
+      {
+        "name": "replayed webhook_id",
+        "now": "2026-11-14T17:01:00.000Z",
+        "seen": [
+          "whk_vector000001"
+        ],
+        "expect_ok": false,
+        "expect_reason": "replayed_webhook_id"
+      }
+    ]
+  },
+  "offer_digest": {
+    "offer": {
+      "offer_id": "offer-1",
+      "version": 1,
+      "terms_summary": "Fictional scope.",
+      "fee_summary": "Fictional flat fee.",
+      "valid_until": "2026-11-25T17:00:00.000Z",
+      "documents": [
+        {
+          "document_id": "doc_vector000001",
+          "sha256": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "title": "Engagement letter (fictional)"
+        }
+      ]
+    },
+    "offer_digest": "sha256:3badff1bce75b4c1a3a18670e3122f608981065bea6fc621c2e33acfceabb9c4"
+  },
+  "message_content_digest": {
+    "content": {
+      "body": "Fictional: here is my move-out checklist.",
+      "attachments": []
+    },
+    "content_digest": "sha256:3593e1a6cdd93b1188c6e86202cf286d10b11a6161b3b432c5257c2da3a8a889"
+  }
+}
