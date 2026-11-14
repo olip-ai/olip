@@ -35,6 +35,35 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: 'conformance-${{ matrix.os }}-node${{ matrix.node }}', path: protocol/conformance/results/}
+  lifecycle-v2-draft:
+    name: OLIP 2.0-draft lifecycle (proposed; Node ${{ matrix.node }})
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22', '20']
+    runs-on: ubuntu-latest
+    # Node 22 blocks. Node 20 is reported only: the draft has been run on Node 22 so far.
+    continue-on-error: ${{ matrix.node != '22' }}
+    defaults:
+      run:
+        working-directory: protocol/v2-draft
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '${{ matrix.node }}', cache: npm, cache-dependency-path: protocol/v2-draft/package-lock.json}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: npm ci && (cd .. && npm ci)
+      - name: 2.0-draft tests (schemas, OpenAPI, state machines, consent, firm authority, lifecycle, MCP, A2A, Python, 1.0 compatibility)
+        run: npm test
+      - name: Black-box conformance against the reference host (relay, direct, combined 1.0 + 2.0, production build)
+        run: npm run conformance
+      - name: OLIP 1.0 files stay frozen and 1.0 results are not rewritten by this job
+        working-directory: .
+        run: git diff --exit-code -- protocol/spec protocol/schemas protocol/schemas-0.2 protocol/conformance/results
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: 'v2-draft-conformance-node${{ matrix.node }}', path: protocol/v2-draft/conformance/results/}
   site:
     name: Website, browser simulation, scans
     # Pinned: Playwright's browser install does not support newer Ubuntu images yet.

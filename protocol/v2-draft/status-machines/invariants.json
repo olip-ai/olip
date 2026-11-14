@@ -1,0 +1,84 @@
+{
+  "olip_version": "2.0-draft",
+  "status": "proposed_draft_not_adopted",
+  "invariants": [
+    {
+      "id": "INV-01",
+      "text": "No engagement.firm_confirmed from agent_client, lifecycle_host or consumer roles.",
+      "tests": [
+        "security: agent cannot create firm events",
+        "security: host key cannot sign firm events",
+        "security: paralegal cannot confirm engagement"
+      ]
+    },
+    {
+      "id": "INV-02",
+      "text": "No consultation.confirmed without a firm-signed event that names a confirmation reference and matches the user's proposed slot.",
+      "tests": [
+        "consultation: confirm needs firm event",
+        "consultation: confirm with wrong slot rejected"
+      ]
+    },
+    {
+      "id": "INV-03",
+      "text": "The OLIP 1.0 handoff machine is unchanged; no 2.0 state is ever written into a 1.0 handoff.",
+      "tests": [
+        "compat: 1.0 states unchanged"
+      ]
+    },
+    {
+      "id": "INV-04",
+      "text": "No user-visible firm reply is created from a transport or email notification; replies are firm-signed messages.",
+      "tests": [
+        "messages: transport ack is not delivery"
+      ]
+    },
+    {
+      "id": "INV-05",
+      "text": "No consumer messages to an organization after the matter is closed or terminated, except a new authorized thread; firm closing communications are allowed.",
+      "tests": [
+        "matter: thread read-only after termination"
+      ]
+    },
+    {
+      "id": "INV-06",
+      "text": "Late, duplicate, replayed or out-of-order events never advance a projection illegally; duplicates are idempotent.",
+      "tests": [
+        "events: replay",
+        "events: stale",
+        "events: stale revision"
+      ]
+    },
+    {
+      "id": "INV-07",
+      "text": "Two validly signed contradictory events for the same object revision produce a flagged reconciliation record, never a silent choice.",
+      "tests": [
+        "events: contradictory events flagged"
+      ]
+    },
+    {
+      "id": "INV-08",
+      "text": "Each disclosure needs its own user grant bound to recipient, purpose, exact fields or content digest, revision, notice version, nonce and expiry. Grants never carry across recipients or passports.",
+      "tests": [
+        "consent: grant reuse for other firm",
+        "consent: edit after approval",
+        "scenario C"
+      ]
+    },
+    {
+      "id": "INV-09",
+      "text": "A full CaseBrief may be disclosed to an organization only after that organization's conflict screen is eligible_for_further_intake.",
+      "tests": [
+        "intake: casebrief before eligibility"
+      ]
+    },
+    {
+      "id": "INV-10",
+      "text": "Attendance, delivery and reading are never inferred from time passing or transport acceptance.",
+      "tests": [
+        "consultation: time passing",
+        "messages: offline relay"
+      ]
+    }
+  ]
+}

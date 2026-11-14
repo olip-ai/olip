@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/capabilities.schema.json",
+  "title": "LifecycleCapabilities",
+  "description": "Feature negotiation document served at /olip/v2/capabilities and /.well-known/olip-lifecycle.json. Contains no private data.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "olip_version",
+    "release_status",
+    "statement",
+    "profiles",
+    "base_path",
+    "extension_id",
+    "implementation",
+    "auth",
+    "user_approval_methods",
+    "approval_is_model_callable",
+    "encryption",
+    "operations",
+    "policy_gate"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.schema.json#/$defs/olip_version"
+    },
+    "release_status": {
+      "const": "proposed_draft_not_adopted"
+    },
+    "statement": {
+      "$ref": "common.schema.json#/$defs/statement"
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "olip-lifecycle-core/2",
+          "olip-consultation/2",
+          "olip-engagement/2",
+          "olip-communications/2",
+          "olip-matter/2"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "base_path": {
+      "const": "/olip/v2"
+    },
+    "supported_media": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "extension_id": {
+      "const": "olip.ai/lifecycle-capabilities/2.0-draft"
+    },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "mode",
+        "topology",
+        "operator",
+        "fictional_data_only",
+        "sponsor_services_required"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "mock",
+            "production"
+          ]
+        },
+        "topology": {
+          "enum": [
+            "direct",
+            "relay"
+          ]
+        },
+        "operator": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "operator_id",
+            "display_name"
+          ],
+          "properties": {
+            "operator_id": {
+              "$ref": "common.schema.json#/$defs/organization_id"
+            },
+            "display_name": {
+              "type": "string"
+            }
+          }
+        },
+        "fictional_data_only": {
+          "type": "boolean"
+        },
+        "sponsor_services_required": {
+          "const": false
+        }
+      }
+    },
+    "auth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "token_endpoint",
+        "grant_types",
+        "user_sign_in",
+        "agent_delegation"
+      ],
+      "properties": {
+        "token_endpoint": {
+          "type": "string"
+        },
+        "grant_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "user_sign_in": {
+          "type": "string"
+        },
+        "agent_delegation": {
+          "type": "string"
+        }
+      }
+    },
+    "user_approval_methods": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "approval_is_model_callable": {
+      "const": false
+    },
+    "encryption": {
+      "$ref": "common.schema.json#/$defs/encryption"
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "method",
+          "path",
+          "auth"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z_]+$"
+          },
+          "method": {
+            "enum": [
+              "GET",
+              "POST",
+              "PUT"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "auth": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "public",
+                "user",
+                "agent",
+                "firm",
+                "observer"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "policy_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "rules_status",
+        "production_write_requires"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "mock",
+            "production"
+          ]
+        },
+        "rules_status": {
+          "type": "string"
+        },
+        "production_write_requires": {
+          "type": "string"
+        }
+      }
+    },
+    "downgrade": {
+      "type": "object",
+      "description": "How clients behave with OLIP 1.0-only peers."
+    },
+    "mock_hooks": {
+      "type": "object",
+      "description": "Mock builds only. A production host must not have this member."
+    }
+  }
+}

@@ -1,0 +1,4801 @@
+{
+  "openapi": "3.1.0",
+  "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "info": {
+    "title": "OLIP 2.0-draft lifecycle API",
+    "version": "2.0.0-draft.1",
+    "license": {
+      "name": "Apache-2.0",
+      "identifier": "Apache-2.0"
+    },
+    "description": "PROPOSED draft. Not adopted by any standards body and not approved by any bar or regulator. OLIP 1.0 is unchanged and frozen. This file is generated from the reference host's route table. Mock-only test hooks (/mock/v2/*) are deliberately left out: a real host must never expose them."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:{port}",
+      "description": "Local reference host (fictional data only).",
+      "variables": {
+        "port": {
+          "default": "8787"
+        }
+      }
+    }
+  ],
+  "tags": [
+    {
+      "name": "discovery-and-auth"
+    },
+    {
+      "name": "intake"
+    },
+    {
+      "name": "matter"
+    },
+    {
+      "name": "consent"
+    },
+    {
+      "name": "consultation"
+    },
+    {
+      "name": "engagement"
+    },
+    {
+      "name": "communications"
+    },
+    {
+      "name": "documents"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Tokens identify one caller kind: user (session), agent (delegated by one user), firm (organization client credentials) or observer. x-olip-callers on each operation lists who may call it."
+      }
+    }
+  },
+  "paths": {
+    "/olip/v2/capabilities": {
+      "get": {
+        "operationId": "get_lifecycle_capabilities",
+        "summary": "Feature negotiation; no private data.",
+        "tags": [
+          "discovery-and-auth"
+        ],
+        "x-olip-callers": [
+          "public"
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/capabilities.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/.well-known/olip-lifecycle.json": {
+      "get": {
+        "operationId": "get_lifecycle_manifest",
+        "summary": "Same as capabilities, at a well-known path.",
+        "tags": [
+          "discovery-and-auth"
+        ],
+        "x-olip-callers": [
+          "public"
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/capabilities.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/keys": {
+      "get": {
+        "operationId": "get_host_keys",
+        "summary": "Host attestation keys (JWKS).",
+        "tags": [
+          "discovery-and-auth"
+        ],
+        "x-olip-callers": [
+          "public"
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/token": {
+      "post": {
+        "operationId": "token",
+        "summary": "OAuth2-style token endpoint (mock client credentials and delegation codes).",
+        "tags": [
+          "discovery-and-auth"
+        ],
+        "x-olip-callers": [
+          "public"
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "access_token",
+                    "token_type",
+                    "expires_in"
+                  ],
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OAuth 2.0 error (RFC 6749 section 5.2).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "error_description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "grant_type",
+                      "client_id",
+                      "client_secret"
+                    ],
+                    "properties": {
+                      "grant_type": {
+                        "const": "client_credentials"
+                      },
+                      "client_id": {
+                        "type": "string"
+                      },
+                      "client_secret": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "grant_type",
+                      "client_id",
+                      "client_secret",
+                      "code"
+                    ],
+                    "properties": {
+                      "grant_type": {
+                        "const": "urn:olip:params:oauth:grant-type:delegation_code"
+                      },
+                      "client_id": {
+                        "type": "string"
+                      },
+                      "client_secret": {
+                        "type": "string"
+                      },
+                      "code": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/user-sessions": {
+      "post": {
+        "operationId": "create_user_session",
+        "summary": "User sign-in (mock password; a real host uses its own OIDC sign-in).",
+        "tags": [
+          "discovery-and-auth"
+        ],
+        "x-olip-callers": [
+          "public"
+        ],
+        "security": [],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "subject_id",
+                  "password"
+                ],
+                "properties": {
+                  "subject_id": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Mock only. A real host uses its own OpenID Connect sign-in."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/agent-delegations": {
+      "post": {
+        "operationId": "create_agent_delegation",
+        "summary": "The USER lets one assistant act for them. Content access is off unless the user turns it on.",
+        "tags": [
+          "discovery-and-auth"
+        ],
+        "x-olip-callers": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "client_id"
+                ],
+                "properties": {
+                  "client_id": {
+                    "type": "string"
+                  },
+                  "content_access": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/agent-delegations/{id}/revoke": {
+      "post": {
+        "operationId": "revoke_agent_delegation",
+        "summary": "The user removes an assistant's access for the future.",
+        "tags": [
+          "discovery-and-auth"
+        ],
+        "x-olip-callers": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/recipients": {
+      "get": {
+        "operationId": "list_recipients",
+        "summary": "Organizations reachable through this host. Alphabetical; payment never affects inclusion or order.",
+        "tags": [
+          "intake"
+        ],
+        "x-olip-callers": [
+          "public"
+        ],
+        "parameters": [
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "matter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/recipients/{id}/intake-questions": {
+      "get": {
+        "operationId": "get_intake_questions",
+        "summary": "Stage-appropriate typed questions from the organization (screening first).",
+        "tags": [
+          "intake"
+        ],
+        "x-olip-callers": [
+          "public"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stage",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "screening",
+                "casebrief"
+              ]
+            }
+          }
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters": {
+      "post": {
+        "operationId": "create_matter",
+        "summary": "Create a matter in the user's own space (optionally from a passport). Nothing is sent.",
+        "tags": [
+          "matter"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "matter": {
+                      "$ref": "../schemas/legal-matter.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "casebrief"
+                    ],
+                    "properties": {
+                      "casebrief": {
+                        "type": "object"
+                      },
+                      "fictional": {
+                        "type": "boolean"
+                      },
+                      "reopens": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "from_passport"
+                    ],
+                    "properties": {
+                      "from_passport": {
+                        "$ref": "../schemas/matter-passport.schema.json"
+                      },
+                      "passport_issuer_keys": {
+                        "type": "array"
+                      },
+                      "fictional": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}": {
+      "get": {
+        "operationId": "get_matter",
+        "summary": "Role-redacted snapshot of the matter and its status of record.",
+        "tags": [
+          "matter"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent",
+          "firm",
+          "observer"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "matter": {
+                      "$ref": "../schemas/legal-matter.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/casebrief": {
+      "put": {
+        "operationId": "update_casebrief",
+        "summary": "Replace the user's CaseBrief draft. Needs If-Match with the current CaseBrief revision. Voids approvals bound to the old content.",
+        "tags": [
+          "matter"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The current CaseBrief revision. Missing is 428 OLIP_REVISION_REQUIRED; stale is 409 OLIP_REVISION_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "matter": {
+                      "$ref": "../schemas/legal-matter.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "casebrief"
+                ],
+                "properties": {
+                  "casebrief": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/conflict-screens": {
+      "post": {
+        "operationId": "request_conflict_screen",
+        "summary": "Prepare a MINIMAL screening disclosure to ONE organization. Returns a user approval link. Nothing is sent yet.",
+        "tags": [
+          "intake"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "conflict_screen": {
+                      "$ref": "../schemas/conflict-screen.schema.json"
+                    },
+                    "approval": {
+                      "$ref": "../schemas/common.schema.json#/$defs/approval_request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "organization_id",
+                  "fields",
+                  "selection"
+                ],
+                "properties": {
+                  "organization_id": {
+                    "type": "string"
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z_]+(\\.[a-z_]+)*$"
+                    },
+                    "minItems": 1
+                  },
+                  "selection": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "by"
+                    ],
+                    "properties": {
+                      "by": {
+                        "const": "user",
+                        "description": "The user picked this recipient. Agent-chosen recipients are refused."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/conflict-screens/{id}": {
+      "get": {
+        "operationId": "get_conflict_screen",
+        "summary": "Conflict screen status of record.",
+        "tags": [
+          "intake"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent",
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "conflict_screen": {
+                      "$ref": "../schemas/conflict-screen.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/conflict-screens/{id}/submit": {
+      "post": {
+        "operationId": "submit_conflict_screen",
+        "summary": "Send the screening disclosure the USER approved. Fails unless the approval matches current content exactly.",
+        "tags": [
+          "intake"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "conflict_screen": {
+                      "$ref": "../schemas/conflict-screen.schema.json"
+                    },
+                    "delivery": {
+                      "$ref": "../schemas/common.schema.json#/$defs/delivery"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "grant_id",
+                  "grant_digest"
+                ],
+                "properties": {
+                  "grant_id": {
+                    "type": "string"
+                  },
+                  "grant_digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "approval_id": {
+                    "type": "string"
+                  },
+                  "approval_url": {
+                    "type": "string"
+                  },
+                  "expires_at": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "instructions": {
+                    "type": "string"
+                  }
+                },
+                "description": "The approval the user gave on the approval page. The host checks it is active, unused, unexpired and bound to exactly this content."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/conflict-screens/{id}/events": {
+      "post": {
+        "operationId": "record_conflict_screen_event",
+        "summary": "The organization's signed screening outcome. Agents and hosts cannot call this.",
+        "tags": [
+          "intake"
+        ],
+        "x-olip-callers": [
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "conflict_screen": {
+                      "$ref": "../schemas/conflict-screen.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "event"
+                ],
+                "properties": {
+                  "event": {
+                    "$ref": "../schemas/lifecycle-event.schema.json"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/conflict-screens/{id}/additional-information": {
+      "post": {
+        "operationId": "provide_additional_screening",
+        "summary": "Prepare ONLY the extra fields the firm asked for. Returns a user approval link.",
+        "tags": [
+          "intake"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "approval": {
+                      "$ref": "../schemas/common.schema.json#/$defs/approval_request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "fields"
+                ],
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z_]+(\\.[a-z_]+)*$"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/conflict-screens/{id}/additional-information/submit": {
+      "post": {
+        "operationId": "submit_additional_screening",
+        "summary": "Send the extra screening fields the USER approved.",
+        "tags": [
+          "intake"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "conflict_screen": {
+                      "$ref": "../schemas/conflict-screen.schema.json"
+                    },
+                    "delivery": {
+                      "$ref": "../schemas/common.schema.json#/$defs/delivery"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "grant_id",
+                  "grant_digest"
+                ],
+                "properties": {
+                  "grant_id": {
+                    "type": "string"
+                  },
+                  "grant_digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "approval_id": {
+                    "type": "string"
+                  },
+                  "approval_url": {
+                    "type": "string"
+                  },
+                  "expires_at": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "instructions": {
+                    "type": "string"
+                  }
+                },
+                "description": "The approval the user gave on the approval page. The host checks it is active, unused, unexpired and bound to exactly this content."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/conflict-screens/{id}/withdraw": {
+      "post": {
+        "operationId": "withdraw_conflict_screen",
+        "summary": "The USER withdraws from a screening.",
+        "tags": [
+          "intake"
+        ],
+        "x-olip-callers": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "conflict_screen": {
+                      "$ref": "../schemas/conflict-screen.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/disclosures": {
+      "post": {
+        "operationId": "request_casebrief_disclosure",
+        "summary": "Prepare the FULLER CaseBrief for one organization. Only allowed after that organization says intake may continue.",
+        "tags": [
+          "intake"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "approval": {
+                      "$ref": "../schemas/common.schema.json#/$defs/approval_request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "organization_id",
+                  "fields"
+                ],
+                "properties": {
+                  "organization_id": {
+                    "type": "string"
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z_]+(\\.[a-z_]+)*$"
+                    },
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/disclosures/submit": {
+      "post": {
+        "operationId": "submit_casebrief_disclosure",
+        "summary": "Send the fuller CaseBrief the USER approved.",
+        "tags": [
+          "intake"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "conflict_screen": {
+                      "$ref": "../schemas/conflict-screen.schema.json"
+                    },
+                    "delivery": {
+                      "$ref": "../schemas/common.schema.json#/$defs/delivery"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "grant_id",
+                  "grant_digest"
+                ],
+                "properties": {
+                  "grant_id": {
+                    "type": "string"
+                  },
+                  "grant_digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "approval_id": {
+                    "type": "string"
+                  },
+                  "approval_url": {
+                    "type": "string"
+                  },
+                  "expires_at": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "instructions": {
+                    "type": "string"
+                  }
+                },
+                "description": "The approval the user gave on the approval page. The host checks it is active, unused, unexpired and bound to exactly this content."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/approvals/{id}": {
+      "get": {
+        "operationId": "get_approval",
+        "summary": "The user's approval page: exact recipient, items, purpose, notices and digest. HTML for browsers, JSON otherwise.",
+        "tags": [
+          "consent"
+        ],
+        "x-olip-callers": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "approval": {
+                      "$ref": "../schemas/approval.schema.json"
+                    }
+                  }
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/approvals/{id}/decision": {
+      "post": {
+        "operationId": "decide_approval",
+        "summary": "The USER approves or declines, with the one-time code sent to their own contact. Agents get 403.",
+        "tags": [
+          "consent"
+        ],
+        "x-olip-callers": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "decision",
+                  "grant_digest"
+                ],
+                "properties": {
+                  "decision": {
+                    "enum": [
+                      "approve",
+                      "decline"
+                    ]
+                  },
+                  "otp": {
+                    "type": "string",
+                    "description": "The one-time code sent to the user's own contact."
+                  },
+                  "grant_digest": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "decision",
+                  "grant_digest"
+                ],
+                "properties": {
+                  "decision": {
+                    "enum": [
+                      "approve",
+                      "decline"
+                    ]
+                  },
+                  "otp": {
+                    "type": "string",
+                    "description": "The one-time code sent to the user's own contact."
+                  },
+                  "grant_digest": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-olip-model-callable": false
+      }
+    },
+    "/olip/v2/grants/{id}/revoke": {
+      "post": {
+        "operationId": "revoke_grant",
+        "summary": "The user revokes an unused or bounded approval.",
+        "tags": [
+          "consent"
+        ],
+        "x-olip-callers": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/grants": {
+      "get": {
+        "operationId": "list_grants",
+        "summary": "The user's consent ledger for a matter (no codes).",
+        "tags": [
+          "consent"
+        ],
+        "x-olip-callers": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "grants": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "../schemas/disclosure-grant.schema.json"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/consultations": {
+      "post": {
+        "operationId": "request_consultation",
+        "summary": "Prepare a consultation request to one organization. Returns a user approval link.",
+        "tags": [
+          "consultation"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "consultation": {
+                      "$ref": "../schemas/consultation.schema.json"
+                    },
+                    "approval": {
+                      "$ref": "../schemas/common.schema.json#/$defs/approval_request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "organization_id"
+                ],
+                "properties": {
+                  "organization_id": {
+                    "type": "string"
+                  },
+                  "preferences": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [],
+                    "properties": {
+                      "modes": {
+                        "type": "array",
+                        "items": {
+                          "enum": [
+                            "video",
+                            "phone",
+                            "in_person",
+                            "unknown"
+                          ]
+                        }
+                      },
+                      "timezone": {
+                        "type": "string"
+                      },
+                      "note": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/consultations/{id}/submit": {
+      "post": {
+        "operationId": "submit_consultation_request",
+        "summary": "Send the consultation request the USER approved.",
+        "tags": [
+          "consultation"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "consultation": {
+                      "$ref": "../schemas/consultation.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted by a relay; the organization's system has not confirmed receipt. Not delivery.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "grant_id",
+                  "grant_digest"
+                ],
+                "properties": {
+                  "grant_id": {
+                    "type": "string"
+                  },
+                  "grant_digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "approval_id": {
+                    "type": "string"
+                  },
+                  "approval_url": {
+                    "type": "string"
+                  },
+                  "expires_at": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "instructions": {
+                    "type": "string"
+                  }
+                },
+                "description": "The approval the user gave on the approval page. The host checks it is active, unused, unexpired and bound to exactly this content."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/consultations/{id}": {
+      "get": {
+        "operationId": "get_consultation",
+        "summary": "Consultation status of record. Times are shown with IANA time zone and UTC.",
+        "tags": [
+          "consultation"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent",
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "consultation": {
+                      "$ref": "../schemas/consultation.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/consultations/{id}/events": {
+      "post": {
+        "operationId": "record_consultation_event",
+        "summary": "Firm: signed offer/confirm/cancel/reschedule/attendance events. User: cancel or ask to reschedule (no attendance claims).",
+        "tags": [
+          "consultation"
+        ],
+        "x-olip-callers": [
+          "firm",
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "consultation": {
+                      "$ref": "../schemas/consultation.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "event"
+                    ],
+                    "properties": {
+                      "event": {
+                        "$ref": "../schemas/lifecycle-event.schema.json"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "event_type"
+                    ],
+                    "properties": {
+                      "event_type": {
+                        "enum": [
+                          "consultation.cancelled",
+                          "consultation.reschedule_requested"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/consultations/{id}/proposals": {
+      "post": {
+        "operationId": "propose_consultation_slot",
+        "summary": "Prepare the user's pick of one offered slot. Returns a user approval link.",
+        "tags": [
+          "consultation"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "approval": {
+                      "$ref": "../schemas/common.schema.json#/$defs/approval_request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "slot_id"
+                ],
+                "properties": {
+                  "slot_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/consultations/{id}/proposals/submit": {
+      "post": {
+        "operationId": "submit_consultation_proposal",
+        "summary": "Send the slot pick the USER approved.",
+        "tags": [
+          "consultation"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "consultation": {
+                      "$ref": "../schemas/consultation.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted by a relay; the organization's system has not confirmed receipt. Not delivery.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "grant_id",
+                  "grant_digest"
+                ],
+                "properties": {
+                  "grant_id": {
+                    "type": "string"
+                  },
+                  "grant_digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "approval_id": {
+                    "type": "string"
+                  },
+                  "approval_url": {
+                    "type": "string"
+                  },
+                  "expires_at": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "instructions": {
+                    "type": "string"
+                  }
+                },
+                "description": "The approval the user gave on the approval page. The host checks it is active, unused, unexpired and bound to exactly this content."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/engagement-offers": {
+      "post": {
+        "operationId": "publish_engagement_offer",
+        "summary": "The organization's signed, versioned engagement offer with hashed documents.",
+        "tags": [
+          "engagement"
+        ],
+        "x-olip-callers": [
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "engagement": {
+                      "$ref": "../schemas/engagement.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "event"
+                ],
+                "properties": {
+                  "event": {
+                    "$ref": "../schemas/lifecycle-event.schema.json"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/engagements": {
+      "post": {
+        "operationId": "prepare_engagement_target",
+        "summary": "Create an empty engagement record so the firm can sign its first offer against a known id and revision.",
+        "tags": [
+          "engagement"
+        ],
+        "x-olip-callers": [
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "engagement": {
+                      "$ref": "../schemas/engagement.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/engagements/{id}": {
+      "get": {
+        "operationId": "get_engagement",
+        "summary": "Engagement status of record, with the qualified display text.",
+        "tags": [
+          "engagement"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent",
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "engagement": {
+                      "$ref": "../schemas/engagement.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/engagement-offers/{id}/responses": {
+      "post": {
+        "operationId": "respond_to_engagement_offer",
+        "summary": "Prepare the user's accept/decline of ONE exact offer version (id = engagement id). Returns the user approval link; the user's decision there IS the response.",
+        "tags": [
+          "engagement"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "approval": {
+                      "$ref": "../schemas/common.schema.json#/$defs/approval_request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {
+                  "offer_digest": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/engagements/{id}/events": {
+      "post": {
+        "operationId": "record_engagement_event",
+        "summary": "The organization's signed confirmation, rejection, withdrawal, payment note or end.",
+        "tags": [
+          "engagement"
+        ],
+        "x-olip-callers": [
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "engagement": {
+                      "$ref": "../schemas/engagement.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "event"
+                ],
+                "properties": {
+                  "event": {
+                    "$ref": "../schemas/lifecycle-event.schema.json"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/threads": {
+      "post": {
+        "operationId": "create_thread",
+        "summary": "Open a conversation with one organization (pre-engagement needs eligible screening and firm policy).",
+        "tags": [
+          "communications"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "thread": {
+                      "$ref": "../schemas/conversation-thread.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "organization_id"
+                ],
+                "properties": {
+                  "organization_id": {
+                    "type": "string"
+                  },
+                  "purpose": {
+                    "enum": [
+                      "pre_engagement",
+                      "consultation",
+                      "engaged",
+                      "post_closure"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/threads/{id}": {
+      "get": {
+        "operationId": "get_thread",
+        "summary": "Thread membership, policy and encryption statement.",
+        "tags": [
+          "communications"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent",
+          "firm",
+          "observer"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "thread": {
+                      "$ref": "../schemas/conversation-thread.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/threads/{id}/messages": {
+      "post": {
+        "operationId": "send_message",
+        "summary": "Consumer side: create a DRAFT (needs user approval to send, or a narrow logistics pre-approval). Firm side: a signed message.firm_sent event.",
+        "tags": [
+          "communications"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent",
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "message": {
+                      "$ref": "../schemas/message.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "event"
+                    ],
+                    "properties": {
+                      "event": {
+                        "$ref": "../schemas/lifecycle-event.schema.json"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "body"
+                    ],
+                    "properties": {
+                      "body": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "category": {
+                        "enum": [
+                          "substantive"
+                        ]
+                      },
+                      "attachments": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "category",
+                      "template"
+                    ],
+                    "properties": {
+                      "category": {
+                        "const": "logistics"
+                      },
+                      "template": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "get_messages",
+        "summary": "Messages in a thread, paginated with a stable cursor. Bodies only for participants with content access.",
+        "tags": [
+          "communications"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent",
+          "firm",
+          "observer"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "messages": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "../schemas/message.schema.json"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/messages/{id}/send": {
+      "post": {
+        "operationId": "send_authorized_message",
+        "summary": "Send a drafted message with the user's approval (or a logistics pre-approval for a template message).",
+        "tags": [
+          "communications"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "message": {
+                      "$ref": "../schemas/message.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "grant_id",
+                  "grant_digest"
+                ],
+                "properties": {
+                  "grant_id": {
+                    "type": "string"
+                  },
+                  "grant_digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "approval_id": {
+                    "type": "string"
+                  },
+                  "approval_url": {
+                    "type": "string"
+                  },
+                  "expires_at": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "instructions": {
+                    "type": "string"
+                  }
+                },
+                "description": "The approval the user gave on the approval page. The host checks it is active, unused, unexpired and bound to exactly this content."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/threads/{id}/logistics-preauthorizations": {
+      "post": {
+        "operationId": "preauthorize_logistics",
+        "summary": "Prepare a NARROW, expiring, revocable pre-approval for the firm's fixed logistics templates only. No free text, no attachments.",
+        "tags": [
+          "communications"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "templates"
+                ],
+                "properties": {
+                  "templates": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1
+                  },
+                  "max_uses": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5
+                  },
+                  "hours": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 72
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/messages/{id}/read": {
+      "post": {
+        "operationId": "mark_message_read",
+        "summary": "The USER records reading a firm message. Optional; never inferred.",
+        "tags": [
+          "communications"
+        ],
+        "x-olip-callers": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "message": {
+                      "$ref": "../schemas/message.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/messages/{id}/events": {
+      "post": {
+        "operationId": "record_message_event",
+        "summary": "The firm's signed read receipt for a consumer message.",
+        "tags": [
+          "communications"
+        ],
+        "x-olip-callers": [
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "message": {
+                      "$ref": "../schemas/message.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "event"
+                ],
+                "properties": {
+                  "event": {
+                    "$ref": "../schemas/lifecycle-event.schema.json"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/threads/{id}/events": {
+      "post": {
+        "operationId": "record_thread_event",
+        "summary": "The firm adds or removes an observer participant (signed).",
+        "tags": [
+          "communications"
+        ],
+        "x-olip-callers": [
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "thread": {
+                      "$ref": "../schemas/conversation-thread.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "event"
+                ],
+                "properties": {
+                  "event": {
+                    "$ref": "../schemas/lifecycle-event.schema.json"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/documents/upload-authorizations": {
+      "post": {
+        "operationId": "prepare_document_upload",
+        "summary": "Scoped, short-lived upload grant. Type, size and content are checked on the server.",
+        "tags": [
+          "documents"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent",
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "matter_id",
+                  "filename",
+                  "declared_mime",
+                  "size"
+                ],
+                "properties": {
+                  "matter_id": {
+                    "type": "string"
+                  },
+                  "filename": {
+                    "type": "string"
+                  },
+                  "declared_mime": {
+                    "enum": [
+                      "application/pdf",
+                      "image/png",
+                      "text/plain"
+                    ]
+                  },
+                  "size": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "purpose": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/uploads/{id}": {
+      "put": {
+        "operationId": "upload_document",
+        "summary": "Upload bytes (base64 JSON in this mock). Rejected files never become accessible.",
+        "tags": [
+          "documents"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent",
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          },
+          {
+            "name": "x-olip-upload-token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "document": {
+                      "$ref": "../schemas/document-reference.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "content_base64"
+                ],
+                "properties": {
+                  "content_base64": {
+                    "type": "string",
+                    "contentEncoding": "base64"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/threads/{id}/documents": {
+      "post": {
+        "operationId": "transfer_approved_document",
+        "summary": "Send a cleared document to the thread's organization with the user's approval bound to its SHA-256.",
+        "tags": [
+          "communications"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "document_id"
+                ],
+                "properties": {
+                  "grant_id": {
+                    "type": "string"
+                  },
+                  "grant_digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "approval_id": {
+                    "type": "string"
+                  },
+                  "approval_url": {
+                    "type": "string"
+                  },
+                  "expires_at": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "instructions": {
+                    "type": "string"
+                  },
+                  "document_id": {
+                    "type": "string"
+                  }
+                },
+                "description": "First call with document_id only returns an approval link; second call adds the approval the user gave."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/documents/{id}/download-authorizations": {
+      "post": {
+        "operationId": "create_download_authorization",
+        "summary": "A short-lived download token for an authorized participant. Never logged.",
+        "tags": [
+          "documents"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent",
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/downloads/{token}": {
+      "get": {
+        "operationId": "download_document",
+        "summary": "Fetch bytes with a valid, unexpired download token.",
+        "tags": [
+          "discovery-and-auth"
+        ],
+        "x-olip-callers": [
+          "public"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "The document bytes.",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "contentMediaType": "application/octet-stream"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/events": {
+      "post": {
+        "operationId": "record_matter_event",
+        "summary": "Firm: signed inactive/closure/termination. User: close their OWN intake journey on an unrepresented matter.",
+        "tags": [
+          "matter"
+        ],
+        "x-olip-callers": [
+          "firm",
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "matter": {
+                      "$ref": "../schemas/legal-matter.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "event"
+                    ],
+                    "properties": {
+                      "event": {
+                        "$ref": "../schemas/lifecycle-event.schema.json"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "event_type"
+                    ],
+                    "properties": {
+                      "event_type": {
+                        "const": "matter.closed",
+                        "description": "A user closing their own unrepresented intake journey."
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "get_matter_events",
+        "summary": "The tamper-evident journal (hash chain) visible to the caller.",
+        "tags": [
+          "matter"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent",
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "entries": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "../schemas/audit-record.schema.json"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/exports": {
+      "post": {
+        "operationId": "export_matter_passport",
+        "summary": "The USER exports a signed, portable matter passport. Export sends nothing and authorizes nobody.",
+        "tags": [
+          "matter"
+        ],
+        "x-olip-callers": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    },
+                    "passport": {
+                      "$ref": "../schemas/matter-passport.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {
+                  "include_documents": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/subscriptions": {
+      "post": {
+        "operationId": "subscribe_lifecycle_events",
+        "summary": "Signed minimal callbacks (hints only). Callback URLs are checked against SSRF rules.",
+        "tags": [
+          "matter"
+        ],
+        "x-olip-callers": [
+          "agent",
+          "user",
+          "firm",
+          "observer"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": "Same key and same body returns the first result; same key with a different body is 409 OLIP_IDEMPOTENCY_CONFLICT."
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "callback_url"
+                ],
+                "properties": {
+                  "callback_url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "HTTPS only; private, loopback and link-local addresses are refused, and DNS is re-checked."
+                  },
+                  "event_types": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v2/matters/{id}/reconciliations": {
+      "get": {
+        "operationId": "list_reconciliations",
+        "summary": "Contradictory signed events flagged for the firm to reconcile.",
+        "tags": [
+          "matter"
+        ],
+        "x-olip-callers": [
+          "user",
+          "agent",
+          "firm"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "olip_version"
+                  ],
+                  "properties": {
+                    "olip_version": {
+                      "const": "2.0-draft"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An OLIP error. See error.code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

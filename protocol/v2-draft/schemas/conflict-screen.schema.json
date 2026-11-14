@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/conflict-screen.schema.json",
+  "title": "ConflictScreen",
+  "description": "The firm's minimal screening step. eligible_for_further_intake is NOT a conflict clearance and NOT representation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "machine",
+    "state",
+    "revision",
+    "history",
+    "created_at",
+    "updated_at",
+    "matter_id",
+    "organization_id",
+    "requested_fields",
+    "disclosures",
+    "firm_requests",
+    "decision"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "type": {
+      "const": "conflict_screen"
+    },
+    "machine": {
+      "const": "intake"
+    },
+    "state": {
+      "enum": [
+        "not_started",
+        "screening_requested",
+        "information_requested",
+        "eligible_for_further_intake",
+        "unable_to_proceed",
+        "withdrawn"
+      ]
+    },
+    "revision": {
+      "$ref": "common.schema.json#/$defs/revision"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/history_entry"
+      }
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "updated_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "matter_id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "organization_id": {
+      "$ref": "common.schema.json#/$defs/organization_id"
+    },
+    "reconciliation_required": {
+      "type": "boolean",
+      "description": "Set when a validly signed event contradicted one already applied. The firm must reconcile."
+    },
+    "requested_fields": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/field_path"
+      }
+    },
+    "disclosures": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/object_id"
+      }
+    },
+    "firm_requests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "event_id",
+          "fields"
+        ],
+        "properties": {
+          "event_id": {
+            "$ref": "common.schema.json#/$defs/event_id"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path"
+              ],
+              "properties": {
+                "path": {
+                  "$ref": "common.schema.json#/$defs/field_path"
+                },
+                "question": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "decision": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event_type",
+            "firm_text",
+            "alternatives",
+            "by_actor",
+            "at",
+            "statement"
+          ],
+          "properties": {
+            "event_type": {
+              "enum": [
+                "intake.eligible_for_further_intake",
+                "intake.unable_to_proceed"
+              ]
+            },
+            "firm_text": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "alternatives": {
+              "type": "array",
+              "items": {}
+            },
+            "by_actor": {
+              "$ref": "common.schema.json#/$defs/actor_id"
+            },
+            "at": {
+              "$ref": "common.schema.json#/$defs/timestamp"
+            },
+            "statement": {
+              "$ref": "common.schema.json#/$defs/statement"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "supersedes": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/object_id"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

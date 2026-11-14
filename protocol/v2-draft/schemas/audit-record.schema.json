@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/audit-record.schema.json",
+  "title": "AuditRecord",
+  "description": "One entry of a matter's append-only hash-chained journal, with read-time attribution.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "seq",
+    "recorded_at",
+    "prev_hash",
+    "event",
+    "entry_hash"
+  ],
+  "properties": {
+    "seq": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "recorded_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "prev_hash": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "event": {
+      "$ref": "lifecycle-event.schema.json"
+    },
+    "entry_hash": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "attribution": {
+      "enum": [
+        "firm_signed",
+        "host_attested",
+        "downgraded_signing_key_compromised",
+        "unknown_key"
+      ]
+    }
+  }
+}

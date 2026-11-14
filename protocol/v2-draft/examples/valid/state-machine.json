@@ -1,0 +1,213 @@
+{
+  "$schema": "https://olip.ai/spec/2.0-draft/schemas/state-machine.schema.json",
+  "olip_version": "2.0-draft",
+  "status": "proposed_draft_not_adopted",
+  "machine": "consultation",
+  "object_type": "consultation",
+  "initial": "not_requested",
+  "states": {
+    "not_requested": {
+      "meaning": "No consultation has been asked for.",
+      "terminal": false
+    },
+    "requested": {
+      "meaning": "The user approved a consultation request and the organization's endpoint signed a receipt. No time is agreed.",
+      "terminal": false
+    },
+    "options_offered": {
+      "meaning": "The organization offered specific times. Offered is not booked.",
+      "terminal": false
+    },
+    "proposed": {
+      "meaning": "The user picked one offered time. It is not confirmed until the organization confirms it.",
+      "terminal": false
+    },
+    "confirmed": {
+      "meaning": "The organization's scheduling system confirmed this time and time zone.",
+      "terminal": false
+    },
+    "reschedule_requested": {
+      "meaning": "One side asked to move a confirmed time. The old time is no longer confirmed.",
+      "terminal": false
+    },
+    "completed": {
+      "meaning": "The organization reports the consultation took place (source named). A consultation is not representation.",
+      "terminal": true
+    },
+    "no_show": {
+      "meaning": "The organization reports the user did not attend (source named).",
+      "terminal": true
+    },
+    "declined": {
+      "meaning": "The organization declined to schedule a consultation.",
+      "terminal": true
+    },
+    "cancelled": {
+      "meaning": "The user or the organization cancelled.",
+      "terminal": true
+    },
+    "expired": {
+      "meaning": "The offered or proposed times passed before confirmation.",
+      "terminal": true
+    }
+  },
+  "transitions": [
+    {
+      "event_type": "consultation.requested",
+      "from": [
+        "not_requested"
+      ],
+      "to": "requested",
+      "actors": [
+        "lifecycle_host"
+      ],
+      "evidence": [
+        "user_disclosure_grant",
+        "recipient_signed_receipt"
+      ]
+    },
+    {
+      "event_type": "consultation.options_offered",
+      "from": [
+        "requested",
+        "reschedule_requested"
+      ],
+      "to": "options_offered",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority",
+        "slots_with_iana_timezone"
+      ]
+    },
+    {
+      "event_type": "consultation.proposed",
+      "from": [
+        "options_offered"
+      ],
+      "to": "proposed",
+      "actors": [
+        "lifecycle_host"
+      ],
+      "evidence": [
+        "user_disclosure_grant",
+        "recipient_signed_receipt"
+      ]
+    },
+    {
+      "event_type": "consultation.confirmed",
+      "from": [
+        "proposed"
+      ],
+      "to": "confirmed",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority",
+        "confirmation_reference",
+        "slot_matches_proposal"
+      ]
+    },
+    {
+      "event_type": "consultation.reschedule_requested",
+      "from": [
+        "confirmed"
+      ],
+      "to": "reschedule_requested",
+      "actors": [
+        "firm",
+        "consumer"
+      ],
+      "evidence": [
+        "firm_signature_or_authenticated_user_action"
+      ]
+    },
+    {
+      "event_type": "consultation.completed",
+      "from": [
+        "confirmed"
+      ],
+      "to": "completed",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority",
+        "attendance_source"
+      ]
+    },
+    {
+      "event_type": "consultation.no_show",
+      "from": [
+        "confirmed"
+      ],
+      "to": "no_show",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority",
+        "attendance_source"
+      ]
+    },
+    {
+      "event_type": "consultation.declined",
+      "from": [
+        "requested",
+        "options_offered",
+        "proposed",
+        "reschedule_requested"
+      ],
+      "to": "declined",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority"
+      ]
+    },
+    {
+      "event_type": "consultation.cancelled",
+      "from": [
+        "requested",
+        "options_offered",
+        "proposed",
+        "confirmed",
+        "reschedule_requested"
+      ],
+      "to": "cancelled",
+      "actors": [
+        "firm",
+        "consumer"
+      ],
+      "evidence": [
+        "firm_signature_or_authenticated_user_action"
+      ]
+    },
+    {
+      "event_type": "consultation.expired",
+      "from": [
+        "options_offered",
+        "proposed"
+      ],
+      "to": "expired",
+      "actors": [
+        "lifecycle_host"
+      ],
+      "evidence": [
+        "all_slots_in_past"
+      ]
+    }
+  ],
+  "notes": [
+    "Attendance is never inferred from a calendar end time. completed and no_show need a firm event that names its attendance source.",
+    "A new time after reschedule_requested is a new options_offered event with a higher version; the old confirmation stays in history."
+  ]
+}

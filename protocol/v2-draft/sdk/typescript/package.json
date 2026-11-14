@@ -1,0 +1,2 @@
+{ "name": "@olip/lifecycle-client-draft", "version": "2.0.0-draft.1", "private": true, "type": "module", "main": "dist/index.js", "types": "dist/index.d.ts",
+  "description": "PROPOSED OLIP 2.0-draft lifecycle client. Not published to any registry. No sponsor account needed.", "license": "Apache-2.0" }

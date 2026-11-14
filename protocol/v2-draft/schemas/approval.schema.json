@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/approval.schema.json",
+  "title": "Approval",
+  "description": "The user's approval page data (JSON form). Only the signed-in user can read or decide it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "approval_id",
+    "state",
+    "expires_at",
+    "grant_id",
+    "grant_digest",
+    "action",
+    "preview"
+  ],
+  "properties": {
+    "approval_id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "state": {
+      "enum": [
+        "pending",
+        "approved",
+        "declined",
+        "expired",
+        "locked",
+        "void"
+      ]
+    },
+    "expires_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "grant_id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "grant_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "action": {
+      "type": "string"
+    },
+    "preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recipient",
+        "action",
+        "purpose",
+        "fields",
+        "notices"
+      ],
+      "properties": {
+        "recipient": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "organization_id",
+            "display_name"
+          ],
+          "properties": {
+            "organization_id": {
+              "$ref": "common.schema.json#/$defs/organization_id"
+            },
+            "display_name": {
+              "type": "string"
+            }
+          }
+        },
+        "action": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "value"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "value": {}
+            }
+          }
+        },
+        "notices": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "casebrief_revision": {
+          "type": "integer"
+        },
+        "warnings": {
+          "type": "array",
+          "items": {}
+        },
+        "firm_asked": {
+          "type": "array",
+          "items": {}
+        },
+        "attachments": {
+          "type": "array",
+          "items": {}
+        },
+        "offer": {
+          "type": "object",
+          "description": "The exact offer version being answered."
+        },
+        "what_accepting_means": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "$schema": "https://olip.ai/spec/2.0-draft/schemas/state-machine.schema.json",
+  "olip_version": "2.0-draft",
+  "status": "proposed_draft_not_adopted",
+  "machine": "matter",
+  "object_type": "matter",
+  "initial": "open",
+  "states": {
+    "open": {
+      "meaning": "The matter record exists.",
+      "terminal": false
+    },
+    "inactive": {
+      "meaning": "The engaged organization marked the matter inactive.",
+      "terminal": false
+    },
+    "closure_proposed": {
+      "meaning": "The engaged organization proposed closing the matter and gave notice.",
+      "terminal": false
+    },
+    "closed": {
+      "meaning": "Closed. For a represented matter only the organization can close it. An unrepresented user may close their own intake journey.",
+      "terminal": true
+    },
+    "terminated": {
+      "meaning": "The engaged organization reports the representation was terminated.",
+      "terminal": true
+    }
+  },
+  "transitions": [
+    {
+      "event_type": "matter.inactive",
+      "from": [
+        "open"
+      ],
+      "to": "inactive",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority",
+        "represented_by_signer"
+      ]
+    },
+    {
+      "event_type": "matter.reactivated",
+      "from": [
+        "inactive"
+      ],
+      "to": "open",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority",
+        "represented_by_signer"
+      ]
+    },
+    {
+      "event_type": "matter.closure_proposed",
+      "from": [
+        "open",
+        "inactive"
+      ],
+      "to": "closure_proposed",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority",
+        "represented_by_signer",
+        "notice_text"
+      ]
+    },
+    {
+      "event_type": "matter.closed",
+      "from": [
+        "open",
+        "inactive",
+        "closure_proposed"
+      ],
+      "to": "closed",
+      "actors": [
+        "firm",
+        "consumer"
+      ],
+      "evidence": [
+        "firm_signature_if_represented",
+        "authenticated_user_action_if_not_represented"
+      ]
+    },
+    {
+      "event_type": "matter.terminated",
+      "from": [
+        "open",
+        "inactive",
+        "closure_proposed"
+      ],
+      "to": "terminated",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority",
+        "represented_by_signer",
+        "notice_text"
+      ]
+    }
+  ],
+  "notes": [
+    "Reopening creates a new matter that references the old one (reopens). Closed and terminated matters never change again.",
+    "A user closing their own journey on an unrepresented matter is recorded with closed_by consumer and is never shown as a firm termination."
+  ]
+}

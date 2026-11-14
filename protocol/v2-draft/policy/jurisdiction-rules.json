@@ -1,0 +1,11 @@
+{
+  "olip_version": "2.0-draft",
+  "status": "illustrative_pending_counsel_review",
+  "statement": "Reference policy only. No jurisdiction below has been reviewed or approved by counsel. A production host must refuse every lifecycle write for a jurisdiction whose status is not approved_by_counsel. Unknown jurisdictions fail closed.",
+  "production_write_requires": "approved_by_counsel",
+  "jurisdictions": {
+    "US-CA": { "status": "pending_counsel_review", "open_questions": ["Prospective-client duties for screening data", "Electronic engagement assent requirements", "Retention period for client communications"] },
+    "US-NY": { "status": "pending_counsel_review", "open_questions": ["Prospective-client duties for screening data", "Engagement letter requirements", "Retention period for client communications"] },
+    "US-TX": { "status": "pending_counsel_review", "open_questions": ["Prospective-client duties for screening data"] }
+  }
+}

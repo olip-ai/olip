@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/error.schema.json",
+  "title": "Error",
+  "description": "Every OLIP 2.0-draft error response. Codes are stable; messages are plain language and may change.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "olip_version",
+    "error"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.schema.json#/$defs/olip_version"
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "message",
+        "retryable"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^OLIP_[A-Z_]+$",
+          "description": "Codes a host returns: OLIP_AGENT_CANNOT_APPROVE, OLIP_APPROVAL_ALREADY_DECIDED, OLIP_APPROVAL_CODE_INVALID, OLIP_APPROVAL_LOCKED, OLIP_ATTENDANCE_SOURCE_REQUIRED, OLIP_AUTHORIZATION_EXPIRED, OLIP_CALLBACK_URL_REJECTED, OLIP_CONFLICT_STAGE_REQUIRED, OLIP_CONSENT_DIGEST_MISMATCH, OLIP_CONSULTATION_SLOT_EXPIRED, OLIP_CONSULTATION_SLOT_MISMATCH, OLIP_DELEGATION_REVOKED, OLIP_DISCLOSURE_NOT_AUTHORIZED, OLIP_DOCUMENT_NOT_CLEARED, OLIP_DOCUMENT_REJECTED, OLIP_ENGAGEMENT_OFFER_CHANGED, OLIP_ENGAGEMENT_OFFER_EXPIRED, OLIP_EVENT_CONFLICT, OLIP_EVENT_REPLAYED, OLIP_EVENT_SIGNATURE_INVALID, OLIP_EVENT_STALE, OLIP_FIELD_NOT_ALLOWED, OLIP_FIRM_AUTHORITY_REQUIRED, OLIP_FORBIDDEN, OLIP_IDEMPOTENCY_CONFLICT, OLIP_IDEMPOTENCY_KEY_REQUIRED, OLIP_INTERNAL, OLIP_INVALID_REQUEST, OLIP_KEY_REVOKED, OLIP_LIFECYCLE_TRANSITION_INVALID, OLIP_NOT_FOUND, OLIP_PASSPORT_INVALID, OLIP_PAYLOAD_TOO_LARGE, OLIP_POLICY_GATE_CLOSED, OLIP_RATE_LIMITED, OLIP_RECIPIENT_NOT_USER_SELECTED, OLIP_REVISION_CONFLICT, OLIP_REVISION_REQUIRED, OLIP_SCHEMA_INVALID, OLIP_SENSITIVE_DATA_BLOCKED, OLIP_THREAD_CLOSED, OLIP_THREAD_MEMBERSHIP_REQUIRED, OLIP_TOKEN_EXPIRED, OLIP_UNAUTHENTICATED. Client libraries may also raise: OLIP_HTTP_ERROR, OLIP_NOT_NEGOTIATED, OLIP_PROFILE_NOT_SUPPORTED."
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "details": {
+          "type": "object",
+          "description": "Machine-readable details for this code."
+        }
+      }
+    }
+  }
+}

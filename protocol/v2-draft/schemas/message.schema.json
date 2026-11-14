@@ -1,0 +1,291 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/message.schema.json",
+  "title": "Message",
+  "description": "One message. Delivery states are truthful: delivered_to_endpoint needs the recipient's signed receipt; read_by_recipient needs the recipient's own report. Observers get only the status-only form.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "machine",
+        "state",
+        "revision",
+        "history",
+        "created_at",
+        "updated_at",
+        "matter_id",
+        "organization_id",
+        "thread_id",
+        "sender",
+        "category",
+        "content_digest",
+        "attachments",
+        "drafting",
+        "body",
+        "labels"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/object_id"
+        },
+        "type": {
+          "const": "message"
+        },
+        "machine": {
+          "const": "message_delivery"
+        },
+        "state": {
+          "enum": [
+            "draft",
+            "user_authorized",
+            "queued",
+            "accepted_by_transport",
+            "delivered_to_endpoint",
+            "read_by_recipient",
+            "failed",
+            "cancelled_before_send",
+            "expired"
+          ]
+        },
+        "revision": {
+          "$ref": "common.schema.json#/$defs/revision"
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/history_entry"
+          }
+        },
+        "created_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "matter_id": {
+          "$ref": "common.schema.json#/$defs/object_id"
+        },
+        "organization_id": {
+          "$ref": "common.schema.json#/$defs/organization_id"
+        },
+        "reconciliation_required": {
+          "type": "boolean",
+          "description": "Set when a validly signed event contradicted one already applied. The firm must reconcile."
+        },
+        "thread_id": {
+          "$ref": "common.schema.json#/$defs/object_id"
+        },
+        "sender": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "role",
+                "subject_id",
+                "via"
+              ],
+              "properties": {
+                "role": {
+                  "const": "consumer"
+                },
+                "subject_id": {
+                  "$ref": "common.schema.json#/$defs/subject_id"
+                },
+                "via": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "role",
+                "actor_id",
+                "organization_id"
+              ],
+              "properties": {
+                "role": {
+                  "const": "firm"
+                },
+                "actor_id": {
+                  "$ref": "common.schema.json#/$defs/actor_id"
+                },
+                "organization_id": {
+                  "$ref": "common.schema.json#/$defs/organization_id"
+                }
+              }
+            }
+          ]
+        },
+        "category": {
+          "enum": [
+            "substantive",
+            "logistics",
+            "closing_communication"
+          ]
+        },
+        "template": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "content_digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "document_id",
+              "sha256"
+            ],
+            "properties": {
+              "document_id": {
+                "$ref": "common.schema.json#/$defs/object_id"
+              },
+              "sha256": {
+                "$ref": "common.schema.json#/$defs/digest"
+              },
+              "filename": {
+                "type": "string"
+              },
+              "mime": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "drafting": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ai_assisted",
+            "reviewed_by"
+          ],
+          "properties": {
+            "ai_assisted": {
+              "type": "boolean"
+            },
+            "reviewed_by": {
+              "anyOf": [
+                {
+                  "$ref": "common.schema.json#/$defs/actor_id"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "expires_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "pending_delivery_id": {
+          "$ref": "common.schema.json#/$defs/object_id",
+          "description": "Set while a relay holds the message without the firm's receipt."
+        },
+        "firm_event_id": {
+          "$ref": "common.schema.json#/$defs/event_id"
+        },
+        "kid": {
+          "type": "string"
+        },
+        "receipt": {
+          "$ref": "delivery-receipt.schema.json"
+        },
+        "body": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/untrusted_text"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ai_assisted",
+            "reviewed_by",
+            "statement"
+          ],
+          "properties": {
+            "ai_assisted": {
+              "type": "boolean"
+            },
+            "reviewed_by": {
+              "anyOf": [
+                {
+                  "$ref": "common.schema.json#/$defs/actor_id"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "statement": {
+              "$ref": "common.schema.json#/$defs/statement"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "message_id",
+        "state",
+        "sender_role",
+        "created_at",
+        "body"
+      ],
+      "properties": {
+        "message_id": {
+          "$ref": "common.schema.json#/$defs/object_id"
+        },
+        "state": {
+          "enum": [
+            "draft",
+            "user_authorized",
+            "queued",
+            "accepted_by_transport",
+            "delivered_to_endpoint",
+            "read_by_recipient",
+            "failed",
+            "cancelled_before_send",
+            "expired"
+          ]
+        },
+        "sender_role": {
+          "enum": [
+            "consumer",
+            "firm"
+          ]
+        },
+        "created_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "body": {
+          "type": "null"
+        }
+      },
+      "title": "Status-only message (observers)"
+    }
+  ]
+}

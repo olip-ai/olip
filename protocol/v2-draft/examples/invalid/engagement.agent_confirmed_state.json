@@ -1,0 +1,105 @@
+{
+  "id": "eng_wRdngKdhwdLVU6-a",
+  "type": "engagement",
+  "machine": "engagement",
+  "state": "confirmed_by_assistant",
+  "revision": 4,
+  "history": [
+    {
+      "event_id": "urn:olip:org_test_alvarez:event:7qjeWPZCF1Xe",
+      "event_type": "engagement.offered",
+      "at": "2026-11-18T17:00:00.147Z",
+      "by": "firm",
+      "actor_id": "stf_test_avery",
+      "kid": "kid_test_740cc96de2d4"
+    },
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:lIyrmSHWJcaW",
+      "event_type": "engagement.user_reviewing",
+      "at": "2026-11-18T17:00:00.150Z",
+      "by": "lifecycle_host"
+    },
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:ZVH1A2Kg3PDW",
+      "event_type": "engagement.user_accepted",
+      "at": "2026-11-18T17:00:00.152Z",
+      "by": "consumer"
+    },
+    {
+      "event_id": "urn:olip:org_test_alvarez:event:ZprIJ2e4QN0V",
+      "event_type": "engagement.firm_confirmed",
+      "at": "2026-11-18T17:00:00.160Z",
+      "by": "firm",
+      "actor_id": "stf_test_avery",
+      "kid": "kid_test_740cc96de2d4"
+    }
+  ],
+  "created_at": "2026-11-18T17:00:00.144Z",
+  "updated_at": "2026-11-18T17:00:00.160Z",
+  "matter_id": "mat_E4laPlUDXirno6aU",
+  "organization_id": "org_test_alvarez",
+  "offers": [
+    {
+      "offer_id": "offer-1",
+      "version": 1,
+      "terms_summary": "Fictional: represent you in the deposit dispute with Bayview Rentals LLC (fictional).",
+      "fee_summary": "Fictional flat fee of 500 dollars.",
+      "valid_until": "2026-11-25T17:00:00.144Z",
+      "documents": [
+        {
+          "document_id": "doc_2iHr8zB6xXlNX-6x",
+          "sha256": "sha256:0f1040114ff0ac8078a04ddbf277abd6fc91bdf0fde6c04d5977d15fcf80b168",
+          "title": "Engagement letter (fictional)"
+        }
+      ],
+      "assent_policy": "hosted_otp_click",
+      "requires_countersignature": true,
+      "representation": {
+        "type": "firm",
+        "responsible_actor_id": "stf_test_avery"
+      },
+      "offer_digest": "sha256:f6b2aafa7f3bdb13e95c76c030ef2e46c8a506ec77996bec3bc22e0124a52030",
+      "issued_by_actor": "stf_test_avery",
+      "event_id": "urn:olip:org_test_alvarez:event:7qjeWPZCF1Xe"
+    }
+  ],
+  "offer": {
+    "offer_id": "offer-1",
+    "version": 1,
+    "terms_summary": "Fictional: represent you in the deposit dispute with Bayview Rentals LLC (fictional).",
+    "fee_summary": "Fictional flat fee of 500 dollars.",
+    "valid_until": "2026-11-25T17:00:00.144Z",
+    "documents": [
+      {
+        "document_id": "doc_2iHr8zB6xXlNX-6x",
+        "sha256": "sha256:0f1040114ff0ac8078a04ddbf277abd6fc91bdf0fde6c04d5977d15fcf80b168",
+        "title": "Engagement letter (fictional)"
+      }
+    ],
+    "assent_policy": "hosted_otp_click",
+    "requires_countersignature": true,
+    "representation": {
+      "type": "firm",
+      "responsible_actor_id": "stf_test_avery"
+    },
+    "offer_digest": "sha256:f6b2aafa7f3bdb13e95c76c030ef2e46c8a506ec77996bec3bc22e0124a52030",
+    "issued_by_actor": "stf_test_avery",
+    "event_id": "urn:olip:org_test_alvarez:event:7qjeWPZCF1Xe"
+  },
+  "acceptance": {
+    "acceptance_id": "acc_S16IjY34owAMJV5q",
+    "offer_digest": "sha256:f6b2aafa7f3bdb13e95c76c030ef2e46c8a506ec77996bec3bc22e0124a52030",
+    "offer_version": 1,
+    "at": "2026-11-18T17:00:00.152Z",
+    "method": "hosted_otp_mock",
+    "event_id": "urn:olip:op_test_neutral_relay:event:ZVH1A2Kg3PDW"
+  },
+  "confirmed_at": "2026-11-18T17:00:00.158Z",
+  "confirmed_by_actor": "stf_test_avery",
+  "display_status": {
+    "text": "Firm reports engagement confirmed",
+    "reported_by": "org_test_alvarez",
+    "reported_at": "2026-11-18T17:00:00.158Z",
+    "qualifier": "This is the firm's own signed report. OLIP does not create an attorney-client relationship; when one exists is decided by applicable law."
+  }
+}

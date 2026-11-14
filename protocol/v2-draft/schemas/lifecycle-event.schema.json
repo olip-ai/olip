@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/lifecycle-event.schema.json",
+  "title": "LifecycleEvent",
+  "description": "A signed assertion. Firm events are signed with a key the firm published for lifecycle_events; host and consumer events are signed by the host as attestations.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "olip_version",
+    "event_id",
+    "matter_id",
+    "object",
+    "event_type",
+    "actor",
+    "prior_revision",
+    "occurred_at",
+    "idempotency_key",
+    "evidence",
+    "payload",
+    "signature"
+  ],
+  "properties": {
+    "olip_version": {
+      "$ref": "common.schema.json#/$defs/olip_version"
+    },
+    "event_id": {
+      "$ref": "common.schema.json#/$defs/event_id"
+    },
+    "matter_id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "matter",
+            "conflict_screen",
+            "consultation",
+            "engagement",
+            "thread",
+            "message",
+            "grant",
+            "document",
+            "delegation",
+            "disclosure"
+          ]
+        },
+        "id": {
+          "$ref": "common.schema.json#/$defs/object_id"
+        }
+      }
+    },
+    "event_type": {
+      "type": "string",
+      "pattern": "^[a-z_]+\\.[a-z_]+$",
+      "description": "Known types: consent.declined, consent.granted, consent.revoked, consultation.cancelled, consultation.completed, consultation.confirmed, consultation.declined, consultation.expired, consultation.no_show, consultation.options_offered, consultation.proposed, consultation.requested, consultation.reschedule_requested, delegation.created, delegation.revoked, disclosure.delivered, engagement.ended, engagement.expired, engagement.firm_confirmed, engagement.offered, engagement.payment_reported, engagement.rejected_by_firm, engagement.user_accepted, engagement.user_declined, engagement.user_reviewing, engagement.withdrawn, intake.additional_information_provided, intake.eligible_for_further_intake, intake.information_requested, intake.screening_requested, intake.unable_to_proceed, intake.withdrawn, lifecycle.reconciliation_flagged, matter.casebrief_updated, matter.closed, matter.closure_proposed, matter.created, matter.inactive, matter.passport_exported, matter.reactivated, matter.terminated, message.accepted_by_transport, message.cancelled_before_send, message.delivered_to_endpoint, message.expired, message.failed, message.firm_sent, message.queued, message.read_by_recipient, message.user_authorized, thread.created, thread.participant_added, thread.participant_removed."
+    },
+    "actor": {
+      "$ref": "common.schema.json#/$defs/actor"
+    },
+    "prior_revision": {
+      "$ref": "common.schema.json#/$defs/revision"
+    },
+    "occurred_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "correlation_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "causation_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "description": "What backs the claim (receipt ids, digests, sources)."
+    },
+    "payload": {
+      "type": "object",
+      "description": "Event-specific data. Never trusted as instructions."
+    },
+    "fictional": {
+      "type": "boolean"
+    },
+    "signature": {
+      "$ref": "common.schema.json#/$defs/signature"
+    }
+  }
+}

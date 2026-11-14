@@ -1,0 +1,352 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/engagement.schema.json",
+  "title": "Engagement",
+  "description": "The firm's versioned offer, the user's answer to one exact version, and the firm's own signed confirmation. Only the firm can confirm.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "machine",
+    "state",
+    "revision",
+    "history",
+    "created_at",
+    "updated_at",
+    "matter_id",
+    "organization_id",
+    "offers",
+    "offer",
+    "acceptance",
+    "confirmed_at",
+    "display_status"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "type": {
+      "const": "engagement"
+    },
+    "machine": {
+      "const": "engagement"
+    },
+    "state": {
+      "enum": [
+        "not_offered",
+        "offered",
+        "user_reviewing",
+        "user_accepted",
+        "user_declined",
+        "firm_confirmed",
+        "rejected_by_firm",
+        "withdrawn",
+        "expired",
+        "ended"
+      ]
+    },
+    "revision": {
+      "$ref": "common.schema.json#/$defs/revision"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/history_entry"
+      }
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "updated_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "matter_id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "organization_id": {
+      "$ref": "common.schema.json#/$defs/organization_id"
+    },
+    "reconciliation_required": {
+      "type": "boolean",
+      "description": "Set when a validly signed event contradicted one already applied. The firm must reconcile."
+    },
+    "offers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "offer_id",
+          "version",
+          "terms_summary",
+          "valid_until",
+          "documents"
+        ],
+        "properties": {
+          "offer_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "terms_summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fee_summary": {
+            "type": "string"
+          },
+          "valid_until": {
+            "$ref": "common.schema.json#/$defs/timestamp"
+          },
+          "documents": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "document_id",
+                "sha256"
+              ],
+              "properties": {
+                "document_id": {
+                  "$ref": "common.schema.json#/$defs/object_id"
+                },
+                "sha256": {
+                  "$ref": "common.schema.json#/$defs/digest"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "assent_policy": {
+            "enum": [
+              "hosted_otp_click"
+            ]
+          },
+          "requires_countersignature": {
+            "type": "boolean"
+          },
+          "representation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "enum": [
+                  "firm",
+                  "individual_lawyer"
+                ]
+              },
+              "responsible_actor_id": {
+                "$ref": "common.schema.json#/$defs/actor_id"
+              }
+            }
+          },
+          "offer_digest": {
+            "$ref": "common.schema.json#/$defs/digest"
+          },
+          "issued_by_actor": {
+            "$ref": "common.schema.json#/$defs/actor_id"
+          },
+          "event_id": {
+            "$ref": "common.schema.json#/$defs/event_id"
+          }
+        }
+      }
+    },
+    "offer": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "offer_id",
+            "version",
+            "terms_summary",
+            "valid_until",
+            "documents"
+          ],
+          "properties": {
+            "offer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "terms_summary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fee_summary": {
+              "type": "string"
+            },
+            "valid_until": {
+              "$ref": "common.schema.json#/$defs/timestamp"
+            },
+            "documents": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "document_id",
+                  "sha256"
+                ],
+                "properties": {
+                  "document_id": {
+                    "$ref": "common.schema.json#/$defs/object_id"
+                  },
+                  "sha256": {
+                    "$ref": "common.schema.json#/$defs/digest"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "assent_policy": {
+              "enum": [
+                "hosted_otp_click"
+              ]
+            },
+            "requires_countersignature": {
+              "type": "boolean"
+            },
+            "representation": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "firm",
+                    "individual_lawyer"
+                  ]
+                },
+                "responsible_actor_id": {
+                  "$ref": "common.schema.json#/$defs/actor_id"
+                }
+              }
+            },
+            "offer_digest": {
+              "$ref": "common.schema.json#/$defs/digest"
+            },
+            "issued_by_actor": {
+              "$ref": "common.schema.json#/$defs/actor_id"
+            },
+            "event_id": {
+              "$ref": "common.schema.json#/$defs/event_id"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "acceptance": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "acceptance_id",
+            "offer_digest",
+            "offer_version",
+            "at",
+            "method",
+            "event_id"
+          ],
+          "properties": {
+            "acceptance_id": {
+              "$ref": "common.schema.json#/$defs/object_id"
+            },
+            "offer_digest": {
+              "$ref": "common.schema.json#/$defs/digest"
+            },
+            "offer_version": {
+              "type": "integer"
+            },
+            "at": {
+              "$ref": "common.schema.json#/$defs/timestamp"
+            },
+            "method": {
+              "enum": [
+                "hosted_otp_mock"
+              ]
+            },
+            "event_id": {
+              "$ref": "common.schema.json#/$defs/event_id"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "confirmed_at": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "confirmed_by_actor": {
+      "$ref": "common.schema.json#/$defs/actor_id"
+    },
+    "payment_note": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reported_at",
+        "statement"
+      ],
+      "properties": {
+        "reported_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "statement": {
+          "$ref": "common.schema.json#/$defs/statement"
+        }
+      }
+    },
+    "display_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "reported_by": {
+          "$ref": "common.schema.json#/$defs/organization_id"
+        },
+        "reported_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "qualifier": {
+          "$ref": "common.schema.json#/$defs/statement"
+        }
+      }
+    }
+  }
+}

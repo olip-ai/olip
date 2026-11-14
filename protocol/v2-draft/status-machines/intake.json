@@ -1,0 +1,129 @@
+{
+  "$schema": "https://olip.ai/spec/2.0-draft/schemas/state-machine.schema.json",
+  "olip_version": "2.0-draft",
+  "status": "proposed_draft_not_adopted",
+  "machine": "intake",
+  "object_type": "conflict_screen",
+  "initial": "not_started",
+  "states": {
+    "not_started": {
+      "meaning": "No screening data has been sent to this organization.",
+      "terminal": false
+    },
+    "screening_requested": {
+      "meaning": "The user approved a minimal screening disclosure and the organization's endpoint signed a receipt for it. Nobody at the organization has decided anything yet.",
+      "terminal": false
+    },
+    "information_requested": {
+      "meaning": "The organization asked for specific additional screening facts. The user decides whether to share each one.",
+      "terminal": false
+    },
+    "eligible_for_further_intake": {
+      "meaning": "The organization says intake may continue. This is NOT a conflict clearance finding and NOT representation.",
+      "terminal": false
+    },
+    "unable_to_proceed": {
+      "meaning": "The organization says it cannot continue. Only the organization's own approved text is shown.",
+      "terminal": true
+    },
+    "withdrawn": {
+      "meaning": "The user withdrew from this screening. Data already received by the organization may be kept under its own duties.",
+      "terminal": true
+    }
+  },
+  "transitions": [
+    {
+      "event_type": "intake.screening_requested",
+      "from": [
+        "not_started"
+      ],
+      "to": "screening_requested",
+      "actors": [
+        "lifecycle_host"
+      ],
+      "evidence": [
+        "user_disclosure_grant",
+        "recipient_signed_receipt"
+      ]
+    },
+    {
+      "event_type": "intake.information_requested",
+      "from": [
+        "screening_requested"
+      ],
+      "to": "information_requested",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority"
+      ]
+    },
+    {
+      "event_type": "intake.additional_information_provided",
+      "from": [
+        "information_requested"
+      ],
+      "to": "screening_requested",
+      "actors": [
+        "lifecycle_host"
+      ],
+      "evidence": [
+        "user_disclosure_grant",
+        "recipient_signed_receipt"
+      ]
+    },
+    {
+      "event_type": "intake.eligible_for_further_intake",
+      "from": [
+        "screening_requested",
+        "information_requested"
+      ],
+      "to": "eligible_for_further_intake",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority"
+      ]
+    },
+    {
+      "event_type": "intake.unable_to_proceed",
+      "from": [
+        "screening_requested",
+        "information_requested",
+        "eligible_for_further_intake"
+      ],
+      "to": "unable_to_proceed",
+      "actors": [
+        "firm"
+      ],
+      "evidence": [
+        "firm_signature",
+        "firm_authority"
+      ]
+    },
+    {
+      "event_type": "intake.withdrawn",
+      "from": [
+        "not_started",
+        "screening_requested",
+        "information_requested",
+        "eligible_for_further_intake"
+      ],
+      "to": "withdrawn",
+      "actors": [
+        "consumer"
+      ],
+      "evidence": [
+        "authenticated_user_action"
+      ]
+    }
+  ],
+  "notes": [
+    "A new screening after new facts is a NEW conflict_screen object that references the earlier one (supersedes). History is never edited.",
+    "No agent or host may produce eligible_for_further_intake. No matching algorithm produces a conflict clearance."
+  ]
+}

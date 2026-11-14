@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/delivery-receipt.schema.json",
+  "title": "DeliveryReceipt",
+  "description": "A recipient's signed statement that it stored exactly this content. It says nothing about reading or deciding.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "olip_version",
+        "receipt_id",
+        "delivery_id",
+        "organization_id",
+        "kind",
+        "payload_digest",
+        "received_at",
+        "signature"
+      ],
+      "properties": {
+        "olip_version": {
+          "$ref": "common.schema.json#/$defs/olip_version"
+        },
+        "receipt_id": {
+          "$ref": "common.schema.json#/$defs/object_id"
+        },
+        "delivery_id": {
+          "$ref": "common.schema.json#/$defs/object_id"
+        },
+        "organization_id": {
+          "$ref": "common.schema.json#/$defs/organization_id"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "payload_digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        },
+        "received_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "statement": {
+          "$ref": "common.schema.json#/$defs/statement"
+        },
+        "fictional": {
+          "type": "boolean"
+        },
+        "signature": {
+          "$ref": "common.schema.json#/$defs/signature"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "olip_version",
+        "receipt_id",
+        "message_id",
+        "recipient",
+        "payload_digest",
+        "received_at",
+        "signature"
+      ],
+      "properties": {
+        "olip_version": {
+          "$ref": "common.schema.json#/$defs/olip_version"
+        },
+        "receipt_id": {
+          "$ref": "common.schema.json#/$defs/object_id"
+        },
+        "message_id": {
+          "$ref": "common.schema.json#/$defs/object_id"
+        },
+        "recipient": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "subject_id"
+          ],
+          "properties": {
+            "role": {
+              "const": "consumer_inbox"
+            },
+            "subject_id": {
+              "$ref": "common.schema.json#/$defs/subject_id"
+            }
+          }
+        },
+        "payload_digest": {
+          "$ref": "common.schema.json#/$defs/digest"
+        },
+        "received_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "statement": {
+          "$ref": "common.schema.json#/$defs/statement"
+        },
+        "signature": {
+          "$ref": "common.schema.json#/$defs/signature"
+        }
+      }
+    }
+  ]
+}

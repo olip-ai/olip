@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/matter-participant.schema.json",
+  "title": "MatterParticipant",
+  "description": "Who acts on a matter. Used as the actor of every LifecycleEvent and in thread membership.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "actor_id",
+        "organization_id"
+      ],
+      "properties": {
+        "role": {
+          "const": "consumer"
+        },
+        "actor_id": {
+          "$ref": "common.schema.json#/$defs/subject_id"
+        },
+        "organization_id": {
+          "type": "null"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "actor_id",
+        "organization_id"
+      ],
+      "properties": {
+        "role": {
+          "const": "firm"
+        },
+        "actor_id": {
+          "$ref": "common.schema.json#/$defs/actor_id"
+        },
+        "organization_id": {
+          "$ref": "common.schema.json#/$defs/organization_id"
+        },
+        "staff_role": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "actor_id",
+        "organization_id"
+      ],
+      "properties": {
+        "role": {
+          "const": "lifecycle_host"
+        },
+        "actor_id": {
+          "type": "null"
+        },
+        "organization_id": {
+          "$ref": "common.schema.json#/$defs/organization_id"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "organization_id",
+        "access",
+        "added_at",
+        "removed_at"
+      ],
+      "properties": {
+        "role": {
+          "const": "observer"
+        },
+        "organization_id": {
+          "$ref": "common.schema.json#/$defs/organization_id"
+        },
+        "access": {
+          "enum": [
+            "status_only"
+          ]
+        },
+        "added_at": {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        "removed_at": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

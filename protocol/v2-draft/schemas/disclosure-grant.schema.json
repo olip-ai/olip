@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/2.0-draft/schemas/disclosure-grant.schema.json",
+  "title": "DisclosureGrant",
+  "description": "A user's one-time approval of one exact action for one recipient. The digest binds action, recipient, purpose, fields and values, documents, content, revision and expiry.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "grant_id",
+    "action",
+    "recipient",
+    "purpose",
+    "stage",
+    "matter_id",
+    "fields",
+    "documents",
+    "state",
+    "use",
+    "uses",
+    "max_uses",
+    "grant_digest",
+    "created_at",
+    "expires_at",
+    "approved_at"
+  ],
+  "properties": {
+    "grant_id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "action": {
+      "enum": [
+        "disclosure.screening",
+        "disclosure.additional_screening",
+        "disclosure.casebrief",
+        "consultation.request",
+        "consultation.propose",
+        "engagement.respond",
+        "message.send",
+        "document.send",
+        "message.logistics"
+      ]
+    },
+    "recipient": {
+      "$ref": "common.schema.json#/$defs/organization_id"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "stage": {
+      "anyOf": [
+        {
+          "enum": [
+            "screening",
+            "additional_screening",
+            "casebrief"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "matter_id": {
+      "$ref": "common.schema.json#/$defs/object_id"
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/field_path"
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "document_id",
+          "sha256"
+        ],
+        "properties": {
+          "document_id": {
+            "$ref": "common.schema.json#/$defs/object_id"
+          },
+          "sha256": {
+            "$ref": "common.schema.json#/$defs/digest"
+          }
+        }
+      }
+    },
+    "state": {
+      "enum": [
+        "pending",
+        "active",
+        "used",
+        "denied",
+        "revoked",
+        "expired"
+      ]
+    },
+    "use": {
+      "enum": [
+        "one_time",
+        "bounded_class"
+      ]
+    },
+    "uses": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_uses": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "grant_digest": {
+      "$ref": "common.schema.json#/$defs/digest"
+    },
+    "created_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "expires_at": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "approved_at": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}
