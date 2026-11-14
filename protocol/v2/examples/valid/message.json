@@ -1,0 +1,85 @@
+{
+  "id": "msg_HpnGkE-2aNPrwilA",
+  "type": "message",
+  "machine": "message_delivery",
+  "state": "read_by_recipient",
+  "revision": 5,
+  "history": [
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:4ZEnfEXjqyQd",
+      "event_type": "message.user_authorized",
+      "at": "2026-11-18T17:00:00.201Z",
+      "by": "consumer"
+    },
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:NCXdXtwDvlir",
+      "event_type": "message.queued",
+      "at": "2026-11-18T17:00:00.201Z",
+      "by": "lifecycle_host"
+    },
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:QGlpWheYq58_",
+      "event_type": "message.accepted_by_transport",
+      "at": "2026-11-18T17:00:00.204Z",
+      "by": "lifecycle_host"
+    },
+    {
+      "event_id": "urn:olip:op_test_neutral_relay:event:_MRwuQVeliu5",
+      "event_type": "message.delivered_to_endpoint",
+      "at": "2026-11-18T17:00:00.204Z",
+      "by": "lifecycle_host"
+    },
+    {
+      "event_id": "urn:olip:org_test_alvarez:event:w-UY_eeyyuzo",
+      "event_type": "message.read_by_recipient",
+      "at": "2026-11-18T17:00:00.228Z",
+      "by": "firm",
+      "actor_id": "stf_test_avery",
+      "kid": "kid_test_740cc96de2d4"
+    }
+  ],
+  "created_at": "2026-11-18T17:00:00.196Z",
+  "updated_at": "2026-11-18T17:00:00.228Z",
+  "matter_id": "mat_B3kz4C0sREuyqTcw",
+  "thread_id": "thr_uNA-03h1neRsarrr",
+  "organization_id": "org_test_alvarez",
+  "sender": {
+    "role": "consumer",
+    "subject_id": "usr_test_casey",
+    "via": "agt_test_assistant_a"
+  },
+  "category": "substantive",
+  "template": null,
+  "content_digest": "sha256:7560bcdd76a4b1a92a6177657b4584db519cdb427d8b6abc918c5903d11562ba",
+  "attachments": [],
+  "drafting": {
+    "ai_assisted": true,
+    "reviewed_by": null
+  },
+  "expires_at": "2026-11-19T17:00:00.196Z",
+  "receipt": {
+    "olip_version": "2.0",
+    "receipt_id": "rcp_AHJlGs3JgJxfAEgX",
+    "delivery_id": "dlv_pceBpmge-WFoQf-5",
+    "organization_id": "org_test_alvarez",
+    "kind": "message",
+    "payload_digest": "sha256:155fb5c7aa1093ab2e19b7ea1bab099e690ac6ef07c774df642c4f02cb9191b9",
+    "received_at": "2026-11-18T17:00:00.202Z",
+    "statement": "The firm's intake system stored this exact content. Nobody has read or decided anything yet.",
+    "fictional": true,
+    "signature": {
+      "alg": "EdDSA",
+      "kid": "kid_test_740cc96de2d4",
+      "value": "v1O6cG_oPJOnFv0yzBH_v3SErVg220Oql2UbNqaqcuGzuty3n0MJL78rHYxYFzbF0bRQwVvkCYS_Tc97THbWDw"
+    }
+  },
+  "body": {
+    "untrusted_content": true,
+    "value": "Fictional: here is my move-out checklist. Please confirm next steps."
+  },
+  "labels": {
+    "ai_assisted": true,
+    "reviewed_by": null,
+    "statement": "Sent by the user."
+  }
+}
