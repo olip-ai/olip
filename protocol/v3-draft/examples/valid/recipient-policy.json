@@ -1,0 +1,53 @@
+{
+  "olip_version": "3.0-draft.1",
+  "organization_id": "org_test_alvarez",
+  "stage": "screening",
+  "fields": [
+    {
+      "path": "prospective_client.name",
+      "label": "Your full name",
+      "required": true,
+      "why": "To check whether the firm already represents someone against you."
+    },
+    {
+      "path": "adverse_parties",
+      "label": "Names of the other side (people or companies)",
+      "required": true,
+      "why": "To check for conflicts of interest."
+    },
+    {
+      "path": "matter.category",
+      "label": "Broad type of matter",
+      "required": true,
+      "why": "To see whether the firm handles this kind of matter."
+    },
+    {
+      "path": "matter.jurisdiction",
+      "label": "State",
+      "required": true,
+      "why": "To see whether the firm can help in this state."
+    },
+    {
+      "path": "related_parties",
+      "label": "Other people involved (for example a co-tenant)",
+      "required": false,
+      "why": "Asked only if the firm needs it for its conflicts check."
+    }
+  ],
+  "statement": "Only these fields are sent before the firm decides whether intake may continue. The firm, not OLIP, decides what is legally sufficient.",
+  "lifecycle_profiles": [
+    "olip-lifecycle-core/2",
+    "olip-consultation/2",
+    "olip-engagement/2",
+    "olip-communications/2",
+    "olip-matter/2"
+  ],
+  "correlation_id": "cor_um8Gyu5eCawCvaiE",
+  "action_receipt": {
+    "action": "olip.get_recipient_policy",
+    "effect": "read_only",
+    "decision": "allow",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+    "note": "A successful call means this host ran the action. It does not mean any organization received, read or accepted anything; read delivery and lifecycle states for that."
+  }
+}

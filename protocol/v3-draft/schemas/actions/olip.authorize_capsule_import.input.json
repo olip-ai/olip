@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.authorize_capsule_import.input.json",
+  "title": "Allow an assistant to import a capsule (input)",
+  "type": "object",
+  "properties": {
+    "capsule_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "The capsule id returned earlier.",
+      "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+    },
+    "capsule_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "client_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "The assistant client id returned earlier.",
+      "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+    },
+    "expires_in_seconds": {
+      "type": "integer",
+      "minimum": 60,
+      "maximum": 86400
+    }
+  },
+  "required": [
+    "capsule_id",
+    "capsule_digest",
+    "client_id"
+  ],
+  "additionalProperties": false
+}

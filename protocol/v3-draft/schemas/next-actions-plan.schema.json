@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/next-actions-plan.schema.json",
+  "title": "Next actions plan",
+  "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+  "type": "object",
+  "properties": {
+    "olip_version": {
+      "const": "3.0-draft.1"
+    },
+    "correlation_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "action_receipt": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "effect": {
+          "enum": [
+            "privileged_admin",
+            "firm_authoritative",
+            "external_disclosure",
+            "authorized_state_change",
+            "local_preparation",
+            "read_only"
+          ]
+        },
+        "decision": {
+          "type": "string"
+        },
+        "policy_version": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "action",
+        "effect",
+        "decision",
+        "policy_version",
+        "note"
+      ],
+      "additionalProperties": false
+    },
+    "idempotent_replay": {
+      "type": "boolean"
+    },
+    "plan_version": {
+      "const": "3.0-draft.1"
+    },
+    "workflow_id": {
+      "type": "string"
+    },
+    "as_of_event_sequence": {
+      "type": "integer"
+    },
+    "as_of_event_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "desired_goal": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "next_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "target": {
+            "type": "object"
+          },
+          "disposition": {
+            "enum": [
+              "allowed_read_only",
+              "allowed",
+              "requires_user_approval",
+              "requires_firm_authority",
+              "blocked"
+            ]
+          },
+          "reason_code": {
+            "type": "string",
+            "pattern": "^[A-Z_]+$"
+          },
+          "missing_preconditions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "action",
+          "disposition",
+          "reason_code",
+          "missing_preconditions"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "policy_version": {
+      "type": "string"
+    },
+    "not_authorization": {
+      "const": true
+    },
+    "not_legal_advice": {
+      "const": true
+    },
+    "statement": {
+      "type": "string"
+    },
+    "plan_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "olip_version",
+    "plan_version",
+    "workflow_id",
+    "as_of_event_sequence",
+    "next_actions",
+    "policy_version",
+    "not_authorization",
+    "not_legal_advice",
+    "plan_digest"
+  ],
+  "additionalProperties": false
+}

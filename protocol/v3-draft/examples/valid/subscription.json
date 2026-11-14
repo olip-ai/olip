@@ -1,0 +1,30 @@
+{
+  "olip_version": "3.0-draft.1",
+  "subscription": {
+    "subscription_id": "sub_Ml-1ZrY3qxQBS_eS",
+    "workflow_id": "wf_SN5HdS2d45e97xmO",
+    "active": true,
+    "created_at": "2026-11-14T17:00:00.281Z",
+    "cancelled_at": null,
+    "verification": {
+      "keys_url": "/olip/v3/keys",
+      "alg": "EdDSA",
+      "max_skew_seconds": 300,
+      "dedupe_on": "webhook_id"
+    },
+    "delivery": {
+      "retries": 2,
+      "backoff": "exponential with jitter",
+      "redirects": "never followed",
+      "fallback": "poll olip.list_workflow_events"
+    }
+  },
+  "correlation_id": "cor_AyklrHjW8w1S1IHH",
+  "action_receipt": {
+    "action": "olip.subscribe_events",
+    "effect": "read_only",
+    "decision": "allow",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+    "note": "A successful call means this host ran the action. It does not mean any organization received, read or accepted anything; read delivery and lifecycle states for that."
+  }
+}

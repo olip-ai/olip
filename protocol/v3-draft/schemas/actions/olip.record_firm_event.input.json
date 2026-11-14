@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.record_firm_event.input.json",
+  "title": "Record a firm-signed event (input)",
+  "type": "object",
+  "properties": {
+    "object_type": {
+      "enum": [
+        "conflict_screen",
+        "consultation",
+        "engagement",
+        "message",
+        "thread",
+        "matter",
+        "engagement_offer"
+      ]
+    },
+    "object_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "The object id returned earlier.",
+      "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+    },
+    "event": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "object_type",
+    "object_id",
+    "event"
+  ],
+  "additionalProperties": false
+}

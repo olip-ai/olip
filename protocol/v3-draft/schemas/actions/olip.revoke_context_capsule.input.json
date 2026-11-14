@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.revoke_context_capsule.input.json",
+  "title": "Revoke a capsule (input)",
+  "type": "object",
+  "properties": {
+    "capsule_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "The capsule id returned earlier.",
+      "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+    }
+  },
+  "required": [
+    "capsule_id"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/webhook.schema.json",
+  "title": "Webhook hint",
+  "description": "Signed, minimal, content-free hint. Receivers verify the signature, check sent_at skew and deduplicate on webhook_id.",
+  "type": "object",
+  "properties": {
+    "olip_version": {
+      "const": "3.0-draft.1"
+    },
+    "webhook_id": {
+      "type": "string"
+    },
+    "subscription_id": {
+      "type": "string"
+    },
+    "workflow_id": {
+      "type": "string"
+    },
+    "event_sequence": {
+      "type": "integer"
+    },
+    "event_type": {
+      "type": "string"
+    },
+    "event_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "statement": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "object",
+      "properties": {
+        "alg": {
+          "const": "EdDSA"
+        },
+        "kid": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "alg",
+        "kid",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "olip_version",
+    "webhook_id",
+    "subscription_id",
+    "workflow_id",
+    "event_sequence",
+    "event_type",
+    "event_digest",
+    "sent_at",
+    "signature"
+  ],
+  "additionalProperties": false
+}

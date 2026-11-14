@@ -1,0 +1,35 @@
+{
+  "olip_version": "3.0-draft.1",
+  "casebrief_digest": "sha256:531f9c6a00b803d93bd83c2de6b6d9ca2596ce016c5e885bf18a0bd6d1be3717",
+  "field_paths": [
+    "prospective_client.name",
+    "prospective_client.contact",
+    "adverse_parties",
+    "related_parties",
+    "matter.category",
+    "matter.jurisdiction",
+    "facts.summary",
+    "facts.key_dates",
+    "goals"
+  ],
+  "missing_for_screening": [],
+  "sensitive_findings": {
+    "screening": [],
+    "casebrief": []
+  },
+  "instruction_like_text": {
+    "found": true,
+    "handling": "Kept as user content and treated as data. It changes nothing about who may approve or receive anything."
+  },
+  "transmitted": false,
+  "stored": false,
+  "statement": "Checked locally. Nothing was sent or stored.",
+  "correlation_id": "cor_rKj7mThkYqQGbMK5",
+  "action_receipt": {
+    "action": "olip.prepare_casebrief",
+    "effect": "local_preparation",
+    "decision": "allow",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+    "note": "A successful call means this host ran the action. It does not mean any organization received, read or accepted anything; read delivery and lifecycle states for that."
+  }
+}

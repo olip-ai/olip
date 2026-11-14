@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json",
+  "title": "Error",
+  "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+  "type": "object",
+  "properties": {
+    "olip_version": {
+      "const": "3.0-draft.1"
+    },
+    "correlation_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "action_receipt": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "effect": {
+          "enum": [
+            "privileged_admin",
+            "firm_authoritative",
+            "external_disclosure",
+            "authorized_state_change",
+            "local_preparation",
+            "read_only"
+          ]
+        },
+        "decision": {
+          "type": "string"
+        },
+        "policy_version": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "action",
+        "effect",
+        "decision",
+        "policy_version",
+        "note"
+      ],
+      "additionalProperties": false
+    },
+    "idempotent_replay": {
+      "type": "boolean"
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "enum": [
+            "VERSION_UNSUPPORTED",
+            "ACTION_NOT_SUPPORTED",
+            "SCHEMA_INVALID",
+            "AUTH_REQUIRED",
+            "SCOPE_INSUFFICIENT",
+            "USER_APPROVAL_REQUIRED",
+            "GRANT_EXPIRED",
+            "GRANT_REVOKED",
+            "DIGEST_MISMATCH",
+            "RECIPIENT_MISMATCH",
+            "FIRM_AUTHORITY_REQUIRED",
+            "POLICY_UNREVIEWED",
+            "POLICY_STALE",
+            "PRECONDITION_MISSING",
+            "CONFLICTING_STATE",
+            "IDEMPOTENCY_CONFLICT",
+            "IDEMPOTENCY_KEY_REQUIRED",
+            "REPLAY_DETECTED",
+            "EVENT_CURSOR_GAP",
+            "SUBSCRIPTION_REVOKED",
+            "CALLBACK_URL_REJECTED",
+            "RECIPIENT_UNREACHABLE",
+            "TRANSIENT_BACKEND_ERROR",
+            "UNVERIFIED_EVIDENCE",
+            "CAPSULE_INVALID",
+            "SENSITIVE_DATA_BLOCKED",
+            "RATE_LIMITED",
+            "SECURITY_REVIEW_REQUIRED",
+            "NOT_FOUND",
+            "INTERNAL"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "retryable"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "olip_version",
+    "error"
+  ],
+  "additionalProperties": false
+}

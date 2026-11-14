@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.export_context_capsule.input.json",
+  "title": "Export a context capsule (input)",
+  "type": "object",
+  "properties": {
+    "workflow_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "The workflow id returned earlier.",
+      "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+    },
+    "include_fields": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 40,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z_]+(\\.[a-z_]+)*$"
+      },
+      "description": "Field paths, exactly as the organization's intake questions list them."
+    },
+    "unresolved_questions": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300,
+        "description": "A question nobody has answered yet."
+      }
+    },
+    "ai_interpretations": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "properties": {
+          "field_path": {
+            "type": "string",
+            "pattern": "^[a-z_]+(\\.[a-z_]+)*$"
+          },
+          "value": {},
+          "note": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "field_path",
+          "value"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "intended_host": {
+      "type": "object",
+      "properties": {
+        "client_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "description": "The assistant client id returned earlier.",
+          "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+        },
+        "encryption_key": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "client_id"
+      ],
+      "additionalProperties": false
+    },
+    "purpose": {
+      "enum": [
+        "continue_with_another_assistant",
+        "personal_record"
+      ]
+    },
+    "expires_in_seconds": {
+      "type": "integer",
+      "minimum": 300,
+      "maximum": 2592000
+    }
+  },
+  "required": [
+    "workflow_id",
+    "include_fields",
+    "purpose"
+  ],
+  "additionalProperties": false
+}

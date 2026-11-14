@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.subscribe_events.input.json",
+  "title": "Subscribe to workflow events (input)",
+  "type": "object",
+  "properties": {
+    "workflow_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "The workflow id returned earlier.",
+      "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+    },
+    "callback_url": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000,
+      "description": "https URL you control."
+    }
+  },
+  "required": [
+    "workflow_id",
+    "callback_url"
+  ],
+  "additionalProperties": false
+}

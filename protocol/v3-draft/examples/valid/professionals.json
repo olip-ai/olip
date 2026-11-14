@@ -1,0 +1,96 @@
+{
+  "olip_version": "3.0-draft.1",
+  "ordering": {
+    "method": "display_name_alphabetical",
+    "paid_influence": false
+  },
+  "professionals": [
+    {
+      "organization_id": "org_test_alvarez",
+      "display_name": "Alvarez Tenant Law (fictional)",
+      "fictional": true,
+      "jurisdictions": [
+        "US-CA"
+      ],
+      "matter_types": [
+        "housing.landlord_tenant"
+      ],
+      "profiles": [
+        "olip-lifecycle-core/2",
+        "olip-consultation/2",
+        "olip-engagement/2",
+        "olip-communications/2",
+        "olip-matter/2"
+      ],
+      "olip_1_0_professional_ids": [
+        "prf_test_alvarez"
+      ],
+      "statement": "Firm-reported configuration. Not verified by OLIP.",
+      "evidence": {
+        "source": "organization_signed_profile (2.0 firm endpoint)",
+        "as_of": "2026-11-14T17:00:00.162Z",
+        "verification": "host checked the organization's signed authority document"
+      }
+    },
+    {
+      "organization_id": "org_test_cedar",
+      "display_name": "Cedar Row Law (fictional)",
+      "fictional": true,
+      "jurisdictions": [
+        "US-CA"
+      ],
+      "matter_types": [
+        "housing.landlord_tenant"
+      ],
+      "profiles": [
+        "olip-lifecycle-core/2",
+        "olip-consultation/2",
+        "olip-engagement/2",
+        "olip-communications/2",
+        "olip-matter/2"
+      ],
+      "olip_1_0_professional_ids": [],
+      "statement": "Firm-reported configuration. Not verified by OLIP.",
+      "evidence": {
+        "source": "organization_signed_profile (2.0 firm endpoint)",
+        "as_of": "2026-11-14T17:00:00.162Z",
+        "verification": "host checked the organization's signed authority document"
+      }
+    },
+    {
+      "organization_id": "org_test_northgate",
+      "display_name": "Northgate Tenant Legal (fictional)",
+      "fictional": true,
+      "jurisdictions": [
+        "US-CA",
+        "US-NY"
+      ],
+      "matter_types": [
+        "housing.landlord_tenant"
+      ],
+      "profiles": [
+        "olip-lifecycle-core/2",
+        "olip-consultation/2",
+        "olip-engagement/2",
+        "olip-communications/2",
+        "olip-matter/2"
+      ],
+      "olip_1_0_professional_ids": [],
+      "statement": "Firm-reported configuration. Not verified by OLIP.",
+      "evidence": {
+        "source": "organization_signed_profile (2.0 firm endpoint)",
+        "as_of": "2026-11-14T17:00:00.162Z",
+        "verification": "host checked the organization's signed authority document"
+      }
+    }
+  ],
+  "statement": "Listed alphabetically. Payment never affects inclusion or order. This host does not recommend or rank any organization; the user chooses.",
+  "correlation_id": "cor_VuxzcHtVKVuh5rMa",
+  "action_receipt": {
+    "action": "olip.find_professionals",
+    "effect": "read_only",
+    "decision": "allow",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+    "note": "A successful call means this host ran the action. It does not mean any organization received, read or accepted anything; read delivery and lifecycle states for that."
+  }
+}

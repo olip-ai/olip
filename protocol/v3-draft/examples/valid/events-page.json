@@ -1,0 +1,714 @@
+{
+  "olip_version": "3.0-draft.1",
+  "workflow_id": "wf_SN5HdS2d45e97xmO",
+  "entries": [
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:1",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 1,
+      "event_type": "workflow.created",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.169Z",
+      "actor_type": "ai_host",
+      "actor_ref": {
+        "kind": "agent",
+        "client_id": "agt_test_assistant_a"
+      },
+      "authority_ref": null,
+      "source": "olip_3_layer",
+      "v2_ref": null,
+      "payload_digest": "sha256:aac6e67a486a1324f07b01c9d52618d4a775ae0fd49c96c5d8753d8d7e3ee9ec",
+      "payload": {
+        "matter_ref": "2.0 matter (id in workflow record)"
+      },
+      "previous_event_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": "req-000001",
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:8bf895c35623c796c40684646f1409dfa0c18fe1a46fee862c464110fbea34cc",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "fYAz1kq9yz5R_w9jqULa5YbDN-jfgmn_mQzJLvD28M67dTkkKyqAMGb3dNL8sq909mnD6M9l5mkb8g1QWwEBBw"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:2",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 2,
+      "event_type": "lifecycle.matter.created",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.169Z",
+      "actor_type": "user",
+      "actor_ref": null,
+      "authority_ref": null,
+      "source": "olip_2_0_draft_lifecycle",
+      "v2_ref": {
+        "seq": 1,
+        "entry_hash": "sha256:f93372abcc0a1818d8e7a8d0e3327ceeb3661d9691b9bf961b78db1fd9140d3b",
+        "event_id": "urn:olip:op_test_neutral_relay:event:4oGwP80_VKlH",
+        "signer_kid": "kid_test_71a187791122",
+        "attribution_at_mirror": "host_attested",
+        "object": {
+          "type": "matter",
+          "id": "mat_GGfMu_VSfth9cOAR"
+        }
+      },
+      "payload_digest": "sha256:9579e06baafb25bd7d99e32bd02dfa06a3510a17b5e0a3dcfbceb93ede07f183",
+      "payload": {
+        "object_type": "matter"
+      },
+      "previous_event_digest": "sha256:8bf895c35623c796c40684646f1409dfa0c18fe1a46fee862c464110fbea34cc",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:e9ae11af23063a2941ec6df6db9e1efa86977ff17ace5f6bb5b7680028d3818e",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "_b7Md7vdMq29CW6d3YXDmURYfPji6iCMqinlASTs-X9GkM1ZgEw84LCiOMWLrsGmxgRll9xvNvOOkOcFm2heBA"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:3",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 3,
+      "event_type": "disclosure.prepared",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.176Z",
+      "actor_type": "ai_host",
+      "actor_ref": {
+        "kind": "agent",
+        "client_id": "agt_test_assistant_a"
+      },
+      "authority_ref": null,
+      "source": "olip_3_layer",
+      "v2_ref": null,
+      "payload_digest": "sha256:45a19e0e4df75186b4df1bbaec0148d18a63160db50faa9c5a05562a2fe8a1eb",
+      "payload": {
+        "disclosure_id": "dis_k1Y883We83zZx-Em",
+        "organization_id": "org_test_alvarez",
+        "stage": "screening",
+        "fields": [
+          "prospective_client.name",
+          "adverse_parties",
+          "matter.category",
+          "matter.jurisdiction"
+        ],
+        "grant_digest": "sha256:df81f6bdfd34d63f62c70d22e6f8e645b9a7d0ba1f33500c63f003a22357a25a"
+      },
+      "previous_event_digest": "sha256:e9ae11af23063a2941ec6df6db9e1efa86977ff17ace5f6bb5b7680028d3818e",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": "req-000002",
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:a93727fb89b0e1a5993f9a181fbca271dbe19b8b697048a423ecda10b9ab91dc",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "kWNGIygtFCFrwB7RQQMk56lG7HshP-oc45EStz7EsmOpBkXIq5yL6w6LdIWCNqUlVJUdluB9R8-EqDPbGJedDw"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:4",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 4,
+      "event_type": "lifecycle.consent.granted",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.184Z",
+      "actor_type": "user",
+      "actor_ref": null,
+      "authority_ref": null,
+      "source": "olip_2_0_draft_lifecycle",
+      "v2_ref": {
+        "seq": 2,
+        "entry_hash": "sha256:aa75e597c9f8a697a57938a5fe3909041f4478a845ca023a0b5e276b5f2256b6",
+        "event_id": "urn:olip:op_test_neutral_relay:event:djZj0JLqnN14",
+        "signer_kid": "kid_test_71a187791122",
+        "attribution_at_mirror": "host_attested",
+        "object": {
+          "type": "grant",
+          "id": "grt_89VJ9cqgfsyA5SVi"
+        }
+      },
+      "payload_digest": "sha256:da1a28b2caa16fedab90f3c7e310566e138368f2462352ee49fb95e5df305714",
+      "payload": {
+        "object_type": "grant"
+      },
+      "previous_event_digest": "sha256:a93727fb89b0e1a5993f9a181fbca271dbe19b8b697048a423ecda10b9ab91dc",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:fcacf6b50a18d25d8c05a5bd9a4540525024d55f19fd9c244f978c3bb32ce7ed",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "HDSD-OKcl2d8q62OvDh3mRtEYDn8SbjGwUpy5oUq3E6ldElUBTQsvxL2lRFbMM8XxPrPor_TZkBlz5k647CWCg"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:5",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 5,
+      "event_type": "lifecycle.intake.screening_requested",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.189Z",
+      "actor_type": "lifecycle_host",
+      "actor_ref": {
+        "operator_id": "op_test_neutral_relay"
+      },
+      "authority_ref": null,
+      "source": "olip_2_0_draft_lifecycle",
+      "v2_ref": {
+        "seq": 3,
+        "entry_hash": "sha256:e36bf48a1f251ebd62832e642458bed4ab3896634ba39cdd1f2c77af7a111456",
+        "event_id": "urn:olip:op_test_neutral_relay:event:FdBhviXzmEC5",
+        "signer_kid": "kid_test_71a187791122",
+        "attribution_at_mirror": "host_attested",
+        "object": {
+          "type": "conflict_screen",
+          "id": "scr_ENqI2zoPG8Q4Al8v"
+        }
+      },
+      "payload_digest": "sha256:e38c79febabb887cc3813d25164a56f23ca13fbdacba4cf27270e17f99b22b4c",
+      "payload": {
+        "object_type": "conflict_screen"
+      },
+      "previous_event_digest": "sha256:fcacf6b50a18d25d8c05a5bd9a4540525024d55f19fd9c244f978c3bb32ce7ed",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:c29c726477493aca7436607c3adfa84c20749597e12040b5aab720f04d104f80",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "bIZNWpy7W0jRTAArq5myB7oDYyNFS4A9yhrZS2oNDtDhkbHEFhPl6ZXO70gEfHlipEpb1rhNKImuKQz9I-hHBQ"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:6",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 6,
+      "event_type": "disclosure.submitted",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.189Z",
+      "actor_type": "ai_host",
+      "actor_ref": {
+        "kind": "agent",
+        "client_id": "agt_test_assistant_a"
+      },
+      "authority_ref": "grt_89VJ9cqgfsyA5SVi",
+      "source": "olip_3_layer",
+      "v2_ref": null,
+      "payload_digest": "sha256:cccf771e49bdd0b144005efc00c95dbafa825f1f9d33b0bc43510512dde986cc",
+      "payload": {
+        "disclosure_id": "dis_k1Y883We83zZx-Em",
+        "organization_id": "org_test_alvarez",
+        "delivery_state": "delivered_to_endpoint",
+        "grant_digest": "sha256:df81f6bdfd34d63f62c70d22e6f8e645b9a7d0ba1f33500c63f003a22357a25a"
+      },
+      "previous_event_digest": "sha256:c29c726477493aca7436607c3adfa84c20749597e12040b5aab720f04d104f80",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": "req-000004",
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:cc1c618bd6cb2c42a9c24a635ced8f6e4426b87bb9d64bd7fb4c4609413e9432",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "VPEdcd6p9B5bRzH7zFBIoz7AHtUz13-7-AsFkOQhK9eFOV4lV3eBJu-1Dh6WgrbbE-cbiTwvJTOuyQx6rkvqCA"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:7",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 7,
+      "event_type": "lifecycle.intake.eligible_for_further_intake",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.202Z",
+      "actor_type": "firm_authorized_actor",
+      "actor_ref": {
+        "organization_id": "org_test_alvarez",
+        "actor_id": "stf_test_jordan"
+      },
+      "authority_ref": "kid_test_740cc96de2d4",
+      "source": "olip_2_0_draft_lifecycle",
+      "v2_ref": {
+        "seq": 4,
+        "entry_hash": "sha256:ffe37b040b361dbc7f29d6a258727fef723cf65ecec4af3d65d1a1fb342a6f41",
+        "event_id": "urn:olip:org_test_alvarez:event:bQc9XCzEanEG",
+        "signer_kid": "kid_test_740cc96de2d4",
+        "attribution_at_mirror": "firm_signed_verified_by_2_0_host",
+        "object": {
+          "type": "conflict_screen",
+          "id": "scr_ENqI2zoPG8Q4Al8v"
+        }
+      },
+      "payload_digest": "sha256:e38c79febabb887cc3813d25164a56f23ca13fbdacba4cf27270e17f99b22b4c",
+      "payload": {
+        "object_type": "conflict_screen"
+      },
+      "previous_event_digest": "sha256:cc1c618bd6cb2c42a9c24a635ced8f6e4426b87bb9d64bd7fb4c4609413e9432",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:a187acfa8b1e8a5811dba2e650bdc6a99e7d8cdf908497d50aa74ad91116d5a3",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "6xvd5NEhfkHp23qqx2-N1DfmlKpPyg5yEfFZfvhtw2L6aRMk23WCP1fmd0NQSx-7uDX8Aip73bzzjKDzEyLLCQ"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:8",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 8,
+      "event_type": "lifecycle.consent.granted",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.215Z",
+      "actor_type": "user",
+      "actor_ref": null,
+      "authority_ref": null,
+      "source": "olip_2_0_draft_lifecycle",
+      "v2_ref": {
+        "seq": 5,
+        "entry_hash": "sha256:5a685d153675dc6a490bf66e593053ece196fc7b2ba144d85c61eb27ad1de7fd",
+        "event_id": "urn:olip:op_test_neutral_relay:event:fOCpb8NIJmTq",
+        "signer_kid": "kid_test_71a187791122",
+        "attribution_at_mirror": "host_attested",
+        "object": {
+          "type": "grant",
+          "id": "grt_9NJK4cWIqeuT4Me2"
+        }
+      },
+      "payload_digest": "sha256:da1a28b2caa16fedab90f3c7e310566e138368f2462352ee49fb95e5df305714",
+      "payload": {
+        "object_type": "grant"
+      },
+      "previous_event_digest": "sha256:a187acfa8b1e8a5811dba2e650bdc6a99e7d8cdf908497d50aa74ad91116d5a3",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:2d92bddbee4075fba1a4ad40ac5da857a4e631d9b29742b2374d45918b0383ce",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "Axt2mfn5d8d6ZtpbragxeRpPKexKieOEI1K0MDwo2-JICH-y1ZX-vcyEuUfkq3z280xryqaDsORJ2hXG9m4ZBA"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:9",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 9,
+      "event_type": "lifecycle.consultation.requested",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.219Z",
+      "actor_type": "lifecycle_host",
+      "actor_ref": {
+        "operator_id": "op_test_neutral_relay"
+      },
+      "authority_ref": null,
+      "source": "olip_2_0_draft_lifecycle",
+      "v2_ref": {
+        "seq": 6,
+        "entry_hash": "sha256:d7b6d64d042ba54e65bc7dd1100f4d39fd8e1a9bb527cf937509c761efd83b20",
+        "event_id": "urn:olip:op_test_neutral_relay:event:nHNL4tjkZbO7",
+        "signer_kid": "kid_test_71a187791122",
+        "attribution_at_mirror": "host_attested",
+        "object": {
+          "type": "consultation",
+          "id": "cns_JMiq5BrbkO_jH6Om"
+        }
+      },
+      "payload_digest": "sha256:514aa9c285dbe68f35ead9561bcafabb5bd5669b35982da01ed89645de6058ad",
+      "payload": {
+        "object_type": "consultation"
+      },
+      "previous_event_digest": "sha256:2d92bddbee4075fba1a4ad40ac5da857a4e631d9b29742b2374d45918b0383ce",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:4c84e41d0fe28663384aace0b32fe6f1c0ce7c734381c982031cdb6436aefd63",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "-mu7DafVZ9z3Md0O7JyB1bgN4KSpxw5BHxo0AXamF4rn6g4tMPYbfuJs9p3RtVZqEetZLyr1NVUplCntJC-5Cw"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:10",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 10,
+      "event_type": "lifecycle.consultation.options_offered",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.225Z",
+      "actor_type": "firm_authorized_actor",
+      "actor_ref": {
+        "organization_id": "org_test_alvarez",
+        "actor_id": "stf_test_sam"
+      },
+      "authority_ref": "kid_test_740cc96de2d4",
+      "source": "olip_2_0_draft_lifecycle",
+      "v2_ref": {
+        "seq": 7,
+        "entry_hash": "sha256:c9ff273a9b6780e9a007aef2143cb72406f2e40f2cd9ec2f96458f1f9f63988e",
+        "event_id": "urn:olip:org_test_alvarez:event:rmfw4OFsUAAE",
+        "signer_kid": "kid_test_740cc96de2d4",
+        "attribution_at_mirror": "firm_signed_verified_by_2_0_host",
+        "object": {
+          "type": "consultation",
+          "id": "cns_JMiq5BrbkO_jH6Om"
+        }
+      },
+      "payload_digest": "sha256:514aa9c285dbe68f35ead9561bcafabb5bd5669b35982da01ed89645de6058ad",
+      "payload": {
+        "object_type": "consultation"
+      },
+      "previous_event_digest": "sha256:4c84e41d0fe28663384aace0b32fe6f1c0ce7c734381c982031cdb6436aefd63",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:9d3db0f66482e646d9ef981cf0d6f35045dd0b184ec68283810926480e007935",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "kmD0keAsrmezQKtti2SIp4TUPMxrx5CoULq6RMEnG-GhFbloSDLanzrsWBhK58ctzFVc9aTBRRl2-mHSx9_SCw"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:11",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 11,
+      "event_type": "lifecycle.consent.granted",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.231Z",
+      "actor_type": "user",
+      "actor_ref": null,
+      "authority_ref": null,
+      "source": "olip_2_0_draft_lifecycle",
+      "v2_ref": {
+        "seq": 8,
+        "entry_hash": "sha256:b446055a660b21ebbd0e2cdd594639f443a7371780874cc9ee016b7570972d84",
+        "event_id": "urn:olip:op_test_neutral_relay:event:c-8AlNqWQoGd",
+        "signer_kid": "kid_test_71a187791122",
+        "attribution_at_mirror": "host_attested",
+        "object": {
+          "type": "grant",
+          "id": "grt_gS6PfLIfLyI_5cal"
+        }
+      },
+      "payload_digest": "sha256:da1a28b2caa16fedab90f3c7e310566e138368f2462352ee49fb95e5df305714",
+      "payload": {
+        "object_type": "grant"
+      },
+      "previous_event_digest": "sha256:9d3db0f66482e646d9ef981cf0d6f35045dd0b184ec68283810926480e007935",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:bf3e227ed498e3e390ab8ef756d5943b419f10e61398ebb73b7765118096464d",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "U5jKl-JnWS6CDFHdx5Bon5w2W0Nf84KnCMydo_wERvNPoKuvLgrA4P3GJyfaiiC5TUFh59tz8ocIppBL-TWqDA"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:12",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 12,
+      "event_type": "lifecycle.consultation.proposed",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.236Z",
+      "actor_type": "lifecycle_host",
+      "actor_ref": {
+        "operator_id": "op_test_neutral_relay"
+      },
+      "authority_ref": null,
+      "source": "olip_2_0_draft_lifecycle",
+      "v2_ref": {
+        "seq": 9,
+        "entry_hash": "sha256:204b0f540e7307c2ace31658e55cb1c0ac7557628d6550e26013d6e1153b7d93",
+        "event_id": "urn:olip:op_test_neutral_relay:event:zKYSMXO0PtJo",
+        "signer_kid": "kid_test_71a187791122",
+        "attribution_at_mirror": "host_attested",
+        "object": {
+          "type": "consultation",
+          "id": "cns_JMiq5BrbkO_jH6Om"
+        }
+      },
+      "payload_digest": "sha256:514aa9c285dbe68f35ead9561bcafabb5bd5669b35982da01ed89645de6058ad",
+      "payload": {
+        "object_type": "consultation"
+      },
+      "previous_event_digest": "sha256:bf3e227ed498e3e390ab8ef756d5943b419f10e61398ebb73b7765118096464d",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:fb5da0d0e0dbe0a2598efae40ac0f2fa59b0f15450c30d8527e7f10ca42d65e6",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "fwBht0ADyq9Aag5fNtPKVyGfUvSSzvPzTF5GIMXifsGrhd06HGA4ktY5nD8qlbaHfLAZZ-_fem5Yr7yL84VDDw"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:13",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 13,
+      "event_type": "lifecycle.consultation.confirmed",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.240Z",
+      "actor_type": "firm_authorized_actor",
+      "actor_ref": {
+        "organization_id": "org_test_alvarez",
+        "actor_id": "stf_test_sam"
+      },
+      "authority_ref": "kid_test_740cc96de2d4",
+      "source": "olip_2_0_draft_lifecycle",
+      "v2_ref": {
+        "seq": 10,
+        "entry_hash": "sha256:8d4acf4d1af12d337b152866dda309658980698311d5cf39bfddab07baa5e172",
+        "event_id": "urn:olip:org_test_alvarez:event:MjO2R0Kl4xqc",
+        "signer_kid": "kid_test_740cc96de2d4",
+        "attribution_at_mirror": "firm_signed_verified_by_2_0_host",
+        "object": {
+          "type": "consultation",
+          "id": "cns_JMiq5BrbkO_jH6Om"
+        }
+      },
+      "payload_digest": "sha256:514aa9c285dbe68f35ead9561bcafabb5bd5669b35982da01ed89645de6058ad",
+      "payload": {
+        "object_type": "consultation"
+      },
+      "previous_event_digest": "sha256:fb5da0d0e0dbe0a2598efae40ac0f2fa59b0f15450c30d8527e7f10ca42d65e6",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:0261bbee45206e66751dc89734e7b696c207b30d81d445a5ec25bcf257102574",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "qdPqXW-3uB8jZjzJLsflpBQfDd48eKUZpwl8of11fLwbv42NPa-r57YBIs-UudPgZ9mCQINDNPXIJmyZiO2DBg"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:14",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 14,
+      "event_type": "capsule.exported",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.246Z",
+      "actor_type": "user",
+      "actor_ref": {
+        "kind": "user",
+        "subject_ref": "subj_x_US0uvJ4e_vjPDdMcyDYx"
+      },
+      "authority_ref": null,
+      "source": "olip_3_layer",
+      "v2_ref": null,
+      "payload_digest": "sha256:fdc79d9d095be9df7231f32f9fdf6bee3a3c03a52252f70abf986f37ccb4c7cd",
+      "payload": {
+        "capsule_id": "cap_qt49akiw8irSw6k0",
+        "capsule_digest": "sha256:a034bb4723fa165efee7ad68b290f2e094bb79db08db36c76a5dd2e1cc8b9696",
+        "included_field_count": 3,
+        "encrypted": true
+      },
+      "previous_event_digest": "sha256:0261bbee45206e66751dc89734e7b696c207b30d81d445a5ec25bcf257102574",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": "req-000009",
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:f19e31d8a51df0e30cd97fc0597c887bc3aa328ae855d7f2b65f9eed95712dc6",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "TI6-Nm0ivruIf1P4sfEGWYFktd8MjknDY0UicW23Fy8Llmgwpa2sgtpWNC829O9CEKUJabYkaBGqHh_MHTYODg"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:15",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 15,
+      "event_type": "capsule.import_authorized",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.250Z",
+      "actor_type": "user",
+      "actor_ref": {
+        "kind": "user",
+        "subject_ref": "subj_x_US0uvJ4e_vjPDdMcyDYx"
+      },
+      "authority_ref": null,
+      "source": "olip_3_layer",
+      "v2_ref": null,
+      "payload_digest": "sha256:633769b414dd39d238163db9adf36b153d92d98816b839cd045eeb315a1f55d2",
+      "payload": {
+        "capsule_id": "cap_qt49akiw8irSw6k0",
+        "client_id": "agt_test_assistant_b",
+        "import_authorization_id": "iau_JGSThS_TuekrwP1v"
+      },
+      "previous_event_digest": "sha256:f19e31d8a51df0e30cd97fc0597c887bc3aa328ae855d7f2b65f9eed95712dc6",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": "req-000010",
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:f76803f262a11603eba4b40421956536b3a1d63d1ed947d1a03d89648db0cce8",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "txP1UStfytbNO3I6QHqClguQUwiZFeyxj_WdvJd1ob1ooaLZiqd5jHVYPzpIDoyvy7GSpzFKbL3gw4iY5Y5cDQ"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:16",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 16,
+      "event_type": "capsule.imported",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.256Z",
+      "actor_type": "ai_host",
+      "actor_ref": {
+        "kind": "agent",
+        "client_id": "agt_test_assistant_b"
+      },
+      "authority_ref": "iau_JGSThS_TuekrwP1v",
+      "source": "olip_3_layer",
+      "v2_ref": null,
+      "payload_digest": "sha256:e8daca08f9c847a7534870876fc333716ce3253525603171db16808f83c82d93",
+      "payload": {
+        "capsule_id": "cap_qt49akiw8irSw6k0",
+        "client_id": "agt_test_assistant_b"
+      },
+      "previous_event_digest": "sha256:f76803f262a11603eba4b40421956536b3a1d63d1ed947d1a03d89648db0cce8",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": "req-000011",
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:56e3e024fd93986154a03ae4224653a8fa4605dbb2e06ef5492af38a4a77d469",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "P2dn4Vq__1GzVSa1bal00A9v6JcuX3iACeQJvXEyJm-HeVFrnsPIAxjwpbcNKVUfAr5oXjqkBV7PsLQhDJR0BA"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:17",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 17,
+      "event_type": "disclosure.prepared",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.264Z",
+      "actor_type": "ai_host",
+      "actor_ref": {
+        "kind": "agent",
+        "client_id": "agt_test_assistant_b"
+      },
+      "authority_ref": null,
+      "source": "olip_3_layer",
+      "v2_ref": null,
+      "payload_digest": "sha256:2bbeb35bab022e79bdfbef3539539fa833791d4ccbcf61fa121c96b1de6c0142",
+      "payload": {
+        "disclosure_id": "dis_65IapJqstSryIF3A",
+        "organization_id": "org_test_cedar",
+        "stage": "screening",
+        "fields": [
+          "prospective_client.name",
+          "adverse_parties",
+          "matter.category",
+          "matter.jurisdiction"
+        ],
+        "grant_digest": "sha256:4ff838875524c2decf7143cd7449d327595df78fa8dd49c466606a4d249b4d73"
+      },
+      "previous_event_digest": "sha256:56e3e024fd93986154a03ae4224653a8fa4605dbb2e06ef5492af38a4a77d469",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": "req-000013",
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:0ea0c991d2b1a676a8ad23843087a1e5b7f825fa1a76a0577dfeaa1847365e3b",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "J35ON9Lgiycayx6IBi-nGNT2jubBSr0IWHRsbt_QrTC_Da7x_mZi425m0oO4J4gmRGkhsILhV5_pcYPZCZOxBw"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:v3-host:evt:wf_SN5HdS2d45e97xmO:18",
+      "workflow_id": "wf_SN5HdS2d45e97xmO",
+      "sequence": 18,
+      "event_type": "disclosure.cancelled",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T17:00:00.267Z",
+      "actor_type": "ai_host",
+      "actor_ref": {
+        "kind": "agent",
+        "client_id": "agt_test_assistant_b"
+      },
+      "authority_ref": null,
+      "source": "olip_3_layer",
+      "v2_ref": null,
+      "payload_digest": "sha256:1056f6122f883c420b0461efd68e4de937d22af1585486d029f1204d5172703f",
+      "payload": {
+        "disclosure_id": "dis_65IapJqstSryIF3A"
+      },
+      "previous_event_digest": "sha256:0ea0c991d2b1a676a8ad23843087a1e5b7f825fa1a76a0577dfeaa1847365e3b",
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+      "idempotency_key": "req-000015",
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:f17e567c04237ecdf867302e060a67df128f0f9dbd8e2bbd6d342cf4e6d3f929",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_a2fcfad00484",
+        "value": "hL2yOyHgLX7UhO6r6tD-6P0pD1Q-9LR2F_4MPVueBTjpGJ74rm-zN-N5FDqKOqAhshtH1YVPDzqbOUaQHcDTCQ"
+      }
+    }
+  ],
+  "next_cursor": "c1.eyJ3Ijoid2ZfU041SGRTMmQ0NWU5N3htTyIsInMiOjE4fQ.Q2DJ4bu71uqKmC1UEvJtGl",
+  "has_more": false,
+  "head": {
+    "sequence": 18,
+    "digest": "sha256:f17e567c04237ecdf867302e060a67df128f0f9dbd8e2bbd6d342cf4e6d3f929"
+  },
+  "chain": {
+    "ok": true,
+    "length": 18,
+    "statement": "Hash chain and Ed25519 signatures check out for this host's journal. Not an independently audited ledger."
+  },
+  "keys_url": "/olip/v3/keys",
+  "correlation_id": "cor_yJxwsO6udAwiW6AU",
+  "action_receipt": {
+    "action": "olip.list_workflow_events",
+    "effect": "read_only",
+    "decision": "allow",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+    "note": "A successful call means this host ran the action. It does not mean any organization received, read or accepted anything; read delivery and lifecycle states for that."
+  }
+}

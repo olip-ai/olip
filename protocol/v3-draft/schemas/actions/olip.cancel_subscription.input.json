@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.cancel_subscription.input.json",
+  "title": "Cancel a subscription (input)",
+  "type": "object",
+  "properties": {
+    "subscription_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "The subscription id returned earlier.",
+      "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+    }
+  },
+  "required": [
+    "subscription_id"
+  ],
+  "additionalProperties": false
+}

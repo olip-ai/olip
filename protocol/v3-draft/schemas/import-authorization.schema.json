@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/import-authorization.schema.json",
+  "title": "Capsule import authorization",
+  "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+  "type": "object",
+  "properties": {
+    "olip_version": {
+      "const": "3.0-draft.1"
+    },
+    "correlation_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "action_receipt": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "effect": {
+          "enum": [
+            "privileged_admin",
+            "firm_authoritative",
+            "external_disclosure",
+            "authorized_state_change",
+            "local_preparation",
+            "read_only"
+          ]
+        },
+        "decision": {
+          "type": "string"
+        },
+        "policy_version": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "action",
+        "effect",
+        "decision",
+        "policy_version",
+        "note"
+      ],
+      "additionalProperties": false
+    },
+    "idempotent_replay": {
+      "type": "boolean"
+    },
+    "import_authorization": {
+      "type": "object",
+      "properties": {
+        "olip_version": {
+          "const": "3.0-draft.1"
+        },
+        "import_authorization_id": {
+          "type": "string"
+        },
+        "capsule_id": {
+          "type": "string"
+        },
+        "capsule_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "client_id": {
+          "type": "string"
+        },
+        "subject_ref": {
+          "type": "string"
+        },
+        "authorized_by": {
+          "const": "signed_in_user_session"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "nonce": {
+          "type": "string"
+        },
+        "max_uses": {
+          "const": 1
+        },
+        "scope": {
+          "type": "array"
+        },
+        "authorizes_recipients": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "statement": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "object",
+          "properties": {
+            "alg": {
+              "const": "EdDSA"
+            },
+            "kid": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "required": [
+            "alg",
+            "kid",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "import_authorization_id",
+        "capsule_id",
+        "capsule_digest",
+        "client_id",
+        "expires_at",
+        "authorizes_recipients",
+        "signature"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "olip_version",
+    "import_authorization"
+  ],
+  "additionalProperties": false
+}

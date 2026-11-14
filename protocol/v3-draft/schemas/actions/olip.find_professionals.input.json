@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.find_professionals.input.json",
+  "title": "Find organizations (input)",
+  "type": "object",
+  "properties": {
+    "jurisdiction": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "ISO 3166-2 code, e.g. US-CA",
+      "pattern": "^[A-Z]{2}-[A-Z0-9]{1,3}$"
+    },
+    "matter_type": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "e.g. housing.landlord_tenant",
+      "pattern": "^[a-z_]+(\\.[a-z_]+)*$"
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}

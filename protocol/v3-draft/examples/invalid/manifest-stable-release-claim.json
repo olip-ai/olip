@@ -1,0 +1,872 @@
+{
+  "olip_version": "3.0-draft.1",
+  "manifest_version": "3.0-draft.1",
+  "release_status": "stable",
+  "statement": "OLIP 3.0 is a proposed draft under development. It is not a stable release, has not been adopted by any standards body, has not been independently security reviewed, and has not been approved by any bar or regulator. OLIP 1.0 and OLIP 2.0 are unchanged.",
+  "provider_id": "urn:olip:host:v3-host",
+  "issuer": "urn:olip:host:v3-host",
+  "endpoint_origin": "same-origin",
+  "supported_olip_versions": [
+    "2.0",
+    "3.0-draft.1"
+  ],
+  "extension_id": "olip.ai/agent-compatibility/3.0-draft",
+  "profile": "olip-agent-compat/3",
+  "profiles": [
+    {
+      "id": "discovery",
+      "provided_by": "olip-lifecycle-core/2"
+    },
+    {
+      "id": "intake",
+      "provided_by": "olip-lifecycle-core/2"
+    },
+    {
+      "id": "consultation",
+      "provided_by": "olip-consultation/2"
+    },
+    {
+      "id": "engagement",
+      "provided_by": "olip-engagement/2"
+    },
+    {
+      "id": "communications",
+      "provided_by": "olip-communications/2"
+    },
+    {
+      "id": "matter_lifecycle",
+      "provided_by": "olip-matter/2"
+    },
+    {
+      "id": "agent_continuity",
+      "provided_by": "olip-agent-compat/3"
+    }
+  ],
+  "transport_bindings": {
+    "https": {
+      "base_path": "/olip/v3",
+      "openapi_url": "/olip/v3/openapi.json",
+      "invoke": "POST /olip/v3/actions/{action_id}/invoke",
+      "version_header": "OLIP-Version"
+    },
+    "mcp": {
+      "adapter": "adapters/mcp/server.mjs",
+      "sdk": "@modelcontextprotocol/sdk 1.32.2",
+      "protocol_versions": "as negotiated by the pinned SDK (latest 2025-11-25)",
+      "note": "The pinned official SDK does not offer MCP 2026-07-28; see docs/COMPATIBILITY_MATRIX.md."
+    },
+    "a2a": {
+      "adapter": "adapters/a2a/agent.mjs",
+      "sdk": "@a2a-js/sdk 1.3.0",
+      "protocol_version": "1.0",
+      "agent_card_path": "/.well-known/agent-card.json (on the adapter)"
+    }
+  },
+  "actions": [
+    {
+      "id": "olip.get_capabilities",
+      "version": "1.0",
+      "title": "Get capabilities",
+      "summary": "This host's 3.0-draft agent manifest: actions, effects, approval rules, policy status and bindings.",
+      "effects": [
+        "read_only"
+      ],
+      "effect": "read_only",
+      "effect_meaning": "No external effect. Still access-controlled.",
+      "principals": [
+        "public"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": false,
+      "idempotency": "not_applicable",
+      "retry": "safe",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.get_capabilities.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/agent-manifest.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.find_professionals",
+      "version": "1.0",
+      "title": "Find organizations",
+      "summary": "Organizations reachable through this host for a place and type of matter. Alphabetical; payment never affects inclusion or order. Show every result; the USER picks.",
+      "effects": [
+        "read_only"
+      ],
+      "effect": "read_only",
+      "effect_meaning": "No external effect. Still access-controlled.",
+      "principals": [
+        "public"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": false,
+      "idempotency": "not_applicable",
+      "retry": "safe",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.find_professionals.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/professionals.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.get_recipient_policy",
+      "version": "1.0",
+      "title": "Get an organization's intake policy",
+      "summary": "Which stages and fields an organization accepts, and its limits. Screening asks only what a conflicts check needs.",
+      "effects": [
+        "read_only"
+      ],
+      "effect": "read_only",
+      "effect_meaning": "No external effect. Still access-controlled.",
+      "principals": [
+        "public"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": false,
+      "idempotency": "not_applicable",
+      "retry": "safe",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.get_recipient_policy.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/recipient-policy.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.prepare_casebrief",
+      "version": "1.0",
+      "title": "Check a CaseBrief draft",
+      "summary": "Checks a CaseBrief draft locally: shape, sensitive data, instruction-like text. Sends nothing and stores nothing.",
+      "effects": [
+        "local_preparation"
+      ],
+      "effect": "local_preparation",
+      "effect_meaning": "Computes a draft, preview or validation. Sends nothing to any third party.",
+      "principals": [
+        "user",
+        "agent"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": false,
+      "idempotency": "not_applicable",
+      "retry": "safe",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.prepare_casebrief.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/casebrief-check.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.start_workflow",
+      "version": "1.0",
+      "title": "Start a workflow",
+      "summary": "Creates the user's matter (through the unchanged 2.0 host) and a durable workflow id. Nothing is sent to anyone.",
+      "effects": [
+        "authorized_state_change"
+      ],
+      "effect": "authorized_state_change",
+      "effect_meaning": "Changes only the caller's own already-authorized workflow, settings or consent records.",
+      "principals": [
+        "user",
+        "agent"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.start_workflow.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/workflow.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.get_workflow",
+      "version": "1.0",
+      "title": "Get workflow status",
+      "summary": "The workflow's status of record, with each state's meaning and what it does NOT mean. Repeat meanings exactly.",
+      "effects": [
+        "read_only"
+      ],
+      "effect": "read_only",
+      "effect_meaning": "No external effect. Still access-controlled.",
+      "principals": [
+        "user",
+        "agent"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": false,
+      "idempotency": "not_applicable",
+      "retry": "safe",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.get_workflow.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/workflow.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.list_workflow_events",
+      "version": "1.0",
+      "title": "List workflow events",
+      "summary": "Signed, hash-chained workflow events after a cursor. Pass last_seen_digest to detect gaps. Polling is fully supported.",
+      "effects": [
+        "read_only"
+      ],
+      "effect": "read_only",
+      "effect_meaning": "No external effect. Still access-controlled.",
+      "principals": [
+        "user",
+        "agent"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": false,
+      "idempotency": "not_applicable",
+      "retry": "safe",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.list_workflow_events.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/events-page.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.preview_disclosure",
+      "version": "1.0",
+      "title": "Prepare a disclosure for approval",
+      "summary": "Prepares exactly what would go to ONE organization the user picked, and returns the user's approval page. Nothing is sent. Only the user can approve, on that page.",
+      "effects": [
+        "local_preparation"
+      ],
+      "effect": "local_preparation",
+      "effect_meaning": "Computes a draft, preview or validation. Sends nothing to any third party.",
+      "principals": [
+        "user",
+        "agent"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [
+        "casebrief stage: the organization said intake may continue (eligible_for_further_intake)"
+      ],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.preview_disclosure.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/disclosure-preview.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.submit_approved_disclosure",
+      "version": "1.0",
+      "title": "Send an approved disclosure",
+      "summary": "Sends what the USER approved, to the one recipient they approved, if the content still matches byte for byte. Rechecked immediately before sending. Report delivery.state exactly.",
+      "effects": [
+        "external_disclosure"
+      ],
+      "effect": "external_disclosure",
+      "effect_meaning": "Sends client or case information to a recipient. Needs the user's approval bound to that exact recipient and content.",
+      "principals": [
+        "user",
+        "agent"
+      ],
+      "approval": "user_out_of_band",
+      "firm_authority": false,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "receipt",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.submit_approved_disclosure.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/disclosure-result.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.cancel_pending_request",
+      "version": "1.0",
+      "title": "Cancel a pending request",
+      "summary": "Cancels a prepared disclosure that has not been sent. It cannot undo anything already delivered.",
+      "effects": [
+        "authorized_state_change"
+      ],
+      "effect": "authorized_state_change",
+      "effect_meaning": "Changes only the caller's own already-authorized workflow, settings or consent records.",
+      "principals": [
+        "user",
+        "agent"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.cancel_pending_request.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/disclosure-result.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.plan_next_actions",
+      "version": "1.0",
+      "title": "Plan next actions",
+      "summary": "Deterministic list of procedural next steps: allowed, blocked, or needing the user's approval or the firm's authority. NOT permission and NOT legal advice; every step is rechecked when called.",
+      "effects": [
+        "local_preparation"
+      ],
+      "effect": "local_preparation",
+      "effect_meaning": "Computes a draft, preview or validation. Sends nothing to any third party.",
+      "principals": [
+        "user",
+        "agent"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": false,
+      "idempotency": "not_applicable",
+      "retry": "safe",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.plan_next_actions.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/next-actions-plan.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.export_context_capsule",
+      "version": "1.0",
+      "title": "Export a context capsule",
+      "summary": "The USER exports a selected, signed, portable summary of the matter for themselves or one named assistant. It sends nothing and authorizes no recipient.",
+      "effects": [
+        "local_preparation"
+      ],
+      "effect": "local_preparation",
+      "effect_meaning": "Computes a draft, preview or validation. Sends nothing to any third party.",
+      "principals": [
+        "user"
+      ],
+      "approval": "user_session",
+      "firm_authority": false,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.export_context_capsule.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/context-capsule-export.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.validate_context_capsule",
+      "version": "1.0",
+      "title": "Validate a context capsule",
+      "summary": "Checks a capsule's schema, digest, signature, expiry and revocation. Stores nothing.",
+      "effects": [
+        "local_preparation"
+      ],
+      "effect": "local_preparation",
+      "effect_meaning": "Computes a draft, preview or validation. Sends nothing to any third party.",
+      "principals": [
+        "user",
+        "agent"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": false,
+      "idempotency": "not_applicable",
+      "retry": "safe",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.validate_context_capsule.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/capsule-check.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.authorize_capsule_import",
+      "version": "1.0",
+      "title": "Allow an assistant to import a capsule",
+      "summary": "The USER lets ONE named assistant import ONE exact capsule. It gives that assistant no right to contact anyone.",
+      "effects": [
+        "authorized_state_change"
+      ],
+      "effect": "authorized_state_change",
+      "effect_meaning": "Changes only the caller's own already-authorized workflow, settings or consent records.",
+      "principals": [
+        "user"
+      ],
+      "approval": "user_session",
+      "firm_authority": false,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.authorize_capsule_import.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/import-authorization.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.import_context_capsule",
+      "version": "1.0",
+      "title": "Import a context capsule",
+      "summary": "Imports a capsule the user authorized for this assistant. Import creates no approval and sends nothing; contacting any organization still needs a new approval.",
+      "effects": [
+        "authorized_state_change"
+      ],
+      "effect": "authorized_state_change",
+      "effect_meaning": "Changes only the caller's own already-authorized workflow, settings or consent records.",
+      "principals": [
+        "agent"
+      ],
+      "approval": "user_session",
+      "firm_authority": false,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.import_context_capsule.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/capsule-import.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.get_imported_capsule",
+      "version": "1.0",
+      "title": "Read an imported capsule",
+      "summary": "The imported capsule, for the assistant that imported it, while it is not expired or revoked.",
+      "effects": [
+        "read_only"
+      ],
+      "effect": "read_only",
+      "effect_meaning": "No external effect. Still access-controlled.",
+      "principals": [
+        "agent"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": false,
+      "idempotency": "not_applicable",
+      "retry": "safe",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.get_imported_capsule.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/capsule-import.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.revoke_context_capsule",
+      "version": "1.0",
+      "title": "Revoke a capsule",
+      "summary": "The USER stops future imports and reads of a capsule on this host. Copies already taken elsewhere cannot be recalled.",
+      "effects": [
+        "authorized_state_change"
+      ],
+      "effect": "authorized_state_change",
+      "effect_meaning": "Changes only the caller's own already-authorized workflow, settings or consent records.",
+      "principals": [
+        "user"
+      ],
+      "approval": "user_session",
+      "firm_authority": false,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.revoke_context_capsule.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/capsule-revocation.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.subscribe_events",
+      "version": "1.0",
+      "title": "Subscribe to workflow events",
+      "summary": "Signed, minimal webhook hints for one workflow. Callback URLs pass outbound-request checks. Hints carry no case content; read the workflow before acting.",
+      "effects": [
+        "read_only"
+      ],
+      "effect": "read_only",
+      "effect_meaning": "No external effect. Still access-controlled.",
+      "principals": [
+        "user",
+        "agent"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.subscribe_events.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/subscription.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.cancel_subscription",
+      "version": "1.0",
+      "title": "Cancel a subscription",
+      "summary": "Stops future webhook hints for a subscription.",
+      "effects": [
+        "read_only"
+      ],
+      "effect": "read_only",
+      "effect_meaning": "No external effect. Still access-controlled.",
+      "principals": [
+        "user",
+        "agent"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.cancel_subscription.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/subscription.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.call_lifecycle",
+      "version": "1.0",
+      "title": "Use a 2.0 lifecycle step",
+      "summary": "Runs one consumer-side 2.0 lifecycle step (consultation, engagement review, messages) with its unchanged 2.0 rules. Steps that send anything need the user's approval on the approval page.",
+      "effects": [
+        "external_disclosure",
+        "local_preparation",
+        "read_only"
+      ],
+      "effect": "external_disclosure",
+      "effect_meaning": "Sends client or case information to a recipient. Needs the user's approval bound to that exact recipient and content.",
+      "principals": [
+        "user",
+        "agent"
+      ],
+      "approval": "user_out_of_band",
+      "firm_authority": false,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https",
+        "mcp",
+        "a2a"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.call_lifecycle.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/lifecycle-result.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.record_firm_event",
+      "version": "1.0",
+      "title": "Record a firm-signed event",
+      "summary": "The organization's own system records its signed lifecycle event (screening outcome, consultation, engagement, closure). The 2.0 host verifies signer, role, scope and key.",
+      "effects": [
+        "firm_authoritative"
+      ],
+      "effect": "firm_authoritative",
+      "effect_meaning": "Only the organization's own authenticated, authorized system may do this. A client agent never can.",
+      "principals": [
+        "firm"
+      ],
+      "approval": "none",
+      "firm_authority": true,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.record_firm_event.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/lifecycle-result.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    },
+    {
+      "id": "olip.set_jurisdiction_policy",
+      "version": "1.0",
+      "title": "Set jurisdiction policy (operator)",
+      "summary": "Host operator changes a jurisdiction's policy status. Never exposed to model tools.",
+      "effects": [
+        "privileged_admin"
+      ],
+      "effect": "privileged_admin",
+      "effect_meaning": "Trust, key or policy administration by the host operator. Never available to a model tool.",
+      "principals": [
+        "operator"
+      ],
+      "approval": "none",
+      "firm_authority": false,
+      "mutating": true,
+      "idempotency": "required",
+      "retry": "safe_with_same_key",
+      "max_execution_ms": 10000,
+      "response": "immediate",
+      "preconditions": [],
+      "transports": [
+        "https"
+      ],
+      "input_schema": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.set_jurisdiction_policy.input.json",
+      "output_schema": "https://olip.ai/spec/3.0-draft/schemas/policy-change.schema.json",
+      "enforcement_note": "Documentation only. The host's policy gateway decides from server-side state on every call."
+    }
+  ],
+  "effects": {
+    "read_only": "No external effect. Still access-controlled.",
+    "local_preparation": "Computes a draft, preview or validation. Sends nothing to any third party.",
+    "authorized_state_change": "Changes only the caller's own already-authorized workflow, settings or consent records.",
+    "external_disclosure": "Sends client or case information to a recipient. Needs the user's approval bound to that exact recipient and content.",
+    "firm_authoritative": "Only the organization's own authenticated, authorized system may do this. A client agent never can.",
+    "privileged_admin": "Trust, key or policy administration by the host operator. Never available to a model tool."
+  },
+  "policy": {
+    "policy_set_id": "olip-3.0-draft-reference-policy-2026-11-14",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+    "status": "illustrative_pending_counsel_review",
+    "statement": "Reference policy only. No jurisdiction below has been reviewed or approved by counsel. In production mode every regulated write (state change, disclosure or firm event) is refused unless the jurisdiction's status is approved_by_counsel and its review date has not passed. Unknown jurisdictions always fail closed. The 2.0 lifecycle host applies its own, separate gate as well.",
+    "production_write_requires": "approved_by_counsel",
+    "mode": "mock",
+    "jurisdictions": {
+      "US-CA": {
+        "status": "pending_counsel_review",
+        "reviewed_at": null,
+        "review_by": null
+      },
+      "US-NY": {
+        "status": "pending_counsel_review",
+        "reviewed_at": null,
+        "review_by": null
+      },
+      "US-TX": {
+        "status": "pending_counsel_review",
+        "reviewed_at": null,
+        "review_by": null
+      }
+    },
+    "unknown_jurisdictions": "fail_closed",
+    "jurisdiction_approval": "sandbox_only"
+  },
+  "status_semantics": [
+    {
+      "state": "tool_call_succeeded",
+      "layer": "MCP / A2A / HTTPS",
+      "means": "The host ran the action.",
+      "does_not_mean": "Any organization received, read or accepted anything."
+    },
+    {
+      "state": "a2a_task_completed",
+      "layer": "A2A",
+      "means": "The agent-level task ended.",
+      "does_not_mean": "A consultation was held or representation began."
+    },
+    {
+      "state": "accepted_by_transport",
+      "layer": "2.0 delivery",
+      "means": "A relay accepted the item.",
+      "does_not_mean": "The firm's system confirmed receiving it."
+    },
+    {
+      "state": "delivered_to_endpoint",
+      "layer": "2.0 delivery",
+      "means": "The firm's endpoint returned a signed receipt for this exact content.",
+      "does_not_mean": "Anyone read it, responded, or took the matter."
+    },
+    {
+      "state": "eligible_for_further_intake",
+      "layer": "2.0 intake",
+      "means": "The firm says intake may continue.",
+      "does_not_mean": "A conflict clearance finding or representation."
+    },
+    {
+      "state": "consultation_confirmed",
+      "layer": "2.0 consultation",
+      "means": "The firm confirmed an appointment time.",
+      "does_not_mean": "The consultation happened or legal advice was given."
+    },
+    {
+      "state": "engagement_offer_issued",
+      "layer": "2.0 engagement",
+      "means": "The firm signed a versioned offer.",
+      "does_not_mean": "The client accepted or representation began."
+    },
+    {
+      "state": "client_accepted_offer",
+      "layer": "2.0 engagement",
+      "means": "The user's acceptance of one exact offer version was recorded.",
+      "does_not_mean": "The firm confirmed the engagement."
+    },
+    {
+      "state": "firm_confirmed",
+      "layer": "2.0 engagement",
+      "means": "The firm's authorized attorney signed a confirmation. Shown as 'Firm reports engagement confirmed'.",
+      "does_not_mean": "A legal determination that an attorney-client relationship exists."
+    },
+    {
+      "state": "matter_closed",
+      "layer": "2.0 matter",
+      "means": "The firm (or, for an unrepresented intake, the user) closed the matter.",
+      "does_not_mean": "All obligations, records or legal holds have ended."
+    },
+    {
+      "state": "capsule_imported",
+      "layer": "3.0-draft continuity",
+      "means": "One assistant may read one user-authorized capsule.",
+      "does_not_mean": "Permission to contact or send anything to any organization."
+    },
+    {
+      "state": "planner_allowed",
+      "layer": "3.0-draft planner",
+      "means": "Current state suggests the step is available.",
+      "does_not_mean": "Permission. The gateway checks again when the step is called."
+    }
+  ],
+  "approval": {
+    "user_approval_methods": [
+      "hosted_otp_mock (2.0 approval page)",
+      "signed_in_user_session (capsule export and import authorization)"
+    ],
+    "approval_is_model_callable": false
+  },
+  "neutrality": {
+    "discovery_ordering": "display_name_alphabetical",
+    "paid_influence": false,
+    "sponsor_services_required": false,
+    "sponsor_account_required": false
+  },
+  "privacy": {
+    "manifest_contains_case_data": false,
+    "logs": "route, status and error code only",
+    "capsule_encryption": "optional, to one receiving assistant's X25519 key; not end-to-end between people",
+    "retention": "Mock: in memory or a local snapshot file. No production retention policy exists."
+  },
+  "keys_url": "/olip/v3/keys",
+  "errors_url": "/olip/v3/errors",
+  "schemas_base": "/olip/v3/schemas/",
+  "mode": "mock",
+  "fictional_data_only": true,
+  "max_age_seconds": 300,
+  "expires_at": "2026-11-14T18:00:00.141Z",
+  "etag": "sha256:6cff1db25276888e5c9bb823c0499c5239bda74d7a4d1532a68045fe92cdf15e",
+  "signature": {
+    "alg": "EdDSA",
+    "kid": "kid_v3test_911680470501",
+    "value": "XNM-r2ZgJW-357FKXD9Lt6IITzVsb2tcK6uG05qquQhwj_cNTG-FtOqAJBpTCUwakcqpECNF5ikjjS3bTv-SDQ"
+  }
+}

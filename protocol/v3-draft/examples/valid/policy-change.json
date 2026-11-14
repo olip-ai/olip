@@ -1,0 +1,18 @@
+{
+  "olip_version": "3.0-draft.1",
+  "jurisdiction": "US-NY",
+  "rule": {
+    "status": "suspended",
+    "reviewed_at": null,
+    "review_by": null
+  },
+  "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#2",
+  "correlation_id": "cor_PlWwQaPOCoFafhp9",
+  "action_receipt": {
+    "action": "olip.set_jurisdiction_policy",
+    "effect": "privileged_admin",
+    "decision": "allow",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#2",
+    "note": "A successful call means this host ran the action. It does not mean any organization received, read or accepted anything; read delivery and lifecycle states for that."
+  }
+}

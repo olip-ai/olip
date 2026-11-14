@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.plan_next_actions.input.json",
+  "title": "Plan next actions (input)",
+  "type": "object",
+  "properties": {
+    "workflow_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "The workflow id returned earlier.",
+      "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+    },
+    "desired_goal": {
+      "enum": [
+        "find_counsel",
+        "share_screening",
+        "share_casebrief",
+        "schedule_consultation",
+        "review_engagement",
+        "message_firm",
+        "move_to_another_assistant",
+        "close_out"
+      ]
+    },
+    "known_event_cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 400,
+      "description": "Optional cursor the caller last read."
+    }
+  },
+  "required": [
+    "workflow_id"
+  ],
+  "additionalProperties": false
+}

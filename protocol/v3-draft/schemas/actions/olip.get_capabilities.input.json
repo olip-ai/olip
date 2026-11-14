@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.get_capabilities.input.json",
+  "title": "Get capabilities (input)",
+  "type": "object",
+  "properties": {},
+  "required": [],
+  "additionalProperties": false
+}

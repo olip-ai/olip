@@ -1,0 +1,15 @@
+{
+  "olip_version": "3.0-draft.1",
+  "capsule_id": "cap_UkkjlKSCcn8D5Uvu",
+  "revoked": true,
+  "revoked_at": "2026-11-14T17:00:00.453Z",
+  "statement": "Future imports and reads on this host stop. Copies already taken elsewhere cannot be recalled.",
+  "correlation_id": "cor_e5iLxWQBwESbqJAZ",
+  "action_receipt": {
+    "action": "olip.revoke_context_capsule",
+    "effect": "authorized_state_change",
+    "decision": "allow",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+    "note": "A successful call means this host ran the action. It does not mean any organization received, read or accepted anything; read delivery and lifecycle states for that."
+  }
+}

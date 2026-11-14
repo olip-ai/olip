@@ -1,0 +1,16 @@
+{
+  "olip_version": "3.0-draft.1",
+  "error": {
+    "code": "USER_APPROVAL_REQUIRED",
+    "message": "This needs the user's own approval on the approval page. An assistant cannot give it.",
+    "retryable": false,
+    "details": {
+      "decision": "require_user_approval",
+      "missing": [
+        "user_decision_on_approval_page"
+      ],
+      "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1"
+    }
+  },
+  "correlation_id": "cor_fqqSzgxCDylqWD9G"
+}

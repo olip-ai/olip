@@ -1,0 +1,284 @@
+{
+  "olip_version": "3.0-draft.1",
+  "document": "legal_context_capsule",
+  "capsule_version": "3.0-draft.1",
+  "capsule_id": "cap_UkkjlKSCcn8D5Uvu",
+  "matter_ref": "wf_SN5HdS2d45e97xmO",
+  "subject_ref": "subj_x_US0uvJ4e_vjPDdMcyDYx",
+  "controller": {
+    "kind": "user",
+    "note": "The user controls this export. The host that issued it is named in issuer."
+  },
+  "issuer": "urn:olip:host:v3-host",
+  "fictional": true,
+  "created_at": "2026-11-14T17:00:00.386Z",
+  "expires_at": "2026-11-21T17:00:00.386Z",
+  "source_provenance": {
+    "origin": "olip_3_0_draft_reference_host",
+    "method": "user_initiated_export",
+    "casebrief_revision": 1,
+    "as_of_event_sequence": 32,
+    "as_of_event_digest": "sha256:76bbe3d273eab2ea473c419f86e1b2e774f5bb8ebc21b475c63bc7194083e660"
+  },
+  "included_fields": [
+    "matter.category"
+  ],
+  "excluded_fields": [
+    {
+      "path": "adverse_parties",
+      "reason": "not_selected_by_user"
+    },
+    {
+      "path": "facts.key_dates",
+      "reason": "not_selected_by_user"
+    },
+    {
+      "path": "facts.summary",
+      "reason": "not_selected_by_user"
+    },
+    {
+      "path": "goals",
+      "reason": "not_selected_by_user"
+    },
+    {
+      "path": "matter.jurisdiction",
+      "reason": "not_selected_by_user"
+    },
+    {
+      "path": "prospective_client.contact",
+      "reason": "not_selected_by_user"
+    },
+    {
+      "path": "prospective_client.name",
+      "reason": "not_selected_by_user"
+    },
+    {
+      "path": "related_parties",
+      "reason": "not_selected_by_user"
+    }
+  ],
+  "workflow_snapshot": {
+    "as_of": "2026-11-14T17:00:00.386Z",
+    "as_of_event_sequence": 32,
+    "as_of_event_digest": "sha256:76bbe3d273eab2ea473c419f86e1b2e774f5bb8ebc21b475c63bc7194083e660",
+    "lifecycle": {
+      "matter": {
+        "state": "closed",
+        "meaning": "Closed. For a represented matter only the organization can close it. An unrepresented user may close their own intake journey."
+      },
+      "conflict_screens": [
+        {
+          "id": "scr_ENqI2zoPG8Q4Al8v",
+          "organization_id": "org_test_alvarez",
+          "state": "eligible_for_further_intake",
+          "meaning": "The organization says intake may continue. This is NOT a conflict clearance finding and NOT representation.",
+          "revision": 2,
+          "reconciliation_required": false
+        },
+        {
+          "id": "scr_IQA1K5mtAJlX5sFE",
+          "organization_id": "org_test_cedar",
+          "state": "not_started",
+          "meaning": "No screening data has been sent to this organization.",
+          "revision": 0,
+          "reconciliation_required": false
+        }
+      ],
+      "consultations": [
+        {
+          "id": "cns_JMiq5BrbkO_jH6Om",
+          "organization_id": "org_test_alvarez",
+          "state": "confirmed",
+          "meaning": "The organization's scheduling system confirmed this time and time zone.",
+          "revision": 4,
+          "reconciliation_required": false
+        }
+      ],
+      "engagements": [
+        {
+          "id": "eng_T-GwAaRoKZJjgCcW",
+          "organization_id": "org_test_alvarez",
+          "state": "ended",
+          "meaning": "The organization reports the engagement ended (see the matter record).",
+          "revision": 5,
+          "reconciliation_required": false
+        }
+      ]
+    },
+    "pending_user_approvals": 0,
+    "authoritative_sources": {
+      "lifecycle_states": "the 2.0 host's status of record",
+      "firm_states": "firm-signed events"
+    }
+  },
+  "export_authorization": {
+    "authorized_by": "signed_in_user_session",
+    "purpose": "personal_record",
+    "originating_system": "urn:olip:host:v3-host",
+    "expires_at": "2026-11-21T17:00:00.386Z",
+    "onward_disclosure": false,
+    "authorizes_recipients": [],
+    "new_host_access": "Requires a separate import authorization from the user for one named assistant.",
+    "statement": "This capsule is not consent to contact or send anything to any organization."
+  },
+  "intended_host": null,
+  "retention": {
+    "expires_at": "2026-11-21T17:00:00.386Z",
+    "revocation": "The user can revoke it on the issuing host; imports and reads there stop. Copies already taken elsewhere cannot be recalled.",
+    "deletion": "Mock host: in memory or a local snapshot file.",
+    "legal_hold_caveat": "Organizations that already received information keep it under their own legal duties."
+  },
+  "excludes": [
+    "model_chain_of_thought",
+    "raw_chat_transcripts",
+    "session_identifiers",
+    "credentials",
+    "unselected_casebrief_fields",
+    "document_contents"
+  ],
+  "schema_ref": "https://olip.ai/spec/3.0-draft/schemas/context-capsule.schema.json",
+  "encryption": {
+    "status": "none",
+    "statement": "Not encrypted. Signed for integrity only. Protect the file like any confidential document."
+  },
+  "content": {
+    "assertions": [
+      {
+        "claim_id": "claim_001",
+        "field_path": "matter.category",
+        "value": "housing.landlord_tenant",
+        "origin_type": "user_reported",
+        "source_ref": "casebrief_revision_1",
+        "observed_at": "2026-11-14T17:00:00.379Z",
+        "verified_at": null,
+        "jurisdiction": "US-CA",
+        "extraction_method": "user_entered",
+        "confidence_or_uncertainty": "unknown",
+        "verification_status": "unverified",
+        "supersedes_claim_id": null,
+        "access_classification": "client_confidential",
+        "content_digest": "sha256:0ff40b20392b9a9cd9b3b44f3a63122d6228503b0a1d15fe59d0e32f1cc6a478",
+        "untrusted_text_flags": []
+      },
+      {
+        "claim_id": "claim_002",
+        "field_path": "lifecycle.conflict_screen.scr_ENqI2zoPG8Q4Al8v",
+        "value": "intake.eligible_for_further_intake",
+        "origin_type": "firm_asserted",
+        "source_ref": "urn:olip:org_test_alvarez:event:bQc9XCzEanEG",
+        "observed_at": "2026-11-14T17:00:00.202Z",
+        "verified_at": "2026-11-14T17:00:00.202Z",
+        "jurisdiction": "US-CA",
+        "extraction_method": "signed_lifecycle_event",
+        "confidence_or_uncertainty": "not_applicable",
+        "verification_status": "signature_verified_by_2_0_host",
+        "supersedes_claim_id": null,
+        "access_classification": "client_confidential",
+        "content_digest": "sha256:e38c79febabb887cc3813d25164a56f23ca13fbdacba4cf27270e17f99b22b4c",
+        "untrusted_text_flags": []
+      },
+      {
+        "claim_id": "claim_003",
+        "field_path": "lifecycle.consultation.cns_JMiq5BrbkO_jH6Om",
+        "value": "consultation.options_offered",
+        "origin_type": "firm_asserted",
+        "source_ref": "urn:olip:org_test_alvarez:event:rmfw4OFsUAAE",
+        "observed_at": "2026-11-14T17:00:00.225Z",
+        "verified_at": "2026-11-14T17:00:00.225Z",
+        "jurisdiction": "US-CA",
+        "extraction_method": "signed_lifecycle_event",
+        "confidence_or_uncertainty": "not_applicable",
+        "verification_status": "signature_verified_by_2_0_host",
+        "supersedes_claim_id": null,
+        "access_classification": "client_confidential",
+        "content_digest": "sha256:514aa9c285dbe68f35ead9561bcafabb5bd5669b35982da01ed89645de6058ad",
+        "untrusted_text_flags": []
+      },
+      {
+        "claim_id": "claim_004",
+        "field_path": "lifecycle.consultation.cns_JMiq5BrbkO_jH6Om",
+        "value": "consultation.confirmed",
+        "origin_type": "firm_asserted",
+        "source_ref": "urn:olip:org_test_alvarez:event:MjO2R0Kl4xqc",
+        "observed_at": "2026-11-14T17:00:00.240Z",
+        "verified_at": "2026-11-14T17:00:00.240Z",
+        "jurisdiction": "US-CA",
+        "extraction_method": "signed_lifecycle_event",
+        "confidence_or_uncertainty": "not_applicable",
+        "verification_status": "signature_verified_by_2_0_host",
+        "supersedes_claim_id": null,
+        "access_classification": "client_confidential",
+        "content_digest": "sha256:514aa9c285dbe68f35ead9561bcafabb5bd5669b35982da01ed89645de6058ad",
+        "untrusted_text_flags": []
+      },
+      {
+        "claim_id": "claim_005",
+        "field_path": "lifecycle.engagement.eng_T-GwAaRoKZJjgCcW",
+        "value": "engagement.offered",
+        "origin_type": "firm_asserted",
+        "source_ref": "urn:olip:org_test_alvarez:event:5HNkp5Nv_9uw",
+        "observed_at": "2026-11-14T17:00:00.337Z",
+        "verified_at": "2026-11-14T17:00:00.337Z",
+        "jurisdiction": "US-CA",
+        "extraction_method": "signed_lifecycle_event",
+        "confidence_or_uncertainty": "not_applicable",
+        "verification_status": "signature_verified_by_2_0_host",
+        "supersedes_claim_id": null,
+        "access_classification": "client_confidential",
+        "content_digest": "sha256:df7be69406b575870dfbb20d2c7f81a9cbeab9c24b8e093f23a60dd674dc92d7",
+        "untrusted_text_flags": []
+      },
+      {
+        "claim_id": "claim_006",
+        "field_path": "lifecycle.engagement.eng_T-GwAaRoKZJjgCcW",
+        "value": "engagement.firm_confirmed",
+        "origin_type": "firm_asserted",
+        "source_ref": "urn:olip:org_test_alvarez:event:G_A8NBCaIgMS",
+        "observed_at": "2026-11-14T17:00:00.358Z",
+        "verified_at": "2026-11-14T17:00:00.358Z",
+        "jurisdiction": "US-CA",
+        "extraction_method": "signed_lifecycle_event",
+        "confidence_or_uncertainty": "not_applicable",
+        "verification_status": "signature_verified_by_2_0_host",
+        "supersedes_claim_id": null,
+        "access_classification": "client_confidential",
+        "content_digest": "sha256:df7be69406b575870dfbb20d2c7f81a9cbeab9c24b8e093f23a60dd674dc92d7",
+        "untrusted_text_flags": []
+      },
+      {
+        "claim_id": "claim_007",
+        "field_path": "lifecycle.matter.mat_GGfMu_VSfth9cOAR",
+        "value": "matter.closed",
+        "origin_type": "firm_asserted",
+        "source_ref": "urn:olip:org_test_alvarez:event:exYYIYCsG6Vv",
+        "observed_at": "2026-11-14T17:00:00.379Z",
+        "verified_at": "2026-11-14T17:00:00.379Z",
+        "jurisdiction": "US-CA",
+        "extraction_method": "signed_lifecycle_event",
+        "confidence_or_uncertainty": "not_applicable",
+        "verification_status": "signature_verified_by_2_0_host",
+        "supersedes_claim_id": null,
+        "access_classification": "client_confidential",
+        "content_digest": "sha256:9579e06baafb25bd7d99e32bd02dfa06a3510a17b5e0a3dcfbceb93ede07f183",
+        "untrusted_text_flags": []
+      }
+    ],
+    "conflicts": [],
+    "unresolved_questions": [],
+    "time_sensitive_fields": [],
+    "document_refs": [
+      {
+        "document_id": "doc_1",
+        "sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "access_scope": "x",
+        "content_included": true
+      }
+    ]
+  },
+  "capsule_digest": "sha256:2cec3d37314e6eae385ba009a7f9eba532a1b28cd7f78bf46eadb5b6e353928f",
+  "signature": {
+    "alg": "EdDSA",
+    "kid": "kid_v3test_bb480e323394",
+    "value": "gXCPpRHM5NwIxTtenM1IIpTvUDJII46GS3bP50CZFNJUBsAAtKvdmUyZYohY2C9veQsV_dLXjd960JRF979-CA"
+  }
+}

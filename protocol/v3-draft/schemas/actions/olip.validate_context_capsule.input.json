@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.validate_context_capsule.input.json",
+  "title": "Validate a context capsule (input)",
+  "type": "object",
+  "properties": {
+    "capsule": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "capsule"
+  ],
+  "additionalProperties": false
+}

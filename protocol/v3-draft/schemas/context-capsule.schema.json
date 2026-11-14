@@ -1,0 +1,1014 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/context-capsule.schema.json",
+  "title": "Legal Context Capsule",
+  "description": "A user-controlled, signed, selective export of legal task context. Not a transcript, not assistant memory, not a privilege guarantee, and not authorization to contact any recipient.",
+  "type": "object",
+  "properties": {
+    "olip_version": {
+      "const": "3.0-draft.1"
+    },
+    "document": {
+      "const": "legal_context_capsule"
+    },
+    "capsule_version": {
+      "const": "3.0-draft.1"
+    },
+    "capsule_id": {
+      "type": "string",
+      "pattern": "^cap_"
+    },
+    "matter_ref": {
+      "type": "string"
+    },
+    "subject_ref": {
+      "type": "string",
+      "pattern": "^subj_"
+    },
+    "controller": {
+      "type": "object"
+    },
+    "issuer": {
+      "type": "string"
+    },
+    "fictional": {
+      "type": "boolean"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_provenance": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string"
+        },
+        "method": {
+          "const": "user_initiated_export"
+        },
+        "casebrief_revision": {
+          "type": "integer"
+        },
+        "as_of_event_sequence": {
+          "type": "integer"
+        },
+        "as_of_event_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "origin",
+        "method",
+        "as_of_event_sequence",
+        "as_of_event_digest"
+      ],
+      "additionalProperties": false
+    },
+    "included_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "excluded_fields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "workflow_snapshot": {
+      "type": "object",
+      "properties": {
+        "as_of": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "as_of_event_sequence": {
+          "type": "integer"
+        },
+        "as_of_event_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "lifecycle": {
+          "type": "object"
+        },
+        "pending_user_approvals": {
+          "type": "integer"
+        },
+        "authoritative_sources": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "as_of",
+        "as_of_event_sequence",
+        "lifecycle"
+      ],
+      "additionalProperties": false
+    },
+    "export_authorization": {
+      "type": "object",
+      "properties": {
+        "authorized_by": {
+          "const": "signed_in_user_session"
+        },
+        "purpose": {
+          "enum": [
+            "continue_with_another_assistant",
+            "personal_record"
+          ]
+        },
+        "originating_system": {
+          "type": "string"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "onward_disclosure": {
+          "const": false
+        },
+        "authorizes_recipients": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "new_host_access": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "authorized_by",
+        "purpose",
+        "onward_disclosure",
+        "authorizes_recipients"
+      ],
+      "additionalProperties": false
+    },
+    "intended_host": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "client_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "client_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "retention": {
+      "type": "object",
+      "properties": {
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "revocation": {
+          "type": "string"
+        },
+        "deletion": {
+          "type": "string"
+        },
+        "legal_hold_caveat": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "expires_at",
+        "revocation",
+        "legal_hold_caveat"
+      ],
+      "additionalProperties": false
+    },
+    "excludes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "schema_ref": {
+      "type": "string"
+    },
+    "encryption": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "none",
+            "recipient_key"
+          ]
+        },
+        "alg": {
+          "type": "string"
+        },
+        "recipient_kid": {
+          "type": "string"
+        },
+        "content_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "statement": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "statement"
+      ],
+      "additionalProperties": false
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "assertions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "claim_id": {
+                "type": "string"
+              },
+              "field_path": {
+                "type": "string"
+              },
+              "value": {},
+              "origin_type": {
+                "enum": [
+                  "user_reported",
+                  "document_extracted",
+                  "official_source_checked",
+                  "firm_asserted",
+                  "third_party_asserted",
+                  "ai_interpretation"
+                ]
+              },
+              "source_ref": {
+                "type": "string"
+              },
+              "observed_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "verified_at": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "jurisdiction": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "extraction_method": {
+                "type": "string"
+              },
+              "confidence_or_uncertainty": {
+                "type": "string"
+              },
+              "verification_status": {
+                "enum": [
+                  "unverified",
+                  "not_verified",
+                  "signature_verified_by_2_0_host",
+                  "verified_under_named_procedure"
+                ]
+              },
+              "supersedes_claim_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "access_classification": {
+                "enum": [
+                  "client_confidential",
+                  "public"
+                ]
+              },
+              "content_digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "untrusted_text_flags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "note": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "claim_id",
+              "field_path",
+              "value",
+              "origin_type",
+              "source_ref",
+              "observed_at",
+              "verified_at",
+              "verification_status",
+              "access_classification",
+              "content_digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field_path": {
+                "type": "string"
+              },
+              "claim_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "resolution": {
+                "enum": [
+                  "unresolved",
+                  "resolved_by_user"
+                ]
+              },
+              "statement": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "field_path",
+              "claim_ids",
+              "resolution"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "unresolved_questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question_id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "origin_type": {
+                "enum": [
+                  "user_reported",
+                  "document_extracted",
+                  "official_source_checked",
+                  "firm_asserted",
+                  "third_party_asserted",
+                  "ai_interpretation"
+                ]
+              }
+            },
+            "required": [
+              "question_id",
+              "text",
+              "origin_type"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "time_sensitive_fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field_path": {
+                "type": "string"
+              },
+              "description": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "timezone": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "origin_type": {
+                "enum": [
+                  "user_reported",
+                  "document_extracted",
+                  "official_source_checked",
+                  "firm_asserted",
+                  "third_party_asserted",
+                  "ai_interpretation"
+                ]
+              },
+              "verification_status": {
+                "enum": [
+                  "unverified",
+                  "verified_under_named_procedure"
+                ]
+              },
+              "calculation": {
+                "type": "null"
+              },
+              "statement": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "field_path",
+              "value",
+              "origin_type",
+              "verification_status",
+              "calculation"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "document_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "document_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "mime": {
+                "type": "string"
+              },
+              "access_scope": {
+                "type": "string"
+              },
+              "content_included": {
+                "const": false
+              }
+            },
+            "required": [
+              "document_id",
+              "sha256",
+              "access_scope",
+              "content_included"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "assertions",
+        "conflicts",
+        "unresolved_questions",
+        "time_sensitive_fields",
+        "document_refs"
+      ],
+      "additionalProperties": false
+    },
+    "sealed_content": {
+      "type": "object",
+      "properties": {
+        "alg": {
+          "const": "ECDH-ES+HKDF-SHA256/A256GCM"
+        },
+        "recipient_kid": {
+          "type": "string"
+        },
+        "epk": {
+          "type": "object",
+          "properties": {
+            "kty": {
+              "const": "OKP"
+            },
+            "crv": {
+              "const": "X25519"
+            },
+            "x": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kty",
+            "crv",
+            "x"
+          ],
+          "additionalProperties": false
+        },
+        "iv": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        },
+        "aad": {
+          "type": "string"
+        },
+        "ciphertext": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "alg",
+        "recipient_kid",
+        "epk",
+        "iv",
+        "tag",
+        "aad",
+        "ciphertext"
+      ],
+      "additionalProperties": false
+    },
+    "capsule_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "signature": {
+      "type": "object",
+      "properties": {
+        "alg": {
+          "const": "EdDSA"
+        },
+        "kid": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "alg",
+        "kid",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "olip_version",
+    "document",
+    "capsule_version",
+    "capsule_id",
+    "matter_ref",
+    "subject_ref",
+    "issuer",
+    "created_at",
+    "expires_at",
+    "source_provenance",
+    "included_fields",
+    "excluded_fields",
+    "workflow_snapshot",
+    "export_authorization",
+    "retention",
+    "encryption",
+    "capsule_digest",
+    "signature"
+  ],
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "required": [
+        "content"
+      ],
+      "not": {
+        "required": [
+          "sealed_content"
+        ]
+      }
+    },
+    {
+      "required": [
+        "sealed_content"
+      ],
+      "not": {
+        "required": [
+          "content"
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "content": {
+      "type": "object",
+      "properties": {
+        "assertions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "claim_id": {
+                "type": "string"
+              },
+              "field_path": {
+                "type": "string"
+              },
+              "value": {},
+              "origin_type": {
+                "enum": [
+                  "user_reported",
+                  "document_extracted",
+                  "official_source_checked",
+                  "firm_asserted",
+                  "third_party_asserted",
+                  "ai_interpretation"
+                ]
+              },
+              "source_ref": {
+                "type": "string"
+              },
+              "observed_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "verified_at": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "jurisdiction": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "extraction_method": {
+                "type": "string"
+              },
+              "confidence_or_uncertainty": {
+                "type": "string"
+              },
+              "verification_status": {
+                "enum": [
+                  "unverified",
+                  "not_verified",
+                  "signature_verified_by_2_0_host",
+                  "verified_under_named_procedure"
+                ]
+              },
+              "supersedes_claim_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "access_classification": {
+                "enum": [
+                  "client_confidential",
+                  "public"
+                ]
+              },
+              "content_digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "untrusted_text_flags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "note": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "claim_id",
+              "field_path",
+              "value",
+              "origin_type",
+              "source_ref",
+              "observed_at",
+              "verified_at",
+              "verification_status",
+              "access_classification",
+              "content_digest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field_path": {
+                "type": "string"
+              },
+              "claim_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "resolution": {
+                "enum": [
+                  "unresolved",
+                  "resolved_by_user"
+                ]
+              },
+              "statement": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "field_path",
+              "claim_ids",
+              "resolution"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "unresolved_questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question_id": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "origin_type": {
+                "enum": [
+                  "user_reported",
+                  "document_extracted",
+                  "official_source_checked",
+                  "firm_asserted",
+                  "third_party_asserted",
+                  "ai_interpretation"
+                ]
+              }
+            },
+            "required": [
+              "question_id",
+              "text",
+              "origin_type"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "time_sensitive_fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field_path": {
+                "type": "string"
+              },
+              "description": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "timezone": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "origin_type": {
+                "enum": [
+                  "user_reported",
+                  "document_extracted",
+                  "official_source_checked",
+                  "firm_asserted",
+                  "third_party_asserted",
+                  "ai_interpretation"
+                ]
+              },
+              "verification_status": {
+                "enum": [
+                  "unverified",
+                  "verified_under_named_procedure"
+                ]
+              },
+              "calculation": {
+                "type": "null"
+              },
+              "statement": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "field_path",
+              "value",
+              "origin_type",
+              "verification_status",
+              "calculation"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "document_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "document_id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "mime": {
+                "type": "string"
+              },
+              "access_scope": {
+                "type": "string"
+              },
+              "content_included": {
+                "const": false
+              }
+            },
+            "required": [
+              "document_id",
+              "sha256",
+              "access_scope",
+              "content_included"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "assertions",
+        "conflicts",
+        "unresolved_questions",
+        "time_sensitive_fields",
+        "document_refs"
+      ],
+      "additionalProperties": false
+    },
+    "assertion": {
+      "type": "object",
+      "properties": {
+        "claim_id": {
+          "type": "string"
+        },
+        "field_path": {
+          "type": "string"
+        },
+        "value": {},
+        "origin_type": {
+          "enum": [
+            "user_reported",
+            "document_extracted",
+            "official_source_checked",
+            "firm_asserted",
+            "third_party_asserted",
+            "ai_interpretation"
+          ]
+        },
+        "source_ref": {
+          "type": "string"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "verified_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "jurisdiction": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "extraction_method": {
+          "type": "string"
+        },
+        "confidence_or_uncertainty": {
+          "type": "string"
+        },
+        "verification_status": {
+          "enum": [
+            "unverified",
+            "not_verified",
+            "signature_verified_by_2_0_host",
+            "verified_under_named_procedure"
+          ]
+        },
+        "supersedes_claim_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "access_classification": {
+          "enum": [
+            "client_confidential",
+            "public"
+          ]
+        },
+        "content_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "untrusted_text_flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "claim_id",
+        "field_path",
+        "value",
+        "origin_type",
+        "source_ref",
+        "observed_at",
+        "verified_at",
+        "verification_status",
+        "access_classification",
+        "content_digest"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

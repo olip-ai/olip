@@ -1,0 +1,35 @@
+{
+  "olip_version": "3.0-draft.1",
+  "disclosure": {
+    "disclosure_id": "dis_k1Y883We83zZx-Em",
+    "organization_id": "org_test_alvarez",
+    "stage": "screening",
+    "fields": [
+      "prospective_client.name",
+      "adverse_parties",
+      "matter.category",
+      "matter.jurisdiction"
+    ],
+    "state": "awaiting_user_approval",
+    "approval": {
+      "approval_id": "apv_OZRSHb44_TyJciFf",
+      "approval_url": "/olip/v2/approvals/apv_OZRSHb44_TyJciFf",
+      "grant_id": "grt_89VJ9cqgfsyA5SVi",
+      "grant_digest": "sha256:df81f6bdfd34d63f62c70d22e6f8e645b9a7d0ba1f33500c63f003a22357a25a",
+      "expires_at": "2026-11-14T17:30:00.176Z"
+    },
+    "delivery": null,
+    "created_at": "2026-11-14T17:00:00.176Z"
+  },
+  "sent": true,
+  "next": "Show the user the approval page. Only the user can approve, there, with a code sent to their own contact. Then call olip.submit_approved_disclosure with this disclosure_id, grant_id and grant_digest.",
+  "statement": "Nothing was sent. The approval is bound to this one organization, these exact field values, this purpose and an expiry. Any change needs a new approval.",
+  "correlation_id": "cor_uaFkXjLODWqFpqgY",
+  "action_receipt": {
+    "action": "olip.preview_disclosure",
+    "effect": "local_preparation",
+    "decision": "allow",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+    "note": "A successful call means this host ran the action. It does not mean any organization received, read or accepted anything; read delivery and lifecycle states for that."
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "olip_version": "3.0-draft.1",
+  "disclosure": {
+    "disclosure_id": "dis_k1Y883We83zZx-Em",
+    "organization_id": "org_test_alvarez",
+    "stage": "screening",
+    "fields": [
+      "prospective_client.name",
+      "adverse_parties",
+      "matter.category",
+      "matter.jurisdiction"
+    ],
+    "state": "submitted",
+    "approval": {
+      "approval_id": "apv_OZRSHb44_TyJciFf",
+      "approval_url": "/olip/v2/approvals/apv_OZRSHb44_TyJciFf",
+      "grant_id": "grt_89VJ9cqgfsyA5SVi",
+      "grant_digest": "sha256:df81f6bdfd34d63f62c70d22e6f8e645b9a7d0ba1f33500c63f003a22357a25a",
+      "expires_at": "2026-11-14T17:30:00.176Z"
+    },
+    "delivery": {
+      "state": "delivered_to_endpoint",
+      "receipt_id": "rcp_tzxeIwJ_oofpXNVv",
+      "receipt_kid": "kid_test_740cc96de2d4"
+    },
+    "created_at": "2026-11-14T17:00:00.176Z"
+  },
+  "delivery": {
+    "state": "delivered_to_endpoint",
+    "receipt": {
+      "olip_version": "2.0",
+      "receipt_id": "rcp_tzxeIwJ_oofpXNVv",
+      "delivery_id": "dlv_3In4wrEFrwOZy8en",
+      "organization_id": "org_test_alvarez",
+      "kind": "screening",
+      "payload_digest": "sha256:1c82f60c261ab0253a032a6a03a0098f16f266305d46dd0f9ca32bdb868ed586",
+      "received_at": "2026-11-14T17:00:00.186Z",
+      "statement": "The firm's intake system stored this exact content. Nobody has read or decided anything yet.",
+      "fictional": true,
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_test_740cc96de2d4",
+        "value": "beZDFSGGTVHoZfF96gkzHqd45mPaxAQPp8Pu2kGhNN-Y0t4bcZ_VU2jm4q145NPL_f6VbmXs5uRirRbCusrFDg"
+      }
+    }
+  },
+  "lifecycle_object": {
+    "type": "conflict_screen",
+    "id": "scr_ENqI2zoPG8Q4Al8v",
+    "state": "screening_requested"
+  },
+  "status_semantics": {
+    "delivery_state": {
+      "state": "delivered_to_endpoint",
+      "layer": "2.0 delivery",
+      "means": "The firm's endpoint returned a signed receipt for this exact content.",
+      "does_not_mean": "Anyone read it, responded, or took the matter."
+    },
+    "tool_success": {
+      "state": "tool_call_succeeded",
+      "layer": "MCP / A2A / HTTPS",
+      "means": "The host ran the action.",
+      "does_not_mean": "Any organization received, read or accepted anything."
+    }
+  },
+  "correlation_id": "cor_Fla_Vr21rnz3ZwC7",
+  "action_receipt": {
+    "action": "olip.submit_approved_disclosure",
+    "effect": "external_disclosure",
+    "decision": "allow",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+    "note": "A successful call means this host ran the action. It does not mean any organization received, read or accepted anything; read delivery and lifecycle states for that."
+  }
+}

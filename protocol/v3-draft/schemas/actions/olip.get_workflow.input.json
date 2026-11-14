@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.get_workflow.input.json",
+  "title": "Get workflow status (input)",
+  "type": "object",
+  "properties": {
+    "workflow_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "The workflow id returned earlier.",
+      "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+    }
+  },
+  "required": [
+    "workflow_id"
+  ],
+  "additionalProperties": false
+}
