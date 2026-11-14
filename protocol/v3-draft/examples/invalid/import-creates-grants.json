@@ -1,0 +1,166 @@
+{
+  "olip_version": "3.0-draft.1",
+  "import": {
+    "import_id": "imp_uHf9jqnkZmrGtO1n",
+    "capsule_id": "cap_3srrtk_nlrr9_e8M",
+    "client_id": "agt_test_assistant_b",
+    "state": "imported_limited",
+    "imported_at": "2026-11-14T17:00:00.325Z"
+  },
+  "capsule": {
+    "olip_version": "3.0-draft.1",
+    "document": "legal_context_capsule",
+    "capsule_version": "3.0-draft.1",
+    "capsule_id": "cap_3srrtk_nlrr9_e8M",
+    "matter_ref": "wf_VorHnOamNEFaFkTK",
+    "subject_ref": "subj_x_US0uvJ4e_vjPDdMcyDYx",
+    "controller": {
+      "kind": "user",
+      "note": "The user controls this export. The host that issued it is named in issuer."
+    },
+    "issuer": "urn:olip:host:v3-host",
+    "fictional": true,
+    "created_at": "2026-11-14T17:00:00.312Z",
+    "expires_at": "2026-11-21T17:00:00.311Z",
+    "source_provenance": {
+      "origin": "olip_3_0_draft_reference_host",
+      "method": "user_initiated_export",
+      "casebrief_revision": 1,
+      "as_of_event_sequence": 13,
+      "as_of_event_digest": "sha256:336591d023bd1b498918fecf7d748efa5ab41e002f10ba092e35df0bc933f0ae"
+    },
+    "included_fields": [
+      "facts.key_dates",
+      "matter.category",
+      "matter.jurisdiction"
+    ],
+    "excluded_fields": [
+      {
+        "path": "adverse_parties",
+        "reason": "not_selected_by_user"
+      },
+      {
+        "path": "facts.summary",
+        "reason": "not_selected_by_user"
+      },
+      {
+        "path": "goals",
+        "reason": "not_selected_by_user"
+      },
+      {
+        "path": "prospective_client.contact",
+        "reason": "not_selected_by_user"
+      },
+      {
+        "path": "prospective_client.name",
+        "reason": "not_selected_by_user"
+      },
+      {
+        "path": "related_parties",
+        "reason": "not_selected_by_user"
+      }
+    ],
+    "workflow_snapshot": {
+      "as_of": "2026-11-14T17:00:00.312Z",
+      "as_of_event_sequence": 13,
+      "as_of_event_digest": "sha256:336591d023bd1b498918fecf7d748efa5ab41e002f10ba092e35df0bc933f0ae",
+      "lifecycle": {
+        "matter": {
+          "state": "open",
+          "meaning": "The matter record exists."
+        },
+        "conflict_screens": [
+          {
+            "id": "scr_WmHgzV5tf0TD9SyI",
+            "organization_id": "org_test_alvarez",
+            "state": "eligible_for_further_intake",
+            "meaning": "The organization says intake may continue. This is NOT a conflict clearance finding and NOT representation.",
+            "revision": 2,
+            "reconciliation_required": false
+          }
+        ],
+        "consultations": [
+          {
+            "id": "cns_WhOgoiQnTUyp9kcp",
+            "organization_id": "org_test_alvarez",
+            "state": "confirmed",
+            "meaning": "The organization's scheduling system confirmed this time and time zone.",
+            "revision": 4,
+            "reconciliation_required": false
+          }
+        ],
+        "engagements": []
+      },
+      "pending_user_approvals": 0,
+      "authoritative_sources": {
+        "lifecycle_states": "the 2.0-draft host's status of record",
+        "firm_states": "firm-signed events"
+      }
+    },
+    "export_authorization": {
+      "authorized_by": "signed_in_user_session",
+      "purpose": "continue_with_another_assistant",
+      "originating_system": "urn:olip:host:v3-host",
+      "expires_at": "2026-11-21T17:00:00.311Z",
+      "onward_disclosure": false,
+      "authorizes_recipients": [],
+      "new_host_access": "Requires a separate import authorization from the user for one named assistant.",
+      "statement": "This capsule is not consent to contact or send anything to any organization."
+    },
+    "intended_host": {
+      "client_id": "agt_test_assistant_b"
+    },
+    "retention": {
+      "expires_at": "2026-11-21T17:00:00.311Z",
+      "revocation": "The user can revoke it on the issuing host; imports and reads there stop. Copies already taken elsewhere cannot be recalled.",
+      "deletion": "Mock host: in memory or a local snapshot file.",
+      "legal_hold_caveat": "Organizations that already received information keep it under their own legal duties."
+    },
+    "excludes": [
+      "model_chain_of_thought",
+      "raw_chat_transcripts",
+      "session_identifiers",
+      "credentials",
+      "unselected_casebrief_fields",
+      "document_contents"
+    ],
+    "schema_ref": "https://olip.ai/spec/3.0-draft/schemas/context-capsule.schema.json",
+    "encryption": {
+      "status": "recipient_key",
+      "alg": "ECDH-ES+HKDF-SHA256/A256GCM",
+      "recipient_kid": "kid_v3enc_c5b5e03cea96",
+      "content_digest": "sha256:dc7458647c23c4dea1915117ab604d60236eb11678dfff379b5c3f309dd591b5",
+      "statement": "Content is encrypted to one assistant's key. The issuing host saw the plaintext when it built the capsule. This is not end-to-end encryption between people."
+    },
+    "sealed_content": {
+      "alg": "ECDH-ES+HKDF-SHA256/A256GCM",
+      "recipient_kid": "kid_v3enc_c5b5e03cea96",
+      "epk": {
+        "kty": "OKP",
+        "crv": "X25519",
+        "x": "WhhgntJePfevh5Z4FcaWNvQDM824lVCMKuCZ6CIiZmQ"
+      },
+      "iv": "ZHWDedxRAY6n9Stw",
+      "tag": "LHGzn6_wsJrfK2y5ol6gfQ",
+      "aad": "cap_3srrtk_nlrr9_e8M|3.0-draft.1",
+      "ciphertext": "qF0cuV6O2JOTqm2N3f53qaP38dgPYgsvc89vF8CFR99vpfV9i0PjcfbZt3238sDhcx4YT4bl_62YNh8ghYbikabGfs7cd2pKg1qnao1cr-mOZ5hUFAK1MUZaXajafuRZGho7W6oNZFlkDKi2iRkuy33Gk3YjAuy0a_CJthANt6w0kgbsE2I33Wk4L4JIEduBFXST0ZUEtuiDzkAweQz5o96YnZ9f-zh0oPaiDv-NCBfw8O5YPEHXYpNT28xEiNpzTeVv8mc1rL63HQnj04mC-zmklgMaoKkNU9dViadtDXj_BCU3zlJ9US3fAd1Fr9ragQB8rOIRbnIa0zKwd7N_mmUBbti_VdMF5Zc8ZUcNVFlpR0QV3UG10WNGYkDENLYSfEPuKDYsdPriSmI8KVAHz9UxaU3IQwA5FTT9a-bdL_BrdB25HdkcmNbeSvA2HU3s1t4BhwKjBJGnuZyVc6jXRET4FX3zDM_RA_clGmZ20t6Hi0Mc7T8GpKMimumn18ssub0o-myQGcp8kUb0cl2qS9MMWcYDlUcnBxo7Shk2JvFj5qdADQ4ow5xihI0-3a2fsF2jCbyqOCEAFOOip-OaaKn979DH192eKYfHu2CUyhtcl1Cb77iS5DjvVIaDZebP9DE-QW5rAC1jNcJqRGI3qsw1TSlKLmqobrSAcK-cVm4ecvl9jEnxpVQfveiAOphEQPsfQRWJ-HVMlcUNqmVzrKT-Wuu2ZPC9RAGKinwE99LyqudacvoYI6hS76g923MYSIHkBAjdaBoLB71clwBx88YO9-4yl9NrtMhDEmlMiLPlwKhllM3iFSjyvBux6GUQUwQdXXuIfqoYb2-scKj3iHm155rzYMXtGl0jMlI1K6IqN5EnSqMmK2NuonYLnl1L4fggEllnoMTfvgyB6fbUeN20O13JNl1ye9eCA5RVGWeg0X2YpRZqmjiF4402n9n4YbKRFBNGiMjQANpNuj7tZYz1BGRtOTYNBSoqn2d_kPudFs1ngnJXFr7h5VPlnPSxC-g-pfx7D1HtzDx7A0LB3tVhETCOgUkGRKXV57ZKuMqTjDzQTh4cVcIR8sYzqoRXuZ3zv3algihqC0HdB875QlipgJvV64laEOy6zzbpr0kRgzezxTgEmv6rOKEl3YkcZRv3G2fI18dXF_jTfR-fSMjdc3dI4ONCZBP3ktzgyM2dD9jlxcGhImGYysg8Vp2saE641cvJKh3t3aBBD6OWMxOj6VY_3JsadiOQC0rEcs0eYHKRI5oqnhHXk5dp8ElagOdWuqqT9oz4G0rHP9fQ8YWyOXt2Yx-Wj7g-q9Lnx9dIyYckeSfNmnrD-RE_0KM3sBqDjWu7835HSAjKhY6rwBYl0sn_0A44PbOfAFN2H0eU9au1NBiKvZQuAsTbJ_O_eemVMOcjw8hInf_HY09y5GyPvFqiqNsRvxP25UkEPe4trxI3bUrJG6Ry_-_1YDafzZc8JoIb9EiQJ8D3PZ-NCxuB3oMYvuzWp6x5obBoOqaTfFMQK5_seVhYS9Wx3yH5_ljv8vQUHrm7b-CEkIPwG1pJPrWL7QA5cv482Yv_RcURNwW_O-k0T59MHXPyxWzyYo-cVqHBoNntBs75fNVm4PWpiIt-aScH41vKSqvsAcpS6-Wv3SlnDjng2l5Bb2dtNcjxGF76o4w-FpKT2Vu7F3TgS4E5nzNHuYEuRtV6t4vR-1XlCEiytQSZkfFk-lK8ekxJBJ2wi_fSTtduJgzJGQykLSFkS5OeO-LOBVmTQzp0yDLZjqGnExYsY578ty3lORvhIGD4CHcmJi1UEsoH95qJomZBsDLYhdRQurZqxNOYzTkpNTTxCbssbViPccc347ICJpWLogW_AQllhQ_j-hNEWIX8q2vspE9FwSdqmEp4-EWu3aZ2QUMGPXhVQBekg2Xm_DC0eleU1prEE0-ZnUNtDzxkkzBTzjRfGg8ofx08pH-b-lttmqCxb3RHeqgryOYsv-A1HXUEoC0PppNYq4eJsPPs726oYh-nR-73W_MfUJH2DNCOzlVLKssyiIj7mJIf1pGoaJJzRkXaJGaadclmEV5tu5qWxnZi8FgF_hYUsDSU4MiAw6-TSUcoLLmxOFFDxtJdJRBx5YO2-ajxFDcpUEZKXWzXAPLV1cJsaBDw-rWLciAlWFMQ82mY6CxJyHTG-NJDSTaq4O4EbEf-BAeYEBemgsIRjTblfWpRWm0O8ZcaYXEXQqQG6bEWcLtTiXOiB9cpAlICR2P5gsFUgHEQNNoCTsMLNoQm5jW2mZVlJeknrQZXnSUII1GcAlap37fUO_DLKbJwk8VWzgGhDibHS0PA9kiWDKq6kwjgXkEGPCUctE_oD2T0zM73YiLauYB5j6LMt3MlHpuFYSEGl3VAe_VaVsH4HfaLQtO2yt4LdtQjDqCAPy9aWMML8XFCP9OapZ_Q8jTMR1DNtXEqvXpM0J2Hh4K4GacU34BoJeK11z563uTVMwXok3XPhRrjiwzZrX5dWYTEfJ84I2ggRV3GNCCoEMxKW8kKS1QAUhKBFh7OiUen2hojgrQ06GjDaJt17cvoWyK6PQGNEBNuDK7Mfl7s9cG5nhLQZ10E720WxPmKbftvykaKgIhxoN8e7foO9U0vs1JJSd_D7qiwLwHlVLUkfeUTgZDJRWt86prihtnZlwu_EZbE2g8xt_xxXKk4lnSWkxAF8GQ_FPpKvrTT_kesRbBHZFJAyr4uh29B6u8OLmN42WLUE6V-JbvJfdB3Uvv8Tml5tFOXzkZOEc6KIpRJ8PemJXkaEP0e5MkwX_u3rZWezZV4CwIAyWD6StF8TroIvUxrpqf8EF1EfdqrNiKHybrCPCSTHEvUI84sP8LiMrso3cSbw62koqx3_UPKNldQp0Am2Q1743VTV6HRezfP3M8uJgwkyQWofgaK7R5xZe8cfU9tKai5V73vfjlRsaG9YxaJVNfDk7B3WEEazYvlPgAcfXUaVNcsKyw5kWylJ7-mV3nN-NnEprAD3H3KMAqmdVwYw7XiUJFfs0A5SvpwjPq4UL5xhrizaxpAqIw1hVaq5xkBLKu4ti14lNpH9MunjYpwbyDN82mCoPFSYuhp2QPA-myY-CBx2jEMYkUY3eW8oj5juTPkGjj0UTBHEFNluPPGVoB-DrIK1Xzwdh1sBcI1M0hWyIYSy5Uv5-IC743TJYnOpPKMMMwjnQjXMkaHRCGGNmpvRaVO9Uizr2X78m6D4RAF4YoDGdf0t6BtWbvvdbcKiohyks6WUUIQ0Y3rKBudD4pkQ3KexfdVctmUXgOYscn6tLEFvg5Qs_xlDwFvBtU2WNprV_bLrDH2MqkpbL1jbEPqNoPp-_8C0meee9QoigxDd1W-SqBHJsBb_Go9S686Vi3ECAmiMM0ra-X8q9yNbF0VfOX1cZhpl1Q2jl-_f_vPINicKazNVM9ThMedWO4ZX_Xb5_KzWsJtaTAd1Bg-p4QXRpJwC_nPEbsyjcTRk8vAhp3w9hezCgFUaRcvQE0NXjUbaKDegIhOO3c4iqh78K1RETbw7rHWZ-B_ZAtag279KsGku8SiSqfckfm1tyTpF_uoI5Nn4u-YgwNckQtAAxh-xtWkfcLXGGBGUsO6FqPfJJsrb_cCZcVT55drc0NI41NCVPbXGv_it6C_DRQI-JlYLGRmUhtIXBdKS1jiqVZhB9XeXsSS-7sfw4DnweS8alnYg9b5tM5yWED3QwkjDIcqZr1vfrY4CPa92jpa2V0KbSYL510AzF0CpRnNHXLBlOPyPqDa2x0RcvwANk7isvwl05o6ycrm_PubRx6TWtScCQoNugwe_EbwO9vHvZLevGRuG5XRYUY2NaBaf3ZoI6-7K4ZUQDLfXPusmcF2uBE6JnM-2lIn1MjSGywFqB-zh3FZyxLk6WMQF5sZ3406Zj9_0fge00sUFYWX1ati_GM8pUGWt4EDOAOAV8U8KE1NHmxVZLH4OXFNENQHQPfvUHxuQlSHezHp0nAZCyqzop2VBZJgG8mWWJlkAufvBkAMiMYYReyfmWd8GM_ITByFJEUheUqnxuTdLM4_etngS8D4vovzwwE0u3GDqv3M5vSxPrt-_nfzNYQxFXFKJ0X5pho1_r8oDkVsXhzFDfMKaoFcJVRS43mZZ85az2lpPG4wZBjEqJiN73LHB6EWYIwceP9dW6tl5uPDY22HDkFn_WyxXqSEdnCIcdDA--CQPqq2O_Vqn9v6Qy76E_TqDzXDPv8t1NR5eMPPMPB7tOO8EQxMa0pFqh42MgBMFDICRxUpZq5Tl3APbJ3nADBe1rd7K0bii5p7kQxYZYeZC4Qr06aZpWYpT12xx1GoB9jHdGAihvFb2O9-QTkP1pItKX2zGPFheyqe94cUdfsdlidlT2NhN-N86JmfhE0YXOxzbczCMVdEIlsr7i41SHLbsv_FHWEZKYIzEmoiLPtZMpwN0f5AJXY689Fy8ALQp5-jNjQMXj3W0KBQEg6_VumvTnz74tbrcBCmubNhzLlwbawacIN6rLnv4IWNq6OqrIYdPPiBJpQ0n7cRHHhf32zymbqfCPT47IT4YSMdxJSxe0Mxm5FOH9dQ1arHvKPWkTtf5BWx0CIvPQKVouYOXETg_nouofVEBJz4KmyNqhXz0V2YmRSdMPs4kr3FVYMkfgu9HafqtyOXy4hOMWdFFbA050UONaRzIms4GCXD3VwukAxtOt2f3RThwjq0I70kgYniV7Jxf9AL9gFUbeDE0x3_VBJ-Nxb9w4rolT5ongGXK7K3iwmObU_BUJCAwr-xARlL1Nt21wXSm8EE6hvXlWyQ4FKjpJl8ibZ8EOdYnJ7baPIuFgF7kcE9iX03tM_qH6DGfayt7hQghqCP6J-ZXCBCxR35LwF0_Bmq_y2vDYsYh0uHqwBAoTf-IQSEKEitbNqjSO9sB1zMQLVNAopE_244VQpMzR3VgKFWkZyWQO_QQO_MEGegIMUIQBMBJhyzGVvomBmwGVJqUS36zKuAzt0KFfQJ8_i9hWiqmYkYEM-r7H27pedviei76kFUy_Mg5fKYYACxFMfo94NoMaGEzcEXdw4PMYGG3V1aVJl2XulY8RviX7ZRi2MRBVDwHSYOzbqr_FX291pwvJerA8HXchoh2CRRTqlMxhwhZHHsVYEZzSiMsyStPavhVHKmSAqxZCZsjE0bUpnlmRj40lDVTlmWJ1BOfTV_F6LPcN0r2QotmWpp_GCUkIpbwbFr0DADjCLxeLWDxewDdQZazAujP8LX3E-XW7TgxEzbdiK4uRd2Fng0LqswpL9l_aZlJz9fDCIE1ZF_7Ve5rMqp52LVmwegbHufSedUbc7bTgk46PI7Z2mhOmQ1ecGm-rU_MGdKnrU48zNO7paGX10QlZvvtUtPsN2fZ9HpZ5KQS8lGdP9yPQZNw-_rW1GNJCZQ1llqbkO7ttECHWzrfr0G-ny1-j_l4em0540I5A1GL9ltyR9lOKg68voAjtGeo7Yb_f6syT4z9b9jU-E1wyDgPV9NyfZ4Byzl0GiCr9uvPzg-Ag"
+    },
+    "capsule_digest": "sha256:161b1989d98576169b6794bd32483ab85a2f77c9787af61d2bbbdd2858a714d9",
+    "signature": {
+      "alg": "EdDSA",
+      "kid": "kid_v3test_bb480e323394",
+      "value": "wYfIuvSPJ6iOXfCmTke7WLaypRglCdQa31PrAqjmOYgIxWJsoPxAu7zVxbZXpZ7w8srwzJOaEECug_x95fiOAA"
+    }
+  },
+  "grants_created": 1,
+  "authorizes_recipients": [],
+  "statement": "Imported for reading only. No approval was created and nothing was sent. Contacting any organization, including a different firm, needs a new approval from the user.",
+  "correlation_id": "cor_dy_PHbsYdohpk3zk",
+  "action_receipt": {
+    "action": "olip.import_context_capsule",
+    "effect": "authorized_state_change",
+    "decision": "allow",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+    "note": "A successful call means this host ran the action. It does not mean any organization received, read or accepted anything; read delivery and lifecycle states for that."
+  }
+}

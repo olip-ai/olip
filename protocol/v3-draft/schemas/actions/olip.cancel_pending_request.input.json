@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.cancel_pending_request.input.json",
+  "title": "Cancel a pending request (input)",
+  "type": "object",
+  "properties": {
+    "disclosure_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "The disclosure id returned earlier.",
+      "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+    }
+  },
+  "required": [
+    "disclosure_id"
+  ],
+  "additionalProperties": false
+}

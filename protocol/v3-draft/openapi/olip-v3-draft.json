@@ -1,0 +1,5970 @@
+{
+  "openapi": "3.1.0",
+  "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "info": {
+    "title": "OLIP 3.0-draft agent compatibility layer (PROPOSED, not adopted)",
+    "version": "3.0-draft.1",
+    "description": "Proposed draft. Not a stable release, not adopted by any standards body, not independently security reviewed, not approved by any bar or regulator. Fictional data only. Every path here is a design candidate served by the reference host, not a published production endpoint.",
+    "license": {
+      "name": "Apache-2.0 (code); see the repository LICENSE.md for specification text",
+      "identifier": "Apache-2.0"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1",
+      "description": "Local fictional sandbox only"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Tokens from the co-located 2.0-draft host (/olip/v2/token, /olip/v2/user-sessions). Mock credentials only."
+      }
+    },
+    "schemas": {
+      "action-contract": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/action-contract.schema.json",
+        "title": "Action contract",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^olip\\.[a-z_]+$"
+          },
+          "version": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "effects": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "privileged_admin",
+                "firm_authoritative",
+                "external_disclosure",
+                "authorized_state_change",
+                "local_preparation",
+                "read_only"
+              ]
+            },
+            "minItems": 1
+          },
+          "effect": {
+            "enum": [
+              "privileged_admin",
+              "firm_authoritative",
+              "external_disclosure",
+              "authorized_state_change",
+              "local_preparation",
+              "read_only"
+            ]
+          },
+          "effect_meaning": {
+            "type": "string"
+          },
+          "principals": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "public",
+                "user",
+                "agent",
+                "firm",
+                "operator"
+              ]
+            }
+          },
+          "approval": {
+            "enum": [
+              "none",
+              "user_out_of_band",
+              "user_session"
+            ]
+          },
+          "firm_authority": {
+            "type": "boolean"
+          },
+          "mutating": {
+            "type": "boolean"
+          },
+          "idempotency": {
+            "enum": [
+              "required",
+              "not_applicable"
+            ]
+          },
+          "retry": {
+            "enum": [
+              "safe",
+              "safe_with_same_key",
+              "never"
+            ]
+          },
+          "max_execution_ms": {
+            "type": "integer"
+          },
+          "response": {
+            "enum": [
+              "immediate",
+              "receipt"
+            ]
+          },
+          "preconditions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "transports": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "https",
+                "mcp",
+                "a2a"
+              ]
+            }
+          },
+          "input_schema": {
+            "type": "string"
+          },
+          "output_schema": {
+            "type": "string"
+          },
+          "enforcement_note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "effects",
+          "effect",
+          "principals",
+          "approval",
+          "firm_authority",
+          "mutating",
+          "idempotency",
+          "retry",
+          "transports",
+          "input_schema",
+          "output_schema"
+        ],
+        "additionalProperties": false
+      },
+      "agent-manifest": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/agent-manifest.schema.json",
+        "title": "Agent manifest",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "manifest_version": {
+            "const": "3.0-draft.1"
+          },
+          "release_status": {
+            "const": "proposed_draft_not_adopted"
+          },
+          "statement": {
+            "type": "string"
+          },
+          "provider_id": {
+            "type": "string"
+          },
+          "issuer": {
+            "type": "string"
+          },
+          "endpoint_origin": {
+            "type": "string"
+          },
+          "supported_olip_versions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "extension_id": {
+            "type": "string"
+          },
+          "profile": {
+            "type": "string"
+          },
+          "profiles": {
+            "type": "array"
+          },
+          "transport_bindings": {
+            "type": "object"
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "https://olip.ai/spec/3.0-draft/schemas/action-contract.schema.json"
+            }
+          },
+          "effects": {
+            "type": "object"
+          },
+          "policy": {
+            "type": "object"
+          },
+          "status_semantics": {
+            "type": "array"
+          },
+          "approval": {
+            "type": "object",
+            "properties": {
+              "user_approval_methods": {
+                "type": "array"
+              },
+              "approval_is_model_callable": {
+                "const": false
+              }
+            },
+            "required": [
+              "approval_is_model_callable"
+            ],
+            "additionalProperties": false
+          },
+          "neutrality": {
+            "type": "object",
+            "properties": {
+              "discovery_ordering": {
+                "type": "string"
+              },
+              "paid_influence": {
+                "const": false
+              },
+              "sponsor_services_required": {
+                "const": false
+              },
+              "sponsor_account_required": {
+                "const": false
+              }
+            },
+            "required": [
+              "paid_influence",
+              "sponsor_services_required",
+              "sponsor_account_required"
+            ],
+            "additionalProperties": false
+          },
+          "privacy": {
+            "type": "object"
+          },
+          "keys_url": {
+            "type": "string"
+          },
+          "errors_url": {
+            "type": "string"
+          },
+          "schemas_base": {
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "mock",
+              "production"
+            ]
+          },
+          "fictional_data_only": {
+            "type": "boolean"
+          },
+          "max_age_seconds": {
+            "type": "integer"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "etag": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "signature": {
+            "type": "object",
+            "properties": {
+              "alg": {
+                "const": "EdDSA"
+              },
+              "kid": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "required": [
+              "alg",
+              "kid",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "olip_version",
+          "manifest_version",
+          "release_status",
+          "provider_id",
+          "supported_olip_versions",
+          "actions",
+          "policy",
+          "neutrality",
+          "approval",
+          "etag",
+          "expires_at",
+          "signature"
+        ],
+        "additionalProperties": false
+      },
+      "error": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json",
+        "title": "Error",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "enum": [
+                  "VERSION_UNSUPPORTED",
+                  "ACTION_NOT_SUPPORTED",
+                  "SCHEMA_INVALID",
+                  "AUTH_REQUIRED",
+                  "SCOPE_INSUFFICIENT",
+                  "USER_APPROVAL_REQUIRED",
+                  "GRANT_EXPIRED",
+                  "GRANT_REVOKED",
+                  "DIGEST_MISMATCH",
+                  "RECIPIENT_MISMATCH",
+                  "FIRM_AUTHORITY_REQUIRED",
+                  "POLICY_UNREVIEWED",
+                  "POLICY_STALE",
+                  "PRECONDITION_MISSING",
+                  "CONFLICTING_STATE",
+                  "IDEMPOTENCY_CONFLICT",
+                  "IDEMPOTENCY_KEY_REQUIRED",
+                  "REPLAY_DETECTED",
+                  "EVENT_CURSOR_GAP",
+                  "SUBSCRIPTION_REVOKED",
+                  "CALLBACK_URL_REJECTED",
+                  "RECIPIENT_UNREACHABLE",
+                  "TRANSIENT_BACKEND_ERROR",
+                  "UNVERIFIED_EVIDENCE",
+                  "CAPSULE_INVALID",
+                  "SENSITIVE_DATA_BLOCKED",
+                  "RATE_LIMITED",
+                  "SECURITY_REVIEW_REQUIRED",
+                  "NOT_FOUND",
+                  "INTERNAL"
+                ]
+              },
+              "message": {
+                "type": "string"
+              },
+              "retryable": {
+                "type": "boolean"
+              },
+              "details": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "code",
+              "message",
+              "retryable"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "olip_version",
+          "error"
+        ],
+        "additionalProperties": false
+      },
+      "professionals": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/professionals.schema.json",
+        "title": "Organizations",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "ordering": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string"
+              },
+              "paid_influence": {
+                "const": false
+              }
+            },
+            "required": [
+              "method",
+              "paid_influence"
+            ],
+            "additionalProperties": false
+          },
+          "professionals": {
+            "type": "array"
+          },
+          "statement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "olip_version",
+          "ordering",
+          "professionals"
+        ],
+        "additionalProperties": false
+      },
+      "recipient-policy": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/recipient-policy.schema.json",
+        "title": "Recipient intake policy",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "organization_id": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "array"
+          },
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lifecycle_profiles": {
+            "type": "array"
+          }
+        },
+        "required": [
+          "olip_version",
+          "organization_id",
+          "fields"
+        ],
+        "additionalProperties": false
+      },
+      "casebrief-check": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/casebrief-check.schema.json",
+        "title": "CaseBrief check",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "casebrief_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "field_paths": {
+            "type": "array"
+          },
+          "missing_for_screening": {
+            "type": "array"
+          },
+          "sensitive_findings": {
+            "type": "object"
+          },
+          "instruction_like_text": {
+            "type": "object"
+          },
+          "transmitted": {
+            "const": false
+          },
+          "stored": {
+            "const": false
+          },
+          "statement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "olip_version",
+          "casebrief_digest",
+          "transmitted",
+          "stored"
+        ],
+        "additionalProperties": false
+      },
+      "workflow": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/workflow.schema.json",
+        "title": "Workflow",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "workflow": {
+            "type": "object",
+            "required": [
+              "workflow_id",
+              "head",
+              "lifecycle"
+            ]
+          },
+          "status_semantics": {
+            "type": "array"
+          },
+          "statement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "olip_version",
+          "workflow"
+        ],
+        "additionalProperties": false
+      },
+      "workflow-event": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/workflow-event.schema.json",
+        "title": "Workflow event envelope",
+        "description": "Signed, hash-chained entry in the 3.0-draft workflow journal. Holds references, never case content.",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "workflow_id": {
+            "type": "string"
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "event_type": {
+            "type": "string",
+            "pattern": "^[a-z_]+(\\.[a-z_]+)+$"
+          },
+          "schema_version": {
+            "const": "3.0-draft.1"
+          },
+          "recorded_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actor_type": {
+            "enum": [
+              "user",
+              "ai_host",
+              "firm_authorized_actor",
+              "lifecycle_host",
+              "operator"
+            ]
+          },
+          "actor_ref": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "authority_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source": {
+            "enum": [
+              "olip_3_layer",
+              "olip_2_0_draft_lifecycle"
+            ]
+          },
+          "v2_ref": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "seq": {
+                    "type": "integer"
+                  },
+                  "entry_hash": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "event_id": {
+                    "type": "string"
+                  },
+                  "signer_kid": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "attribution_at_mirror": {
+                    "type": "string"
+                  },
+                  "object": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "seq",
+                  "entry_hash",
+                  "event_id"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "payload_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "payload": {
+            "type": "object"
+          },
+          "previous_event_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "policy_version": {
+            "type": "string"
+          },
+          "idempotency_key": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "privacy_scope": {
+            "const": "participant_minimum"
+          },
+          "fictional": {
+            "type": "boolean"
+          },
+          "event_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "signature": {
+            "type": "object",
+            "properties": {
+              "alg": {
+                "const": "EdDSA"
+              },
+              "kid": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "required": [
+              "alg",
+              "kid",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "olip_version",
+          "event_id",
+          "workflow_id",
+          "sequence",
+          "event_type",
+          "recorded_at",
+          "actor_type",
+          "source",
+          "payload_digest",
+          "previous_event_digest",
+          "policy_version",
+          "event_digest",
+          "signature"
+        ],
+        "additionalProperties": false
+      },
+      "events-page": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/events-page.schema.json",
+        "title": "Workflow events page",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "workflow_id": {
+            "type": "string"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "https://olip.ai/spec/3.0-draft/schemas/workflow-event.schema.json"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          },
+          "has_more": {
+            "type": "boolean"
+          },
+          "head": {
+            "type": "object"
+          },
+          "chain": {
+            "type": "object"
+          },
+          "keys_url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "olip_version",
+          "workflow_id",
+          "entries",
+          "next_cursor",
+          "has_more",
+          "chain"
+        ],
+        "additionalProperties": false
+      },
+      "disclosure-preview": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/disclosure-preview.schema.json",
+        "title": "Prepared disclosure",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "disclosure": {
+            "type": "object",
+            "required": [
+              "disclosure_id",
+              "organization_id",
+              "stage",
+              "fields",
+              "state",
+              "approval"
+            ]
+          },
+          "sent": {
+            "const": false
+          },
+          "next": {
+            "type": "string"
+          },
+          "statement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "olip_version",
+          "disclosure",
+          "sent"
+        ],
+        "additionalProperties": false
+      },
+      "disclosure-result": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/disclosure-result.schema.json",
+        "title": "Disclosure result",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "disclosure": {
+            "type": "object"
+          },
+          "delivery": {
+            "type": "object"
+          },
+          "lifecycle_object": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "status_semantics": {
+            "type": "object"
+          },
+          "statement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "olip_version",
+          "disclosure"
+        ],
+        "additionalProperties": false
+      },
+      "next-actions-plan": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/next-actions-plan.schema.json",
+        "title": "Next actions plan",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "plan_version": {
+            "const": "3.0-draft.1"
+          },
+          "workflow_id": {
+            "type": "string"
+          },
+          "as_of_event_sequence": {
+            "type": "integer"
+          },
+          "as_of_event_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "desired_goal": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "next_actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "action": {
+                  "type": "string"
+                },
+                "operation": {
+                  "type": "string"
+                },
+                "target": {
+                  "type": "object"
+                },
+                "disposition": {
+                  "enum": [
+                    "allowed_read_only",
+                    "allowed",
+                    "requires_user_approval",
+                    "requires_firm_authority",
+                    "blocked"
+                  ]
+                },
+                "reason_code": {
+                  "type": "string",
+                  "pattern": "^[A-Z_]+$"
+                },
+                "missing_preconditions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "action",
+                "disposition",
+                "reason_code",
+                "missing_preconditions"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "policy_version": {
+            "type": "string"
+          },
+          "not_authorization": {
+            "const": true
+          },
+          "not_legal_advice": {
+            "const": true
+          },
+          "statement": {
+            "type": "string"
+          },
+          "plan_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "olip_version",
+          "plan_version",
+          "workflow_id",
+          "as_of_event_sequence",
+          "next_actions",
+          "policy_version",
+          "not_authorization",
+          "not_legal_advice",
+          "plan_digest"
+        ],
+        "additionalProperties": false
+      },
+      "context-capsule": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/context-capsule.schema.json",
+        "title": "Legal Context Capsule",
+        "description": "A user-controlled, signed, selective export of legal task context. Not a transcript, not assistant memory, not a privilege guarantee, and not authorization to contact any recipient.",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "document": {
+            "const": "legal_context_capsule"
+          },
+          "capsule_version": {
+            "const": "3.0-draft.1"
+          },
+          "capsule_id": {
+            "type": "string",
+            "pattern": "^cap_"
+          },
+          "matter_ref": {
+            "type": "string"
+          },
+          "subject_ref": {
+            "type": "string",
+            "pattern": "^subj_"
+          },
+          "controller": {
+            "type": "object"
+          },
+          "issuer": {
+            "type": "string"
+          },
+          "fictional": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "source_provenance": {
+            "type": "object",
+            "properties": {
+              "origin": {
+                "type": "string"
+              },
+              "method": {
+                "const": "user_initiated_export"
+              },
+              "casebrief_revision": {
+                "type": "integer"
+              },
+              "as_of_event_sequence": {
+                "type": "integer"
+              },
+              "as_of_event_digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "origin",
+              "method",
+              "as_of_event_sequence",
+              "as_of_event_digest"
+            ],
+            "additionalProperties": false
+          },
+          "included_fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "excluded_fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "workflow_snapshot": {
+            "type": "object",
+            "properties": {
+              "as_of": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "as_of_event_sequence": {
+                "type": "integer"
+              },
+              "as_of_event_digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "lifecycle": {
+                "type": "object"
+              },
+              "pending_user_approvals": {
+                "type": "integer"
+              },
+              "authoritative_sources": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "as_of",
+              "as_of_event_sequence",
+              "lifecycle"
+            ],
+            "additionalProperties": false
+          },
+          "export_authorization": {
+            "type": "object",
+            "properties": {
+              "authorized_by": {
+                "const": "signed_in_user_session"
+              },
+              "purpose": {
+                "enum": [
+                  "continue_with_another_assistant",
+                  "personal_record"
+                ]
+              },
+              "originating_system": {
+                "type": "string"
+              },
+              "expires_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "onward_disclosure": {
+                "const": false
+              },
+              "authorizes_recipients": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "new_host_access": {
+                "type": "string"
+              },
+              "statement": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "authorized_by",
+              "purpose",
+              "onward_disclosure",
+              "authorizes_recipients"
+            ],
+            "additionalProperties": false
+          },
+          "intended_host": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "client_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "client_id"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "retention": {
+            "type": "object",
+            "properties": {
+              "expires_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "revocation": {
+                "type": "string"
+              },
+              "deletion": {
+                "type": "string"
+              },
+              "legal_hold_caveat": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "expires_at",
+              "revocation",
+              "legal_hold_caveat"
+            ],
+            "additionalProperties": false
+          },
+          "excludes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "schema_ref": {
+            "type": "string"
+          },
+          "encryption": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "enum": [
+                  "none",
+                  "recipient_key"
+                ]
+              },
+              "alg": {
+                "type": "string"
+              },
+              "recipient_kid": {
+                "type": "string"
+              },
+              "content_digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "statement": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "statement"
+            ],
+            "additionalProperties": false
+          },
+          "content": {
+            "type": "object",
+            "properties": {
+              "assertions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "claim_id": {
+                      "type": "string"
+                    },
+                    "field_path": {
+                      "type": "string"
+                    },
+                    "value": {},
+                    "origin_type": {
+                      "enum": [
+                        "user_reported",
+                        "document_extracted",
+                        "official_source_checked",
+                        "firm_asserted",
+                        "third_party_asserted",
+                        "ai_interpretation"
+                      ]
+                    },
+                    "source_ref": {
+                      "type": "string"
+                    },
+                    "observed_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "verified_at": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "jurisdiction": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "extraction_method": {
+                      "type": "string"
+                    },
+                    "confidence_or_uncertainty": {
+                      "type": "string"
+                    },
+                    "verification_status": {
+                      "enum": [
+                        "unverified",
+                        "not_verified",
+                        "signature_verified_by_2_0_host",
+                        "verified_under_named_procedure"
+                      ]
+                    },
+                    "supersedes_claim_id": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "access_classification": {
+                      "enum": [
+                        "client_confidential",
+                        "public"
+                      ]
+                    },
+                    "content_digest": {
+                      "type": "string",
+                      "pattern": "^sha256:[0-9a-f]{64}$"
+                    },
+                    "untrusted_text_flags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "note": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "claim_id",
+                    "field_path",
+                    "value",
+                    "origin_type",
+                    "source_ref",
+                    "observed_at",
+                    "verified_at",
+                    "verification_status",
+                    "access_classification",
+                    "content_digest"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "conflicts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field_path": {
+                      "type": "string"
+                    },
+                    "claim_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "resolution": {
+                      "enum": [
+                        "unresolved",
+                        "resolved_by_user"
+                      ]
+                    },
+                    "statement": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "field_path",
+                    "claim_ids",
+                    "resolution"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "unresolved_questions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "question_id": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "origin_type": {
+                      "enum": [
+                        "user_reported",
+                        "document_extracted",
+                        "official_source_checked",
+                        "firm_asserted",
+                        "third_party_asserted",
+                        "ai_interpretation"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "question_id",
+                    "text",
+                    "origin_type"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "time_sensitive_fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field_path": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "value": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "timezone": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "origin_type": {
+                      "enum": [
+                        "user_reported",
+                        "document_extracted",
+                        "official_source_checked",
+                        "firm_asserted",
+                        "third_party_asserted",
+                        "ai_interpretation"
+                      ]
+                    },
+                    "verification_status": {
+                      "enum": [
+                        "unverified",
+                        "verified_under_named_procedure"
+                      ]
+                    },
+                    "calculation": {
+                      "type": "null"
+                    },
+                    "statement": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "field_path",
+                    "value",
+                    "origin_type",
+                    "verification_status",
+                    "calculation"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "document_refs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "document_id": {
+                      "type": "string"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^sha256:[0-9a-f]{64}$"
+                    },
+                    "mime": {
+                      "type": "string"
+                    },
+                    "access_scope": {
+                      "type": "string"
+                    },
+                    "content_included": {
+                      "const": false
+                    }
+                  },
+                  "required": [
+                    "document_id",
+                    "sha256",
+                    "access_scope",
+                    "content_included"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "assertions",
+              "conflicts",
+              "unresolved_questions",
+              "time_sensitive_fields",
+              "document_refs"
+            ],
+            "additionalProperties": false
+          },
+          "sealed_content": {
+            "type": "object",
+            "properties": {
+              "alg": {
+                "const": "ECDH-ES+HKDF-SHA256/A256GCM"
+              },
+              "recipient_kid": {
+                "type": "string"
+              },
+              "epk": {
+                "type": "object",
+                "properties": {
+                  "kty": {
+                    "const": "OKP"
+                  },
+                  "crv": {
+                    "const": "X25519"
+                  },
+                  "x": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kty",
+                  "crv",
+                  "x"
+                ],
+                "additionalProperties": false
+              },
+              "iv": {
+                "type": "string"
+              },
+              "tag": {
+                "type": "string"
+              },
+              "aad": {
+                "type": "string"
+              },
+              "ciphertext": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "alg",
+              "recipient_kid",
+              "epk",
+              "iv",
+              "tag",
+              "aad",
+              "ciphertext"
+            ],
+            "additionalProperties": false
+          },
+          "capsule_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "signature": {
+            "type": "object",
+            "properties": {
+              "alg": {
+                "const": "EdDSA"
+              },
+              "kid": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "required": [
+              "alg",
+              "kid",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "olip_version",
+          "document",
+          "capsule_version",
+          "capsule_id",
+          "matter_ref",
+          "subject_ref",
+          "issuer",
+          "created_at",
+          "expires_at",
+          "source_provenance",
+          "included_fields",
+          "excluded_fields",
+          "workflow_snapshot",
+          "export_authorization",
+          "retention",
+          "encryption",
+          "capsule_digest",
+          "signature"
+        ],
+        "additionalProperties": false,
+        "oneOf": [
+          {
+            "required": [
+              "content"
+            ],
+            "not": {
+              "required": [
+                "sealed_content"
+              ]
+            }
+          },
+          {
+            "required": [
+              "sealed_content"
+            ],
+            "not": {
+              "required": [
+                "content"
+              ]
+            }
+          }
+        ],
+        "$defs": {
+          "content": {
+            "type": "object",
+            "properties": {
+              "assertions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "claim_id": {
+                      "type": "string"
+                    },
+                    "field_path": {
+                      "type": "string"
+                    },
+                    "value": {},
+                    "origin_type": {
+                      "enum": [
+                        "user_reported",
+                        "document_extracted",
+                        "official_source_checked",
+                        "firm_asserted",
+                        "third_party_asserted",
+                        "ai_interpretation"
+                      ]
+                    },
+                    "source_ref": {
+                      "type": "string"
+                    },
+                    "observed_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "verified_at": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "jurisdiction": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "extraction_method": {
+                      "type": "string"
+                    },
+                    "confidence_or_uncertainty": {
+                      "type": "string"
+                    },
+                    "verification_status": {
+                      "enum": [
+                        "unverified",
+                        "not_verified",
+                        "signature_verified_by_2_0_host",
+                        "verified_under_named_procedure"
+                      ]
+                    },
+                    "supersedes_claim_id": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "access_classification": {
+                      "enum": [
+                        "client_confidential",
+                        "public"
+                      ]
+                    },
+                    "content_digest": {
+                      "type": "string",
+                      "pattern": "^sha256:[0-9a-f]{64}$"
+                    },
+                    "untrusted_text_flags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "note": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "claim_id",
+                    "field_path",
+                    "value",
+                    "origin_type",
+                    "source_ref",
+                    "observed_at",
+                    "verified_at",
+                    "verification_status",
+                    "access_classification",
+                    "content_digest"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "conflicts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field_path": {
+                      "type": "string"
+                    },
+                    "claim_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "resolution": {
+                      "enum": [
+                        "unresolved",
+                        "resolved_by_user"
+                      ]
+                    },
+                    "statement": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "field_path",
+                    "claim_ids",
+                    "resolution"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "unresolved_questions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "question_id": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "origin_type": {
+                      "enum": [
+                        "user_reported",
+                        "document_extracted",
+                        "official_source_checked",
+                        "firm_asserted",
+                        "third_party_asserted",
+                        "ai_interpretation"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "question_id",
+                    "text",
+                    "origin_type"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "time_sensitive_fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field_path": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "value": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "timezone": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "origin_type": {
+                      "enum": [
+                        "user_reported",
+                        "document_extracted",
+                        "official_source_checked",
+                        "firm_asserted",
+                        "third_party_asserted",
+                        "ai_interpretation"
+                      ]
+                    },
+                    "verification_status": {
+                      "enum": [
+                        "unverified",
+                        "verified_under_named_procedure"
+                      ]
+                    },
+                    "calculation": {
+                      "type": "null"
+                    },
+                    "statement": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "field_path",
+                    "value",
+                    "origin_type",
+                    "verification_status",
+                    "calculation"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "document_refs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "document_id": {
+                      "type": "string"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^sha256:[0-9a-f]{64}$"
+                    },
+                    "mime": {
+                      "type": "string"
+                    },
+                    "access_scope": {
+                      "type": "string"
+                    },
+                    "content_included": {
+                      "const": false
+                    }
+                  },
+                  "required": [
+                    "document_id",
+                    "sha256",
+                    "access_scope",
+                    "content_included"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "assertions",
+              "conflicts",
+              "unresolved_questions",
+              "time_sensitive_fields",
+              "document_refs"
+            ],
+            "additionalProperties": false
+          },
+          "assertion": {
+            "type": "object",
+            "properties": {
+              "claim_id": {
+                "type": "string"
+              },
+              "field_path": {
+                "type": "string"
+              },
+              "value": {},
+              "origin_type": {
+                "enum": [
+                  "user_reported",
+                  "document_extracted",
+                  "official_source_checked",
+                  "firm_asserted",
+                  "third_party_asserted",
+                  "ai_interpretation"
+                ]
+              },
+              "source_ref": {
+                "type": "string"
+              },
+              "observed_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "verified_at": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "jurisdiction": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "extraction_method": {
+                "type": "string"
+              },
+              "confidence_or_uncertainty": {
+                "type": "string"
+              },
+              "verification_status": {
+                "enum": [
+                  "unverified",
+                  "not_verified",
+                  "signature_verified_by_2_0_host",
+                  "verified_under_named_procedure"
+                ]
+              },
+              "supersedes_claim_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "access_classification": {
+                "enum": [
+                  "client_confidential",
+                  "public"
+                ]
+              },
+              "content_digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "untrusted_text_flags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "note": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "claim_id",
+              "field_path",
+              "value",
+              "origin_type",
+              "source_ref",
+              "observed_at",
+              "verified_at",
+              "verification_status",
+              "access_classification",
+              "content_digest"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "context-capsule-export": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/context-capsule-export.schema.json",
+        "title": "Capsule export result",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "capsule": {
+            "$ref": "https://olip.ai/spec/3.0-draft/schemas/context-capsule.schema.json"
+          },
+          "transmitted": {
+            "const": false
+          },
+          "statement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "olip_version",
+          "capsule",
+          "transmitted"
+        ],
+        "additionalProperties": false
+      },
+      "capsule-check": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/capsule-check.schema.json",
+        "title": "Capsule check",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "ok": {
+            "type": "boolean"
+          },
+          "problems": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "issuer_kid": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "encrypted": {
+            "type": "boolean"
+          },
+          "stored": {
+            "const": false
+          }
+        },
+        "required": [
+          "olip_version",
+          "ok",
+          "problems"
+        ],
+        "additionalProperties": false
+      },
+      "import-authorization": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/import-authorization.schema.json",
+        "title": "Capsule import authorization",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "import_authorization": {
+            "type": "object",
+            "properties": {
+              "olip_version": {
+                "const": "3.0-draft.1"
+              },
+              "import_authorization_id": {
+                "type": "string"
+              },
+              "capsule_id": {
+                "type": "string"
+              },
+              "capsule_digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "client_id": {
+                "type": "string"
+              },
+              "subject_ref": {
+                "type": "string"
+              },
+              "authorized_by": {
+                "const": "signed_in_user_session"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "expires_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "nonce": {
+                "type": "string"
+              },
+              "max_uses": {
+                "const": 1
+              },
+              "scope": {
+                "type": "array"
+              },
+              "authorizes_recipients": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "statement": {
+                "type": "string"
+              },
+              "signature": {
+                "type": "object",
+                "properties": {
+                  "alg": {
+                    "const": "EdDSA"
+                  },
+                  "kid": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-]+$"
+                  }
+                },
+                "required": [
+                  "alg",
+                  "kid",
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "import_authorization_id",
+              "capsule_id",
+              "capsule_digest",
+              "client_id",
+              "expires_at",
+              "authorizes_recipients",
+              "signature"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "olip_version",
+          "import_authorization"
+        ],
+        "additionalProperties": false
+      },
+      "capsule-import": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/capsule-import.schema.json",
+        "title": "Imported capsule",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "import": {
+            "type": "object"
+          },
+          "capsule": {
+            "$ref": "https://olip.ai/spec/3.0-draft/schemas/context-capsule.schema.json"
+          },
+          "grants_created": {
+            "const": 0
+          },
+          "authorizes_recipients": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "statement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "olip_version",
+          "import",
+          "capsule",
+          "grants_created",
+          "authorizes_recipients"
+        ],
+        "additionalProperties": false
+      },
+      "capsule-revocation": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/capsule-revocation.schema.json",
+        "title": "Capsule revocation",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "capsule_id": {
+            "type": "string"
+          },
+          "revoked": {
+            "const": true
+          },
+          "revoked_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "statement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "olip_version",
+          "capsule_id",
+          "revoked"
+        ],
+        "additionalProperties": false
+      },
+      "subscription": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/subscription.schema.json",
+        "title": "Subscription",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "subscription": {
+            "type": "object",
+            "required": [
+              "subscription_id",
+              "workflow_id",
+              "active",
+              "verification"
+            ]
+          }
+        },
+        "required": [
+          "olip_version",
+          "subscription"
+        ],
+        "additionalProperties": false
+      },
+      "webhook": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/webhook.schema.json",
+        "title": "Webhook hint",
+        "description": "Signed, minimal, content-free hint. Receivers verify the signature, check sent_at skew and deduplicate on webhook_id.",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "webhook_id": {
+            "type": "string"
+          },
+          "subscription_id": {
+            "type": "string"
+          },
+          "workflow_id": {
+            "type": "string"
+          },
+          "event_sequence": {
+            "type": "integer"
+          },
+          "event_type": {
+            "type": "string"
+          },
+          "event_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "sent_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "statement": {
+            "type": "string"
+          },
+          "signature": {
+            "type": "object",
+            "properties": {
+              "alg": {
+                "const": "EdDSA"
+              },
+              "kid": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]+$"
+              }
+            },
+            "required": [
+              "alg",
+              "kid",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "olip_version",
+          "webhook_id",
+          "subscription_id",
+          "workflow_id",
+          "event_sequence",
+          "event_type",
+          "event_digest",
+          "sent_at",
+          "signature"
+        ],
+        "additionalProperties": false
+      },
+      "lifecycle-result": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/lifecycle-result.schema.json",
+        "title": "Lifecycle step result",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "lifecycle_v2_route": {
+            "type": "string"
+          },
+          "result": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "effect": {
+            "enum": [
+              "privileged_admin",
+              "firm_authoritative",
+              "external_disclosure",
+              "authorized_state_change",
+              "local_preparation",
+              "read_only"
+            ]
+          },
+          "next": {
+            "type": "string"
+          },
+          "statement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "olip_version",
+          "operation",
+          "lifecycle_v2_route",
+          "result",
+          "effect"
+        ],
+        "additionalProperties": false
+      },
+      "policy-change": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/policy-change.schema.json",
+        "title": "Policy change",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "jurisdiction": {
+            "type": "string"
+          },
+          "rule": {
+            "type": "object"
+          },
+          "policy_version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "olip_version",
+          "jurisdiction",
+          "rule",
+          "policy_version"
+        ],
+        "additionalProperties": false
+      },
+      "decision": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/decision.schema.json",
+        "title": "Policy decision",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "decision": {
+            "enum": [
+              "allow",
+              "require_user_approval",
+              "require_firm_authority",
+              "deny",
+              "unknown_policy"
+            ]
+          },
+          "reason_code": {
+            "type": "string"
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "policy_version": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "olip_version",
+          "decision",
+          "reason_code",
+          "missing",
+          "policy_version"
+        ],
+        "additionalProperties": false
+      },
+      "keys": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/keys.schema.json",
+        "title": "Host keys",
+        "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+        "type": "object",
+        "properties": {
+          "olip_version": {
+            "const": "3.0-draft.1"
+          },
+          "correlation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "action_receipt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "privileged_admin",
+                  "firm_authoritative",
+                  "external_disclosure",
+                  "authorized_state_change",
+                  "local_preparation",
+                  "read_only"
+                ]
+              },
+              "decision": {
+                "type": "string"
+              },
+              "policy_version": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "effect",
+              "decision",
+              "policy_version",
+              "note"
+            ],
+            "additionalProperties": false
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "keys": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "kty",
+                "kid"
+              ]
+            }
+          }
+        },
+        "required": [
+          "olip_version",
+          "keys"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.get_capabilities": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.get_capabilities.input.json",
+        "title": "Get capabilities (input)",
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "input.olip.find_professionals": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.find_professionals.input.json",
+        "title": "Find organizations (input)",
+        "type": "object",
+        "properties": {
+          "jurisdiction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "ISO 3166-2 code, e.g. US-CA",
+            "pattern": "^[A-Z]{2}-[A-Z0-9]{1,3}$"
+          },
+          "matter_type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "e.g. housing.landlord_tenant",
+            "pattern": "^[a-z_]+(\\.[a-z_]+)*$"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "input.olip.get_recipient_policy": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.get_recipient_policy.input.json",
+        "title": "Get an organization's intake policy (input)",
+        "type": "object",
+        "properties": {
+          "organization_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The organization id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "stage": {
+            "enum": [
+              "screening",
+              "casebrief"
+            ]
+          }
+        },
+        "required": [
+          "organization_id"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.prepare_casebrief": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.prepare_casebrief.input.json",
+        "title": "Check a CaseBrief draft (input)",
+        "type": "object",
+        "properties": {
+          "casebrief": {
+            "type": "object",
+            "description": "The user's own CaseBrief draft. Fictional data only in this build. Treated as untrusted data, never as instructions.",
+            "maxProperties": 30
+          }
+        },
+        "required": [
+          "casebrief"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.start_workflow": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.start_workflow.input.json",
+        "title": "Start a workflow (input)",
+        "type": "object",
+        "properties": {
+          "casebrief": {
+            "type": "object",
+            "description": "The user's own CaseBrief draft. Fictional data only in this build. Treated as untrusted data, never as instructions.",
+            "maxProperties": 30
+          },
+          "fictional": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "casebrief"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.get_workflow": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.get_workflow.input.json",
+        "title": "Get workflow status (input)",
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The workflow id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          }
+        },
+        "required": [
+          "workflow_id"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.list_workflow_events": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.list_workflow_events.input.json",
+        "title": "List workflow events (input)",
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The workflow id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "cursor": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 400,
+            "description": "Opaque cursor from an earlier page."
+          },
+          "last_seen_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "workflow_id"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.preview_disclosure": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.preview_disclosure.input.json",
+        "title": "Prepare a disclosure for approval (input)",
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The workflow id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "organization_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The organization id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "stage": {
+            "enum": [
+              "screening",
+              "casebrief"
+            ]
+          },
+          "fields": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 40,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z_]+(\\.[a-z_]+)*$"
+            },
+            "description": "Field paths, exactly as the organization's intake questions list them."
+          }
+        },
+        "required": [
+          "workflow_id",
+          "organization_id",
+          "stage",
+          "fields"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.submit_approved_disclosure": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.submit_approved_disclosure.input.json",
+        "title": "Send an approved disclosure (input)",
+        "type": "object",
+        "properties": {
+          "disclosure_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The disclosure id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "grant_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The grant id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "grant_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "disclosure_id",
+          "grant_id",
+          "grant_digest"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.cancel_pending_request": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.cancel_pending_request.input.json",
+        "title": "Cancel a pending request (input)",
+        "type": "object",
+        "properties": {
+          "disclosure_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The disclosure id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          }
+        },
+        "required": [
+          "disclosure_id"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.plan_next_actions": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.plan_next_actions.input.json",
+        "title": "Plan next actions (input)",
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The workflow id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "desired_goal": {
+            "enum": [
+              "find_counsel",
+              "share_screening",
+              "share_casebrief",
+              "schedule_consultation",
+              "review_engagement",
+              "message_firm",
+              "move_to_another_assistant",
+              "close_out"
+            ]
+          },
+          "known_event_cursor": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 400,
+            "description": "Optional cursor the caller last read."
+          }
+        },
+        "required": [
+          "workflow_id"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.export_context_capsule": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.export_context_capsule.input.json",
+        "title": "Export a context capsule (input)",
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The workflow id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "include_fields": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 40,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z_]+(\\.[a-z_]+)*$"
+            },
+            "description": "Field paths, exactly as the organization's intake questions list them."
+          },
+          "unresolved_questions": {
+            "type": "array",
+            "maxItems": 20,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300,
+              "description": "A question nobody has answered yet."
+            }
+          },
+          "ai_interpretations": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "type": "object",
+              "properties": {
+                "field_path": {
+                  "type": "string",
+                  "pattern": "^[a-z_]+(\\.[a-z_]+)*$"
+                },
+                "value": {},
+                "note": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 300
+                }
+              },
+              "required": [
+                "field_path",
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "intended_host": {
+            "type": "object",
+            "properties": {
+              "client_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512,
+                "description": "The assistant client id returned earlier.",
+                "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+              },
+              "encryption_key": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "client_id"
+            ],
+            "additionalProperties": false
+          },
+          "purpose": {
+            "enum": [
+              "continue_with_another_assistant",
+              "personal_record"
+            ]
+          },
+          "expires_in_seconds": {
+            "type": "integer",
+            "minimum": 300,
+            "maximum": 2592000
+          }
+        },
+        "required": [
+          "workflow_id",
+          "include_fields",
+          "purpose"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.validate_context_capsule": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.validate_context_capsule.input.json",
+        "title": "Validate a context capsule (input)",
+        "type": "object",
+        "properties": {
+          "capsule": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "capsule"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.authorize_capsule_import": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.authorize_capsule_import.input.json",
+        "title": "Allow an assistant to import a capsule (input)",
+        "type": "object",
+        "properties": {
+          "capsule_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The capsule id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "capsule_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "client_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The assistant client id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "expires_in_seconds": {
+            "type": "integer",
+            "minimum": 60,
+            "maximum": 86400
+          }
+        },
+        "required": [
+          "capsule_id",
+          "capsule_digest",
+          "client_id"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.import_context_capsule": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.import_context_capsule.input.json",
+        "title": "Import a context capsule (input)",
+        "type": "object",
+        "properties": {
+          "capsule": {
+            "type": "object"
+          },
+          "import_authorization_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The import authorization id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          }
+        },
+        "required": [
+          "capsule",
+          "import_authorization_id"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.get_imported_capsule": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.get_imported_capsule.input.json",
+        "title": "Read an imported capsule (input)",
+        "type": "object",
+        "properties": {
+          "capsule_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The capsule id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          }
+        },
+        "required": [
+          "capsule_id"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.revoke_context_capsule": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.revoke_context_capsule.input.json",
+        "title": "Revoke a capsule (input)",
+        "type": "object",
+        "properties": {
+          "capsule_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The capsule id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          }
+        },
+        "required": [
+          "capsule_id"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.subscribe_events": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.subscribe_events.input.json",
+        "title": "Subscribe to workflow events (input)",
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The workflow id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "callback_url": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "description": "https URL you control."
+          }
+        },
+        "required": [
+          "workflow_id",
+          "callback_url"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.cancel_subscription": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.cancel_subscription.input.json",
+        "title": "Cancel a subscription (input)",
+        "type": "object",
+        "properties": {
+          "subscription_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The subscription id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          }
+        },
+        "required": [
+          "subscription_id"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.call_lifecycle": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.call_lifecycle.input.json",
+        "title": "Use a 2.0-draft lifecycle step (input)",
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The workflow id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "operation": {
+            "enum": [
+              "get_conflict_screen",
+              "get_consultation",
+              "get_engagement",
+              "get_thread",
+              "get_messages",
+              "get_matter_events",
+              "request_consultation",
+              "propose_consultation_slot",
+              "respond_to_engagement_offer",
+              "create_thread",
+              "send_message",
+              "submit_consultation_request",
+              "submit_consultation_proposal",
+              "send_authorized_message"
+            ]
+          },
+          "object_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The object id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "body": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "workflow_id",
+          "operation"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.record_firm_event": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.record_firm_event.input.json",
+        "title": "Record a firm-signed event (input)",
+        "type": "object",
+        "properties": {
+          "object_type": {
+            "enum": [
+              "conflict_screen",
+              "consultation",
+              "engagement",
+              "message",
+              "thread",
+              "matter",
+              "engagement_offer"
+            ]
+          },
+          "object_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "description": "The object id returned earlier.",
+            "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+          },
+          "event": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "object_type",
+          "object_id",
+          "event"
+        ],
+        "additionalProperties": false
+      },
+      "input.olip.set_jurisdiction_policy": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.set_jurisdiction_policy.input.json",
+        "title": "Set jurisdiction policy (operator) (input)",
+        "type": "object",
+        "properties": {
+          "jurisdiction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^[A-Z]{2}-[A-Z0-9]{1,3}$"
+          },
+          "status": {
+            "enum": [
+              "sandbox_only",
+              "suspended",
+              "pending_counsel_review",
+              "approved_by_counsel"
+            ]
+          },
+          "reviewed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "review_by": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "jurisdiction",
+          "status"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "paths": {
+    "/olip/v3/agent-manifest": {
+      "get": {
+        "operationId": "get_capabilities",
+        "summary": "Get capabilities",
+        "description": "This host's 3.0-draft agent manifest: actions, effects, approval rules, policy status and bindings.\n\nEffect: read_only (No external effect. Still access-controlled.) Principals: public. Approval: none.",
+        "tags": [
+          "read_only"
+        ],
+        "parameters": [
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/agent-manifest.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.get_capabilities",
+        "x-olip-effect": "read_only"
+      }
+    },
+    "/.well-known/olip-agent.json": {
+      "get": {
+        "operationId": "get_capabilities_well_known",
+        "summary": "Get capabilities",
+        "description": "This host's 3.0-draft agent manifest: actions, effects, approval rules, policy status and bindings.\n\nEffect: read_only (No external effect. Still access-controlled.) Principals: public. Approval: none.",
+        "tags": [
+          "read_only"
+        ],
+        "parameters": [
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/agent-manifest.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.get_capabilities",
+        "x-olip-effect": "read_only"
+      }
+    },
+    "/olip/v3/professionals": {
+      "get": {
+        "operationId": "find_professionals",
+        "summary": "Find organizations",
+        "description": "Organizations reachable through this host for a place and type of matter. Alphabetical; payment never affects inclusion or order. Show every result; the USER picks.\n\nEffect: read_only (No external effect. Still access-controlled.) Principals: public. Approval: none.",
+        "tags": [
+          "read_only"
+        ],
+        "parameters": [
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "matter_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/professionals.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.find_professionals",
+        "x-olip-effect": "read_only"
+      }
+    },
+    "/olip/v3/recipients/{organization_id}/policy": {
+      "get": {
+        "operationId": "get_recipient_policy",
+        "summary": "Get an organization's intake policy",
+        "description": "Which stages and fields an organization accepts, and its limits. Screening asks only what a conflicts check needs.\n\nEffect: read_only (No external effect. Still access-controlled.) Principals: public. Approval: none.",
+        "tags": [
+          "read_only"
+        ],
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stage",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/recipient-policy.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.get_recipient_policy",
+        "x-olip-effect": "read_only"
+      }
+    },
+    "/olip/v3/casebriefs/check": {
+      "post": {
+        "operationId": "prepare_casebrief",
+        "summary": "Check a CaseBrief draft",
+        "description": "Checks a CaseBrief draft locally: shape, sensitive data, instruction-like text. Sends nothing and stores nothing.\n\nEffect: local_preparation (Computes a draft, preview or validation. Sends nothing to any third party.) Principals: user, agent. Approval: none.",
+        "tags": [
+          "local_preparation"
+        ],
+        "parameters": [
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/casebrief-check.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.prepare_casebrief",
+        "x-olip-effect": "local_preparation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.prepare_casebrief.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/workflows": {
+      "post": {
+        "operationId": "start_workflow",
+        "summary": "Start a workflow",
+        "description": "Creates the user's matter (through the unchanged 2.0-draft host) and a durable workflow id. Nothing is sent to anyone.\n\nEffect: authorized_state_change (Changes only the caller's own already-authorized workflow, settings or consent records.) Principals: user, agent. Approval: none.",
+        "tags": [
+          "authorized_state_change"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/workflow.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.start_workflow",
+        "x-olip-effect": "authorized_state_change",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.start_workflow.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/workflows/{workflow_id}": {
+      "get": {
+        "operationId": "get_workflow",
+        "summary": "Get workflow status",
+        "description": "The workflow's status of record, with each state's meaning and what it does NOT mean. Repeat meanings exactly.\n\nEffect: read_only (No external effect. Still access-controlled.) Principals: user, agent. Approval: none.",
+        "tags": [
+          "read_only"
+        ],
+        "parameters": [
+          {
+            "name": "workflow_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/workflow.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.get_workflow",
+        "x-olip-effect": "read_only"
+      }
+    },
+    "/olip/v3/workflows/{workflow_id}/events": {
+      "get": {
+        "operationId": "list_workflow_events",
+        "summary": "List workflow events",
+        "description": "Signed, hash-chained workflow events after a cursor. Pass last_seen_digest to detect gaps. Polling is fully supported.\n\nEffect: read_only (No external effect. Still access-controlled.) Principals: user, agent. Approval: none.",
+        "tags": [
+          "read_only"
+        ],
+        "parameters": [
+          {
+            "name": "workflow_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "last_seen_digest",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/events-page.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.list_workflow_events",
+        "x-olip-effect": "read_only"
+      }
+    },
+    "/olip/v3/workflows/{workflow_id}/cancel": {
+      "post": {
+        "operationId": "cancel_pending_request",
+        "summary": "Cancel a pending request",
+        "description": "Cancels a prepared disclosure that has not been sent. It cannot undo anything already delivered.\n\nEffect: authorized_state_change (Changes only the caller's own already-authorized workflow, settings or consent records.) Principals: user, agent. Approval: none.",
+        "tags": [
+          "authorized_state_change"
+        ],
+        "parameters": [
+          {
+            "name": "workflow_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/disclosure-result.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.cancel_pending_request",
+        "x-olip-effect": "authorized_state_change"
+      }
+    },
+    "/olip/v3/disclosures/preview": {
+      "post": {
+        "operationId": "preview_disclosure",
+        "summary": "Prepare a disclosure for approval",
+        "description": "Prepares exactly what would go to ONE organization the user picked, and returns the user's approval page. Nothing is sent. Only the user can approve, on that page.\n\nEffect: local_preparation (Computes a draft, preview or validation. Sends nothing to any third party.) Principals: user, agent. Approval: none.",
+        "tags": [
+          "local_preparation"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/disclosure-preview.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.preview_disclosure",
+        "x-olip-effect": "local_preparation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.preview_disclosure.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/disclosures/submit": {
+      "post": {
+        "operationId": "submit_approved_disclosure",
+        "summary": "Send an approved disclosure",
+        "description": "Sends what the USER approved, to the one recipient they approved, if the content still matches byte for byte. Rechecked immediately before sending. Report delivery.state exactly.\n\nEffect: external_disclosure (Sends client or case information to a recipient. Needs the user's approval bound to that exact recipient and content.) Principals: user, agent. Approval: user_out_of_band.",
+        "tags": [
+          "external_disclosure"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/disclosure-result.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.submit_approved_disclosure",
+        "x-olip-effect": "external_disclosure",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.submit_approved_disclosure.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/actions/plan-next": {
+      "post": {
+        "operationId": "plan_next_actions",
+        "summary": "Plan next actions",
+        "description": "Deterministic list of procedural next steps: allowed, blocked, or needing the user's approval or the firm's authority. NOT permission and NOT legal advice; every step is rechecked when called.\n\nEffect: local_preparation (Computes a draft, preview or validation. Sends nothing to any third party.) Principals: user, agent. Approval: none.",
+        "tags": [
+          "local_preparation"
+        ],
+        "parameters": [
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/next-actions-plan.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.plan_next_actions",
+        "x-olip-effect": "local_preparation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.plan_next_actions.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/capsules/export": {
+      "post": {
+        "operationId": "export_context_capsule",
+        "summary": "Export a context capsule",
+        "description": "The USER exports a selected, signed, portable summary of the matter for themselves or one named assistant. It sends nothing and authorizes no recipient.\n\nEffect: local_preparation (Computes a draft, preview or validation. Sends nothing to any third party.) Principals: user. Approval: user_session.",
+        "tags": [
+          "local_preparation"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/context-capsule-export.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.export_context_capsule",
+        "x-olip-effect": "local_preparation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.export_context_capsule.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/capsules/validate": {
+      "post": {
+        "operationId": "validate_context_capsule",
+        "summary": "Validate a context capsule",
+        "description": "Checks a capsule's schema, digest, signature, expiry and revocation. Stores nothing.\n\nEffect: local_preparation (Computes a draft, preview or validation. Sends nothing to any third party.) Principals: user, agent. Approval: none.",
+        "tags": [
+          "local_preparation"
+        ],
+        "parameters": [
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/capsule-check.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.validate_context_capsule",
+        "x-olip-effect": "local_preparation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.validate_context_capsule.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/capsules/import-authorizations": {
+      "post": {
+        "operationId": "authorize_capsule_import",
+        "summary": "Allow an assistant to import a capsule",
+        "description": "The USER lets ONE named assistant import ONE exact capsule. It gives that assistant no right to contact anyone.\n\nEffect: authorized_state_change (Changes only the caller's own already-authorized workflow, settings or consent records.) Principals: user. Approval: user_session.",
+        "tags": [
+          "authorized_state_change"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/import-authorization.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.authorize_capsule_import",
+        "x-olip-effect": "authorized_state_change",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.authorize_capsule_import.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/capsules/import": {
+      "post": {
+        "operationId": "import_context_capsule",
+        "summary": "Import a context capsule",
+        "description": "Imports a capsule the user authorized for this assistant. Import creates no approval and sends nothing; contacting any organization still needs a new approval.\n\nEffect: authorized_state_change (Changes only the caller's own already-authorized workflow, settings or consent records.) Principals: agent. Approval: user_session.",
+        "tags": [
+          "authorized_state_change"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/capsule-import.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.import_context_capsule",
+        "x-olip-effect": "authorized_state_change",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.import_context_capsule.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/capsules/{capsule_id}": {
+      "get": {
+        "operationId": "get_imported_capsule",
+        "summary": "Read an imported capsule",
+        "description": "The imported capsule, for the assistant that imported it, while it is not expired or revoked.\n\nEffect: read_only (No external effect. Still access-controlled.) Principals: agent. Approval: none.",
+        "tags": [
+          "read_only"
+        ],
+        "parameters": [
+          {
+            "name": "capsule_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/capsule-import.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.get_imported_capsule",
+        "x-olip-effect": "read_only"
+      }
+    },
+    "/olip/v3/capsules/{capsule_id}/revoke": {
+      "post": {
+        "operationId": "revoke_context_capsule",
+        "summary": "Revoke a capsule",
+        "description": "The USER stops future imports and reads of a capsule on this host. Copies already taken elsewhere cannot be recalled.\n\nEffect: authorized_state_change (Changes only the caller's own already-authorized workflow, settings or consent records.) Principals: user. Approval: user_session.",
+        "tags": [
+          "authorized_state_change"
+        ],
+        "parameters": [
+          {
+            "name": "capsule_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/capsule-revocation.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.revoke_context_capsule",
+        "x-olip-effect": "authorized_state_change"
+      }
+    },
+    "/olip/v3/subscriptions": {
+      "post": {
+        "operationId": "subscribe_events",
+        "summary": "Subscribe to workflow events",
+        "description": "Signed, minimal webhook hints for one workflow. Callback URLs pass outbound-request checks. Hints carry no case content; read the workflow before acting.\n\nEffect: read_only (No external effect. Still access-controlled.) Principals: user, agent. Approval: none.",
+        "tags": [
+          "read_only"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/subscription.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.subscribe_events",
+        "x-olip-effect": "read_only",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.subscribe_events.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/subscriptions/{subscription_id}": {
+      "delete": {
+        "operationId": "cancel_subscription",
+        "summary": "Cancel a subscription",
+        "description": "Stops future webhook hints for a subscription.\n\nEffect: read_only (No external effect. Still access-controlled.) Principals: user, agent. Approval: none.",
+        "tags": [
+          "read_only"
+        ],
+        "parameters": [
+          {
+            "name": "subscription_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/subscription.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.cancel_subscription",
+        "x-olip-effect": "read_only"
+      }
+    },
+    "/olip/v3/lifecycle": {
+      "post": {
+        "operationId": "call_lifecycle",
+        "summary": "Use a 2.0-draft lifecycle step",
+        "description": "Runs one consumer-side 2.0-draft lifecycle step (consultation, engagement review, messages) with its unchanged 2.0 rules. Steps that send anything need the user's approval on the approval page.\n\nEffect: external_disclosure (Sends client or case information to a recipient. Needs the user's approval bound to that exact recipient and content.) Principals: user, agent. Approval: user_out_of_band.",
+        "tags": [
+          "external_disclosure"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/lifecycle-result.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.call_lifecycle",
+        "x-olip-effect": "external_disclosure",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.call_lifecycle.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/firm-events": {
+      "post": {
+        "operationId": "record_firm_event",
+        "summary": "Record a firm-signed event",
+        "description": "The organization's own system records its signed lifecycle event (screening outcome, consultation, engagement, closure). The 2.0-draft host verifies signer, role, scope and key.\n\nEffect: firm_authoritative (Only the organization's own authenticated, authorized system may do this. A client agent never can.) Principals: firm. Approval: none.",
+        "tags": [
+          "firm_authoritative"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/lifecycle-result.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.record_firm_event",
+        "x-olip-effect": "firm_authoritative",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.record_firm_event.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/admin/jurisdiction-policy": {
+      "post": {
+        "operationId": "set_jurisdiction_policy",
+        "summary": "Set jurisdiction policy (operator)",
+        "description": "Host operator changes a jurisdiction's policy status. Never exposed to model tools.\n\nEffect: privileged_admin (Trust, key or policy administration by the host operator. Never available to a model tool.) Principals: operator. Approval: none.",
+        "tags": [
+          "privileged_admin"
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/policy-change.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "olip.set_jurisdiction_policy",
+        "x-olip-effect": "privileged_admin",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.set_jurisdiction_policy.input.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/actions/{action_id}/invoke": {
+      "post": {
+        "operationId": "invoke_action",
+        "summary": "Invoke any action by id",
+        "description": "Generic invocation. The body is the action's input. Same gateway, same rules.",
+        "tags": [
+          "invoke"
+        ],
+        "parameters": [
+          {
+            "name": "action_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          },
+          {
+            "name": "OLIP-Version",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "const": "3.0-draft.1"
+            }
+          },
+          {
+            "name": "X-Correlation-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          },
+          {}
+        ],
+        "responses": {
+          "200": {
+            "description": "Success. A tool or HTTP success is not delivery, reading, acceptance or representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/agent-manifest.schema.json"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error with a stable code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://olip.ai/spec/3.0-draft/schemas/error.schema.json"
+                }
+              }
+            }
+          }
+        },
+        "x-olip-action": "{action_id}",
+        "x-olip-effect": "per action",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/actions": {
+      "get": {
+        "operationId": "get_actions",
+        "summary": "List action contracts",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "List action contracts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/keys": {
+      "get": {
+        "operationId": "get_keys",
+        "summary": "Host public keys (JWKS)",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Host public keys (JWKS)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/errors": {
+      "get": {
+        "operationId": "get_errors",
+        "summary": "Error catalog",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Error catalog",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/olip/v3/openapi.json": {
+      "get": {
+        "operationId": "get_openapi_json",
+        "summary": "This document",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "This document",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "read_only",
+      "description": "No external effect. Still access-controlled."
+    },
+    {
+      "name": "local_preparation",
+      "description": "Computes a draft, preview or validation. Sends nothing to any third party."
+    },
+    {
+      "name": "authorized_state_change",
+      "description": "Changes only the caller's own already-authorized workflow, settings or consent records."
+    },
+    {
+      "name": "external_disclosure",
+      "description": "Sends client or case information to a recipient. Needs the user's approval bound to that exact recipient and content."
+    },
+    {
+      "name": "firm_authoritative",
+      "description": "Only the organization's own authenticated, authorized system may do this. A client agent never can."
+    },
+    {
+      "name": "privileged_admin",
+      "description": "Trust, key or policy administration by the host operator. Never available to a model tool."
+    }
+  ],
+  "x-olip-errors": [
+    {
+      "code": "VERSION_UNSUPPORTED",
+      "http": 400,
+      "retryable": false
+    },
+    {
+      "code": "ACTION_NOT_SUPPORTED",
+      "http": 404,
+      "retryable": false
+    },
+    {
+      "code": "SCHEMA_INVALID",
+      "http": 400,
+      "retryable": false
+    },
+    {
+      "code": "AUTH_REQUIRED",
+      "http": 401,
+      "retryable": false
+    },
+    {
+      "code": "SCOPE_INSUFFICIENT",
+      "http": 403,
+      "retryable": false
+    },
+    {
+      "code": "USER_APPROVAL_REQUIRED",
+      "http": 403,
+      "retryable": false
+    },
+    {
+      "code": "GRANT_EXPIRED",
+      "http": 410,
+      "retryable": false
+    },
+    {
+      "code": "GRANT_REVOKED",
+      "http": 403,
+      "retryable": false
+    },
+    {
+      "code": "DIGEST_MISMATCH",
+      "http": 409,
+      "retryable": false
+    },
+    {
+      "code": "RECIPIENT_MISMATCH",
+      "http": 403,
+      "retryable": false
+    },
+    {
+      "code": "FIRM_AUTHORITY_REQUIRED",
+      "http": 403,
+      "retryable": false
+    },
+    {
+      "code": "POLICY_UNREVIEWED",
+      "http": 422,
+      "retryable": false
+    },
+    {
+      "code": "POLICY_STALE",
+      "http": 422,
+      "retryable": false
+    },
+    {
+      "code": "PRECONDITION_MISSING",
+      "http": 409,
+      "retryable": false
+    },
+    {
+      "code": "CONFLICTING_STATE",
+      "http": 409,
+      "retryable": false
+    },
+    {
+      "code": "IDEMPOTENCY_CONFLICT",
+      "http": 409,
+      "retryable": false
+    },
+    {
+      "code": "IDEMPOTENCY_KEY_REQUIRED",
+      "http": 400,
+      "retryable": false
+    },
+    {
+      "code": "REPLAY_DETECTED",
+      "http": 409,
+      "retryable": false
+    },
+    {
+      "code": "EVENT_CURSOR_GAP",
+      "http": 409,
+      "retryable": false
+    },
+    {
+      "code": "SUBSCRIPTION_REVOKED",
+      "http": 410,
+      "retryable": false
+    },
+    {
+      "code": "CALLBACK_URL_REJECTED",
+      "http": 422,
+      "retryable": false
+    },
+    {
+      "code": "RECIPIENT_UNREACHABLE",
+      "http": 502,
+      "retryable": true
+    },
+    {
+      "code": "TRANSIENT_BACKEND_ERROR",
+      "http": 503,
+      "retryable": true
+    },
+    {
+      "code": "UNVERIFIED_EVIDENCE",
+      "http": 422,
+      "retryable": false
+    },
+    {
+      "code": "CAPSULE_INVALID",
+      "http": 422,
+      "retryable": false
+    },
+    {
+      "code": "SENSITIVE_DATA_BLOCKED",
+      "http": 422,
+      "retryable": false
+    },
+    {
+      "code": "RATE_LIMITED",
+      "http": 429,
+      "retryable": true
+    },
+    {
+      "code": "SECURITY_REVIEW_REQUIRED",
+      "http": 422,
+      "retryable": false
+    },
+    {
+      "code": "NOT_FOUND",
+      "http": 404,
+      "retryable": false
+    },
+    {
+      "code": "INTERNAL",
+      "http": 500,
+      "retryable": true
+    }
+  ],
+  "x-olip-action-count": 22
+}

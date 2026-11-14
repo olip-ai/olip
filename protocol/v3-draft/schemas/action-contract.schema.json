@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/action-contract.schema.json",
+  "title": "Action contract",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^olip\\.[a-z_]+$"
+    },
+    "version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "effects": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "privileged_admin",
+          "firm_authoritative",
+          "external_disclosure",
+          "authorized_state_change",
+          "local_preparation",
+          "read_only"
+        ]
+      },
+      "minItems": 1
+    },
+    "effect": {
+      "enum": [
+        "privileged_admin",
+        "firm_authoritative",
+        "external_disclosure",
+        "authorized_state_change",
+        "local_preparation",
+        "read_only"
+      ]
+    },
+    "effect_meaning": {
+      "type": "string"
+    },
+    "principals": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "public",
+          "user",
+          "agent",
+          "firm",
+          "operator"
+        ]
+      }
+    },
+    "approval": {
+      "enum": [
+        "none",
+        "user_out_of_band",
+        "user_session"
+      ]
+    },
+    "firm_authority": {
+      "type": "boolean"
+    },
+    "mutating": {
+      "type": "boolean"
+    },
+    "idempotency": {
+      "enum": [
+        "required",
+        "not_applicable"
+      ]
+    },
+    "retry": {
+      "enum": [
+        "safe",
+        "safe_with_same_key",
+        "never"
+      ]
+    },
+    "max_execution_ms": {
+      "type": "integer"
+    },
+    "response": {
+      "enum": [
+        "immediate",
+        "receipt"
+      ]
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "transports": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "https",
+          "mcp",
+          "a2a"
+        ]
+      }
+    },
+    "input_schema": {
+      "type": "string"
+    },
+    "output_schema": {
+      "type": "string"
+    },
+    "enforcement_note": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "effects",
+    "effect",
+    "principals",
+    "approval",
+    "firm_authority",
+    "mutating",
+    "idempotency",
+    "retry",
+    "transports",
+    "input_schema",
+    "output_schema"
+  ],
+  "additionalProperties": false
+}

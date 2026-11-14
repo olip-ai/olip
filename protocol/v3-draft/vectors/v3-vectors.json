@@ -1,0 +1,256 @@
+{
+  "olip_version": "3.0-draft.1",
+  "statement": "FICTIONAL test vectors. The private keys behind them are derivable from public labels and must never protect real data.",
+  "keys": {
+    "events": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "-oR84qhr2saKkZNq8PPUid2W7gU-JzQsw17YvYcoXtg",
+      "kid": "kid_v3test_5cae427a4f72",
+      "alg": "EdDSA",
+      "use": "sig",
+      "key_ops": [
+        "verify"
+      ],
+      "olip_key_purpose": "workflow_events"
+    },
+    "capsules": {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "x": "ZSwzgAj3Rxd82cSwJ7qcoqC-ORRoE5hAEBs9iyj0uK8",
+      "kid": "kid_v3test_8596d4ba4bdc",
+      "alg": "EdDSA",
+      "use": "sig",
+      "key_ops": [
+        "verify"
+      ],
+      "olip_key_purpose": "capsule_issuer"
+    },
+    "recipient_public": {
+      "kty": "OKP",
+      "crv": "X25519",
+      "x": "ttK0Xf9-RGT3yoEqudBMh_0-Iga3cf9YJnsrUus6GGA",
+      "kid": "kid_v3enc_762255b81063",
+      "use": "enc",
+      "olip_key_purpose": "capsule_encryption"
+    },
+    "recipient_private_d": "EQEdN-cQXSFSfmBZD8ZCMXFPYFhEfgry88nZIJixtyg"
+  },
+  "canonical": [
+    {
+      "input": {
+        "b": [
+          3,
+          {
+            "y": 1,
+            "x": "é"
+          }
+        ],
+        "a": null
+      },
+      "canonical": "{\"a\":null,\"b\":[3,{\"x\":\"é\",\"y\":1}]}",
+      "digest": "sha256:fe5eb9871248ae4a79f52c7f6b13bfe3e1b0f129b3e7b4f6d890582c4f531be7"
+    }
+  ],
+  "journal": [
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:vectors:evt:wf_vector:1",
+      "workflow_id": "wf_vector",
+      "sequence": 1,
+      "event_type": "workflow.created",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T15:00:00.000Z",
+      "actor_type": "user",
+      "actor_ref": null,
+      "authority_ref": null,
+      "source": "olip_3_layer",
+      "v2_ref": null,
+      "payload_digest": "sha256:f3013f933b9fb80ab6d995e7ad9da36f683837ba1d81e950c943d40111eac2f0",
+      "payload": {
+        "n": 0
+      },
+      "previous_event_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "policy_version": "vectors#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:a886342072a0e1de8cccd3dcf71cf1929db39d1a85ec0e7f282b5d24d1d7c63c",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_5cae427a4f72",
+        "value": "H4VEvW3DtTAdNxJN8aKpsc0uty8iJ5mRCH4SzHq_W9oukR6tCkPi98BirvBtCmTQdQFhOTKfuAfjRF3lP9sbDQ"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:vectors:evt:wf_vector:2",
+      "workflow_id": "wf_vector",
+      "sequence": 2,
+      "event_type": "disclosure.prepared",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T15:01:00.000Z",
+      "actor_type": "user",
+      "actor_ref": null,
+      "authority_ref": null,
+      "source": "olip_3_layer",
+      "v2_ref": null,
+      "payload_digest": "sha256:2bfd14f43d17fc7cea24e0917a8879b4b2f880b8baeec1b9d90fbaad655e71bd",
+      "payload": {
+        "n": 1
+      },
+      "previous_event_digest": "sha256:a886342072a0e1de8cccd3dcf71cf1929db39d1a85ec0e7f282b5d24d1d7c63c",
+      "policy_version": "vectors#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:1362b71df94fef7fb6dca4d1bd18327e4939b0863d6da538880cfe743a468da8",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_5cae427a4f72",
+        "value": "0wL-O_GJmQSZaX9bkHx56KX6JZ-9WNvMmqOjtV3Lk8KFAvAoapq-aVJHtl3Us13WmkYBs_-O40GKMFPLyfnVBQ"
+      }
+    },
+    {
+      "olip_version": "3.0-draft.1",
+      "event_id": "urn:olip:v3:vectors:evt:wf_vector:3",
+      "workflow_id": "wf_vector",
+      "sequence": 3,
+      "event_type": "lifecycle.intake.eligible_for_further_intake",
+      "schema_version": "3.0-draft.1",
+      "recorded_at": "2026-11-14T15:02:00.000Z",
+      "actor_type": "firm_authorized_actor",
+      "actor_ref": null,
+      "authority_ref": null,
+      "source": "olip_2_0_draft_lifecycle",
+      "v2_ref": null,
+      "payload_digest": "sha256:363379742f80b51bdb9206579af7754911543079b9399cb3fc315fb199f476e8",
+      "payload": {
+        "n": 2
+      },
+      "previous_event_digest": "sha256:1362b71df94fef7fb6dca4d1bd18327e4939b0863d6da538880cfe743a468da8",
+      "policy_version": "vectors#1",
+      "idempotency_key": null,
+      "privacy_scope": "participant_minimum",
+      "fictional": true,
+      "event_digest": "sha256:0714a1125aaac7ff68d9c9228c713742daf65cdb684a2dff22ee249b88dbcd29",
+      "signature": {
+        "alg": "EdDSA",
+        "kid": "kid_v3test_5cae427a4f72",
+        "value": "hx0h4yFFPyZRsgnNhhJ-Pltq2wQ2uvBFBIPKRtddTH_QR6_Tzt-WbiYkF8Tq7YcUFupl8_Hlf9HgMZUSjEhVAA"
+      }
+    }
+  ],
+  "capsule": {
+    "olip_version": "3.0-draft.1",
+    "capsule_id": "cap_vector",
+    "encryption": {
+      "status": "recipient_key",
+      "content_digest": "sha256:4b31265938d09e109d3ef34f80cee8a58fd86c99aabdf9ddfb3f374c9c239c86"
+    },
+    "sealed_content": {
+      "alg": "ECDH-ES+HKDF-SHA256/A256GCM",
+      "recipient_kid": "kid_v3enc_762255b81063",
+      "epk": {
+        "kty": "OKP",
+        "crv": "X25519",
+        "x": "rWM6cEU00Q0BvpmyiQpqLoXDYkfYc_kbXzQr4DBLFSM"
+      },
+      "iv": "BwcHBwcHBwcHBwcH",
+      "tag": "yU6stzs_A0Py8WTAV9jzcA",
+      "aad": "cap_vector|3.0-draft.1",
+      "ciphertext": "qfs4m1A6gRxe-Ero5ECJA-Eo9XwMYRjr2lAxGv3xpJf-0DXoAomgEALeMk3iL6daqCtbASrUg9-tnBKcbaqq2cczqGd0ojnCxQwpCvTfI8wpuZOib3gCFns0VrROvTUAZTMQ_tfFWl3Yzrh4jJ_762079cAJow5YHICP0uMW3DwJupCFLFYIZHdf76w9zZqDECCYeFOC2gQCYed9eB_Ec1cSChzAQJ64L8tq1zfm7JNEV8uby8oExTJ6YupXM0kUI4mMnKcuEZsevQT1KbcqNCNOO3gezMyhFnPUP3uLLE6YamjBYWVfnolqy2iP-gNNtw7Fwjf_G2NHpj5oICJjPRj7BnPLkNYb3-VqnVpQLDTYQfNIEjGG4XVEutD6W3SfsNwMgse6OG4aqra3Sr6k48DNXtJdDDp7XXqOgbIB1swt-z3J9bQ2iTBKfeCZHwfhDcTJDWTMJRaEyc6k1OgFc4ZHb77-m_VKOFS_Wb-Ipx5HebnYdYfqy3HU6Az6Yql4zpokYcONRXJ2fVr2IsssC1hUvfOSjXBl1ZB8vi0egNHammXxn9tqC5OxPSSaqn63msWNcBWFbp8LKBC_6fzoyxIHh8h7Qb20xas0QeHyf9yLyUCPctswgJ5-kT-j23CX7jMwJWtqEEy_hkzdiAX2-rK_AqE66CzCNZvmnFRijo6lXRNC6sUqSBkJLB-ku6tTeOdVFyUCDLWqa4m0yzjWERCPX4rp4f75rrrsjWsJzC8YAW6UYZP2jFLNdXWlIZQlT7j1Zssp06wVuL-UekKITkB-mDgG-GdOjHkJt18ZXNh6EgbltFtgF6mNiQV5h4RKrSpfI4aJm8VkVwgVameMhDgv6Rzp2ii3wmH83t0ZeUcN4IkWqfffaLqLi4lRyBvXLR6MVIECFmQM14NIDE_zHr1oo3dboGwiGytV5hxM-uuPCpLWalj6D7IExZYlM-zd-zcypirR0-WmU4qtTUI"
+    },
+    "expires_at": "2026-12-01T00:00:00.000Z",
+    "capsule_digest": "sha256:3acbc7b29e2a331d70b0e290c8fccb060345d907a70c8a5390ec110d14ceb2d0",
+    "signature": {
+      "alg": "EdDSA",
+      "kid": "kid_v3test_8596d4ba4bdc",
+      "value": "JHcYdxaDYmBr5WwGN5FF9EdPTyUOzk9nkRnz1S-hwpLAWZXZfXfUAikoLYddEQeLMJNKO9PCxeMVdYzEwy2uAA"
+    }
+  },
+  "capsule_plaintext_digest": "sha256:4b31265938d09e109d3ef34f80cee8a58fd86c99aabdf9ddfb3f374c9c239c86",
+  "webhook": {
+    "olip_version": "3.0-draft.1",
+    "webhook_id": "whk_vector",
+    "subscription_id": "sub_vector",
+    "workflow_id": "wf_vector",
+    "event_sequence": 3,
+    "event_type": "lifecycle.intake.eligible_for_further_intake",
+    "event_digest": "sha256:0714a1125aaac7ff68d9c9228c713742daf65cdb684a2dff22ee249b88dbcd29",
+    "sent_at": "2026-11-14T15:03:00.000Z",
+    "statement": "Hint only.",
+    "signature": {
+      "alg": "EdDSA",
+      "kid": "kid_v3test_5cae427a4f72",
+      "value": "y6hrVf_ajZyBTf06PPljfFbmyEfvDH2YxHcsI10OMeodsGVbnhqs7hx4ZsFDJbKtcJaQZWzJKYHz_yHL12n1Aw"
+    }
+  },
+  "plan": {
+    "olip_version": "3.0-draft.1",
+    "plan_version": "3.0-draft.1",
+    "workflow_id": "wf_vector",
+    "as_of_event_sequence": 3,
+    "as_of_event_digest": "sha256:0714a1125aaac7ff68d9c9228c713742daf65cdb684a2dff22ee249b88dbcd29",
+    "desired_goal": "share_casebrief",
+    "next_actions": [
+      {
+        "action": "olip.preview_disclosure",
+        "target": {
+          "organization_id": "org_test_alvarez",
+          "object_id": "scr_vector",
+          "stage": "casebrief"
+        },
+        "disposition": "requires_user_approval",
+        "reason_code": "CASEBRIEF_NEEDS_SEPARATE_USER_APPROVAL",
+        "missing_preconditions": [
+          "fresh_user_content_digest_grant"
+        ]
+      },
+      {
+        "action": "olip.get_workflow",
+        "disposition": "allowed_read_only",
+        "reason_code": "STATUS_OF_RECORD",
+        "missing_preconditions": []
+      },
+      {
+        "action": "olip.list_workflow_events",
+        "disposition": "allowed_read_only",
+        "reason_code": "EVENT_HISTORY",
+        "missing_preconditions": []
+      },
+      {
+        "action": "olip.find_professionals",
+        "disposition": "allowed_read_only",
+        "reason_code": "OTHER_ORGANIZATIONS_MAY_BE_LISTED",
+        "missing_preconditions": []
+      },
+      {
+        "action": "olip.call_lifecycle",
+        "operation": "request_consultation",
+        "target": {
+          "organization_id": "org_test_alvarez",
+          "object_id": "scr_vector"
+        },
+        "disposition": "requires_user_approval",
+        "reason_code": "CONSULTATION_REQUEST_NEEDS_USER_APPROVAL",
+        "missing_preconditions": [
+          "user_approval_on_approval_page"
+        ]
+      },
+      {
+        "action": "olip.export_context_capsule",
+        "disposition": "requires_user_approval",
+        "reason_code": "ONLY_THE_SIGNED_IN_USER_CAN_EXPORT",
+        "missing_preconditions": [
+          "user_signed_in_session"
+        ]
+      }
+    ],
+    "policy_version": "vectors#1",
+    "not_authorization": true,
+    "not_legal_advice": true,
+    "statement": "Procedural hints only. 'allowed' is not permission: every action is checked again by the host when it is called. Nothing here is legal advice or a recommendation of any organization.",
+    "plan_digest": "sha256:f1c7194757a1f41d6a3947a0e378d17ed1fb664b5895319bf7bfe88c3c6685fd"
+  }
+}

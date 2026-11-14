@@ -1,0 +1,182 @@
+{
+  "olip_version": "3.0-draft.1",
+  "fictional": true,
+  "statement": "FICTIONAL examples captured from the reference journey. Not real people, firms or matters.",
+  "examples": [
+    {
+      "file": "valid/agent-manifest.json",
+      "schema": "agent-manifest",
+      "valid": true
+    },
+    {
+      "file": "valid/capsule-check.json",
+      "schema": "capsule-check",
+      "valid": true
+    },
+    {
+      "file": "valid/capsule-import.json",
+      "schema": "capsule-import",
+      "valid": true
+    },
+    {
+      "file": "valid/capsule-revocation.json",
+      "schema": "capsule-revocation",
+      "valid": true
+    },
+    {
+      "file": "valid/casebrief-check.json",
+      "schema": "casebrief-check",
+      "valid": true
+    },
+    {
+      "file": "valid/context-capsule.json",
+      "schema": "context-capsule",
+      "valid": true
+    },
+    {
+      "file": "valid/context-capsule-export.json",
+      "schema": "context-capsule-export",
+      "valid": true
+    },
+    {
+      "file": "valid/disclosure-preview.json",
+      "schema": "disclosure-preview",
+      "valid": true
+    },
+    {
+      "file": "valid/disclosure-result.json",
+      "schema": "disclosure-result",
+      "valid": true
+    },
+    {
+      "file": "valid/error.json",
+      "schema": "error",
+      "valid": true
+    },
+    {
+      "file": "valid/events-page.json",
+      "schema": "events-page",
+      "valid": true
+    },
+    {
+      "file": "valid/import-authorization.json",
+      "schema": "import-authorization",
+      "valid": true
+    },
+    {
+      "file": "valid/lifecycle-result.json",
+      "schema": "lifecycle-result",
+      "valid": true
+    },
+    {
+      "file": "valid/next-actions-plan.json",
+      "schema": "next-actions-plan",
+      "valid": true
+    },
+    {
+      "file": "valid/policy-change.json",
+      "schema": "policy-change",
+      "valid": true
+    },
+    {
+      "file": "valid/professionals.json",
+      "schema": "professionals",
+      "valid": true
+    },
+    {
+      "file": "valid/recipient-policy.json",
+      "schema": "recipient-policy",
+      "valid": true
+    },
+    {
+      "file": "valid/subscription.json",
+      "schema": "subscription",
+      "valid": true
+    },
+    {
+      "file": "valid/webhook.json",
+      "schema": "webhook",
+      "valid": true
+    },
+    {
+      "file": "valid/workflow.json",
+      "schema": "workflow",
+      "valid": true
+    },
+    {
+      "file": "valid/workflow-event.json",
+      "schema": "workflow-event",
+      "valid": true
+    },
+    {
+      "file": "invalid/manifest-approval-model-callable.json",
+      "schema": "agent-manifest",
+      "valid": false
+    },
+    {
+      "file": "invalid/manifest-paid-influence.json",
+      "schema": "agent-manifest",
+      "valid": false
+    },
+    {
+      "file": "invalid/manifest-stable-release-claim.json",
+      "schema": "agent-manifest",
+      "valid": false
+    },
+    {
+      "file": "invalid/plan-claims-authorization.json",
+      "schema": "next-actions-plan",
+      "valid": false
+    },
+    {
+      "file": "invalid/plan-unknown-disposition.json",
+      "schema": "next-actions-plan",
+      "valid": false
+    },
+    {
+      "file": "invalid/capsule-authorizes-recipient.json",
+      "schema": "context-capsule",
+      "valid": false
+    },
+    {
+      "file": "invalid/capsule-content-and-sealed.json",
+      "schema": "context-capsule",
+      "valid": false
+    },
+    {
+      "file": "invalid/capsule-unknown-origin-type.json",
+      "schema": "context-capsule",
+      "valid": false
+    },
+    {
+      "file": "invalid/capsule-document-content-included.json",
+      "schema": "context-capsule",
+      "valid": false
+    },
+    {
+      "file": "invalid/event-bad-digest.json",
+      "schema": "workflow-event",
+      "valid": false
+    },
+    {
+      "file": "invalid/event-unknown-actor.json",
+      "schema": "workflow-event",
+      "valid": false
+    },
+    {
+      "file": "invalid/import-creates-grants.json",
+      "schema": "capsule-import",
+      "valid": false
+    },
+    {
+      "file": "invalid/error-unknown-code.json",
+      "schema": "error",
+      "valid": false
+    },
+    {
+      "file": "invalid/preview-claims-sent.json",
+      "schema": "disclosure-preview",
+      "valid": false
+    }
+  ]
+}

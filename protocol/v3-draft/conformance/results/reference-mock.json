@@ -1,0 +1,112 @@
+{
+  "olip_version": "3.0-draft.1",
+  "target": "reference-mock",
+  "base": "http://127.0.0.1:<port>",
+  "mode": "mock",
+  "independent_implementation": false,
+  "statement": "Self-test of a proposed draft. Passing is not certification, adoption, or a security review.",
+  "summary": {
+    "pass": 18,
+    "fail": 0,
+    "skip": 0,
+    "mock_only": 1
+  },
+  "results": [
+    {
+      "id": "V3-01",
+      "title": "Agent manifest is served at the well-known path, signed by a published key, and says the draft is not adopted",
+      "status": "pass"
+    },
+    {
+      "id": "V3-02",
+      "title": "The REST manifest path serves the same content (same etag)",
+      "status": "pass"
+    },
+    {
+      "id": "V3-03",
+      "title": "Action contracts: published list equals the manifest; no action approves or confirms; firm and admin actions are HTTPS-only",
+      "status": "pass"
+    },
+    {
+      "id": "V3-04",
+      "title": "OpenAPI 3.1 document and error catalog are served",
+      "status": "pass"
+    },
+    {
+      "id": "V3-05",
+      "title": "An unsupported OLIP-Version header is refused with VERSION_UNSUPPORTED",
+      "status": "pass"
+    },
+    {
+      "id": "V3-06",
+      "title": "Discovery is unpaid and alphabetical",
+      "status": "pass"
+    },
+    {
+      "id": "V3-07",
+      "title": "Workflow reads need a token",
+      "status": "pass"
+    },
+    {
+      "id": "V3-08",
+      "title": "Starting a workflow needs an Idempotency-Key, and the same key replays the same workflow",
+      "status": "pass"
+    },
+    {
+      "id": "V3-09",
+      "title": "Event journal: chain and signatures verify; a forged cursor is refused",
+      "status": "pass"
+    },
+    {
+      "id": "V3-10",
+      "title": "Preview sends nothing; sending before the user approves returns USER_APPROVAL_REQUIRED; the assistant cannot approve",
+      "status": "pass"
+    },
+    {
+      "id": "V3-11",
+      "title": "A changed approval digest is refused",
+      "status": "pass"
+    },
+    {
+      "id": "V3-12",
+      "title": "After the user approves (mock inbox), the disclosure is sent once; a retry with the same key replays",
+      "status": "mock_only",
+      "detail": "uses the host's mock inbox to read the user's one-time code"
+    },
+    {
+      "id": "V3-13",
+      "title": "A client agent cannot record a firm event",
+      "status": "pass"
+    },
+    {
+      "id": "V3-14",
+      "title": "Only the signed-in user exports a capsule; it validates, and a tampered copy fails",
+      "status": "pass"
+    },
+    {
+      "id": "V3-15",
+      "title": "Import needs the user's authorization, creates no approvals, and works once",
+      "status": "pass"
+    },
+    {
+      "id": "V3-16",
+      "title": "The planner is deterministic and says it is not authorization",
+      "status": "pass"
+    },
+    {
+      "id": "V3-17",
+      "title": "Callback URLs that point at internal addresses are refused",
+      "status": "pass"
+    },
+    {
+      "id": "V3-18",
+      "title": "Another user's assistant cannot see this workflow (NOT_FOUND)",
+      "status": "pass"
+    },
+    {
+      "id": "V3-SCHEMA",
+      "title": "Every checked response matched the published schemas (28 responses)",
+      "status": "pass"
+    }
+  ]
+}

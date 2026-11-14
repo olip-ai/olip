@@ -1,0 +1,61 @@
+{
+  "olip_version": "3.0-draft.1",
+  "target": "reference-production-build",
+  "base": "http://127.0.0.1:<port>",
+  "mode": "production",
+  "independent_implementation": false,
+  "statement": "Self-test of a proposed draft. Passing is not certification, adoption, or a security review.",
+  "summary": {
+    "pass": 9,
+    "fail": 0,
+    "skip": 0,
+    "mock_only": 0
+  },
+  "results": [
+    {
+      "id": "V3-01",
+      "title": "Agent manifest is served at the well-known path, signed by a published key, and says the draft is not adopted",
+      "status": "pass"
+    },
+    {
+      "id": "V3-02",
+      "title": "The REST manifest path serves the same content (same etag)",
+      "status": "pass"
+    },
+    {
+      "id": "V3-03",
+      "title": "Action contracts: published list equals the manifest; no action approves or confirms; firm and admin actions are HTTPS-only",
+      "status": "pass"
+    },
+    {
+      "id": "V3-04",
+      "title": "OpenAPI 3.1 document and error catalog are served",
+      "status": "pass"
+    },
+    {
+      "id": "V3-05",
+      "title": "An unsupported OLIP-Version header is refused with VERSION_UNSUPPORTED",
+      "status": "pass"
+    },
+    {
+      "id": "V3-06",
+      "title": "Discovery is unpaid and alphabetical",
+      "status": "pass"
+    },
+    {
+      "id": "V3-07",
+      "title": "Workflow reads need a token",
+      "status": "pass"
+    },
+    {
+      "id": "V3-08",
+      "title": "Production build: regulated writes fail closed while no jurisdiction is approved by counsel",
+      "status": "pass"
+    },
+    {
+      "id": "V3-SCHEMA",
+      "title": "Every checked response matched the published schemas (6 responses)",
+      "status": "pass"
+    }
+  ]
+}

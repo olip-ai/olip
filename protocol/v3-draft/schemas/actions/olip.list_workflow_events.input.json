@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/actions/olip.list_workflow_events.input.json",
+  "title": "List workflow events (input)",
+  "type": "object",
+  "properties": {
+    "workflow_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "The workflow id returned earlier.",
+      "pattern": "^[A-Za-z0-9_:.-]{1,200}$"
+    },
+    "cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 400,
+      "description": "Opaque cursor from an earlier page."
+    },
+    "last_seen_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    }
+  },
+  "required": [
+    "workflow_id"
+  ],
+  "additionalProperties": false
+}

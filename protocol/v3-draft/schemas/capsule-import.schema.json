@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/capsule-import.schema.json",
+  "title": "Imported capsule",
+  "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+  "type": "object",
+  "properties": {
+    "olip_version": {
+      "const": "3.0-draft.1"
+    },
+    "correlation_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "action_receipt": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "effect": {
+          "enum": [
+            "privileged_admin",
+            "firm_authoritative",
+            "external_disclosure",
+            "authorized_state_change",
+            "local_preparation",
+            "read_only"
+          ]
+        },
+        "decision": {
+          "type": "string"
+        },
+        "policy_version": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "action",
+        "effect",
+        "decision",
+        "policy_version",
+        "note"
+      ],
+      "additionalProperties": false
+    },
+    "idempotent_replay": {
+      "type": "boolean"
+    },
+    "import": {
+      "type": "object"
+    },
+    "capsule": {
+      "$ref": "https://olip.ai/spec/3.0-draft/schemas/context-capsule.schema.json"
+    },
+    "grants_created": {
+      "const": 0
+    },
+    "authorizes_recipients": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "statement": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "olip_version",
+    "import",
+    "capsule",
+    "grants_created",
+    "authorizes_recipients"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/workflow-event.schema.json",
+  "title": "Workflow event envelope",
+  "description": "Signed, hash-chained entry in the 3.0-draft workflow journal. Holds references, never case content.",
+  "type": "object",
+  "properties": {
+    "olip_version": {
+      "const": "3.0-draft.1"
+    },
+    "event_id": {
+      "type": "string"
+    },
+    "workflow_id": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "event_type": {
+      "type": "string",
+      "pattern": "^[a-z_]+(\\.[a-z_]+)+$"
+    },
+    "schema_version": {
+      "const": "3.0-draft.1"
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "actor_type": {
+      "enum": [
+        "user",
+        "ai_host",
+        "firm_authorized_actor",
+        "lifecycle_host",
+        "operator"
+      ]
+    },
+    "actor_ref": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "authority_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source": {
+      "enum": [
+        "olip_3_layer",
+        "olip_2_0_draft_lifecycle"
+      ]
+    },
+    "v2_ref": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "seq": {
+              "type": "integer"
+            },
+            "entry_hash": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            "event_id": {
+              "type": "string"
+            },
+            "signer_kid": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "attribution_at_mirror": {
+              "type": "string"
+            },
+            "object": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "seq",
+            "entry_hash",
+            "event_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "payload_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "payload": {
+      "type": "object"
+    },
+    "previous_event_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "policy_version": {
+      "type": "string"
+    },
+    "idempotency_key": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "privacy_scope": {
+      "const": "participant_minimum"
+    },
+    "fictional": {
+      "type": "boolean"
+    },
+    "event_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "signature": {
+      "type": "object",
+      "properties": {
+        "alg": {
+          "const": "EdDSA"
+        },
+        "kid": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "alg",
+        "kid",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "olip_version",
+    "event_id",
+    "workflow_id",
+    "sequence",
+    "event_type",
+    "recorded_at",
+    "actor_type",
+    "source",
+    "payload_digest",
+    "previous_event_digest",
+    "policy_version",
+    "event_digest",
+    "signature"
+  ],
+  "additionalProperties": false
+}

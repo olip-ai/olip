@@ -1,0 +1,2 @@
+{ "name": "@olip/agent-client-draft", "version": "3.0.0-draft.1", "private": true, "type": "module", "main": "dist/index.js", "types": "dist/index.d.ts",
+  "description": "PROPOSED OLIP 3.0-draft agent client. Not published to any registry. No sponsor account needed.", "license": "Apache-2.0" }

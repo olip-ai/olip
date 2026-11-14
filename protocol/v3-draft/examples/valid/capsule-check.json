@@ -1,0 +1,19 @@
+{
+  "olip_version": "3.0-draft.1",
+  "ok": false,
+  "problems": [
+    "capsule_digest_mismatch",
+    "signature_bad_signature"
+  ],
+  "issuer_kid": "kid_v3test_bb480e323394",
+  "encrypted": false,
+  "stored": false,
+  "correlation_id": "cor_vHNs1xsikE5xODAc",
+  "action_receipt": {
+    "action": "olip.validate_context_capsule",
+    "effect": "local_preparation",
+    "decision": "allow",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+    "note": "A successful call means this host ran the action. It does not mean any organization received, read or accepted anything; read delivery and lifecycle states for that."
+  }
+}

@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olip.ai/spec/3.0-draft/schemas/agent-manifest.schema.json",
+  "title": "Agent manifest",
+  "description": "OLIP 3.0-draft.1 (proposed draft, not adopted).",
+  "type": "object",
+  "properties": {
+    "olip_version": {
+      "const": "3.0-draft.1"
+    },
+    "correlation_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "action_receipt": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "effect": {
+          "enum": [
+            "privileged_admin",
+            "firm_authoritative",
+            "external_disclosure",
+            "authorized_state_change",
+            "local_preparation",
+            "read_only"
+          ]
+        },
+        "decision": {
+          "type": "string"
+        },
+        "policy_version": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "action",
+        "effect",
+        "decision",
+        "policy_version",
+        "note"
+      ],
+      "additionalProperties": false
+    },
+    "idempotent_replay": {
+      "type": "boolean"
+    },
+    "manifest_version": {
+      "const": "3.0-draft.1"
+    },
+    "release_status": {
+      "const": "proposed_draft_not_adopted"
+    },
+    "statement": {
+      "type": "string"
+    },
+    "provider_id": {
+      "type": "string"
+    },
+    "issuer": {
+      "type": "string"
+    },
+    "endpoint_origin": {
+      "type": "string"
+    },
+    "supported_olip_versions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "extension_id": {
+      "type": "string"
+    },
+    "profile": {
+      "type": "string"
+    },
+    "profiles": {
+      "type": "array"
+    },
+    "transport_bindings": {
+      "type": "object"
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "$ref": "https://olip.ai/spec/3.0-draft/schemas/action-contract.schema.json"
+      }
+    },
+    "effects": {
+      "type": "object"
+    },
+    "policy": {
+      "type": "object"
+    },
+    "status_semantics": {
+      "type": "array"
+    },
+    "approval": {
+      "type": "object",
+      "properties": {
+        "user_approval_methods": {
+          "type": "array"
+        },
+        "approval_is_model_callable": {
+          "const": false
+        }
+      },
+      "required": [
+        "approval_is_model_callable"
+      ],
+      "additionalProperties": false
+    },
+    "neutrality": {
+      "type": "object",
+      "properties": {
+        "discovery_ordering": {
+          "type": "string"
+        },
+        "paid_influence": {
+          "const": false
+        },
+        "sponsor_services_required": {
+          "const": false
+        },
+        "sponsor_account_required": {
+          "const": false
+        }
+      },
+      "required": [
+        "paid_influence",
+        "sponsor_services_required",
+        "sponsor_account_required"
+      ],
+      "additionalProperties": false
+    },
+    "privacy": {
+      "type": "object"
+    },
+    "keys_url": {
+      "type": "string"
+    },
+    "errors_url": {
+      "type": "string"
+    },
+    "schemas_base": {
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "mock",
+        "production"
+      ]
+    },
+    "fictional_data_only": {
+      "type": "boolean"
+    },
+    "max_age_seconds": {
+      "type": "integer"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "etag": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "signature": {
+      "type": "object",
+      "properties": {
+        "alg": {
+          "const": "EdDSA"
+        },
+        "kid": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "alg",
+        "kid",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "olip_version",
+    "manifest_version",
+    "release_status",
+    "provider_id",
+    "supported_olip_versions",
+    "actions",
+    "policy",
+    "neutrality",
+    "approval",
+    "etag",
+    "expires_at",
+    "signature"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,51 @@
+{
+  "olip_version": "3.0-draft.1",
+  "operation": "request_consultation",
+  "lifecycle_v2_route": "POST /olip/v2/matters/{id}/consultations",
+  "result": {
+    "olip_version": "2.0-draft",
+    "consultation": {
+      "id": "cns_WhOgoiQnTUyp9kcp",
+      "type": "consultation",
+      "machine": "consultation",
+      "state": "not_requested",
+      "revision": 0,
+      "history": [],
+      "created_at": "2026-11-14T17:00:00.271Z",
+      "updated_at": "2026-11-14T17:00:00.271Z",
+      "matter_id": "mat_UQ0Rj6ZAj-3hj3OY",
+      "organization_id": "org_test_alvarez",
+      "preferences": {
+        "modes": [
+          "video"
+        ],
+        "timezone": "America/Los_Angeles",
+        "note": null
+      },
+      "slots": [],
+      "slots_version": 0,
+      "proposal": null,
+      "confirmation": null,
+      "attendance": null
+    },
+    "approval": {
+      "approval_id": "apv_qpno_SCUMl4j0iAh",
+      "approval_url": "/olip/v2/approvals/apv_qpno_SCUMl4j0iAh",
+      "grant_id": "grt_Sg9qoEPoB2njEmH_",
+      "grant_digest": "sha256:d3b64ea0b58819582b72e16954127d4bf7dd83d86210f5115ae5d06535f770f9",
+      "expires_at": "2026-11-14T17:30:00.271Z",
+      "state": "pending_user_approval",
+      "instructions": "Show this link to the user. Only the user can approve it, on that page, with a code sent to their own contact. The agent cannot approve."
+    }
+  },
+  "effect": "local_preparation",
+  "next": "Show the user the approval page. Only the user can approve. Then call the matching submit step with grant_id and grant_digest.",
+  "correlation_id": "cor_cbGTPRsyctwr4Tmw",
+  "action_receipt": {
+    "action": "olip.call_lifecycle",
+    "effect": "local_preparation",
+    "decision": "allow",
+    "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+    "note": "A successful call means this host ran the action. It does not mean any organization received, read or accepted anything; read delivery and lifecycle states for that."
+  }
+}

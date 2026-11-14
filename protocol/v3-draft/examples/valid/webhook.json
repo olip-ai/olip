@@ -1,0 +1,16 @@
+{
+  "olip_version": "3.0-draft.1",
+  "webhook_id": "whk_p2x9w2vryvzmaOXo",
+  "subscription_id": "sub_Mht8u7-NgvE6mskx",
+  "workflow_id": "wf_VorHnOamNEFaFkTK",
+  "event_sequence": 19,
+  "event_type": "disclosure.prepared",
+  "event_digest": "sha256:b8379ba6f90333a0071208aaa3b5a63a7cdb9ff584329f0fa47a6fbb7518b66f",
+  "sent_at": "2026-11-14T17:00:00.359Z",
+  "statement": "Hint only. Contains no case content. Read the workflow before acting. Deduplicate on webhook_id.",
+  "signature": {
+    "alg": "EdDSA",
+    "kid": "kid_v3test_a2fcfad00484",
+    "value": "VjWoswtkgO2jidbpc-dyrRDwXoh2z7bu8-19ZgCxy56EUwGolLYUz88x9u_5S5wJbxQmbgbX3MNJ4zEPdYc_Cw"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "olip_version": "3.0-draft.1",
+  "event_id": "urn:olip:v3:v3-host:evt:wf_VorHnOamNEFaFkTK:1",
+  "workflow_id": "wf_VorHnOamNEFaFkTK",
+  "sequence": 1,
+  "event_type": "workflow.created",
+  "schema_version": "3.0-draft.1",
+  "recorded_at": "2026-11-14T17:00:00.216Z",
+  "actor_type": "model",
+  "actor_ref": {
+    "kind": "agent",
+    "client_id": "agt_test_assistant_a"
+  },
+  "authority_ref": null,
+  "source": "olip_3_layer",
+  "v2_ref": null,
+  "payload_digest": "sha256:cbe29aa4a5597e664032183071a4612925223da7254e15b8fa0a18366d5557bb",
+  "payload": {
+    "matter_ref": "2.0-draft matter (id in workflow record)"
+  },
+  "previous_event_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "policy_version": "olip-3.0-draft-reference-policy-2026-11-14#1",
+  "idempotency_key": "849ba2a8a89276e766e58263b7814ee9",
+  "privacy_scope": "participant_minimum",
+  "fictional": true,
+  "event_digest": "sha256:a83974e49d172934d721e9a409ec440690f9e0a0c31aacd18089304ffecdf25b",
+  "signature": {
+    "alg": "EdDSA",
+    "kid": "kid_v3test_a2fcfad00484",
+    "value": "7zDuHYBYjQLXYKwX0U59tPvWIoavtKnCKw7lPdljVod8ouWkCItZgc6838Bw5P_2rpswXOzKzT433kY8y-itBA"
+  }
+}
