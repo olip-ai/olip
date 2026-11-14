@@ -87,7 +87,7 @@ test("webhooks: signed, minimal hints; receivers verify signature, freshness and
     assert.equal((await checkWebhook({ ...w, signature: { ...w.signature, kid: "kid_test_attacker000" } }, keys, { seen: new Set(), now: Date.parse(w.sent_at) })).reason, "unknown_kid", "a changed kid is refused");
   } finally { rx.close(); }
   const m2 = (await a.ai.createMatter(casebrief(), { fictional: true })).matter;
-  for (const [url, reason] of [["http://example.test/h", "https_required"], ["https://user:pw@example.test/h", "credentials_in_url"], ["https://169.254.169.254/latest", "blocked_address"], ["https://[::1]/h", "blocked_address"], ["https://10.0.0.5/h", "blocked_address"], ["https://metadata.google.internal/x", "blocked_hostname"], ["https://localhost/x", "blocked_hostname"]])
+  for (const [url, reason] of [["http://example.test/h", "https_required"], ["https://user:pw@example.test/h", "credentials_in_url"], ["https://169.254.169.254/latest", "blocked_address"], ["https://[::1]/h", "blocked_address"], ["https://10.0.0.5/h", "blocked_address"], ["https://metadata.google.internal/x", "blocked_hostname"], ["https://localhost/x", "blocked_hostname"]]) // scan-publication: allow (SSRF test: the cloud metadata address must be refused)
     assert.equal(expectErr(await a.ai.request("POST", `/olip/v2/matters/${m2.matter_id}/subscriptions`, { callback_url: url }), 422, "OLIP_CALLBACK_URL_REJECTED").error.details.reason, reason, url);
 });
 test("SSRF checks: DNS answers that point inside are refused (rebinding); public addresses pass; ranges are exact", async () => {
