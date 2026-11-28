@@ -48,4 +48,4 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md). Every normative change ships with a sch
 
 ## Sponsorship and governance
 
-OLIP was initiated and is initially sponsored by Digital Crossings Inc. Anyone may implement OLIP and run the conformance suite without paying the sponsor, using its products or holding any account. There is no certification and no paid ranking. See [GOVERNANCE.md](GOVERNANCE.md).
+OLIP was initiated and is initially sponsored by Digital Crossings Inc. Editor: Christian Kameir. Anyone may implement OLIP and run the conformance suite without paying the sponsor, using its products or holding any account. There is no certification and no paid ranking. See [GOVERNANCE.md](GOVERNANCE.md).
